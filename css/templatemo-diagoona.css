@@ -358,6 +358,5 @@ i.fas.fa-code.fa-3x.mt-1.tm-logo {
     color: white;
 }
 
-.freebirdFormviewerViewNoPadding {
-    display: none;
-}
+
+p a { text-decoration: underline; color: white;}

@@ -1,11 +1,1 @@
-i.fas.fa-code.fa-3x.mt-1.tm-logo {
-    color: white;
-}
-
-i.fas.fa-code.fa-3x.mt-1.tm-logo {
-    color: var(--secondary);
-    color: violet;
-    color: var(--secondary);
-    color: violet;
-    color: var(--secondary);
-}
+p a { text-decoration: underline; color: white;}
