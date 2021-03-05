@@ -360,3 +360,5 @@ i.fas.fa-code.fa-3x.mt-1.tm-logo {
 
 
 p a { text-decoration: underline; color: white;}
+.media-body a p, .media-body a h1 { color: white;}
+
