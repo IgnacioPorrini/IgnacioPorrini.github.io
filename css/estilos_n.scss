@@ -17,6 +17,8 @@ $color-accent: #E91E63;
     color: $color-accent;
 }
 
+
+
 header {
     background-color: $color-gray-dark;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -47,7 +49,7 @@ header {
         height: 2px;
         background-color: white;
         z-index: 100000;
-    }   
+    }
 
 
 }
@@ -88,6 +90,10 @@ header.scrolled {
 
 #contacto {
     background-color: $color-gray-medium;
+
+    a {
+        font-weight: 700;
+    }
 }
 
 html {

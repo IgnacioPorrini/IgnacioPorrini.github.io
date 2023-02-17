@@ -72,6 +72,9 @@ header.scrolled p {
 #contacto {
   background-color: #666666;
 }
+#contacto a {
+  font-weight: 700;
+}
 
 html {
   scroll-behavior: smooth;
