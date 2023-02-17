@@ -1,0 +1,119 @@
+@charset "UTF-8";
+/* Estilos para elementos grises */
+.gray {
+  color: #333333;
+}
+
+.gray-light {
+  color: #999999;
+}
+
+/* Estilos para elementos de color */
+.accent {
+  color: #E91E63;
+}
+
+header {
+  background-color: #333333;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+header img {
+  transition: all 1s;
+}
+header h1 {
+  transition: all 1s;
+}
+header p {
+  transition: all 1s;
+}
+header .nav-item .active {
+  position: relative;
+}
+header .nav-item .active::before {
+  content: "";
+  position: absolute;
+  left: 25%;
+  top: 0%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 2px;
+  background-color: white;
+  z-index: 100000;
+}
+
+/* Estilos para cuando la página esté desplazada más de 60 píxeles */
+header.scrolled {
+  background-color: #222;
+}
+header.scrolled img {
+  height: 50px;
+  width: auto;
+}
+header.scrolled h1 {
+  font-size: 1.85rem;
+  margin-bottom: 0;
+}
+header.scrolled p {
+  font-size: 0rem;
+}
+
+#inicio {
+  background-color: #666666;
+}
+
+#sobre-mi {
+  background-color: #999999;
+}
+
+#servicios {
+  background-color: #333333;
+}
+
+#contacto {
+  background-color: #666666;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: calc(8px + 1vw);
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
+  /* o cualquier otro interlineado que desees */
+  color: #333;
+  /* o cualquier otro color que desees */
+}
+
+/* Estilos para encabezados */
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  /* o cualquier otro peso que desees */
+}
+
+section {
+  min-height: 20rem;
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  font-size: 1rem;
+  color: white;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  color: white !important;
+  font-size: 0.9rem;
+  z-index: 100;
+}
+header p,
+header a {
+  color: white !important;
+}/*# sourceMappingURL=estilos_n.css.map */
