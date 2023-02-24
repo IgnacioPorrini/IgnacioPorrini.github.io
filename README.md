@@ -1,6 +1,8 @@
 ### Hola Visitante 👋 
 Mi sitio personal esta en proceso de construccion.
 
+Si tienes comentarios o sugerencias contactame por mensaje directo o por mis redes! Saludos
+
 <!--
 **IgnacioPorrini/IgnacioPorrini** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
