@@ -78,10 +78,11 @@ header.scrolled p {
 
 html {
   scroll-behavior: smooth;
+  font-size: calc(8px + 0.5vw);
 }
 
 body {
-  font-size: calc(8px + 1vw);
+  font-size: calc(8px + 0.5vw);
   font-family: "Open Sans", sans-serif;
   line-height: 1.5;
   /* o cualquier otro interlineado que desees */

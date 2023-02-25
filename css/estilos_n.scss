@@ -98,10 +98,11 @@ header.scrolled {
 
 html {
     scroll-behavior: smooth;
+    font-size: Calc(8px + 0.5vw);
 }
 
 body {
-    font-size: Calc(8px + 1vw);
+    font-size: Calc(8px + 0.5vw);
     font-family: 'Open Sans', sans-serif;
 
     line-height: 1.5;
