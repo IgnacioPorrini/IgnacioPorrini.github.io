@@ -127,10 +127,15 @@ h6 {
 
 section {
     min-height: 20rem;
-    padding-top: 6rem;
+    padding-top: 3rem;
     padding-bottom: 3rem;
     font-size: 1rem;
     color: white;
+
+    &::first-of-type {
+        padding-bottom: 6rem;
+
+    }
 
     a {
         color: white !important;
