@@ -109,6 +109,8 @@ section {
 }
 section a {
   color: white !important;
+  text-decoration: underline !important;
+  font-weight: bold;
 }
 
 header {
