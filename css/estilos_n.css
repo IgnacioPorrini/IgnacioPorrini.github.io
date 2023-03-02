@@ -108,8 +108,8 @@ section {
   font-size: 1rem;
   color: white;
 }
-section::first-of-type {
-  padding-bottom: 6rem;
+section:first-of-type {
+  padding-top: 6rem;
 }
 section a {
   color: white !important;
