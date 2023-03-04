@@ -80,6 +80,7 @@ header.scrolled {
 
 #inicio {
     background-color: $color-gray-medium;
+    padding-top: 9rem;
 }
 
 #sobre-mi {
@@ -87,8 +88,9 @@ header.scrolled {
 }
 
 
-#servicios {
-    background-color: $color-gray-dark;
+#servicios,
+#trabajos {
+    background-color: $color-gray-light;
 }
 
 #contacto {
@@ -136,8 +138,13 @@ section {
     font-size: 1rem;
     color: white;
 
+    >* {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
     &:first-of-type {
-        padding-top: 6rem;
+        //padding-top: 6rem;
 
         @media (max-width: 600px) {}
 

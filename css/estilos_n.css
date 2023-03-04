@@ -59,14 +59,16 @@ header.scrolled p {
 
 #inicio {
   background-color: #666666;
+  padding-top: 9rem;
 }
 
 #sobre-mi {
   background-color: #999999;
 }
 
-#servicios {
-  background-color: #333333;
+#servicios,
+#trabajos {
+  background-color: #999999;
 }
 
 #contacto {
@@ -108,8 +110,9 @@ section {
   font-size: 1rem;
   color: white;
 }
-section:first-of-type {
-  padding-top: 6rem;
+section > * {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 section a {
   color: white !important;
