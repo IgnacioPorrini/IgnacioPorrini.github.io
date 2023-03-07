@@ -59,10 +59,10 @@
                         <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
                             <ul class="navbar-nav text-uppercase">
                                 <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="#sobre-mi">Sobre Mi</a>
+                                    <a class="nav-link tm-nav-link" href="#inicio">Sobre Mi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="#servicios">Servicios</a>
+                                    <a class="nav-link tm-nav-link" href="#trabajos">trabajos</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link tm-nav-link" href="#contacto">Contactame</a>
@@ -76,12 +76,12 @@
         </div>
     </header>
 
-    <section id="inicio">
-        <div class="container">
-            <div class="row">
+    <section id="inicio" style="padding-top: 10rem;">
+        <div class="container mx-auto" style="max-width:620px;">
+            <!-- <div class="row">
+
                 <main class="col-12 col-md-6 mx-auto ">
                     <section class="tm-content">
-                        <!-- <h2 class="mb-4 tm-content-title">Sitios Web y Aplicaciones a Medida</h2> -->
                         <p class="mb-2">Enfocándonos en las necesidades de los usuarios y los objetivos de la
                             organización podemos realizar un sitio o aplicación totalmente a medida. </p>
                         <div class="mb-2" style="text-align: center; margin-left:auto; margin-right: auto;">
@@ -112,13 +112,45 @@
 
                     </section>
                 </main>
+            </div> -->
+
+            <div class="container">
+                <div class="row pb-3">
+                    <div class="col-12">
+                        <p>¡Hola! Soy Desarrollador Web con 3 años de experiencia en el sector, especializado en
+                            front end y con robustos conocimientos de <strong>HTML</strong>, <strong>CSS</strong>,
+                            <strong>JavaScript</strong>,
+                            <strong>PHP</strong> y <strong>WordPress</strong>.
+                        </p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>He trabajado en una amplia variedad de proyectos y siempre estoy aprendiendo nuevas
+                            tecnologías para ofrecer soluciones innovadoras y sostenibles.
+                        </p>
+                        <p>Si estás interesado en trabajar juntos o simplemente quieres más información, no dudes en
+                            ponerte en
+                            contacto conmigo. ¡Estoy deseando escuchar tu idea y ver cómo puedo ayudarte a llevarla a
+                            cabo!</p>
+
+
+
+
+
+                    </div>
+                    <div class="col-md-4">
+                        <img id="foto-ignacio" src="img/foto-perfil-ignacio.jpg" alt="Imagen del desarrollador"
+                            class="img-fluid">
+
+                    </div>
+                </div>
             </div>
+
         </div>
 
 
 
     </section>
-    <section id="sobre-mi">
+    <!-- <section id="sobre-mi">
         <div class="container">
             <div class="row">
                 <main class="col-12 col-md-6 mx-auto">
@@ -160,24 +192,15 @@
 
 
 
-    </section>
-    <section id="servicios">
+    </section> -->
+    <section id="trabajos">
         <div class="container">
             <div class="row">
                 <div class="col-12 "></div>
                 <main class="col-12 col-md-6 mx-auto">
                     <section class="content">
-                        <div class="media my-3 ">
-                            <i class="fas fa-marker fa-2x mr-3 "></i>
-                            <div class="media-body">
-                                <h2 class="mb-3 content-title">Diseño y Desarrollo</h2>
-                            </div>
-                        </div>
-                        <div>
-                            <p>Realizó Sitios Webs Informacionales y/o Funcionales según la necesidad del proyecto y
-                                las herramientas tecnológicas que se elijan para realizarlos.</p>
-                        </div>
-                        <div class="media my-4">
+
+                        <div class="media mb-1">
                             <i class="fas fa-briefcase fa-2x mr-3 "></i>
 
                             <div class="media-body">
@@ -185,14 +208,13 @@
                             </div>
                         </div>
                         <div>
-                            <p>Pueden ver todos mis trabajos en mi perfil de
+                            <p>Pueden ver algunos de mis trabajos como freelancer en mi perfil de
                                 <a href="https://www.behance.net/ignacioporrini">
                                     behance.</a>
                             </p>
                         </div>
-                        <div class="media my-4">
+                        <div class="media mt-5 mb-1">
                             <i class="fas fa-flask fa-2x mr-3 "></i>
-
                             <div class="media-body">
                                 <h2 class="mb-2 tm-content-title">Ideas y Experimentos</h2>
                             </div>
@@ -200,6 +222,7 @@
                         <div>
                             <p>Tambien pueden ver mis bocetos y pruebas en <a
                                     href="https://codepen.io/ignacioporrini">codepen.io</a>
+                            </p>
                         </div>
                     </section>
                 </main>
@@ -212,7 +235,7 @@
             <div class="row">
                 <main class="col-12 col-md-6 mx-auto contact-main">
                     <section class="content contact">
-                        <p id="p1" class="mb-3">Si estás interesado en trabajar conmigo o en contratar mis servicios, no
+                        <p id="p1" class="mb-3">Si estás interesado en trabajar conmigo, no
                             dudes en ponerte en contacto a través de mi <a
                                 href="https://www.linkedin.com/in/ignacio-porrini/">perfil de LinkedIn</a> o enviándome
                             un <a href="mailto:nachopo@gmail.com">correo electrónico</a>. </p>
@@ -250,6 +273,20 @@
         //document.addEventListener('scroll', showPlane);
 
     </script>
+    <style>
+        #foto-ignacio {
+            border-radius: 50%;
+            max-width: 175px;
+        }
+
+        #inicio {
+            background-color: #333;
+        }
+
+        p {
+            max-width: 650px;
+        }
+    </style>
     <style>
         .fa-plane {
             position: fixed;
