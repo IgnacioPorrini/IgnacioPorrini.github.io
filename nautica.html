@@ -249,26 +249,7 @@
 
     </aside>
 
-    <script>
-        function showPlane() {
-            // Obtenemos el elemento con la ID especificada
-            var element = document.getElementById('servicios');
 
-            // Obtenemos la posición del elemento
-            var rect = element.getBoundingClientRect();
-
-            // Si el elemento está por debajo de la mitad de la pantalla, mostramos el icono
-            if (rect.top < window.innerHeight / 2) {
-                document.querySelector('.fa-plane').style.display = 'block';
-            } else {
-                document.querySelector('.fa-plane').style.display = 'none';
-            }
-        }
-
-        // Agregamos un evento scroll al documento
-        //document.addEventListener('scroll', showPlane);
-
-    </script>
     <style>
         #foto-ignacio {
             border-radius: 50%;
@@ -282,9 +263,11 @@
         p {
             max-width: 650px;
         }
-        
 
-        #trabajos section, #trabajos > * {
+
+        #trabajos section,
+        #trabajos>*,
+        #trabajos {
             background-color: #673ab7 !important;
         }
     </style>
