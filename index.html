@@ -203,36 +203,30 @@
                         <div class="media mb-1">
                             <!-- <i class="fas fa-briefcase fa-2x mr-3 "></i> -->
 
-                            <div class="media-body">
-                                <h2 class="mb-2 tm-content-title">Algunos de mis trabajos independientes</h2>
-                            </div>
+
+                            <h2 class="mb-4 tm-content-title">Algunos de mis trabajos independientes</h2>
+
                         </div>
                         <div>
-                            <!-- <a href="https://www.behance.net/ignacioporrini">behance.</a> -->
 
-                            <style>
-                                .list-unstyled a {
-                                    color: rgb(0, 98, 137) !important;
-                                }
-                            </style>
-                            <h3 class="mb-2">Sitio web personal del diseñador de moda Tavo Garcia </h3>
+                            <h3 class="mb-2 h4">Web Personal de Tavo Garcia</h3>
+                            <img class="img-fluid mb-4" src="img/portada-web-tavo.jpg">
                             <p>Haciendo equipo con Camila García Alvez hemos dedicado mucho pienso y esfuerzo para crear
                                 una plataforma que refleje la esencia y estilo de Tavo. La web tiene un impresionante
                                 diseño y es muy fácil de navegar. ¡Estamos muy emocionados con el resultado! !</p>
                             <a href="https://tavogarcia.uy/">Ir a la web de Tavo</a>
 
-                            <hr>
+                            <hr class="my-5">
 
 
 
-                            <h3 class="mb-2">Diseño y Desarrollo Web para el colectivo Donde Estan Nuestras Gurisas</h3>
+                            <h3 class="mb-2 h4">Sitio Institucional para colectivo Donde Estan Nuestras Gurisas?
+                            </h3>
+                            <img class="img-fluid mb-4" src="img/portada-web-deng.jpg">
 
-                            <a href="https://dondeestannuestrasgurisas.org/">Ir a la Web - Dónde Están Nuestras
-                                Gurisas?</a>
+                            <a href="https://dondeestannuestrasgurisas.org/">Ir a la Web de DENG</a>
 
-                            <!--     -->
-
-                            <hr>
+                            <hr class="my-5">
 
                             <!-- <h3>Sitio Web de Proyecto del Castillo Vagabundo</h3>
                                 <p>
@@ -247,7 +241,7 @@
                             <!-- el-castillo-vagabundo.html -->
 
 
-                            <h3>Sitio Web de Comercio Electronico para El Yelmo de Mambrino</h3>
+                            <h3 class=" h4">Comercio Electronico para El Yelmo de Mambrino</h3>
                             <p>
                                 Diseño minimalista enfocado en la facilidad de uso para la busqueda de libros y compra
                                 de los mismos en linea.
@@ -258,7 +252,7 @@
                                 Yelmo de Mambrino</a>
 
                             </p>
-                            <hr>
+                            <hr class="my-5 d-none">
 
 
 
@@ -269,7 +263,7 @@
                                 <h2 class="mb-2 tm-content-title">Ideas y Experimentos</h2>
                             </div>
                         </div>
-                        <div>
+                        <div class="d-none">
                             <p>Tambien pueden ver mis bocetos y pruebas en <a
                                     href="https://codepen.io/ignacioporrini">codepen.io</a>
                             </p>
@@ -285,45 +279,51 @@
             <div class="row">
                 <main class="col-12 col-md-6 mx-auto contact-main">
                     <section class="content contact">
-                        <p id="p1" class="mb-3">Si estás interesado en trabajar conmigo, no
-                            dudes en ponerte en contacto a través de mi <a
-                                href="https://www.linkedin.com/in/ignacio-porrini/">perfil de LinkedIn</a> o enviándome
-                            un <a href="mailto:nachopo@gmail.com">correo electrónico</a>. </p>
-                        <p>Estoy abierto
+                        <div class="text-center ">
+                            <a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20conversar%20por%20trabajo%20"
+                                class="whatsapp-button my-4"><i class="fab fa-whatsapp text-center"></i> Escribime
+                                mediante
+
+                                WhatsApp!</a>
+                        </div>
+
+                        <p class="mb-2">Estoy abierto
                             a nuevas oportunidades y me gustaría poder contribuir con mi experiencia y conocimientos a
-                            proyectos interesantes.</p>
+                            proyectos desafiantes.</p>
+
+                        <p id="p1" class="mb-3 ">Tambien puedes contactarme mediante mensajeria en mi perfil
+                            de <a href="https://www.linkedin.com/in/ignacio-porrini/">LinkedIn</a> o enviándome
+                            un correo electrónico a <a href="mailto:nachopo@gmail.com">nachopo@gmail.com </a>. </p>
+
+
+
+
+
+
+                        <style>
+                            /* Estilos para el botón */
+                            .whatsapp-button {
+                                display: inline-block;
+                                background-color: #25D366;
+                                color: #fff;
+                                text-decoration: none !important;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                font-family: Arial, sans-serif;
+                                font-size: 16px;
+                                border: none;
+                                cursor: pointer;
+                            }
+                        </style>
                     </section>
                 </main>
             </div>
         </div>
     </section>
 
-    <aside>
-        <!-- <i class="fas fa-plane"></i> -->
 
-    </aside>
-
-    <script>
-        function showPlane() {
-            // Obtenemos el elemento con la ID especificada
-            var element = document.getElementById('servicios');
-
-            // Obtenemos la posición del elemento
-            var rect = element.getBoundingClientRect();
-
-            // Si el elemento está por debajo de la mitad de la pantalla, mostramos el icono
-            if (rect.top < window.innerHeight / 2) {
-                document.querySelector('.fa-plane').style.display = 'block';
-            } else {
-                document.querySelector('.fa-plane').style.display = 'none';
-            }
-        }
-
-        // Agregamos un evento scroll al documento
-        //document.addEventListener('scroll', showPlane);
-
-    </script>
     <style>
+        /* Styles en la página*/
         #foto-ignacio {
             border-radius: 50%;
             max-width: 175px;
@@ -333,41 +333,20 @@
             background-color: #333;
         }
 
+        #trabajos {
+            background-color: #4b9da1 !important;
+        }
+
+        #trabajos .img-fluid {
+            padding: 2rem 2rem 1rem 2rem;
+        }
+
+
+
         p {
             max-width: 650px;
         }
     </style>
-    <style>
-        .fa-plane {
-            position: fixed;
-            display: none;
-
-            top: 50%;
-            left: 100%;
-            rotate: 180deg;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            color: white;
-            animation: plane-animation 10s linear infinite;
-        }
-
-        @keyframes plane-animation {
-            0% {
-                left: 100%;
-                scale: 1;
-            }
-
-            50% {
-                scale: 2;
-            }
-
-            100% {
-                scale: 1;
-                left: -100%;
-            }
-        }
-    </style>
-
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
