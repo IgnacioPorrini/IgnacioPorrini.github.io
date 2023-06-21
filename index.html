@@ -220,24 +220,13 @@
                                 diseño y es muy fácil de navegar. ¡Estamos muy emocionados con el resultado! !</p>
                             <a href="https://tavogarcia.uy/">Ir a la web de Tavo</a>
 
-                            <hr class="my-5">
-
-
-
-                            <h3 class="mb-2 h4">Sitio Institucional para colectivo Donde Estan Nuestras Gurisas?
-                            </h3>
-                            <img id="imagen2" class="img-fluid mb-4 d-none" src="img/portada-web-deng.jpg">
-
-                            <a href="https://dondeestannuestrasgurisas.org/">Ir a la Web de DENG</a>
 
                             <hr class="my-5">
 
                             <!-- <h3>Sitio Web de Proyecto del Castillo Vagabundo</h3>
                                 <p>
-
                                     <a href="# ">Ver video promocional / Behance 
                                         Castillo Vagabundo</a>
-
                                 </p>
                                 <hr>
 
@@ -246,6 +235,8 @@
 
 
                             <h3 class=" h4">Comercio Electronico para El Yelmo de Mambrino</h3>
+                            <a href="https://yelmodemambrino.com/"><img id="portada-yelmo" class="img-fluid mb-4"
+                                    src="img/portada-yelmo.jpg"></a>
                             <p>
                                 Diseño minimalista enfocado en la facilidad de uso para la busqueda de libros y compra
                                 de los mismos en linea.
@@ -256,6 +247,17 @@
                                     Yelmo de Mambrino</a>
 
                             </p>
+
+                            <hr class="my-5">
+
+
+
+                            <h3 class="mb-2 h4">Sitio Institucional para colectivo Donde Estan Nuestras Gurisas?
+                            </h3>
+                            <img id="imagen2" class="img-fluid mb-4 d-none" src="img/portada-web-deng.png">
+
+                            <a href="https://dondeestannuestrasgurisas.org/">Ir a la Web de DENG</a>
+
 
                             <hr class="my-5 d-none">
 
@@ -352,54 +354,6 @@
             max-width: 650px;
         }
     </style>
-
-    <script>
-        $(document).ready(function () {
-            var imagen1 = $('#imagen1');
-            var imagen2 = $('#imagen2');
-
-            // Función para ocultar la imagen
-            function ocultarImagen(imagen) {
-                imagen.hide();
-            }
-
-            // Agregar evento de carga de imagen 1
-            imagen1.on('load', function () {
-                console.log('La imagen 1 se ha cargado correctamente.');
-            });
-
-            // Agregar evento de error de carga de imagen 1
-            imagen1.on('error', function () {
-                console.log('Ha ocurrido un error al cargar la imagen 1.');
-                ocultarImagen(imagen1);
-            });
-
-            // Agregar evento de carga de imagen 2
-            imagen2.on('load', function () {
-                console.log('La imagen 2 se ha cargado correctamente.');
-            });
-
-            // Agregar evento de error de carga de imagen 2
-            imagen2.on('error', function () {
-                console.log('Ha ocurrido un error al cargar la imagen 2.');
-                ocultarImagen(imagen2);
-            });
-
-            // Ocultar las imágenes después de 30 segundos si no se han cargado
-            setTimeout(function () {
-                if (!imagen1.complete || imagen1.naturalWidth === 0) {
-                    console.log('La imagen 1 no se ha cargado en 30 segundos.');
-                    ocultarImagen(imagen1);
-                }
-
-                if (!imagen2.complete || imagen2.naturalWidth === 0) {
-                    console.log('La imagen 2 no se ha cargado en 30 segundos.');
-                    ocultarImagen(imagen2);
-                }
-            }, 30000);
-        });
-
-    </script>
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
