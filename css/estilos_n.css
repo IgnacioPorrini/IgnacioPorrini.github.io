@@ -1,150 +1,248 @@
 @charset "UTF-8";
 
-/* Estilos para elementos grises */
-.gray {
-  color: #333333;
-}
-
-.gray-light {
-  color: #999999;
-}
-
-/* Estilos para elementos de color */
-.accent {
-  color: #E91E63;
-}
-
-header {
-  background-color: #333333;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-header img {
-  transition: all 1s;
-}
-
-header h1 {
-  transition: all 1s;
-}
-
-header p {
-  transition: all 1s;
-}
-
-header .nav-item .active {
-  position: relative;
-}
-
-header .nav-item .active::before {
-  content: "";
-  position: absolute;
-  left: 25%;
-  top: 0%;
-  transform: translateY(-50%);
-  width: 50%;
-  height: 2px;
-  background-color: white;
-  z-index: 100000;
-}
-
-/* Estilos para cuando la página esté desplazada más de 60 píxeles */
-header.scrolled {
-  background-color: #222;
-}
-
-header.scrolled img {
-  height: 50px;
-  width: auto;
-}
-
-header.scrolled h1 {
-  font-size: 1.85rem;
-  margin-bottom: 0;
-}
-
-header.scrolled p {
-  font-size: 0rem;
-}
-
-#inicio {
-  background-color: #666666;
-  padding-top: 9rem;
-}
-
-#sobre-mi {
-  background-color: #999999;
-}
-
-#servicios,
-#trabajos {
-  background-color: #999999;
-  background-color: #20a151;
-}
-
-#contacto {
-  background-color: #666666;
-}
-
-#contacto a {
-  font-weight: 700;
+/* =========================================
+   1. VARIABLES & CONFIGURACIÓN BASE
+   ========================================= */
+:root {
+    --bg-dark: #1a1a1a;
+    --bg-darker: #121212;
+    --bg-black: #000000;
+    --primary: #20a151; /* Tu verde original pero usado estratégicamente */
+    --accent: #25d399; /* Verde WhatsApp / Acento brillante */
+    --text-white: #ffffff;
+    --text-gray: #b3b3b3;
+    --font-heading: 'Roboto', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+    --transition: all 0.3s ease;
 }
 
 html {
-  scroll-behavior: smooth;
-  font-size: calc(8px + 0.5vw);
+    scroll-behavior: smooth;
 }
 
 body {
-  font-size: calc(8px + 0.5vw);
-  font-family: "Open Sans", sans-serif;
-  line-height: 1.5;
-  /* o cualquier otro interlineado que desees */
-  color: #333;
-  /* o cualquier otro color que desees */
+    font-family: var(--font-body);
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    line-height: 1.6;
+    overflow-x: hidden; /* Evita scroll horizontal no deseado */
 }
 
-/* Estilos para encabezados */
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  /* o cualquier otro peso que desees */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-white);
 }
 
-section {
-  min-height: 20rem;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  font-size: 1rem;
-  color: white;
+a {
+    text-decoration: none;
+    transition: var(--transition);
 }
 
-section>* {
-  margin-top: auto;
-  margin-bottom: auto;
+p {
+    color: var(--text-gray);
 }
 
-section a {
-  color: white !important;
-  text-decoration: underline !important;
-  font-weight: bold;
+/* Clases de utilidad */
+.text-accent { color: var(--accent) !important; }
+.bg-accent { background-color: var(--primary); color: white; }
+.bg-darker { background-color: var(--bg-darker); }
+.bg-black { background-color: var(--bg-black); }
+.text-muted-light { color: #aaa; }
+
+.section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
 }
 
+/* =========================================
+   2. HEADER & NAVBAR
+   ========================================= */
 header {
-  position: fixed;
-  left: 0;
-  right: 0;
-  color: white !important;
-  font-size: 0.9rem;
-  z-index: 100;
+    background-color: rgba(26, 26, 26, 0.95);
+    padding: 1rem 0;
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-header p,
-header a {
-  color: white !important;
+.logo-brand {
+    height: 60px;
+    width: auto;
+    transition: var(--transition);
 }
 
-/*# sourceMappingURL=estilos_n.css.map */
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+}
+
+/* Estado Scrolled (Manipulado por JS) */
+header.scrolled {
+    background-color: rgba(0, 0, 0, 0.98);
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+header.scrolled .logo-brand {
+    height: 45px;
+}
+
+/* Links de Navegación */
+.nav-link {
+    color: var(--text-white) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem !important;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent);
+    transition: var(--transition);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+.btn-cta {
+    background-color: var(--primary);
+    border: none;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+}
+
+.btn-cta:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   3. HERO SECTION (Sobre Mí)
+   ========================================= */
+.hero-section {
+    min-height: 100vh;
+    padding-top: 80px; /* Para compensar el navbar fijo */
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #2c2c2c 100%);
+}
+
+.profile-img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-img {
+    border-radius: 50%;
+    max-width: 280px;
+    border: 5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: var(--transition);
+}
+
+.profile-img:hover {
+    border-color: var(--accent);
+    transform: scale(1.02);
+}
+
+/* =========================================
+   4. SECCIÓN TRABAJOS (Cards)
+   ========================================= */
+.section-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.divider {
+    height: 3px;
+    width: 60px;
+    background-color: var(--accent);
+    margin-top: 1rem;
+}
+
+.project-card {
+    background-color: #252525;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.project-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+    transform: scale(1.1);
+}
+
+.project-card .card-body {
+    background-color: #252525;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* =========================================
+   5. CONTACTO
+   ========================================= */
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ebc57;
+    color: white;
+}
+
+.social-hover {
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.social-hover:hover {
+    color: var(--accent) !important;
+    transform: scale(1.2);
+}
+
+/* =========================================
+   6. RESPONSIVE
+   ========================================= */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: var(--bg-darker);
+        padding: 1rem;
+        border-radius: 0 0 1rem 1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .hero-section {
+        text-align: center;
+        padding-top: 120px;
+        padding-bottom: 3rem;
+    }
+    
+    .profile-img {
+        max-width: 200px;
+        margin-top: 2rem;
+    }
+}

@@ -5,276 +5,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ignacio Porrini</title>
+    <title>Ignacio Porrini | Desarrollador Web</title>
     <link rel="icon" href="favicon.ico" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" />
-    <!-- https://fonts.google.com/ -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Google tag (gtag.js) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="css/estilos_n.css" rel="stylesheet" />
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-YZMZTJDH70');
     </script>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
-    <link href="css/estilos_n.css" rel="stylesheet" />
-
-    <script src="js/script_n.js"></script>
-
 </head>
 
-<body data-spy="scroll" data-target="#main-nav">
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-10 col-sm-10 col-md-6">
-                    <div class="tm-site-header media align-items-center">
-                        <a class="nav-link tm-nav-link" href="#inicio"><img
-                                src="img/logo-ignacio-porrini-white-bold.png"
-                                alt="Logo de Ignacio Porrini, glifo similar a la letra griega phi" height="80px"
-                                width="80px"></a>
-                        <span class="sr-only">(current)</span>
-                        <div class="media-body">
-                            <a class="nav-link tm-nav-link d-flex flex-column" href="#">
-                                <h1 class="tm-sitename text-uppercase">Ignacio Porrini </h1>
-                                <p class="tm-slogon mb-0">Diseño y Desarrollo Web</p>
-                            </a>
-                        </div>
+<body id="inicio" data-bs-spy="scroll" data-bs-target="#main-nav" tabindex="0">
 
+    <header class="fixed-top transition-all">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark" id="main-nav">
+                <div class="container-fluid px-0">
+                    <a class="navbar-brand d-flex align-items-center gap-3" href="#inicio">
+                        <img src="img/logo-ignacio-porrini-white-bold.png" alt="Logo IP" class="logo-brand">
+                        <div class="d-flex flex-column">
+                            <span class="h5 mb-0 text-uppercase fw-bold">Ignacio Porrini</span>
+                            <small class="fw-light logo-subtitle">Diseño y Desarrollo Web</small>
+                        </div>
+                    </a>
+
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="fa-solid fa-bars text-white fs-3"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbar-nav">
+                        <ul class="navbar-nav text-uppercase align-items-center pt-3 pt-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="#inicio">Sobre Mí</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#trabajos">Trabajos</a></li>
+                            <li class="nav-item ms-lg-3">
+                                <a class="btn btn-primary btn-cta" href="#contacto">Contáctame</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-2 col-sm-2 col-md-6 d-flex justify-content-end">
-                    <nav class="navbar navbar-expand-lg my-auto" id="main-nav">
-                        <button class="navbar-toggler toggler-example mr-0 ml-auto" type="button" data-toggle="collapse"
-                            data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span><i class="fas fa-bars text-white"></i></span>
-                        </button>
-                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
-                            <ul class="navbar-nav text-uppercase">
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="#inicio">Sobre Mi</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="#trabajos">Trabajos</a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="/nautica.html">Náutica</a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a class="nav-link tm-nav-link" href="#contacto">Contactame</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-
+            </nav>
         </div>
     </header>
 
-    <section id="inicio" style="padding-top: 10rem;">
-        <div class="container mx-auto" style="max-width:620px;">
-
+    <main>
+        <section class="hero-section d-flex align-items-center">
             <div class="container">
-                <div class="row pb-3">
-                    <div class="col-12">
-                        <p>¡Hola! Soy Desarrollador Web con más de 3 años de experiencia en el sector, especializado en
-                            front end y con robustos conocimientos de <strong>HTML</strong>, <strong>CSS</strong>,
-                            <strong>JavaScript</strong>,
-                            <strong>PHP</strong> y <strong>WordPress</strong>.
+                <div class="row align-items-center flex-column-reverse flex-md-row">
+                    <div class="col-12 col-md-7 mt-4 mt-md-0">
+                        <span class="badge bg-accent mb-3">Web Developer</span>
+                        <h1 class="display-5 fw-bold mb-4">Transformo ideas en realidades digitales.</h1>
+                        <p class="lead mb-4">
+                            ¡Hola! Soy Desarrollador Web con más de 3 años de experiencia. Especializado en 
+                            <strong>Front-end</strong>, <strong>WordPress</strong> y tecnologías como 
+                            <span class="text-accent">HTML, CSS, JS y PHP</span>.
                         </p>
+                        <p class="text-muted-light">
+                            Siempre aprendiendo nuevas tecnologías para ofrecer soluciones innovadoras.
+                            ¿Tienes una idea? Hablemos.
+                        </p>
+                        <div class="mt-4">
+                            <a href="#contacto" class="btn btn-outline-light me-2">Hablemos</a>
+                            <a href="#trabajos" class="btn btn-link text-white text-decoration-none">Ver portafolio <i class="fas fa-arrow-down ms-1"></i></a>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <p>He trabajado en una amplia variedad de proyectos y siempre estoy aprendiendo nuevas
-                            tecnologías para ofrecer soluciones innovadoras y sostenibles.
-                        </p>
-                        <p>Si estás interesado en trabajar juntos o simplemente quieres más información, no dudes en
-                            ponerte en
-                            <a href="#contacto">contacto conmigo</a>. ¡Estoy deseando escuchar tu idea y ver cómo puedo
-                            ayudarte a llevarla a
-                            cabo!
-                        </p>
-
-
-
-
-
-                    </div>
-                    <div class="mx-auto col-md-4 text-center">
-                        <img id="foto-ignacio" src="img/foto-perfil-ignacio.jpg" alt="Imagen del desarrollador"
-                            class="img-fluid">
-
+                    <div class="col-12 col-md-5 text-center">
+                        <div class="profile-img-container">
+                            <img src="img/foto-perfil-ignacio.jpg" alt="Ignacio Porrini" class="img-fluid profile-img">
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-        </div>
+        <section id="trabajos" class="section-padding bg-darker">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-12 text-center">
+                        <h2 class="section-title">Mis Proyectos</h2>
+                        <div class="divider mx-auto"></div>
+                        <p class="text-muted-light mt-3">Algunos de mis trabajos independientes recientes</p>
+                    </div>
+                </div>
 
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 project-card border-0">
+                            <div class="card-img-top overflow-hidden">
+                                <a href="https://tavogarcia.uy/" target="_blank">
+                                    <img src="img/portada-web-tavo02.JPG" class="img-fluid" alt="Web Tavo Garcia">
+                                </a>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h3 class="h5 card-title fw-bold">Web Personal Tavo García</h3>
+                                <p class="card-text small text-muted flex-grow-1">
+                                    Plataforma que refleja la esencia y estilo del artista. Diseño de alto impacto visual y fácil navegación.
+                                </p>
+                                <a href="https://tavogarcia.uy/" target="_blank" class="text-accent fw-bold text-decoration-none mt-3">
+                                    Visitar sitio <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 project-card border-0">
+                            <div class="card-img-top overflow-hidden">
+                                <a href="https://yelmodemambrino.com/" target="_blank">
+                                    <img src="img/portada-yelmo.JPG" class="img-fluid" alt="El Yelmo de Mambrino">
+                                </a>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h3 class="h5 card-title fw-bold">E-commerce El Yelmo</h3>
+                                <p class="card-text small text-muted flex-grow-1">
+                                    Diseño minimalista enfocado en la facilidad de búsqueda y compra de libros en línea.
+                                </p>
+                                <a href="https://yelmodemambrino.com/" target="_blank" class="text-accent fw-bold text-decoration-none mt-3">
+                                    Visitar sitio <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
-    </section>
-    <section id="trabajos">
-        <div class="container">
-            <div class="row">
-                <div class="media mb-1">
-                    <h2 class="mb-4 tm-content-title text-center">Algunos de mis trabajos independientes</h2>
-
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 project-card border-0">
+                            <div class="card-img-top overflow-hidden">
+                                <a href="https://dondeestannuestrasgurisas.org/" target="_blank">
+                                    <img src="img/portada-web-deng.png" class="img-fluid" alt="Web DENG">
+                                </a>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h3 class="h5 card-title fw-bold">Colectivo DENG</h3>
+                                <p class="card-text small text-muted flex-grow-1">
+                                    Sitio web institucional para visibilizar la causa y actividades del colectivo.
+                                </p>
+                                <a href="https://dondeestannuestrasgurisas.org/" target="_blank" class="text-accent fw-bold text-decoration-none mt-3">
+                                    Visitar sitio <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-xl-4">
+        </section>
 
-                    <h3 class="mb-2 h4 text-center"><a href="https://tavogarcia.uy/">Web Personal de Tavo
-                            Garcia</a></h3>
-                   
-                    <a href="https://tavogarcia.uy/"><img id="imagen1" class="img-fluid mb-4"
-                            src="img/portada-web-tavo02.JPG"></a>
-                    <p>Haciendo equipo con Camila García Alvez hemos dedicado mucho pienso y esfuerzo para crear
-                        una plataforma que refleje la esencia y estilo de Tavo. La web tiene un impresionante
-                        diseño y es muy fácil de navegar. ¡Estamos muy emocionados con el resultado! !</p>
-                    <a href="https://tavogarcia.uy/">Ir a la web de Tavo</a>
+        <section id="contacto" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 text-center">
+                        <h2 class="mb-4 fw-bold">¿Trabajamos juntos?</h2>
+                        <p class="lead mb-5 text-muted-light">
+                            Estoy abierto a nuevas oportunidades para contribuir con mi experiencia a empresas y organizaciones.
+                        </p>
 
-
-                    <hr class="my-5">
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-4">
-                    <h3 class="mb-2 h4 text-center"><a href="https://yelmodemambrino.com/">Comercio Electronico
-                            para El Yelmo de Mambrino</a></h3>
-                    <a href="https://yelmodemambrino.com/"><img id="portada-yelmo" class="img-fluid mb-4"
-                            src="img/portada-yelmo.JPG " alt=""></a>
-                    <p>
-                        Diseño minimalista enfocado en la facilidad de uso para la busqueda de libros y compra
-                        de los mismos en linea.
-                    </p>
-
-                    <p>
-                        <a href="https://yelmodemambrino.com/">El
-                            Yelmo de Mambrino</a>
-
-                    </p>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-4">
-
-                    <h3 class="mb-2 h4 text-center"><a href="https://dondeestannuestrasgurisas.org/">Sitio Web
-                            <span class="d-none visibility-hidden">Institucional
-                            </span> para colectivo Donde Estan Nuestras
-                            Gurisas?</a>
-                    </h3>
-
-                    <a href="https://dondeestannuestrasgurisas.org/"><img id="imagen2" class="img-fluid mb-4"
-                            src="img/portada-web-deng.png"></a>
-
-                    <p>Proyecto en proceso de diseño web para el colectivo Donde Estan Nuestras Gurisas
-                    </p>
-
-                    <a href="https://dondeestannuestrasgurisas.org/">Ir a la Web de DENG</a>
-
-
-                    <hr class="my-5 d-none">
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-    </section>
-    </main>
-    </div>
-    </div>
-
-    </section>
-
-    <section id="contacto">
-        <div class="container">
-            <div class="row">
-                <main class="col-12 col-md-6 mx-auto contact-main">
-                    <section class="content contact">
-
-
-                        <p class="mb-3 text-center">Estoy abierto
-                            a nuevas oportunidades, me gustaría poder contribuir con mi experiencia y conocimientos
-                            tanto a empresas y organizaciones.</p>
-
-                        <div class="text-center mb-2">
-                            <a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20conversar%20por%20trabajo%20"
-                                class="whatsapp-button my-4"><i class="fab fa-whatsapp text-center"></i> Escribime
-                                mediante
-
-                                WhatsApp!</a>
+                        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                            <a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20conversar%20por%20trabajo" 
+                               class="btn btn-whatsapp btn-lg shadow-sm">
+                                <i class="fab fa-whatsapp me-2"></i> Escribime por WhatsApp
+                            </a>
+                            <a href="mailto:nachopo@gmail.com" class="btn btn-outline-light btn-lg">
+                                <i class="far fa-envelope me-2"></i> Enviar Correo
+                            </a>
                         </div>
 
-                        <p id="p1" class="mb-3 text-center">Tambien puedes contactarme mediante mensajeria en mi perfil
-                            de <a href="https://www.linkedin.com/in/ignacio-porrini/">LinkedIn</a> o <br><br>
-                            enviándome un correo electrónico a <a href="mailto:nachopo@gmail.com">nachopo@gmail.com
-                            </a>. </p>
-
-
-
-                        <style>
-                            /* Estilos para el botón */
-                            .whatsapp-button {
-                                display: inline-block;
-                                background-color: #25d399;
-                                color: #fff;
-                                text-decoration: none !important;
-                                padding: 10px 20px;
-                                border-radius: 5px;
-                                font-family: Arial, sans-serif;
-                                font-size: 16px;
-                                border: none;
-                                cursor: pointer;
-                            }
-                        </style>
-                    </section>
-                </main>
+                        <div class="mt-5 pt-4 border-top border-secondary">
+                            <p class="small text-muted">También puedes encontrarme en:</p>
+                            <a href="https://www.linkedin.com/in/ignacio-porrini/" class="fs-2 text-white social-hover">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+    </main>
+
+    <footer class="py-4 text-center bg-black">
+        <div class="container">
+            <small class="text-muted">© 2024 Ignacio Porrini. Todos los derechos reservados.</small>
         </div>
-    </section>
+    </footer>
 
-
-    <style>
-        /* Styles en la página*/
-        #foto-ignacio {
-            border-radius: 50%;
-            max-width: 175px;
-        }
-
-        #inicio {
-            background-color: #333;
-        }
-
-        #trabajos {
-            background-color: #4b9da1 !important;
-        }
-
-        #trabajos .img-fluid {
-            padding: 2rem 2rem 1rem 2rem;
-        }
-
-
-
-        p {
-            max-width: 650px;
-        }
-    </style>
-
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Efecto Navbar al hacer Scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
-
 </html>
