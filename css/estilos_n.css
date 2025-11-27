@@ -199,6 +199,14 @@ header.scrolled .logo-brand {
     border-top: 1px solid rgba(255,255,255,0.05);
 }
 
+.project-card .card-title {
+    color: var(--text-white);
+}
+
+.project-card .card-text {
+    color: #d0d0d0 !important;
+}
+
 /* =========================================
    5. CONTACTO
    ========================================= */
