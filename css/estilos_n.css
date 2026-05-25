@@ -20,6 +20,21 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Scrollbar Personalizado Premium */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
 body {
     font-family: var(--font-body);
     background-color: var(--bg-dark);
@@ -132,7 +147,7 @@ header.scrolled .logo-brand {
 .hero-section {
     min-height: 100vh;
     padding-top: 80px; /* Para compensar el navbar fijo */
-    background: linear-gradient(135deg, var(--bg-dark) 0%, #2c2c2c 100%);
+    background: radial-gradient(circle at 85% 30%, rgba(32, 161, 81, 0.08) 0%, rgba(26, 26, 26, 1) 75%);
 }
 
 .profile-img-container {
@@ -252,5 +267,128 @@ header.scrolled .logo-brand {
     .profile-img {
         max-width: 200px;
         margin-top: 2rem;
+    }
+}
+
+/* =========================================
+   7. CLASES DE DISEÑO PREMIUM (Añadidas)
+   ========================================= */
+
+/* Insignias de Tecnologías (Badges) */
+.tech-badge {
+    background-color: rgba(32, 161, 81, 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(32, 161, 81, 0.25);
+    border-radius: 30px;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.tech-badge:hover {
+    background-color: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Caja de Iconos Interactiva para la sección Hero */
+.tech-icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-gray);
+    font-size: 1.4rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.tech-icon-box:hover {
+    color: var(--accent);
+    background: rgba(37, 211, 153, 0.08);
+    border-color: rgba(37, 211, 153, 0.35);
+    transform: translateY(-4px) rotate(5deg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Tarjetas de Experimento estilo Glassmorphism */
+.glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(37, 211, 153, 0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.section-experiments {
+    background: radial-gradient(circle at 15% 50%, rgba(37, 211, 153, 0.03) 0%, rgba(18, 18, 18, 1) 75%);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Icono de Laboratorio */
+.labs-icon {
+    color: var(--accent);
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.labs-icon:hover {
+    transform: scale(1.08) rotate(5deg);
+    opacity: 1;
+}
+
+/* =========================================
+   8. BOTÓN FLOTANTE DE WHATSAPP PREMIUM
+   ========================================= */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background-color: #25D366;
+    color: white !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) translateY(-3px);
+    background-color: #20ba5a;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.6rem;
     }
 }
