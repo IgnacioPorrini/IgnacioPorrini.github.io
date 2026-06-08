@@ -214,7 +214,8 @@ header.scrolled .logo-brand {
     border-top: 1px solid rgba(255,255,255,0.05);
 }
 
-.project-card .card-title {
+.project-card .card-title,
+.glass-card .card-title {
     color: var(--text-white);
 }
 
