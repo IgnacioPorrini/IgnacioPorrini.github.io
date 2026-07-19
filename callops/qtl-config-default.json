@@ -2,7 +2,7 @@
   "_comment": "Archivo de configuración de prueba — reemplazá los valores con los reales",
   "selector": "#queueName",
   "phone_selector": "#callPhone",
-  "call_notes_url": "file:///C:/Users/INVITADE/OneDrive/Documentos/Desarrollo/callOps/call-notes.html",
+  "call_notes_url": "callops/call-notes.html",
   "queues": [
     {
       "name": "Cola Ventas",
