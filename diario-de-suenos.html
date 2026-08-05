@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diario de Sueños | Ignacio Porrini</title>
+<meta name="description" content="Diario de Sueños: registra tus sueños cada mañana con título, descripción, nitidez y etiquetas simbólicas. Todo se guarda localmente en tu navegador.">
+<link rel="icon" href="favicon.ico" />
+
+<meta property="og:title" content="Diario de Sueños | Ignacio Porrini">
+<meta property="og:description" content="Un lugar para anotar lo que la mente construye mientras duermes, antes de que se disuelva con la luz de la mañana.">
+<meta property="og:url" content="https://ignacioporrini.github.io/diario-de-suenos.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-YZMZTJDH70');
+</script>
+
+<style>
+  :root{
+    --bg-deep:#0B0E23;
+    --bg-panel:#12153099;
+    --bg-panel-solid:#151933;
+    --border:#2A2E52;
+    --moon:#F2C879;
+    --moon-dim:#F2C87955;
+    --lavender:#A78BFA;
+    --mist:#C9CDE8;
+    --muted:#6B7099;
+    --danger:#E88A8A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg-deep);
+    color:var(--mist);
+    font-family:'Work Sans',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  /* --- Ambient star field --- */
+  #stars{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+  }
+  .star{
+    position:absolute; border-radius:50%; background:var(--mist);
+    animation:twinkle var(--dur) ease-in-out infinite;
+    opacity:0.2;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.15;}
+    50%{opacity:0.75;}
+  }
+  .mist-layer{
+    position:fixed; inset:-10% -10% auto -10%; height:60%;
+    background: radial-gradient(ellipse at 30% 20%, #A78BFA14, transparent 60%),
+                radial-gradient(ellipse at 70% 10%, #F2C87910, transparent 55%);
+    z-index:0; pointer-events:none;
+    animation: drift 40s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    0%{transform:translateX(0) translateY(0);}
+    100%{transform:translateX(3%) translateY(2%);}
+  }
+
+  .wrap{position:relative; z-index:1; max-width:720px; margin:0 auto; padding:64px 24px 120px;}
+
+  .back-link{
+    position:relative; z-index:1; display:block; max-width:720px; margin:24px auto 0; padding:0 24px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none;
+    transition:color .2s;
+  }
+  .back-link:hover{color:var(--moon);}
+
+  /* --- Hero --- */
+  header{margin-bottom:56px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:''; width:6px; height:6px; border-radius:50%;
+    background:var(--moon); box-shadow:0 0 8px 2px var(--moon-dim);
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(38px,7vw,58px);
+    line-height:1.05;
+    color:#F4F2FA;
+    letter-spacing:-0.01em;
+  }
+  header p{
+    margin-top:16px; color:var(--muted); font-size:15px; max-width:46ch; line-height:1.6;
+  }
+
+  /* --- Form panel --- */
+  .panel{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:28px;
+    backdrop-filter: blur(6px);
+    margin-bottom:20px;
+  }
+  .panel-title{
+    font-family:'Fraunces',serif; font-size:19px; font-weight:500; color:#F4F2FA; margin-bottom:20px;
+  }
+  label{
+    display:block; font-size:12px; font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; margin-top:18px;
+  }
+  label:first-of-type{margin-top:0;}
+  input[type=text], textarea{
+    width:100%; background:#0D1026; border:1px solid var(--border); border-radius:10px;
+    color:var(--mist); font-family:'Work Sans',sans-serif; font-size:15px; padding:12px 14px;
+    outline:none; transition:border-color .2s;
+    resize:vertical;
+  }
+  input[type=text]:focus, textarea:focus{border-color:var(--lavender);}
+  textarea{min-height:110px; line-height:1.6;}
+
+  /* Moon phase selector - signature element */
+  .moon-select{display:flex; gap:10px; margin-top:4px;}
+  .moon-opt{
+    flex:1; background:#0D1026; border:1px solid var(--border); border-radius:10px;
+    padding:12px 6px 10px; text-align:center; cursor:pointer; transition:.2s;
+  }
+  .moon-opt:hover{border-color:var(--moon-dim);}
+  .moon-opt.active{border-color:var(--moon); background:#F2C87914;}
+  .moon-opt svg{width:22px; height:22px; margin-bottom:6px;}
+  .moon-opt span{display:block; font-size:10px; font-family:'JetBrains Mono',monospace; color:var(--muted); letter-spacing:0.03em;}
+  .moon-opt.active span{color:var(--moon);}
+
+  .tag-input-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+  .tag-chip{
+    background:#A78BFA1A; border:1px solid #A78BFA55; color:var(--lavender);
+    font-size:12px; padding:5px 10px; border-radius:20px; display:flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .tag-chip button{background:none; border:none; color:var(--lavender); cursor:pointer; font-size:13px; line-height:1; opacity:.7;}
+  .tag-chip button:hover{opacity:1;}
+
+  .btn{
+    font-family:'Work Sans',sans-serif; font-weight:500; font-size:14px;
+    border:none; border-radius:10px; padding:12px 22px; cursor:pointer;
+    transition:.2s; letter-spacing:0.01em;
+  }
+  .btn-primary{
+    background:var(--moon); color:#1A1508; margin-top:24px; width:100%;
+  }
+  .btn-primary:hover{background:#f6d998;}
+  .btn-primary:disabled{opacity:.4; cursor:not-allowed;}
+
+  /* --- Entries --- */
+  .entries-head{
+    display:flex; justify-content:space-between; align-items:baseline; margin:48px 0 20px;
+  }
+  .entries-head h2{font-family:'Fraunces',serif; font-weight:500; font-size:20px; color:#F4F2FA;}
+  .count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);}
+
+  .empty{
+    text-align:center; padding:50px 20px; color:var(--muted); font-size:14px; line-height:1.7;
+  }
+  .empty .glyph{font-size:28px; display:block; margin-bottom:10px; opacity:.6;}
+
+  .entry{
+    border:1px solid var(--border); border-radius:14px; padding:22px;
+    margin-bottom:14px; position:relative; overflow:hidden;
+    animation: rise .4s ease both;
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .entry-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:10px;}
+  .entry-title{font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:#F4F2FA; line-height:1.3;}
+  .entry-date{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); white-space:nowrap; margin-top:3px;}
+  .entry-text{font-size:14.5px; line-height:1.7; color:var(--mist); opacity:.9; margin-bottom:14px; white-space:pre-wrap;}
+  .entry-foot{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+  .entry-tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .entry-tags span{
+    font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--lavender);
+    background:#A78BFA14; border:1px solid #A78BFA33; padding:3px 9px; border-radius:20px;
+  }
+  .entry-moon{display:flex; align-items:center; gap:6px; color:var(--moon); font-size:11px; font-family:'JetBrains Mono',monospace;}
+  .entry-moon svg{width:14px; height:14px;}
+  .del-btn{
+    background:none; border:none; color:var(--muted); cursor:pointer; font-size:13px;
+    padding:4px 8px; border-radius:6px; transition:.15s;
+  }
+  .del-btn:hover{color:var(--danger); background:#E88A8A14;}
+
+  ::placeholder{color:#4A4E77;}
+
+  @media (prefers-reduced-motion: reduce){
+    .star, .mist-layer, .entry{animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="mist-layer"></div>
+
+<a href="index.html" class="back-link">← Volver al inicio</a>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">registro nocturno</div>
+    <h1>Diario de Sueños</h1>
+    <p>Un lugar para anotar lo que la mente construye mientras duermes, antes de que se disuelva con la luz de la mañana.</p>
+  </header>
+
+  <div class="panel">
+    <div class="panel-title">Nuevo sueño</div>
+
+    <label for="title">Título</label>
+    <input type="text" id="title" placeholder="Ej. El faro que caminaba">
+
+    <label for="text">¿Qué pasó?</label>
+    <textarea id="text" placeholder="Describe el sueño con el mayor detalle posible, aunque no tenga sentido..."></textarea>
+
+    <label>Nitidez del sueño</label>
+    <div class="moon-select" id="moonSelect"></div>
+
+    <label for="tagInput">Símbolos / etiquetas</label>
+    <input type="text" id="tagInput" placeholder="Escribe una palabra y presiona Enter (ej. agua, vuelo, casa)">
+    <div class="tag-input-row" id="tagRow"></div>
+
+    <button class="btn btn-primary" id="saveBtn">Guardar sueño</button>
+  </div>
+
+  <div class="entries-head">
+    <h2>Sueños registrados</h2>
+    <span class="count" id="countLabel">0</span>
+  </div>
+
+  <div id="entriesList"></div>
+</div>
+
+<script>
+// ---------- Star field ----------
+const starsEl = document.getElementById('stars');
+const N = 70;
+for(let i=0;i<N;i++){
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random()*2 + 0.6;
+  s.style.width = size+'px';
+  s.style.height = size+'px';
+  s.style.top = Math.random()*100+'%';
+  s.style.left = Math.random()*100+'%';
+  s.style.setProperty('--dur', (2 + Math.random()*4)+'s');
+  s.style.animationDelay = (Math.random()*4)+'s';
+  starsEl.appendChild(s);
+}
+
+// ---------- Moon phase options (signature control) ----------
+const MOON_PHASES = [
+  { id:'nueva', label:'Vago', path:'M12 3a9 9 0 100 18 9 9 0 000-18z', fill:'none' },
+  { id:'creciente', label:'Parcial', path:'M12 3a9 9 0 100 18A6.5 6.5 0 0112 3z', fill:'partial' },
+  { id:'llena', label:'Vívido', path:'M12 3a9 9 0 100 18 9 9 0 000-18z', fill:'full' },
+];
+function moonSvg(phase, active){
+  const color = active ? 'var(--moon)' : 'var(--muted)';
+  if(phase.fill === 'full'){
+    return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="${color}"/></svg>`;
+  }
+  if(phase.fill === 'partial'){
+    return `<svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="${color}" stroke-width="1.4"/>
+      <path d="M12 3a9 9 0 000 18 6.5 6.5 0 000-18z" fill="${color}"/>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="${color}" stroke-width="1.4"/></svg>`;
+}
+
+let selectedMoon = 'creciente';
+const moonSelectEl = document.getElementById('moonSelect');
+function renderMoonSelect(){
+  moonSelectEl.innerHTML = '';
+  MOON_PHASES.forEach(p=>{
+    const active = p.id === selectedMoon;
+    const div = document.createElement('div');
+    div.className = 'moon-opt' + (active ? ' active' : '');
+    div.innerHTML = moonSvg(p, active) + `<span>${p.label}</span>`;
+    div.onclick = ()=>{ selectedMoon = p.id; renderMoonSelect(); };
+    moonSelectEl.appendChild(div);
+  });
+}
+renderMoonSelect();
+
+// ---------- Tags ----------
+let currentTags = [];
+const tagInput = document.getElementById('tagInput');
+const tagRow = document.getElementById('tagRow');
+function renderTags(){
+  tagRow.innerHTML = '';
+  currentTags.forEach((t,i)=>{
+    const chip = document.createElement('div');
+    chip.className = 'tag-chip';
+    chip.innerHTML = `${t} <button data-i="${i}">×</button>`;
+    chip.querySelector('button').onclick = ()=>{ currentTags.splice(i,1); renderTags(); };
+    tagRow.appendChild(chip);
+  });
+}
+tagInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && tagInput.value.trim()){
+    e.preventDefault();
+    const val = tagInput.value.trim().toLowerCase();
+    if(!currentTags.includes(val)) currentTags.push(val);
+    tagInput.value = '';
+    renderTags();
+  }
+});
+
+// ---------- Storage ----------
+const STORAGE_KEY = 'dream-entries';
+let entries = [];
+
+function loadEntries(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    entries = raw ? JSON.parse(raw) : [];
+  }catch(e){
+    entries = [];
+  }
+  renderEntries();
+}
+
+function saveEntries(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  }catch(e){
+    console.error('No se pudo guardar', e);
+  }
+}
+
+function fmtDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'numeric' }) + ' · ' +
+         d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+}
+
+function moonLabel(id){
+  return MOON_PHASES.find(p=>p.id===id)?.label || '';
+}
+
+function renderEntries(){
+  const list = document.getElementById('entriesList');
+  const countLabel = document.getElementById('countLabel');
+  countLabel.textContent = entries.length;
+
+  if(entries.length === 0){
+    list.innerHTML = `<div class="empty"><span class="glyph">☾</span>Todavía no hay sueños guardados.<br>El primero que anotes quedará aquí.</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  [...entries].reverse().forEach(entry=>{
+    const phase = MOON_PHASES.find(p=>p.id===entry.moon) || MOON_PHASES[1];
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      <div class="entry-top">
+        <div class="entry-title">${escapeHtml(entry.title || 'Sin título')}</div>
+        <div class="entry-date">${fmtDate(entry.date)}</div>
+      </div>
+      <div class="entry-text">${escapeHtml(entry.text)}</div>
+      <div class="entry-foot">
+        <div class="entry-tags">${entry.tags.map(t=>`<span>${escapeHtml(t)}</span>`).join('')}</div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div class="entry-moon">${moonSvg(phase, true)} ${moonLabel(entry.moon)}</div>
+          <button class="del-btn" data-id="${entry.id}">Eliminar</button>
+        </div>
+      </div>
+    `;
+    div.querySelector('.del-btn').onclick = ()=> deleteEntry(entry.id);
+    list.appendChild(div);
+  });
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+function deleteEntry(id){
+  entries = entries.filter(e=>e.id !== id);
+  renderEntries();
+  saveEntries();
+}
+
+document.getElementById('saveBtn').addEventListener('click', ()=>{
+  const title = document.getElementById('title').value.trim();
+  const text = document.getElementById('text').value.trim();
+  if(!text){
+    document.getElementById('text').focus();
+    return;
+  }
+  const entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+    title, text,
+    moon: selectedMoon,
+    tags: [...currentTags],
+    date: new Date().toISOString()
+  };
+  entries.push(entry);
+  saveEntries();
+
+  // reset form
+  document.getElementById('title').value = '';
+  document.getElementById('text').value = '';
+  currentTags = [];
+  renderTags();
+  selectedMoon = 'creciente';
+  renderMoonSelect();
+
+  renderEntries();
+});
+
+loadEntries();
+</script>
+
+</body>
+</html>
