@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CV | Ignacio Porrini</title>
+    <meta name="description" content="Curriculum Vitae de Ignacio Porrini, Desarrollador Web especializado en Front-end, WordPress y JavaScript. Disponible para nuevas oportunidades.">
+    <link rel="icon" href="favicon.ico" />
+
+    <meta property="og:title" content="CV | Ignacio Porrini">
+    <meta property="og:description" content="Curriculum Vitae de Ignacio Porrini, Desarrollador Web especializado en Front-end, WordPress y JavaScript.">
+    <meta property="og:image" content="https://ignacioporrini.github.io/img/foto-perfil-ignacio.jpg">
+    <meta property="og:url" content="https://ignacioporrini.github.io/cv.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="noindex">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="css/estilos_n.css" rel="stylesheet" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YZMZTJDH70');
+    </script>
+
+    <style>
+        .cv-header {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .cv-hero {
+            padding: 3rem 0 3.5rem;
+            background: radial-gradient(circle at 85% 20%, rgba(37, 211, 153, 0.08) 0%, rgba(26, 26, 26, 1) 70%);
+        }
+
+        .cv-photo {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 50%;
+            border: 3px solid rgba(37, 211, 153, 0.25);
+        }
+
+        .cv-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.75rem;
+            height: 100%;
+        }
+
+        .cv-skill {
+            display: inline-block;
+            background: rgba(37, 211, 153, 0.1);
+            border: 1px solid rgba(37, 211, 153, 0.3);
+            color: var(--accent);
+            border-radius: 30px;
+            padding: 0.35rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.2rem;
+        }
+
+        /* Falsa interrupción de flujo: gate cosmético, no es seguridad real */
+        .cv-lock-wrap {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+        }
+
+        .cv-lock-box {
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+        }
+
+        .cv-lock-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(37, 211, 153, 0.1);
+            border: 1px solid rgba(37, 211, 153, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .cv-lock-error {
+            display: none;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+        }
+
+        #cv-content { display: none; }
+    </style>
+</head>
+
+<body>
+
+    <header class="cv-header">
+        <div class="container">
+            <a href="index.html" class="text-decoration-none text-white d-inline-flex align-items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Volver al inicio
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Gate cosmético: no es seguridad real, la contraseña "cv" solo agrega -->
+        <!-- una pequeña interrupción simbólica antes de mostrar el contenido. -->
+        <section id="cv-lock" class="cv-lock-wrap">
+            <div class="cv-lock-box">
+                <div class="cv-lock-icon"><i class="fas fa-lock"></i></div>
+                <h1 class="h4 fw-bold mb-2">Contenido protegido</h1>
+                <p class="text-muted-light small mb-4">Ingresá la contraseña para ver el CV.</p>
+                <form id="cv-lock-form" class="d-flex flex-column gap-3" autocomplete="off">
+                    <input type="password" id="cv-password" class="form-control bg-dark text-white border-secondary text-center" placeholder="Contraseña" aria-label="Contraseña">
+                    <button type="submit" class="btn btn-cta">Ver CV</button>
+                </form>
+                <p id="cv-lock-error" class="cv-lock-error">Contraseña incorrecta, probá de nuevo.</p>
+            </div>
+        </section>
+
+        <div id="cv-content">
+            <!-- Sobre mí -->
+            <section class="cv-hero">
+                <div class="container">
+                    <div class="row align-items-center g-4">
+                        <div class="col-12 col-md-4 text-center">
+                            <img src="img/foto-perfil-ignacio.jpg" alt="Ignacio Porrini" class="cv-photo">
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <span class="badge bg-accent mb-3">Disponible para nuevas oportunidades</span>
+                            <h1 class="display-6 fw-bold mb-3">Ignacio Porrini</h1>
+                            <p class="lead text-muted-light mb-3">
+                                Desarrollador Web con más de 3 años de experiencia. Especializado en
+                                <strong>Front-end</strong>, <strong>WordPress</strong> y tecnologías como
+                                <span class="text-accent">HTML, CSS, JS y PHP</span>. Siempre aprendiendo nuevas
+                                tecnologías para ofrecer soluciones innovadoras.
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="mailto:nachopo@gmail.com" class="text-accent fw-bold text-decoration-none">
+                                    <i class="far fa-envelope me-1"></i> nachopo@gmail.com
+                                </a>
+                                <a href="https://www.linkedin.com/in/ignacio-porrini/" target="_blank" rel="noopener" class="text-accent fw-bold text-decoration-none">
+                                    <i class="fab fa-linkedin me-1"></i> LinkedIn
+                                </a>
+                                <a href="https://wa.me/59899348110?text=Hola%2C%20vi%20tu%20CV%20y%20quiero%20conversar" target="_blank" rel="noopener" class="text-accent fw-bold text-decoration-none">
+                                    <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resumen -->
+            <section class="section-padding bg-darker">
+                <div class="container">
+                    <h2 class="section-title mb-4">Resumen profesional</h2>
+                    <div class="cv-card">
+                        <p class="mb-0">
+                            Transformo ideas en realidades digitales. Trabajo principalmente en el desarrollo
+                            front-end de sitios y aplicaciones web, además de proyectos con WordPress para clientes
+                            que necesitan presencia online: desde e-commerce hasta sitios institucionales. Me gusta
+                            entender el objetivo real detrás de cada pedido para proponer una solución simple y
+                            prolija, no solo funcional.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habilidades -->
+            <section class="section-padding">
+                <div class="container">
+                    <h2 class="section-title mb-4">Habilidades técnicas</h2>
+                    <div class="cv-card">
+                        <span class="cv-skill">HTML5</span>
+                        <span class="cv-skill">CSS3</span>
+                        <span class="cv-skill">JavaScript</span>
+                        <span class="cv-skill">PHP</span>
+                        <span class="cv-skill">WordPress</span>
+                        <span class="cv-skill">WooCommerce</span>
+                        <span class="cv-skill">Bootstrap</span>
+                        <span class="cv-skill">Git</span>
+                        <span class="cv-skill">Chart.js</span>
+                        <span class="cv-skill">Electron</span>
+                        <span class="cv-skill">UI/UX</span>
+                        <span class="cv-skill">Accesibilidad web</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Proyectos -->
+            <section class="section-padding bg-darker">
+                <div class="container">
+                    <h2 class="section-title mb-4">Proyectos y trabajos realizados</h2>
+                    <div class="row g-4">
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">Saldo Neto</h3>
+                                <p class="mb-0 small">Aplicación de finanzas personales 100% local y privada, con control de gastos, presupuestos y análisis de patrones. JavaScript + Chart.js.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">Monitor Focus</h3>
+                                <p class="mb-0 small">App de escritorio (macOS/Windows) que oscurece monitores no enfocados para reducir la fatiga visual. Electron + JavaScript.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">Diario de Sueños</h3>
+                                <p class="mb-0 small">Web app minimalista para registrar sueños, sin backend, todo guardado en LocalStorage.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">callOps — Herramientas de Soporte</h3>
+                                <p class="mb-0 small">Suite de utilidades web para mejorar la gestión operativa de agentes de call center.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">Web Personal — Tavo García</h3>
+                                <p class="mb-0 small">Sitio WordPress a medida, diseño de alto impacto visual para un artista.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">E-commerce El Yelmo de Mambrino</h3>
+                                <p class="mb-0 small">Tienda online con WordPress y WooCommerce, enfocada en facilidad de búsqueda y compra.</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="cv-card">
+                                <h3 class="h6 fw-bold text-accent mb-1">Colectivo DENG</h3>
+                                <p class="mb-0 small">Sitio institucional en WordPress + PHP para visibilizar la causa y actividades del colectivo, con foco en accesibilidad.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TODO: si querés sumar experiencia laboral formal (empresa, cargo, fechas), agregala en una sección aparte acá -->
+                </div>
+            </section>
+
+            <!-- Contacto -->
+            <section class="section-padding">
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-12 col-lg-7">
+                            <h2 class="mb-3 fw-bold">¿Buscás sumar a alguien al equipo?</h2>
+                            <p class="text-muted-light mb-4">
+                                Estoy buscando activamente nuevas oportunidades laborales como desarrollador
+                                front-end. Si mi perfil encaja con lo que necesitás, hablemos.
+                            </p>
+                            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                <a href="https://wa.me/59899348110?text=Hola%2C%20vi%20tu%20CV%20y%20quiero%20conversar" class="btn btn-whatsapp shadow-sm">
+                                    <i class="fab fa-whatsapp me-2"></i> Escribime por WhatsApp
+                                </a>
+                                <a href="https://www.linkedin.com/in/ignacio-porrini/" target="_blank" rel="noopener" class="btn btn-outline-light shadow-sm">
+                                    <i class="fab fa-linkedin me-2"></i> Conectemos en LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center bg-black">
+        <div class="container">
+            <small>© 2026 Ignacio Porrini. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            var lock = document.getElementById('cv-lock');
+            var content = document.getElementById('cv-content');
+            var form = document.getElementById('cv-lock-form');
+            var input = document.getElementById('cv-password');
+            var error = document.getElementById('cv-lock-error');
+
+            function unlock() {
+                lock.style.display = 'none';
+                content.style.display = 'block';
+                sessionStorage.setItem('cvUnlocked', '1');
+            }
+
+            if (sessionStorage.getItem('cvUnlocked') === '1') {
+                unlock();
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (input.value.trim().toLowerCase() === 'cv') {
+                    unlock();
+                } else {
+                    error.style.display = 'block';
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

@@ -33,26 +33,41 @@
     </script>
 
     <style>
+        /* Paleta cálida propia de esta página (lana, terracota, crema) —
+           sobreescribe las variables frías del sitio solo dentro de este documento */
+        :root {
+            --bg-dark: #2a1f1a;
+            --bg-darker: #1f1611;
+            --bg-black: #140d0a;
+            --primary: #c1652f;
+            --accent: #e0984f;
+            --text-white: #f7ece0;
+            --text-gray: #cbb6a3;
+        }
+
+        .text-white { color: var(--text-white) !important; }
+        .text-muted-light { color: #cbb6a3 !important; }
+
         .tej-header {
             padding: 1.25rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(247, 236, 224, 0.08);
         }
 
         .tej-hero {
             padding: 3rem 0 3.5rem;
-            background: radial-gradient(circle at 85% 20%, rgba(37, 211, 153, 0.08) 0%, rgba(26, 26, 26, 1) 70%);
+            background: radial-gradient(circle at 85% 20%, rgba(224, 152, 79, 0.14) 0%, var(--bg-darker) 70%);
         }
 
         .tej-photo {
             width: 100%;
             max-width: 300px;
             border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(247, 236, 224, 0.12);
         }
 
         .tej-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(247, 236, 224, 0.05);
+            border: 1px solid rgba(247, 236, 224, 0.09);
             border-radius: 12px;
             padding: 1.75rem;
             height: 100%;
@@ -78,8 +93,8 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(37, 211, 153, 0.12);
-            border: 1px solid rgba(37, 211, 153, 0.3);
+            background: rgba(224, 152, 79, 0.16);
+            border: 1px solid rgba(224, 152, 79, 0.4);
             color: var(--accent);
             font-weight: 700;
             display: flex;
@@ -88,11 +103,11 @@
         }
 
         .tej-gallery-placeholder {
-            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border: 1px dashed rgba(247, 236, 224, 0.2);
             border-radius: 12px;
             padding: 2.5rem 1.5rem;
             text-align: center;
-            color: #888;
+            color: #a68f79;
         }
     </style>
 </head>
