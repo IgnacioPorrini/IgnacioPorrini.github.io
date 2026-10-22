@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SailMatch — Instalar el script</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        ol.pasos { padding-left: 1.2rem; display: grid; gap: 14px; margin: 0 0 24px; }
+        ol.pasos li { line-height: 1.45; }
+        .caja { background: #fff; border: 1px solid var(--linea); border-radius: var(--radio); padding: 18px; margin-bottom: 20px; }
+        .ok { color: var(--ok); font-weight: 700; }
+        pre { white-space: pre-wrap; word-break: break-all; font-size: .72rem; max-height: 160px; overflow: auto; background: var(--agua); border-radius: 10px; padding: 10px; margin: 12px 0 0; }
+        code { background: var(--agua); padding: 1px 6px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <header class="top"><div class="wrap top-in"><a href="./" class="brand">⛵ SailMatch</a></div></header>
+    <main class="wrap">
+        <h2>Instalar el script desde el celular</h2>
+        <p class="sub">Unos 5 minutos, una sola vez. Conviene tener esta página abierta en una pestaña y script.google.com en otra.</p>
+
+        <div class="caja">
+            <strong>1. Copiar el código</strong>
+            <p class="sub" style="margin:6px 0 12px">Tocá el botón: copia todo el script de una vez.</p>
+            <button type="button" class="btn btn-prim" id="copiar" disabled>Cargando código…</button>
+            <p id="estado" class="sub" style="margin:10px 0 0"></p>
+            <pre id="codigo" hidden></pre>
+        </div>
+
+        <ol class="pasos" start="2">
+            <li>Abrí <a href="https://script.google.com/home/projects/create" target="_blank" rel="noopener"><strong>script.google.com</strong></a> en Chrome. En el menú ⋮ marcá <strong>Sitio de escritorio</strong> (o “Solicitar sitio de escritorio”). Se crea un proyecto nuevo.</li>
+            <li>Tocá dentro del editor, mantené apretado para <strong>Seleccionar todo</strong>, y <strong>Pegar</strong> (reemplaza lo que había). Tocá el ícono de <strong>guardar</strong> 💾.</li>
+            <li>Arriba, en el selector de funciones, elegí <code>configurar</code> y tocá <strong>Ejecutar</strong>. Google pide permisos: tu cuenta → <em>Configuración avanzada</em> → <em>Ir a … (no seguro)</em> → <em>Permitir</em>. Es normal: el script es tuyo y no está verificado por Google.</li>
+            <li><strong>Implementar → Nueva implementación</strong> → engranaje → <strong>Aplicación web</strong>. Ejecutar como: <strong>Yo</strong>. Quién tiene acceso: <strong>Cualquier persona</strong>. Tocá <strong>Implementar</strong>.</li>
+            <li>Copiá la <strong>URL de la aplicación web</strong> (termina en <code>/exec</code>) y mandásela a Claude.</li>
+        </ol>
+    </main>
+    <script>
+        (function () {
+            var btn = document.getElementById('copiar'), est = document.getElementById('estado'), pre = document.getElementById('codigo');
+            var texto = '';
+            fetch('apps-script/Codigo.gs', { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+                texto = t;
+                pre.textContent = t;
+                btn.disabled = false;
+                btn.textContent = 'Copiar código';
+            }).catch(function () {
+                btn.textContent = 'No se pudo cargar';
+                est.textContent = 'Recargá la página.';
+            });
+            function seleccionarPre() {
+                pre.hidden = false;
+                var r = document.createRange(); r.selectNodeContents(pre);
+                var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+            }
+            btn.addEventListener('click', function () {
+                var hecho = function () { est.innerHTML = '<span class="ok">✓ Copiado.</span> Ahora pasá al paso 2.'; btn.textContent = 'Copiar de nuevo'; };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(texto).then(hecho, function () {
+                        seleccionarPre();
+                        est.textContent = 'Quedó seleccionado abajo: mantené apretado y elegí Copiar.';
+                    });
+                } else {
+                    seleccionarPre();
+                    try { if (document.execCommand('copy')) { hecho(); return; } } catch (e) {}
+                    est.textContent = 'Quedó seleccionado abajo: mantené apretado y elegí Copiar.';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

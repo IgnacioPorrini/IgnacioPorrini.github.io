@@ -1,8 +1,9 @@
 /**
  * SailMatch liviano — Apps Script de la planilla.
  *
- * Pegar este archivo en la planilla (Extensiones → Apps Script),
- * ejecutar una vez la función `configurar` y después
+ * Proyecto independiente en script.google.com (también se puede pegar en
+ * la planilla con Extensiones → Apps Script). Ejecutar una vez la función
+ * `configurar` y después
  * Implementar → Nueva implementación → Aplicación web:
  *   - Ejecutar como: Yo
  *   - Quién tiene acceso: Cualquier persona
@@ -16,7 +17,14 @@
  * Moderación: poner "NO" en la columna "visible" oculta una salida.
  */
 
+// Planilla "SailMatch — Salidas" en su Drive. El script funciona aparte de la
+// planilla (proyecto independiente), así se puede manejar desde script.google.com.
+var PLANILLA_ID = '18XvU3QLBkownc2_0zS2NiYTkHRZDNGSOLlQAhSMmVo8';
 var HOJA = 'Salidas';
+
+function libro() {
+  return SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(PLANILLA_ID);
+}
 var COLUMNAS = [
   'id', 'creada', 'actualizada', 'visible', 'estado',
   'fecha', 'hora_salida', 'hora_regreso', 'puerto', 'embarcacion',
@@ -37,7 +45,7 @@ var MAX_LARGO = {
 /* ---------- configuración (ejecutar una vez a mano) ---------- */
 
 function configurar() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = libro();
   var hoja = ss.getSheetByName(HOJA) || ss.insertSheet(HOJA);
   hoja.getRange(1, 1, hoja.getMaxRows(), COLUMNAS.length).setNumberFormat('@');
   hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]).setFontWeight('bold');
@@ -172,8 +180,8 @@ function normalizarWhatsapp(v) {
 /* ---------- planilla ---------- */
 
 function hoja() {
-  var h = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA);
-  if (!h) { configurar(); h = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA); }
+  var h = libro().getSheetByName(HOJA);
+  if (!h) { configurar(); h = libro().getSheetByName(HOJA); }
   return h;
 }
 
