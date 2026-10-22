@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SailMatch — Salidas a vela</title>
+    <meta name="description" content="Patrones que buscan tripulación y gente con ganas de salir a navegar. Sin registros: publicás la salida y te contactan por WhatsApp.">
+    <meta property="og:title" content="SailMatch — Salidas a vela">
+    <meta property="og:description" content="Patrones que buscan tripulación y gente con ganas de salir a navegar. Sin registros, contacto directo por WhatsApp.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ignacioporrini.github.io/sailmatch/">
+    <meta name="theme-color" content="#0b2a4a">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="top">
+        <div class="wrap top-in">
+            <a href="./" class="brand" data-ir="salidas">
+                <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M15 3 L15 22 L5 22 Z" fill="currentColor"/><path d="M17 7 L17 22 L26 22 Z" fill="currentColor" opacity=".55"/><path d="M3 25 Q16 31 29 25" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+                SailMatch
+            </a>
+            <nav class="tabs" aria-label="Secciones">
+                <button type="button" data-ir="salidas" class="activa">Salidas</button>
+                <button type="button" data-ir="publicar">Publicar</button>
+                <button type="button" data-ir="editar">Mi salida</button>
+            </nav>
+        </div>
+    </header>
+
+    <div id="aviso-demo" class="aviso" hidden>
+        <div class="wrap">Modo ejemplo: la planilla todavía no está conectada, así que estas salidas son de muestra y no se guarda nada.</div>
+    </div>
+
+    <main class="wrap">
+        <!-- SALIDAS -->
+        <section id="v-salidas" class="vista">
+            <div class="intro">
+                <h1>Salidas a vela,<br>sin vueltas.</h1>
+                <p>Patrones que buscan tripulación y gente con ganas de salir a navegar. Elegí una salida y escribile al patrón por WhatsApp. Sin cuentas ni registros.</p>
+            </div>
+            <div class="filtros" role="group" aria-label="Filtrar por nivel">
+                <button type="button" data-nivel="" class="chip activa">Todas</button>
+                <button type="button" data-nivel="sin-experiencia" class="chip">Sin experiencia</button>
+                <button type="button" data-nivel="algo" class="chip">Algo de experiencia</button>
+                <button type="button" data-nivel="experiencia" class="chip">Con experiencia</button>
+            </div>
+            <div id="lista" class="lista" aria-live="polite"></div>
+            <div class="cta-pie">
+                <p>¿Tenés barco y lugar para alguien más?</p>
+                <button type="button" class="btn btn-prim" data-ir="publicar">Publicar una salida</button>
+            </div>
+        </section>
+
+        <!-- PUBLICAR / EDITAR FORM -->
+        <section id="v-publicar" class="vista" hidden>
+            <h2 id="titulo-form">Publicar una salida</h2>
+            <p class="sub" id="sub-form">Completá los datos y listo. Te damos un código para cambiarla o cerrarla después.</p>
+            <form id="form-salida" class="form" novalidate>
+                <div class="fila-2">
+                    <label>Fecha
+                        <input type="date" name="fecha" required>
+                    </label>
+                    <label>Hora de salida
+                        <input type="time" name="hora_salida" required>
+                    </label>
+                </div>
+                <div class="fila-2">
+                    <label>Regreso aproximado <span class="opc">opcional</span>
+                        <input type="time" name="hora_regreso">
+                    </label>
+                    <label>Lugares libres
+                        <input type="number" name="lugares" min="1" max="20" value="2" inputmode="numeric" required>
+                    </label>
+                </div>
+                <label>Puerto o club de salida
+                    <input type="text" name="puerto" list="puertos" maxlength="80" placeholder="Ej.: Puerto del Buceo" required>
+                    <datalist id="puertos">
+                        <option value="Puerto del Buceo">
+                        <option value="Puerto de Punta Carretas">
+                        <option value="Puerto de Montevideo">
+                        <option value="Santiago Vázquez">
+                        <option value="Puerto de Piriápolis">
+                        <option value="Puerto de Punta del Este">
+                        <option value="Puerto de Colonia">
+                    </datalist>
+                </label>
+                <label>Embarcación <span class="opc">opcional</span>
+                    <input type="text" name="embarcacion" maxlength="80" placeholder="Ej.: Velero de 27 pies">
+                </label>
+                <fieldset class="niveles">
+                    <legend>¿A quién buscás?</legend>
+                    <label class="radio"><input type="radio" name="nivel" value="sin-experiencia" checked> No hace falta experiencia</label>
+                    <label class="radio"><input type="radio" name="nivel" value="algo"> Algo de experiencia</label>
+                    <label class="radio"><input type="radio" name="nivel" value="experiencia"> Con experiencia</label>
+                </fieldset>
+                <label>Aporte <span class="opc">opcional</span>
+                    <input type="text" name="aporte" maxlength="80" placeholder="Ej.: Gastos compartidos / Sin costo">
+                </label>
+                <label>Contá la salida <span class="opc">opcional</span>
+                    <textarea name="descripcion" rows="4" maxlength="600" placeholder="Recorrido, qué llevar, si hay que ayudar con las maniobras…"></textarea>
+                </label>
+                <div class="fila-2">
+                    <label>Tu nombre
+                        <input type="text" name="patron" maxlength="50" autocomplete="given-name" required>
+                    </label>
+                    <label>Tu WhatsApp
+                        <input type="tel" name="whatsapp" placeholder="099 123 456" autocomplete="tel" required>
+                    </label>
+                </div>
+                <p class="nota">Tu número va a estar visible en la salida para que te escriban directo.</p>
+                <!-- trampa anti-bots: las personas no la ven -->
+                <label class="trampa" aria-hidden="true">Web <input type="text" name="web" tabindex="-1" autocomplete="off"></label>
+                <p id="error-form" class="error" role="alert" hidden></p>
+                <div class="acciones">
+                    <button type="submit" class="btn btn-prim" id="btn-guardar">Publicar salida</button>
+                </div>
+                <div class="acciones acciones-edicion" id="acciones-edicion" hidden>
+                    <button type="button" class="btn btn-sec" data-estado="completa">Ya se completó</button>
+                    <button type="button" class="btn btn-sec" data-estado="abierta" hidden>Volver a abrirla</button>
+                    <button type="button" class="btn btn-peligro" data-estado="cancelada">Cancelar la salida</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- LISTO -->
+        <section id="v-listo" class="vista" hidden>
+            <div class="listo">
+                <div class="listo-ico" aria-hidden="true">⛵</div>
+                <h2>¡Salida publicada!</h2>
+                <p>Guardá este código. Con él podés cambiar la salida, marcarla como completa o cancelarla.</p>
+                <div class="codigo" id="codigo-nuevo">——</div>
+                <p class="sub">Salida n.º <strong id="id-nuevo"></strong></p>
+                <div class="acciones col">
+                    <a class="btn btn-wa" id="btn-codigo-wa" target="_blank" rel="noopener">Mandarme el código por WhatsApp</a>
+                    <button type="button" class="btn btn-sec" id="btn-copiar">Copiar enlace para editar</button>
+                    <button type="button" class="btn btn-link" data-ir="salidas">Ver las salidas</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDITAR: pedir código -->
+        <section id="v-editar" class="vista" hidden>
+            <h2>Mi salida</h2>
+            <p class="sub">Ingresá el número de salida y el código que te dimos al publicarla.</p>
+            <div id="mis-salidas" class="mis" hidden></div>
+            <form id="form-codigo" class="form angosto" novalidate>
+                <label>Número de salida
+                    <input type="text" name="id" maxlength="8" autocomplete="off" required>
+                </label>
+                <label>Código
+                    <input type="text" name="codigo" maxlength="6" autocomplete="off" class="mayus" required>
+                </label>
+                <p id="error-codigo" class="error" role="alert" hidden></p>
+                <div class="acciones">
+                    <button type="submit" class="btn btn-prim">Abrir mi salida</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="pie">
+        <div class="wrap">
+            SailMatch es un espacio cooperativo: cada patrón es responsable de su salida y de la seguridad a bordo.
+            Hecho por <a href="https://ignacioporrini.github.io/nautica.html">Ignacio Porrini</a>.
+        </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" hidden></div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
