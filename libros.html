@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nacho Porrini Libros | Ignacio Porrini</title>
+    <meta name="description" content="Nacho Porrini Libros: libros usados a la venta y biblioteca personal de préstamo en Montevideo. Consultas por WhatsApp.">
+    <link rel="icon" href="favicon.ico" />
+
+    <meta property="og:title" content="Nacho Porrini Libros">
+    <meta property="og:description" content="Libros usados a la venta y biblioteca personal de préstamo en Montevideo.">
+    <meta property="og:image" content="https://ignacioporrini.github.io/img/foto-perfil-ignacio.jpg">
+    <meta property="og:url" content="https://ignacioporrini.github.io/libros.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="css/estilos_n.css" rel="stylesheet" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YZMZTJDH70');
+    </script>
+
+    <style>
+        .lib-header {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .lib-hero {
+            padding: 3rem 0 2.5rem;
+            background: radial-gradient(circle at 85% 20%, rgba(37, 211, 153, 0.08) 0%, rgba(26, 26, 26, 1) 70%);
+        }
+
+        .lib-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .lib-tab {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ddd;
+            border-radius: 999px;
+            padding: 0.5rem 1.1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .lib-tab.active {
+            background: rgba(37, 211, 153, 0.12);
+            border-color: rgba(37, 211, 153, 0.45);
+            color: var(--accent);
+        }
+
+        .lib-search {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
+            width: 100%;
+        }
+
+        .lib-search::placeholder { color: #888; }
+        .lib-search:focus { outline: 2px solid rgba(37, 211, 153, 0.5); border-color: transparent; }
+
+        .lib-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.25rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lib-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #111;
+        }
+
+        .lib-cover-empty {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(37, 211, 153, 0.1) 0%, rgba(18, 18, 18, 1) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .lib-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .lib-pill {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ccc;
+        }
+
+        .lib-pill.ok { border-color: rgba(37, 211, 153, 0.45); color: var(--accent); }
+        .lib-pill.no { border-color: rgba(255, 140, 90, 0.45); color: #ff9a6b; }
+
+        .lib-status {
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: #aaa;
+        }
+
+        .lib-btn {
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="lib-header">
+        <div class="container">
+            <a href="index.html" class="text-decoration-none text-white d-inline-flex align-items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Volver al inicio
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="lib-hero">
+            <div class="container">
+                <span class="badge bg-accent mb-3">Libros y biblioteca</span>
+                <h1 class="display-6 fw-bold mb-3">Nacho Porrini Libros</h1>
+                <p class="lead text-muted-light mb-0">
+                    Libros usados a la venta y una biblioteca personal para prestar entre conocidos.
+                    Si algo le interesa, escríbame por WhatsApp y coordinamos la entrega en Montevideo.
+                </p>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker">
+            <div class="container">
+                <div class="row g-3 align-items-center mb-4">
+                    <div class="col-12 col-md-6">
+                        <div class="lib-tabs" role="tablist">
+                            <button class="lib-tab active" data-tab="venta" role="tab" aria-selected="true">
+                                <i class="fas fa-tag me-1"></i> En venta
+                            </button>
+                            <button class="lib-tab" data-tab="prestamo" role="tab" aria-selected="false">
+                                <i class="fas fa-book-open me-1"></i> Biblioteca de préstamo
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="lib-buscar" class="visually-hidden">Buscar por título o autor</label>
+                        <input id="lib-buscar" class="lib-search" type="search" placeholder="Buscar por título o autor">
+                    </div>
+                </div>
+
+                <p id="lib-intro" class="text-muted-light small mb-4"></p>
+                <div id="lib-lista" class="row g-4">
+                    <div class="col-12"><div class="lib-status"><i class="fas fa-spinner fa-spin me-2"></i>Cargando libros…</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-12 col-lg-7">
+                        <h2 class="mb-3 fw-bold">¿Busca un libro en particular?</h2>
+                        <p class="text-muted-light mb-4">
+                            Si no lo ve en la lista, pregúnteme igual: puede que lo tenga o lo consiga.
+                        </p>
+                        <a href="https://wa.me/59899348110?text=Hola%2C%20estoy%20buscando%20un%20libro" class="btn btn-whatsapp shadow-sm">
+                            <i class="fab fa-whatsapp me-2"></i> Escribime por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-4 text-center bg-black">
+        <div class="container">
+            <small>© 2026 Ignacio Porrini. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+    <script>
+        // Planilla pública "Nacho Porrini Libros - Catálogo (web)".
+        // Solo contiene datos que se pueden mostrar: nunca nombres de quien tiene un libro prestado.
+        var SHEET_ID = '1P17dWLakwi95PFCF_ZPszykJBorFZokt16IXWeJ4jaM';
+        var WHATSAPP = '59899348110';
+
+        var datos = { venta: null, prestamo: null };
+        var errores = { venta: false, prestamo: false };
+        var tabActual = 'venta';
+
+        var lista = document.getElementById('lib-lista');
+        var intro = document.getElementById('lib-intro');
+        var buscar = document.getElementById('lib-buscar');
+
+        var textos = {
+            venta: 'Libros usados en buen estado. El precio está en pesos uruguayos.',
+            prestamo: 'Libros de mi biblioteca que presto a conocidos. Si figura como prestado, puede reservarlo para cuando vuelva.'
+        };
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function norm(s) {
+            return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+        }
+
+        // Convierte la respuesta de Google Sheets en una lista de objetos {Columna: valor}
+        function aFilas(resp) {
+            if (!resp || resp.status === 'error' || !resp.table) return null;
+            var cols = resp.table.cols.map(function (c) { return (c.label || '').trim(); });
+            return resp.table.rows.map(function (r) {
+                var o = {};
+                cols.forEach(function (nombre, i) {
+                    var celda = r.c[i];
+                    o[nombre] = celda ? (celda.f != null ? celda.f : celda.v) : '';
+                    if (celda && typeof celda.v === 'number') o[nombre + '_num'] = celda.v;
+                });
+                return o;
+            }).filter(function (o) {
+                return o.Titulo && norm(o.Mostrar) !== 'no';
+            });
+        }
+
+        // Acepta un enlace de Google Drive o una URL directa de imagen
+        function urlFoto(f) {
+            f = String(f || '').trim();
+            if (!f) return '';
+            var m = f.match(/\/d\/([\w-]{20,})/) || f.match(/[?&]id=([\w-]{20,})/);
+            if (m && f.indexOf('drive.google.com') !== -1) {
+                return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w500';
+            }
+            return /^https?:\/\//.test(f) ? f : '';
+        }
+
+        function linkWhatsApp(mensaje) {
+            return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(mensaje);
+        }
+
+        function portada(libro) {
+            var foto = urlFoto(libro.Foto);
+            if (foto) {
+                return '<img class="lib-cover" loading="lazy" src="' + esc(foto) + '" alt="Tapa de ' + esc(libro.Titulo) + '">';
+            }
+            return '<div class="lib-cover-empty"><i class="fas fa-book fa-3x text-accent"></i></div>';
+        }
+
+        function tarjetaVenta(l) {
+            var stock = l.Stock_num != null ? l.Stock_num : parseInt(l.Stock, 10);
+            var hay = !isNaN(stock) && stock > 0;
+            var precio = l.Precio_num != null ? l.Precio_num.toLocaleString('es-UY') : esc(l.Precio);
+            var estado = l.Estado ? '<span class="lib-pill me-1">' + esc(l.Estado) + '</span>' : '';
+            var disp = hay
+                ? '<span class="lib-pill ok">' + (stock === 1 ? 'Último ejemplar' : stock + ' disponibles') + '</span>'
+                : '<span class="lib-pill no">Agotado</span>';
+            var boton = hay
+                ? '<a class="btn btn-whatsapp btn-sm lib-btn" target="_blank" rel="noopener" href="' +
+                    esc(linkWhatsApp('Hola, me interesa comprar "' + l.Titulo + '"' + (l.Autor ? ' de ' + l.Autor : '') + ' (' + (l.ID || '') + ')')) +
+                    '"><i class="fab fa-whatsapp me-1"></i> Lo quiero</a>'
+                : '<a class="btn btn-outline-light btn-sm lib-btn" target="_blank" rel="noopener" href="' +
+                    esc(linkWhatsApp('Hola, ¿va a volver a tener "' + l.Titulo + '"?')) +
+                    '">Avisarme si vuelve</a>';
+            return '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"><article class="lib-card">' +
+                portada(l) +
+                '<h3 class="h6 fw-bold mb-1">' + esc(l.Titulo) + '</h3>' +
+                '<p class="small text-muted-light mb-2">' + esc(l.Autor) + (l.Editorial ? ' · ' + esc(l.Editorial) : '') + '</p>' +
+                '<div class="mb-2">' + estado + disp + '</div>' +
+                (l.Descripcion ? '<p class="small mb-3">' + esc(l.Descripcion) + '</p>' : '') +
+                (precio ? '<div class="lib-price mb-3">$ ' + precio + '</div>' : '') +
+                boton + '</article></div>';
+        }
+
+        function tarjetaPrestamo(l) {
+            var libre = norm(l.Disponible) !== 'no';
+            var disp = libre
+                ? '<span class="lib-pill ok">Disponible</span>'
+                : '<span class="lib-pill no">Prestado' + (l['Devolucion prevista'] ? ' hasta ' + esc(l['Devolucion prevista']) : '') + '</span>';
+            var boton = '<a class="btn ' + (libre ? 'btn-whatsapp' : 'btn-outline-light') + ' btn-sm lib-btn" target="_blank" rel="noopener" href="' +
+                esc(linkWhatsApp(libre
+                    ? 'Hola, ¿me podrías prestar "' + l.Titulo + '"? (' + (l.ID || '') + ')'
+                    : 'Hola, quisiera reservar "' + l.Titulo + '" para cuando lo devuelvan (' + (l.ID || '') + ')')) +
+                '">' + (libre ? '<i class="fab fa-whatsapp me-1"></i> Pedirlo prestado' : 'Reservarlo') + '</a>';
+            return '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"><article class="lib-card">' +
+                portada(l) +
+                '<h3 class="h6 fw-bold mb-1">' + esc(l.Titulo) + '</h3>' +
+                '<p class="small text-muted-light mb-2">' + esc(l.Autor) + '</p>' +
+                '<div class="mb-3">' + (l.Genero ? '<span class="lib-pill me-1">' + esc(l.Genero) + '</span>' : '') + disp + '</div>' +
+                boton + '</article></div>';
+        }
+
+        function mostrar() {
+            intro.textContent = textos[tabActual];
+            if (errores[tabActual]) {
+                lista.innerHTML = '<div class="col-12"><div class="lib-status">No pude cargar la lista en este momento. ' +
+                    'Escríbame por WhatsApp y le cuento qué libros hay.</div></div>';
+                return;
+            }
+            var filas = datos[tabActual];
+            if (!filas) {
+                lista.innerHTML = '<div class="col-12"><div class="lib-status"><i class="fas fa-spinner fa-spin me-2"></i>Cargando libros…</div></div>';
+                return;
+            }
+            var q = norm(buscar.value);
+            var vis = filas.filter(function (l) {
+                return !q || norm(l.Titulo + ' ' + l.Autor + ' ' + (l.Genero || '') + ' ' + (l.Editorial || '')).indexOf(q) !== -1;
+            });
+            if (!vis.length) {
+                lista.innerHTML = '<div class="col-12"><div class="lib-status">' +
+                    (q ? 'No encontré libros con esa búsqueda.' : 'Todavía no hay libros cargados en esta sección.') + '</div></div>';
+                return;
+            }
+            lista.innerHTML = vis.map(tabActual === 'venta' ? tarjetaVenta : tarjetaPrestamo).join('');
+        }
+
+        // Carga cada pestaña de la planilla con JSONP (no depende de CORS)
+        function cargar(clave, hoja) {
+            var cb = 'libCb_' + clave;
+            var script = document.createElement('script');
+            var timer = setTimeout(function () { errores[clave] = true; mostrar(); }, 12000);
+            window[cb] = function (resp) {
+                clearTimeout(timer);
+                var filas = aFilas(resp);
+                if (filas) { datos[clave] = filas; errores[clave] = false; } else { errores[clave] = true; }
+                mostrar();
+            };
+            script.onerror = function () { clearTimeout(timer); errores[clave] = true; mostrar(); };
+            script.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+                '/gviz/tq?headers=1&sheet=' + encodeURIComponent(hoja) +
+                '&tqx=responseHandler:' + cb + '&_=' + Date.now();
+            document.body.appendChild(script);
+        }
+
+        document.querySelectorAll('.lib-tab').forEach(function (b) {
+            b.addEventListener('click', function () {
+                tabActual = b.getAttribute('data-tab');
+                document.querySelectorAll('.lib-tab').forEach(function (x) {
+                    var on = x === b;
+                    x.classList.toggle('active', on);
+                    x.setAttribute('aria-selected', on ? 'true' : 'false');
+                });
+                mostrar();
+            });
+        });
+        buscar.addEventListener('input', mostrar);
+
+        cargar('venta', 'Venta');
+        cargar('prestamo', 'Prestamo');
+        mostrar();
+    </script>
+</body>
+</html>
