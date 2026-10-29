@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Quiz y juegos de táctica y estrategia de regata: reglas, roladas y regata de larga distancia.">
+<link rel="icon" href="favicon.ico">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{font:600 14px "Source Sans 3",system-ui,sans-serif;color:var(--sea);text-decoration:none}</style>
+<title>Táctica a bordo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: una columna estrecha tipo bitácora; banderas del código internacional como acento de estado */
+:root{
+  --bg:#EDF2F5; --surface:#FFFFFF; --ink:#0E2433; --muted:#4F6676; --line:#C9D6DE;
+  --sea:#0F4C6E; --flag:#E8B400; --flag-ink:#2A2100; --ok:#1F7A4D; --bad:#B3261E;
+  --ok-bg:#E3F3EA; --bad-bg:#FBE7E5;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;margin:0;text-wrap:balance;color:var(--sea)}
+h1 span{color:var(--ink)}
+.lede{color:var(--muted);margin:4px 0 0}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+nav button{font:600 15px var(--body);border:0;background:none;color:var(--muted);padding:10px 4px;border-radius:7px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--sea);color:var(--bg)}
+button:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--flag);color:var(--flag-ink);border-color:var(--flag)}
+.panel{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--bg);border:1px solid var(--line);padding:2px 8px;border-radius:4px}
+.q{font-family:var(--display);font-weight:600;font-size:1.45rem;line-height:1.2;margin:0;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font:16px/1.35 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px 14px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--sea)}
+.opt.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--ink)}
+.opt:disabled{cursor:default}
+.explain{border-left:3px solid var(--flag);padding:4px 0 4px 12px;color:var(--ink);margin:0}
+.explain b.ok{color:var(--ok)} .explain b.bad{color:var(--bad)}
+.primary{font:700 16px var(--body);background:var(--sea);color:var(--bg);border:0;border-radius:9px;padding:13px 16px;cursor:pointer}
+.ghost{font:600 15px var(--body);background:none;color:var(--sea);border:1px solid var(--line);border-radius:9px;padding:11px 16px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 140px}
+.big{font-family:var(--display);font-weight:800;font-size:3.4rem;line-height:1;color:var(--sea);font-variant-numeric:tabular-nums}
+.small{font-size:14px;color:var(--muted);margin:0}
+.compass{width:100%;max-width:260px;align-self:center;height:auto}
+.legend{display:flex;gap:14px;justify-content:center;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar>div{height:100%;background:var(--flag);transition:width .2s linear}
+ol.plan{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+@media (prefers-reduced-motion:reduce){.bar>div{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <a class="back" href="nautica.html">← Volver a Náutica</a>
+  <header>
+    <div class="eyebrow">Entrenamiento de regata · 5 minutos al día</div>
+    <h1>Táctica <span>a bordo</span></h1>
+    <p class="lede">Preguntas de reglas, táctica, estrategia y regata de larga distancia, más un juego de roladas para entrenar la lectura del viento.</p>
+  </header>
+
+  <nav role="tablist" aria-label="Modos">
+    <button role="tab" id="t-quiz" aria-selected="true">Quiz</button>
+    <button role="tab" id="t-rol" aria-selected="false">Roladas</button>
+    <button role="tab" id="t-fast" aria-selected="false">60 segundos</button>
+  </nav>
+
+  <!-- QUIZ -->
+  <section class="panel" id="p-quiz">
+    <div class="chips" id="cats"></div>
+    <div class="card" id="quizCard"></div>
+  </section>
+
+  <!-- ROLADAS -->
+  <section class="panel" id="p-rol" hidden>
+    <div class="card" id="rolCard"></div>
+  </section>
+
+  <!-- RAPIDO -->
+  <section class="panel" id="p-fast" hidden>
+    <div class="card" id="fastCard"></div>
+  </section>
+
+  <div class="card">
+    <div class="eyebrow">Cómo integrarlo sin que aburra</div>
+    <ol class="plan">
+      <li>Una ronda de <b>Roladas</b> mientras recupera entre series en el ergómetro.</li>
+      <li>Un <b>Quiz</b> de 10 preguntas en el ómnibus o antes de dormir, dos o tres veces por semana.</li>
+      <li>El filtro <b>Larga distancia</b> como prioridad: es la regata que le interesa, y ahí pesan más la meteorología y la navegación que la táctica cuerpo a cuerpo.</li>
+      <li>Cuando una pregunta le resulte obvia, pruébela en el agua: la próxima salida, cuente las roladas y decida cuándo viraría.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+const QS=[
+// REGLAS
+{c:"Reglas",q:"Dos barcos se cruzan en ceñida: uno amurado a babor, otro amurado a estribor. ¿Quién debe mantenerse apartado?",o:["El amurado a babor","El amurado a estribor","El que va más rápido","El que está a barlovento"],a:0,e:"Regla 10: el barco amurado a babor se mantiene apartado del amurado a estribor."},
+{c:"Reglas",q:"Dos barcos en la misma amura y solapados. ¿Quién tiene que mantenerse apartado?",o:["El de sotavento","El de barlovento","El que quedó detrás","Ninguno, rige la cortesía"],a:1,e:"Regla 11: en la misma amura y solapados, el barco de barlovento se mantiene apartado del de sotavento."},
+{c:"Reglas",q:"Misma amura, sin solape: un barco viene claramente detrás del otro. ¿Quién cede?",o:["El de adelante","El que está más cerca de la marca","El que viene claramente detrás","El más grande"],a:2,e:"Regla 12: el barco claramente a popa se mantiene apartado del que va claramente a proa."},
+{c:"Reglas",q:"Infringió una regla de la Parte 2 (por ejemplo, babor-estribor). ¿Cuál es la penalización habitual que puede cumplir en el agua?",o:["Un giro de 360°","Dos giros, cada uno con una virada y una trasluchada","Retirarse obligatoriamente","Volver a cruzar la línea de salida"],a:1,e:"Regla 44.2: la penalización de dos giros. Cada giro incluye una virada y una trasluchada."},
+{c:"Reglas",q:"Tocó una marca durante la regata. ¿Qué penalización corresponde, como regla general?",o:["Ninguna si no la movió","Un giro","Dos giros","Descalificación directa"],a:1,e:"Tocar una marca se paga con un giro (regla 31 junto con la 44.2)."},
+{c:"Reglas",q:"¿Cuánto mide la zona alrededor de una marca, salvo que las instrucciones digan otra cosa?",o:["Dos esloras del barco más cercano","Tres esloras del casco","50 metros","Cinco esloras"],a:1,e:"La zona es el área a tres esloras del casco del barco más cercano a la marca."},
+{c:"Reglas",q:"Al entrar en la zona de una marca, usted está solapado por dentro. ¿Qué le da la regla 18?",o:["Prioridad para virar donde quiera","Espacio de marca: el de afuera debe dejarle lugar para pasarla","Nada, rige babor-estribor","Puede obligar al de afuera a cambiar de amura"],a:1,e:"Si está solapado por dentro al entrar en la zona, el barco de afuera debe darle espacio de marca."},
+// TACTICA
+{c:"Táctica",q:"Un barco navega justo a barlovento y un poco adelante suyo. ¿Qué le pasa?",o:["Nada, el viento se reparte","Recibe aire sucio y pierde velocidad y altura","Gana velocidad por el efecto de succión","Debe virar por reglamento"],a:1,e:"La sombra de viento de un barco cae a sotavento y hacia popa. Ahí se pierde velocidad y capacidad de orzar."},
+{c:"Táctica",q:"Va primero y el segundo, que viene detrás, vira. ¿Qué jugada de control tiene a mano?",o:["Seguir y esperar","Virar también para quedar entre él y la próxima marca (cubrir)","Trasluchar","Bajar velas"],a:1,e:"Cubrir es mantenerse entre el rival y la próxima marca en el mismo bordo, así cualquier cambio del viento los afecta a los dos por igual."},
+{c:"Táctica",q:"¿Qué extremo de la línea de salida está favorecido?",o:["Siempre el del barco de comisión","El más a barlovento","El más cercano a la costa","El más lejano a la primera marca"],a:1,e:"Se favorece el extremo más a barlovento. Una prueba simple: poner proa al viento sobre la línea, la proa apunta hacia el extremo favorecido."},
+{c:"Táctica",q:"¿Por qué conviene no llegar temprano a la layline en la ceñida?",o:["Porque es ilegal","Porque pierde todas las opciones ante una rolada y queda expuesto a aire sucio","Porque el barco va más lento cerca de la layline","No importa, es lo mismo"],a:1,e:"En la layline cualquier rolada lo hace sobrepasar o quedarse corto, y los barcos que llegan después le tapan el viento."},
+{c:"Táctica",q:"Sale bien pero queda con un barco pegado a barlovento que lo tapa. ¿Qué suele ser lo primero?",o:["Orzar a la fuerza","Virar o bajar un poco para conseguir aire limpio","Quedarse y esperar que él vire","Soltar escotas"],a:1,e:"El aire limpio va primero. Bajar un poco para ganar velocidad, o virar si el lado lo permite, suele valer más que pelear en la sombra."},
+// ESTRATEGIA
+{c:"Estrategia",q:"En ceñida, el viento rola y lo obliga a arribar para mantener el ángulo (rolada desfavorable). ¿Qué hace en viento oscilante?",o:["Seguir en el mismo bordo","Virar","Trasluchar","Orzar igual hasta flamear"],a:1,e:"Con viento oscilante, se vira en las roladas desfavorables: el otro bordo pasa a estar favorecido."},
+{c:"Estrategia",q:"Bajando en popa, una rolada lo obliga a orzar para mantener su ángulo de empopada. ¿Qué conviene?",o:["Trasluchar","Seguir igual","Orzar más","Arriar el spinnaker"],a:0,e:"En la popa la lógica se invierte: se traslucha en la rolada que en ceñida sería favorable, porque lo aleja de la marca."},
+{c:"Estrategia",q:"El pronóstico indica una rolada persistente hacia la derecha durante toda la regata. ¿Hacia qué lado de la cancha ceñiría primero?",o:["Hacia la izquierda","Hacia la derecha","Por el medio, siempre","No importa"],a:1,e:"Con rolada persistente se va hacia el lado al que rotará el viento. Así el cambio lo acerca a la marca."},
+{c:"Estrategia",q:"Tiene corriente en contra. ¿Dónde suele ser más débil?",o:["En el centro del canal","Cerca de la costa y en aguas menos profundas","Donde hay más olas","Igual en todos lados"],a:1,e:"La corriente se frena por fricción con el fondo y la costa. Con corriente en contra, se busca agua poco profunda."},
+{c:"Estrategia",q:"¿Qué indica una zona oscura y rizada en el agua a barlovento?",o:["Agua más profunda","Una racha: más viento llegando","Calma","Corriente fuerte"],a:1,e:"Las rachas se ven como manchas más oscuras en el agua. Leerlas permite elegir el lado con más presión."},
+// LARGA DISTANCIA
+{c:"Larga distancia",q:"¿Qué es la VMG?",o:["La velocidad máxima del barco","La velocidad efectiva hacia el destino o hacia el viento","La velocidad del viento aparente","La deriva por corriente"],a:1,e:"VMG (velocity made good) es la componente de la velocidad que realmente lo acerca al objetivo. En larga distancia es la cifra que manda."},
+{c:"Larga distancia",q:"¿Qué muestra el diagrama polar de un barco?",o:["La ruta óptima","La velocidad esperable según ángulo e intensidad del viento","La posición de las estrellas","Las mareas"],a:1,e:"La polar dice cuánto debería andar el barco a cada ángulo y con cada viento. Sirve para saber si está rindiendo y para elegir rumbos."},
+{c:"Larga distancia",q:"En el Río de la Plata, al pasar un frente frío, ¿cómo suele rolar el viento?",o:["De sudoeste a norte","De norte o noroeste a sudoeste (pampero)","Se queda en el este","Pasa de oeste a este en calma"],a:1,e:"Antes del frente sopla del norte o noroeste. Con el paso del frente entra el pampero del sudoeste, a menudo fuerte y de golpe."},
+{c:"Larga distancia",q:"El barómetro baja rápido en pocas horas. ¿Qué anticipa?",o:["Buen tiempo estable","Empeoramiento y aumento del viento","Niebla segura","Nada relevante"],a:1,e:"Una caída rápida de presión anuncia un sistema de baja presión o un frente: hay que prepararse para más viento."},
+{c:"Larga distancia",q:"¿Para qué sirve un sistema de guardias?",o:["Para que el capitán no duerma","Para que siempre haya tripulación descansada y el barco nunca quede sin atención","Para cumplir con la aduana","Solo para regatas nocturnas cortas"],a:1,e:"Rotar guardias reparte el cansancio. En regatas de días, la fatiga decide más que la táctica."},
+{c:"Larga distancia",q:"¿Cuántos metros tiene una milla náutica?",o:["1609 m","1852 m","1000 m","2000 m"],a:1,e:"Una milla náutica son 1852 m. Un nudo es una milla náutica por hora."},
+{c:"Larga distancia",q:"De noche ve una luz roja de otro barco. ¿Qué lado le está mostrando?",o:["Estribor","Babor","La popa","La proa de frente"],a:1,e:"Rojo es babor y verde es estribor. Si solo ve la roja, ese barco le muestra su costado de babor."},
+{c:"Larga distancia",q:"En una regata larga con un frente en camino, ¿qué suele convenir?",o:["Ir directo por la loxodrómica pase lo que pase","Posicionarse para aprovechar la rolada que traerá el frente","Esperar a que pase fondeado","Ignorar el pronóstico"],a:1,e:"La estrategia en larga distancia es meteorológica: colocarse del lado correcto antes de la rolada vale más que cualquier maniobra."}
+];
+const CATS=["Todas","Reglas","Táctica","Estrategia","Larga distancia"];
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* tabs */
+const tabs={quiz:["t-quiz","p-quiz"],rol:["t-rol","p-rol"],fast:["t-fast","p-fast"]};
+function show(k){for(const [n,[t,p]] of Object.entries(tabs)){$("#"+t).setAttribute("aria-selected",n===k);$("#"+p).hidden=n!==k}
+  if(k==="rol"&&!rol.cur)newRol(); if(k==="fast")fastIntro();}
+$("#t-quiz").onclick=()=>show("quiz");$("#t-rol").onclick=()=>show("rol");$("#t-fast").onclick=()=>{stopFast();show("fast")};
+
+/* options with shuffled order */
+function prep(q){const idx=shuffle(q.o.map((_,i)=>i));return{...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)}}
+
+/* QUIZ */
+let cat=store.get("tab_cat","Todas"),quiz;
+function renderCats(){$("#cats").innerHTML=CATS.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+  $("#cats").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{cat=b.dataset.c;store.set("tab_cat",cat);renderCats();startQuiz()})}
+function startQuiz(){const pool=QS.filter(q=>cat==="Todas"||q.c===cat);quiz={qs:shuffle(pool).slice(0,10).map(prep),i:0,score:0,ans:null};drawQuiz()}
+function drawQuiz(){const c=$("#quizCard");
+  if(quiz.i>=quiz.qs.length){const n=quiz.qs.length,best=store.get("tab_best_"+cat,0);if(quiz.score>best)store.set("tab_best_"+cat,quiz.score);
+    const msg=quiz.score===n?"Impecable. Pase a otra categoría.":quiz.score>=n*.7?"Buen nivel. Repase las explicaciones de las que falló.":"Hay terreno para ganar. Repita esta categoría en unos días.";
+    c.innerHTML=`<div class="eyebrow">Resultado · ${esc(cat)}</div><div class="big">${quiz.score}<span style="font-size:1.4rem;color:var(--muted)"> / ${n}</span></div><p class="small">Mejor marca en esta categoría: ${Math.max(best,quiz.score)} / ${n}</p><p>${msg}</p><button class="primary" id="again">Otra ronda</button>`;
+    $("#again").onclick=startQuiz;return}
+  const q=quiz.qs[quiz.i];
+  c.innerHTML=`<div class="meta"><span class="tag">${esc(q.c)}</span><span>${quiz.i+1} / ${quiz.qs.length} · ${quiz.score} ✓</span></div>
+  <p class="q">${esc(q.q)}</p><div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join("")}</div><div id="fb"></div>`;
+  c.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)quiz.score++;
+    c.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add("right");else if(j===i)x.classList.add("wrong")});
+    $("#fb").innerHTML=`<p class="explain"><b class="${ok?"ok":"bad"}">${ok?"Correcto.":"No."}</b> ${esc(q.e)}</p><div style="height:12px"></div><button class="primary" id="next">${quiz.i+1<quiz.qs.length?"Siguiente":"Ver resultado"}</button>`;
+    $("#next").onclick=()=>{quiz.i++;drawQuiz()};$("#next").focus()})}
+
+/* ROLADAS
+   Viento verdadero desde W (270). Amura estribor: rumbo ceñida = viento-45. Amura babor: rumbo = viento+45.
+   Rolada horaria (+): estribor => favorable; babor => desfavorable. */
+let rol={cur:null,streak:0,best:store.get("tab_rol_best",0),total:0,ok:0};
+function newRol(){const tack=Math.random()<.5?"estribor":"babor",dir=Math.random()<.5?1:-1,deg=[5,8,10,12,15,20][Math.floor(Math.random()*6)],
+  leg=Math.random()<.7?"ceñida":"popa";const base=270;
+  let favorable=(tack==="estribor")===(dir===1); // ceñida: rolada que lo deja orzar
+  // en popa: la rolada "favorable" de ceñida es la que obliga a trasluchar
+  const correct= leg==="ceñida" ? (favorable?"seguir":"virar") : (favorable?"virar":"seguir");
+  rol.cur={tack,dir,deg,leg,base,correct,favorable};drawRol()}
+function arrow(cx,cy,r,ang,color,dash){const rad=(ang-90)*Math.PI/180,x1=cx+Math.cos(rad)*r,y1=cy+Math.sin(rad)*r,x2=cx+Math.cos(rad)*28,y2=cy+Math.sin(rad)*28;
+  const a=Math.atan2(y2-y1,x2-x1),h=10;return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="3" ${dash?'stroke-dasharray="6 5"':''}/>
+  <polygon points="${x2},${y2} ${x2-h*Math.cos(a-.45)},${y2-h*Math.sin(a-.45)} ${x2-h*Math.cos(a+.45)},${y2-h*Math.sin(a+.45)}" fill="${color}"/>`}
+function boat(cx,cy,hdg){const pts=[[0,-20],[8,6],[6,16],[-6,16],[-8,6]],r=hdg*Math.PI/180;
+  return `<polygon points="${pts.map(([x,y])=>`${cx+x*Math.cos(r)-y*Math.sin(r)},${cy+x*Math.sin(r)+y*Math.cos(r)}`).join(" ")}" fill="var(--flag)" stroke="var(--ink)" stroke-width="1.5"/>`}
+function drawRol(){const r=rol.cur,newW=r.base+r.dir*r.deg;
+  let hdg= r.leg==="ceñida" ? (r.tack==="estribor"?r.base-45:r.base+45) : (r.tack==="estribor"?r.base-45-90-0:r.base+45+90); // popa ~135° del viento
+  if(r.leg==="popa") hdg = r.tack==="estribor" ? r.base+180-30 : r.base+180+30;
+  const cx=130,cy=130,R=104;
+  const ticks=["N","E","S","O"].map((t,i)=>{const a=(i*90-90)*Math.PI/180;return `<text x="${cx+Math.cos(a)*118}" y="${cy+Math.sin(a)*118+5}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--muted)">${t}</text>`}).join("");
+  const svg=`<svg class="compass" viewBox="0 0 260 260" role="img" aria-label="Rosa de los vientos con el viento anterior y el nuevo">
+   <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--line)" stroke-width="2"/>${ticks}
+   ${arrow(cx,cy,R,r.base,"var(--muted)",true)}${arrow(cx,cy,R,newW,"var(--sea)",false)}${boat(cx,cy,hdg)}</svg>`;
+  const sentido=r.dir===1?"hacia la derecha (sentido horario)":"hacia la izquierda (sentido antihorario)";
+  $("#rolCard").innerHTML=`<div class="meta"><span class="tag">${r.leg==="ceñida"?"Ceñida":"Popa"} · amura ${r.tack}</span><span>Racha ${rol.streak} · mejor ${rol.best}</span></div>
+  ${svg}<div class="legend"><span><i style="background:var(--muted)"></i>Viento anterior</span><span><i style="background:var(--sea)"></i>Viento nuevo</span></div>
+  <p class="q">El viento rola ${r.deg}° ${sentido}. Viento oscilante. ¿Qué hace?</p>
+  <div class="row"><button class="opt" data-v="seguir">Seguir en este bordo</button><button class="opt" data-v="virar">${r.leg==="ceñida"?"Virar":"Trasluchar"}</button></div><div id="rfb"></div>`;
+  $("#rolCard").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=b.dataset.v===r.correct;rol.total++;
+    if(ok){rol.ok++;rol.streak++;if(rol.streak>rol.best){rol.best=rol.streak;store.set("tab_rol_best",rol.best)}}else rol.streak=0;
+    $("#rolCard").querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.v===r.correct)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
+    const why=r.leg==="ceñida"
+      ?(r.favorable?"Con esta rolada puede orzar y apuntar más cerca del viento: es favorable, se sigue.":"Esta rolada lo obliga a arribar: es desfavorable, el otro bordo pasó a estar favorecido. Se vira.")
+      :(r.favorable?"En popa esta rolada lo obliga a orzar y lo aleja de la marca de sotavento: se traslucha.":"Esta rolada le deja arribar hacia la marca de sotavento: se sigue.");
+    $("#rfb").innerHTML=`<p class="explain"><b class="${ok?"ok":"bad"}">${ok?"Correcto.":"No."}</b> ${why}</p><p class="small" style="margin-top:8px">Sesión: ${rol.ok} de ${rol.total}</p><div style="height:10px"></div><button class="primary" id="rnext">Otra rolada</button>`;
+    $("#rnext").onclick=newRol;$("#rnext").focus()})}
+
+/* 60 SEGUNDOS */
+let fast={t:null};
+function stopFast(){if(fast.t){clearInterval(fast.t);fast.t=null}}
+function fastIntro(){stopFast();const best=store.get("tab_fast_best",0);
+  $("#fastCard").innerHTML=`<div class="eyebrow">Modo contrarreloj</div><p class="q">Todas las categorías mezcladas. Responda todas las que pueda en 60 segundos.</p><p class="small">Cada error resta un punto. Mejor marca: ${best}</p><button class="primary" id="go">Largar</button>`;
+  $("#go").onclick=startFast}
+function startFast(){fast={qs:shuffle(QS).map(prep),i:0,score:0,left:60,t:null};drawFast();
+  fast.t=setInterval(()=>{fast.left--;const b=$("#fbar");if(b)b.style.width=(fast.left/60*100)+"%";const l=$("#fleft");if(l)l.textContent=fast.left+" s";if(fast.left<=0)endFast()},1000)}
+function drawFast(){if(fast.i>=fast.qs.length){fast.qs=fast.qs.concat(shuffle(QS).map(prep))}
+  const q=fast.qs[fast.i];
+  $("#fastCard").innerHTML=`<div class="meta"><span id="fleft">${fast.left} s</span><span>Puntos ${fast.score}</span></div><div class="bar"><div id="fbar" style="width:${fast.left/60*100}%"></div></div>
+  <p class="q">${esc(q.q)}</p><div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join("")}</div>`;
+  $("#fastCard").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===q.a;fast.score+=ok?1:-1;
+    $("#fastCard").querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
+    setTimeout(()=>{if(fast.t){fast.i++;drawFast()}},ok?350:1100)})}
+function endFast(){stopFast();const best=store.get("tab_fast_best",0),rec=fast.score>best;if(rec)store.set("tab_fast_best",fast.score);
+  $("#fastCard").innerHTML=`<div class="eyebrow">Tiempo</div><div class="big">${fast.score}</div><p class="small">${rec?"Nueva mejor marca.":"Mejor marca: "+best}</p><button class="primary" id="go">Otra vez</button>`;$("#go").onclick=startFast}
+
+renderCats();startQuiz();
+</script>
+</body>
+</html>
