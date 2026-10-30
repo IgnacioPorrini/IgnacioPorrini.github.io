@@ -393,3 +393,11 @@ header.scrolled .logo-brand {
         font-size: 1.6rem;
     }
 }
+/* Ajustes de la vista celular */
+@media (max-width: 991px) {
+    .hero-tech { justify-content: center; }
+    .hero-tech-label { flex-basis: 100%; margin-right: 0 !important; }
+}
+@media (max-width: 767px) {
+    .project-card .card-img-top { height: 140px !important; }
+}
