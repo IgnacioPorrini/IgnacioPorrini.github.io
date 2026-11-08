@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Estadística a bordo</title>
+<meta name="description" content="Práctica de Introducción a la Estadística con datos de viento, olas, lluvia y temperatura del mar.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: una columna tipo planilla de observación meteorológica; papel cuadriculado tenue y un aviso naranja de viento como acento */
+:root{
+  --bg:#EEF3F3; --grid:#DCE6E7; --surface:#FFFFFF; --ink:#102A30; --muted:#4D666C; --line:#C5D4D6;
+  --sea:#0B5D6B; --sea-ink:#FFFFFF; --gust:#C2410C; --gust-bg:#FDEBDD;
+  --ok:#1F7A4D; --ok-bg:#E2F2E8; --bad:#B3261E; --bad-bg:#FBE6E3;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A171B; --grid:#12252A; --surface:#11252B; --ink:#E3EFF0; --muted:#94AEB3; --line:#24404A;
+  --sea:#5CC2CF; --sea-ink:#04252B; --gust:#FB8B4E; --gust-bg:#3A2112;
+  --ok:#5CC98E; --ok-bg:#123020; --bad:#F08A82; --bad-bg:#3A1917; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A171B; --grid:#12252A; --surface:#11252B; --ink:#E3EFF0; --muted:#94AEB3; --line:#24404A;
+  --sea:#5CC2CF; --sea-ink:#04252B; --gust:#FB8B4E; --gust-bg:#3A2112;
+  --ok:#5CC98E; --ok-bg:#123020; --bad:#F08A82; --bad-bg:#3A1917; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.9rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance;letter-spacing:.01em}
+h2{font:700 1.5rem/1.1 var(--display);margin:0;text-wrap:balance}
+p{margin:0}
+.lede{color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font:500 11px var(--mono);fill:var(--muted)}
+.chart .lab{fill:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav button{font:600 15px var(--body);border:0;background:none;color:var(--muted);padding:10px 4px;border-radius:7px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--sea);color:var(--sea-ink)}
+button:focus-visible,input:focus-visible,.opt:focus-visible{outline:3px solid var(--gust);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--sea);background:var(--sea);color:var(--sea-ink)}
+.meta{display:flex;justify-content:space-between;gap:8px;font:500 13px var(--mono);color:var(--muted);flex-wrap:wrap}
+.tag{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--gust)}
+.q{font-size:1.1rem;font-weight:600;line-height:1.4}
+.data{font:500 14px var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre-wrap}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font:16px var(--body);text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:11px 12px;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+.explain{border-left:3px solid var(--sea);padding:6px 0 6px 12px;color:var(--ink)}
+.explain b{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.primary{font:700 16px var(--body);background:var(--sea);color:var(--sea-ink);border:0;border-radius:8px;padding:12px 18px;cursor:pointer}
+.ghost{font:600 15px var(--body);background:none;color:var(--sea);border:1px solid var(--sea);border-radius:8px;padding:10px 16px;cursor:pointer}
+.big{font:700 3rem/1 var(--display);color:var(--sea)}
+.small{font-size:14px;color:var(--muted)}
+.field{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:8px;align-items:center}
+.field label{font-weight:600}
+.field input{font:500 16px var(--mono);border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:9px 10px;width:100%}
+.field input.ok{border-color:var(--ok);background:var(--ok-bg)}
+.field input.bad{border-color:var(--bad);background:var(--bad-bg)}
+.facts{display:grid;gap:10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.fact .num{font:700 2rem/1 var(--display);color:var(--gust)}
+.timer{font:500 15px var(--mono);color:var(--gust);background:var(--gust-bg);border-radius:6px;padding:4px 8px}
+footer{font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.opt,.chip,nav button{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:6px">
+    <p class="eyebrow">Introducción a la Estadística · práctica</p>
+    <h1>Estadística a bordo</h1>
+    <p class="lede">Ejercicios con datos de viento, olas, lluvia y temperatura del mar, para preparar el examen y empezar a mirar el tiempo con números.</p>
+  </header>
+
+  <section class="panel chart" aria-labelledby="chart-t">
+    <p class="eyebrow" id="chart-t">Viento máximo diario · una semana en Punta Brava (ejemplo)</p>
+    <div id="chart"></div>
+    <div class="legend"><span><i style="background:var(--sea)"></i>Mediana 12 kn</span><span><i style="background:var(--gust)"></i>Media 12,6 kn</span></div>
+    <p class="small">Un solo día de pampero (22 kn) empuja la media hacia arriba. La mediana no se mueve.</p>
+  </section>
+
+  <nav role="tablist" aria-label="Modos">
+    <button role="tab" id="t-quiz" aria-selected="true" data-v="quiz">Quiz</button>
+    <button role="tab" id="t-lab" aria-selected="false" data-v="lab">Laboratorio</button>
+    <button role="tab" id="t-exam" aria-selected="false" data-v="exam">Simulacro</button>
+    <button role="tab" id="t-facts" aria-selected="false" data-v="facts">Datos</button>
+  </nav>
+
+  <!-- QUIZ -->
+  <section id="v-quiz" class="panel" role="tabpanel" aria-labelledby="t-quiz">
+    <div class="chips" id="temas" aria-label="Temas"></div>
+    <div class="meta"><span id="q-tema" class="tag"></span><span id="q-score"></span></div>
+    <p class="q" id="q-text"></p>
+    <div class="data" id="q-data" hidden></div>
+    <div class="opts" id="q-opts"></div>
+    <div class="explain" id="q-exp" hidden></div>
+    <div class="row"><button class="primary" id="q-next" hidden>Siguiente pregunta</button></div>
+  </section>
+
+  <!-- LAB -->
+  <section id="v-lab" class="panel" role="tabpanel" aria-labelledby="t-lab" hidden>
+    <h2>Laboratorio de datos</h2>
+    <p class="small">Datos nuevos cada vez. Calcule a mano o con la calculadora y escriba el resultado con dos decimales (coma o punto). Se acepta una diferencia de ±0,05.</p>
+    <p class="q" id="lab-title"></p>
+    <div class="data" id="lab-data"></div>
+    <div id="lab-fields" style="display:flex;flex-direction:column;gap:8px"></div>
+    <div class="row"><button class="primary" id="lab-check">Corregir</button><button class="ghost" id="lab-new">Datos nuevos</button></div>
+    <div class="explain" id="lab-exp" hidden></div>
+  </section>
+
+  <!-- EXAM -->
+  <section id="v-exam" class="panel" role="tabpanel" aria-labelledby="t-exam" hidden>
+    <div id="exam-start" style="display:flex;flex-direction:column;gap:12px">
+      <h2>Simulacro de parcial</h2>
+      <p>10 preguntas al azar de todos los temas, 20 minutos. Las respuestas se ven al final, como en un examen.</p>
+      <p class="small" id="exam-best"></p>
+      <div class="row"><button class="primary" id="exam-go">Empezar simulacro</button></div>
+    </div>
+    <div id="exam-run" hidden style="display:flex;flex-direction:column;gap:12px">
+      <div class="meta"><span id="exam-n"></span><span class="timer" id="exam-timer" aria-live="off">20:00</span></div>
+      <span class="tag" id="exam-tema"></span>
+      <p class="q" id="exam-text"></p>
+      <div class="data" id="exam-data" hidden></div>
+      <div class="opts" id="exam-opts"></div>
+    </div>
+    <div id="exam-end" hidden style="display:flex;flex-direction:column;gap:12px">
+      <p class="eyebrow">Resultado</p>
+      <p class="big" id="exam-score"></p>
+      <p id="exam-msg"></p>
+      <div id="exam-review" style="display:flex;flex-direction:column;gap:10px"></div>
+      <div class="row"><button class="primary" id="exam-again">Otro simulacro</button></div>
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <section id="v-facts" role="tabpanel" aria-labelledby="t-facts" hidden style="display:flex;flex-direction:column;gap:10px">
+    <h2>Datos que motivan</h2>
+    <div class="facts" id="facts"></div>
+  </section>
+
+  <footer>Los datos de los ejercicios son de ejemplo, inventados con valores realistas para la costa de Montevideo. Hecho por Ignacio Porrini.</footer>
+</div>
+
+<script>
+const BANK=[
+// DESCRIPTIVA
+{t:"Descriptiva",q:"Viento máximo diario en nudos durante una semana. ¿Cuál es la mediana?",d:"8, 12, 15, 10, 22, 12, 9",o:["12","12,6","11","15"],a:0,e:"Ordenados: 8, 9, 10, 12, 12, 15, 22. Con 7 datos la mediana es el 4.º: 12 kn. La media da 88/7 = 12,6 kn porque el día de 22 kn la arrastra."},
+{t:"Descriptiva",q:"Con los mismos datos de viento (8, 12, 15, 10, 22, 12, 9), ¿cuál es la moda?",o:["12","10","22","No hay moda"],a:0,e:"La moda es el valor que más se repite: 12 aparece dos veces."},
+{t:"Descriptiva",q:"Una semana tuvo un día de pampero con ráfagas muy altas. ¿Qué medida de centro se ve menos afectada por ese valor extremo?",o:["La mediana","La media","El rango","La varianza"],a:0,e:"La mediana depende solo del orden de los datos, así que un valor extremo no la mueve. La media, el rango y la varianza sí cambian."},
+{t:"Descriptiva",q:"Altura de ola (m) en cinco observaciones. ¿Cuál es el desvío estándar muestral?",d:"0,5  0,8  1,0  1,2  1,5",o:["0,38 m","0,34 m","0,15 m","1,00 m"],a:0,e:"Media = 1,0. Desvíos al cuadrado: 0,25 + 0,04 + 0 + 0,04 + 0,25 = 0,58. Varianza muestral = 0,58/(5−1) = 0,145, y s = √0,145 ≈ 0,38 m. Con n en vez de n−1 daría 0,34."},
+{t:"Descriptiva",q:"Temperatura del agua en Montevideo (ejemplo): enero media 22 °C y desvío 1,5 °C; febrero media 23 °C y desvío 1,0 °C. ¿Qué mes tiene más variabilidad relativa?",o:["Enero, CV ≈ 6,8 %","Febrero, CV ≈ 4,3 %","Son iguales","No se puede comparar"],a:0,e:"Coeficiente de variación = desvío/media. Enero: 1,5/22 ≈ 6,8 %. Febrero: 1/23 ≈ 4,3 %. El CV permite comparar dispersión entre series de distinta media."},
+{t:"Descriptiva",q:"En un diagrama de caja del viento, Q1 = 10 kn y Q3 = 18 kn. Con el criterio de 1,5 veces el rango intercuartílico, ¿desde qué valor una ráfaga es atípica por arriba?",o:["Más de 30 kn","Más de 26 kn","Más de 18 kn","Más de 36 kn"],a:0,e:"RIC = 18 − 10 = 8. Límite superior = Q3 + 1,5·RIC = 18 + 12 = 30 kn."},
+{t:"Descriptiva",q:"La lluvia diaria tiene muchos días en 0 mm y pocos días muy lluviosos. ¿Qué forma tiene la distribución?",o:["Asimétrica a la derecha: media > mediana","Simétrica: media = mediana","Asimétrica a la izquierda: media < mediana","Uniforme"],a:0,e:"La cola larga va hacia los valores altos (los temporales), y eso tira de la media hacia arriba. Es asimetría positiva."},
+// PROBABILIDAD
+{t:"Probabilidad",q:"La probabilidad de lluvia es 30 % cada día, y los días son independientes. ¿Cuál es la probabilidad de que no llueva ni el sábado ni el domingo?",o:["0,49","0,09","0,70","0,40"],a:0,e:"P(no llueve) = 0,7 cada día. Por independencia: 0,7 × 0,7 = 0,49."},
+{t:"Probabilidad",q:"Con 30 % de lluvia diaria e independencia, ¿cuál es la probabilidad de que llueva al menos un día en 3 días de regata?",o:["0,657","0,900","0,343","0,300"],a:0,e:"Conviene usar el complemento: P(al menos uno) = 1 − P(ninguno) = 1 − 0,7³ = 1 − 0,343 = 0,657."},
+{t:"Probabilidad",q:"En un club, el 40 % de los días el viento supera 15 kn, y el 25 % de los días el viento supera 15 kn y además llueve. ¿Cuál es P(llueve | viento > 15 kn)?",o:["0,625","0,25","0,10","0,40"],a:0,e:"Probabilidad condicional: P(A|B) = P(A∩B)/P(B) = 0,25/0,40 = 0,625."},
+{t:"Probabilidad",q:"Las sudestadas ocurren el 5 % de los días. Si hay sudestada, el aviso se emite el 90 % de las veces. Si no la hay, se emite igual el 10 % de las veces. Hoy hay aviso: ¿cuál es la probabilidad de que haya sudestada?",o:["≈ 32 %","90 %","≈ 50 %","5 %"],a:0,e:"Bayes: 0,9·0,05 / (0,9·0,05 + 0,1·0,95) = 0,045/0,140 ≈ 0,32. Como el fenómeno es raro, muchas alertas son falsas, aunque el aviso sea bueno."},
+{t:"Probabilidad",q:"Dos sucesos A y B son independientes cuando…",o:["P(A∩B) = P(A)·P(B)","P(A∩B) = 0","P(A) + P(B) = 1","P(A|B) = P(B)"],a:0,e:"Independencia: saber que ocurrió B no cambia la probabilidad de A, lo que equivale a P(A∩B) = P(A)·P(B). P(A∩B) = 0 describe sucesos incompatibles, que es otra cosa."},
+// DISTRIBUCIONES
+{t:"Distribuciones",q:"Cada salida de la escuela de vela se cancela por viento con probabilidad 0,2, de forma independiente. En 5 salidas, ¿cuál es la probabilidad de exactamente 1 cancelación?",o:["0,4096","0,2000","0,3277","0,8000"],a:0,e:"Binomial: C(5,1)·0,2¹·0,8⁴ = 5·0,2·0,4096 = 0,4096. El 0,3277 es la probabilidad de cero cancelaciones (0,8⁵)."},
+{t:"Distribuciones",q:"Con probabilidad 0,2 de cancelación por salida, ¿cuántas cancelaciones se esperan en 20 salidas?",o:["4","2","10","0,2"],a:0,e:"La esperanza de una binomial es n·p = 20·0,2 = 4."},
+{t:"Distribuciones",q:"La temperatura del agua en una boya se distribuye Normal con media 20 °C y desvío 2 °C. ¿Cuál es P(T > 24 °C)?",o:["≈ 2,3 %","≈ 16 %","≈ 5 %","≈ 0,1 %"],a:0,e:"z = (24 − 20)/2 = 2. P(Z > 2) ≈ 0,0228. Es la cola más allá de 2 desvíos."},
+{t:"Distribuciones",q:"Con la misma Normal (media 20 °C, desvío 2 °C), ¿qué proporción de días cae entre 18 y 22 °C?",o:["≈ 68 %","≈ 95 %","≈ 50 %","≈ 34 %"],a:0,e:"Es la media ± 1 desvío: P(−1 < Z < 1) ≈ 0,683. Es la regla 68–95–99,7."},
+{t:"Distribuciones",q:"En una zona hay en promedio 2 tormentas eléctricas por mes, modeladas con una Poisson. ¿Cuál es la probabilidad de un mes sin tormentas?",o:["≈ 0,135","≈ 0,5","≈ 0,270","0"],a:0,e:"Poisson: P(X = 0) = e^(−λ) = e^(−2) ≈ 0,135."},
+{t:"Distribuciones",q:"En oceanografía, la 'altura significativa' de ola (Hs) que dan los pronósticos es…",o:["El promedio del tercio más alto de las olas","La ola más alta registrada","La mediana de todas las olas","El promedio de todas las olas"],a:0,e:"Hs es la media del tercio mayor de las olas. Se acerca a lo que un observador estima a ojo, porque las olas chicas casi no se registran mentalmente."},
+// INFERENCIA
+{t:"Inferencia",q:"En 36 días la media del viento fue 14 kn, con σ = 6 kn conocido. ¿Cuál es el intervalo de confianza del 95 % para la media?",o:["(12,04 ; 15,96) kn","(13,02 ; 14,98) kn","(2,24 ; 25,76) kn","(12,36 ; 15,64) kn"],a:0,e:"Error estándar = 6/√36 = 1. IC = 14 ± 1,96·1. El intervalo (2,24; 25,76) se obtiene si se olvida dividir por √n."},
+{t:"Inferencia",q:"Si el tamaño de la muestra de días se cuadruplica, el error estándar de la media…",o:["Se reduce a la mitad","Se reduce a la cuarta parte","No cambia","Se duplica"],a:0,e:"EE = σ/√n. Multiplicar n por 4 divide el EE por √4 = 2."},
+{t:"Inferencia",q:"Se prueba H₀: la temperatura media del agua es 21 °C. El p-valor da 0,03 con α = 0,05. ¿Qué se concluye?",o:["Se rechaza H₀","No se rechaza H₀","Se acepta H₀ con 97 % de certeza","Hay que aumentar α"],a:0,e:"Si el p-valor es menor que α, se rechaza H₀. El p-valor no es la probabilidad de que H₀ sea cierta."},
+{t:"Inferencia",q:"Con H₀: 'mañana no habrá temporal', ¿qué es un error de tipo I?",o:["Avisar de un temporal que no llega","No avisar de un temporal que llega","Acertar el pronóstico","Pronosticar sin datos"],a:0,e:"El error de tipo I es rechazar H₀ cuando es verdadera: se da la alerta y el temporal no viene. No avisar de uno que sí llega es un error de tipo II."},
+// BIVARIADA
+{t:"Bivariada",q:"Entre la velocidad del viento y la altura de ola se obtiene r = 0,85. ¿Qué porcentaje de la variabilidad de la altura explica el viento con una recta?",o:["≈ 72 %","85 %","≈ 92 %","15 %"],a:0,e:"El coeficiente de determinación es r² = 0,85² ≈ 0,72."},
+{t:"Bivariada",q:"Una regresión ajustada da: altura de ola (m) = 0,2 + 0,05 · viento (kn). ¿Qué altura se predice con 20 kn?",o:["1,2 m","1,0 m","0,25 m","4,2 m"],a:0,e:"0,2 + 0,05·20 = 0,2 + 1,0 = 1,2 m. La pendiente dice que cada nudo más suma 5 cm de ola."},
+{t:"Bivariada",q:"Una tabla de contingencia cruza el tipo de viento (3 categorías) con el estado del mar (4 categorías). ¿Cuántos grados de libertad tiene la prueba chi cuadrado?",o:["6","12","7","5"],a:0,e:"gl = (filas − 1)·(columnas − 1) = 2·3 = 6."},
+{t:"Bivariada",q:"Una tabla 2×2 de 100 días cruza 'hubo sudestada' con 'hubo inundación costera' y da χ² = 16. ¿Cuánto vale la V de Cramér?",o:["0,40","0,16","4,00","0,04"],a:0,e:"V = √(χ² / (n·(k − 1))), con k = mín(filas, columnas) = 2. V = √(16/100) = 0,40, una asociación moderada."},
+{t:"Bivariada",q:"Las ventas de helado y los rescates en playa tienen correlación positiva. ¿Cuál es la mejor explicación?",o:["Una tercera variable, el calor, influye en ambas","Los helados causan accidentes","Los rescates aumentan las ventas","Es imposible que estén correlacionadas"],a:0,e:"La correlación no implica causalidad. Los días de calor hay más gente en la playa y más ventas: es una variable de confusión."}
+];
+
+const FACTS=[
+{n:"1/3",h:"La ola que dan los pronósticos",p:"La altura significativa Hs es el promedio del tercio más alto de las olas. Es una media recortada que se usa todos los días en el mar."},
+{n:"1,86 × Hs",h:"La ola más grande entre mil",p:"En aguas profundas las alturas de ola siguen aproximadamente una distribución de Rayleigh. Con esa distribución, la mayor de unas 1000 olas ronda 1,86 veces Hs."},
+{n:"Weibull",h:"Cómo se modela el viento",p:"La velocidad del viento en un lugar se describe bien con una distribución de Weibull. Se usa para estimar cuánta energía va a dar un parque eólico."},
+{n:"0 a 12",h:"La escala Beaufort es ordinal",p:"Beaufort ordena el viento en categorías. Para datos así, la mediana y los percentiles tienen más sentido que la media."},
+{n:"51",h:"Pronósticos por ensamble",p:"El centro europeo de pronósticos corre su modelo 51 veces con condiciones iniciales apenas distintas. La proporción de corridas que da lluvia se usa como probabilidad."},
+{n:"70 %",h:"Qué significa '70 % de lluvia'",p:"En situaciones parecidas, en ese lugar llovió 7 de cada 10 veces. Es probabilidad frecuentista aplicada a un pronóstico."}
+];
+
+const $=id=>document.getElementById(id);
+const fmt=(x,d=2)=>x.toFixed(d).replace('.',',');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(k,v){try{const s=localStorage.getItem(k);return s===null?v:JSON.parse(s)}catch(e){return v}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* Chart */
+(function(){
+  const d=[8,12,15,10,22,12,9],days=["L","M","M","J","V","S","D"],W=600,H=200,pl=34,pr=10,pt=14,pb=26,max=25;
+  const x=i=>pl+(i+.5)*(W-pl-pr)/d.length,bw=(W-pl-pr)/d.length*.56,y=v=>pt+(H-pt-pb)*(1-v/max);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Barras de viento diario: 8, 12, 15, 10, 22, 12 y 9 nudos; mediana 12 y media 12,6">`;
+  [0,5,10,15,20,25].forEach(v=>{s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`});
+  d.forEach((v,i)=>{s+=`<rect x="${x(i)-bw/2}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" rx="2" fill="${v===22?'var(--gust)':'var(--sea)'}" opacity="${v===22?1:.75}"/><text x="${x(i)}" y="${H-8}" text-anchor="middle">${days[i]}</text><text class="lab" x="${x(i)}" y="${y(v)-4}" text-anchor="middle">${v}</text>`});
+  s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(12)}" y2="${y(12)}" stroke="var(--sea)" stroke-width="2.5"/>`;
+  s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(88/7)}" y2="${y(88/7)}" stroke="var(--gust)" stroke-width="2.5" stroke-dasharray="6 4"/>`;
+  s+=`<text x="${pl}" y="${pt-3}">kn</text></svg>`;
+  $('chart').innerHTML=s;
+})();
+
+/* Tabs */
+const tabs=[...document.querySelectorAll('nav button')];
+function show(v){tabs.forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-selected',on);$('v-'+b.dataset.v).hidden=!on});store.set('eab-tab',v)}
+tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
+
+/* Quiz */
+const TEMAS=["Todos","Descriptiva","Probabilidad","Distribuciones","Inferencia","Bivariada"];
+let tema=store.get('eab-tema','Todos'),queue=[],cur=null,score={ok:0,n:0};
+function renderChips(){$('temas').innerHTML='';TEMAS.forEach(t=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.setAttribute('aria-pressed',t===tema);b.onclick=()=>{tema=t;store.set('eab-tema',t);score={ok:0,n:0};queue=[];renderChips();nextQ()};$('temas').append(b)})}
+function optsFor(q){return shuffle(q.o.map((t,i)=>({t,ok:i===q.a})))}
+function nextQ(){
+  if(!queue.length)queue=shuffle(BANK.filter(q=>tema==="Todos"||q.t===tema));
+  cur=queue.pop();
+  $('q-tema').textContent=cur.t;$('q-text').textContent=cur.q;
+  $('q-data').hidden=!cur.d;$('q-data').textContent=cur.d||'';
+  $('q-score').textContent=score.n?`${score.ok}/${score.n} correctas`:'';
+  $('q-exp').hidden=true;$('q-next').hidden=true;$('q-opts').innerHTML='';
+  optsFor(cur).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o.t;b.onclick=()=>answer(b,o.ok);b.dataset.ok=o.ok;$('q-opts').append(b)});
+}
+function answer(btn,ok){
+  [...$('q-opts').children].forEach(b=>{b.disabled=true;if(b.dataset.ok==='true')b.classList.add('ok')});
+  if(!ok)btn.classList.add('bad');
+  score.n++;if(ok)score.ok++;
+  $('q-score').textContent=`${score.ok}/${score.n} correctas`;
+  $('q-exp').innerHTML=`<b>${ok?'Correcto.':'No es esa.'}</b>${cur.e}`;$('q-exp').hidden=false;
+  $('q-next').hidden=false;$('q-next').focus();
+}
+$('q-next').onclick=nextQ;
+renderChips();nextQ();
+
+/* Lab */
+const LABS=[
+ ()=>{const n=6+Math.floor(Math.random()*3),d=Array.from({length:n},()=>6+Math.floor(Math.random()*19));return{title:`Viento máximo diario (kn) durante ${n} días:`,data:d.join(', '),d,asks:['media','mediana','desvío muestral (s)','rango']}},
+ ()=>{const n=5+Math.floor(Math.random()*3),d=Array.from({length:n},()=>Math.round((0.3+Math.random()*1.9)*10)/10);return{title:`Altura de ola (m) en ${n} observaciones:`,data:d.map(v=>fmt(v,1)).join('   '),d,asks:['media','mediana','desvío muestral (s)','rango']}},
+ ()=>{const n=6+Math.floor(Math.random()*3),d=Array.from({length:n},()=>Math.round((17+Math.random()*7)*10)/10);return{title:`Temperatura del agua (°C) en ${n} días:`,data:d.map(v=>fmt(v,1)).join('   '),d,asks:['media','mediana','desvío muestral (s)','rango']}}
+];
+function calc(d){const s=d.slice().sort((a,b)=>a-b),n=d.length,m=d.reduce((a,b)=>a+b,0)/n,med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2,sd=Math.sqrt(d.reduce((a,b)=>a+(b-m)**2,0)/(n-1));return{'media':m,'mediana':med,'desvío muestral (s)':sd,'rango':s[n-1]-s[0],sorted:s}}
+let lab=null;
+function newLab(){lab=LABS[Math.floor(Math.random()*LABS.length)]();lab.res=calc(lab.d);$('lab-title').textContent=lab.title;$('lab-data').textContent=lab.data;$('lab-exp').hidden=true;$('lab-fields').innerHTML='';
+  lab.asks.forEach((a,i)=>{const f=document.createElement('div');f.className='field';f.innerHTML=`<label for="lab-${i}">${a[0].toUpperCase()+a.slice(1)}</label><input id="lab-${i}" inputmode="decimal" autocomplete="off">`;$('lab-fields').append(f)})}
+$('lab-check').onclick=()=>{let ok=0;lab.asks.forEach((a,i)=>{const inp=$('lab-'+i),v=parseFloat(inp.value.replace(',','.'));const good=!isNaN(v)&&Math.abs(v-lab.res[a])<=0.05+1e-9;inp.classList.toggle('ok',good);inp.classList.toggle('bad',!good);if(good)ok++});
+  const r=lab.res,n=lab.d.length,dec=lab.d.some(v=>v%1)?1:0;
+  $('lab-exp').innerHTML=`<b>${ok}/${lab.asks.length} bien.</b>Ordenados: ${r.sorted.map(v=>fmt(v,dec)).join(', ')}. Media = suma/${n} = ${fmt(r.media)}. Mediana = ${fmt(r.mediana)}${n%2?' (el valor central)':' (promedio de los dos centrales)'}. s = √(Σ(x − media)²/(${n}−1)) = ${fmt(r['desvío muestral (s)'])}. Rango = ${fmt(r.rango)}.`;$('lab-exp').hidden=false};
+$('lab-new').onclick=newLab;newLab();
+
+/* Exam */
+let ex=null,timerId=null;
+function bestText(){const b=store.get('eab-best',null);$('exam-best').textContent=b===null?'':`Su mejor resultado en este dispositivo: ${b}/10.`}
+bestText();
+$('exam-go').onclick=startExam;$('exam-again').onclick=startExam;
+function startExam(){ex={qs:shuffle(BANK).slice(0,10).map(q=>({q,opts:optsFor(q),pick:null})),i:0,end:Date.now()+20*60e3};$('exam-start').hidden=true;$('exam-end').hidden=true;$('exam-run').hidden=false;clearInterval(timerId);timerId=setInterval(tick,1000);tick();renderEx()}
+function tick(){const ms=ex.end-Date.now();if(ms<=0){finish();return}const m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60;$('exam-timer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function renderEx(){const it=ex.qs[ex.i];$('exam-n').textContent=`Pregunta ${ex.i+1} de 10`;$('exam-tema').textContent=it.q.t;$('exam-text').textContent=it.q.q;$('exam-data').hidden=!it.q.d;$('exam-data').textContent=it.q.d||'';$('exam-opts').innerHTML='';
+  it.opts.forEach((o,k)=>{const b=document.createElement('button');b.className='opt';b.textContent=o.t;b.onclick=()=>{it.pick=k;ex.i++;ex.i<10?renderEx():finish()};$('exam-opts').append(b)})}
+function finish(){clearInterval(timerId);const ok=ex.qs.filter(it=>it.pick!==null&&it.opts[it.pick].ok).length;$('exam-run').hidden=true;$('exam-end').hidden=false;$('exam-score').textContent=`${ok}/10`;
+  $('exam-msg').textContent=ok>=8?'Muy bien. Está para dar el examen.':ok>=6?'Bien encaminado. Repase los temas en los que falló.':'Conviene repasar con el quiz por temas antes de otro simulacro.';
+  const b=store.get('eab-best',null);if(b===null||ok>b)store.set('eab-best',ok);bestText();
+  $('exam-review').innerHTML='';ex.qs.forEach((it,i)=>{const good=it.pick!==null&&it.opts[it.pick].ok;const r=document.createElement('div');r.className='explain';r.style.borderLeftColor=good?'var(--ok)':'var(--bad)';
+    r.innerHTML=`<b>${i+1}. ${good?'Bien':'Mal'} · ${it.q.t}</b>${it.q.q}<br><span class="small">Respuesta: ${it.q.o[it.q.a]}${!good&&it.pick!==null?` · Usted eligió: ${it.opts[it.pick].t}`:''}${it.pick===null?' · Sin responder':''}</span><br>${it.q.e}`;$('exam-review').append(r)})}
+
+/* Facts */
+$('facts').innerHTML=FACTS.map(f=>`<article class="fact"><span class="num">${f.n}</span><h2 style="font-size:1.25rem">${f.h}</h2><p class="small" style="color:var(--ink)">${f.p}</p></article>`).join('');
+
+show(store.get('eab-tab','quiz'));
+</script>
+</body>
+</html>
