@@ -1,0 +1,19 @@
+{
+  "id": "/cuestionario-brevet.html",
+  "name": "Brevet: práctica para el examen",
+  "short_name": "Brevet",
+  "description": "Las 100 preguntas del cuestionario de Prefectura para el Brevet B, C y D: práctica por temas, tarjetas y simulacro de examen. Funciona sin conexión.",
+  "lang": "es-UY",
+  "start_url": "/cuestionario-brevet.html?fuente=app",
+  "scope": "/cuestionario-brevet.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDF2F5",
+  "theme_color": "#0F4C6E",
+  "categories": ["education", "sports"],
+  "icons": [
+    {"src": "/apps/brevet/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/apps/brevet/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/apps/brevet/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

@@ -7,6 +7,9 @@
 <meta name="description" content="Las 100 preguntas del cuestionario de Prefectura para el Brevet B, C y D: luces, señales, reglas de gobierno, balizamiento, fondeo, meteorología, incendios y seguridad. Práctica por temas, tarjetas y simulacro.">
 <link rel="canonical" href="https://ignacioporrini.github.io/cuestionario-brevet.html">
 <link rel="icon" href="favicon.ico">
+<link rel="manifest" href="/apps/brevet/manifest.webmanifest">
+<meta name="theme-color" content="#0F4C6E">
+<link rel="apple-touch-icon" href="/apps/brevet/apple-180.png">
 <meta name="author" content="Ignacio Porrini">
 <meta name="twitter:card" content="summary">
 <meta property="og:title" content="Cuestionario Brevet: las 100 preguntas de Prefectura">
@@ -86,12 +89,15 @@ footer{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:
 footer a{color:var(--sea)}
 @media (prefers-reduced-motion:no-preference){.opt,.chip,nav button{transition:background .15s,border-color .15s}}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-YZMZTJDH70');
+  // En la app instalada no se usan estadísticas: la app no recoge datos.
+  window.ES_APP = matchMedia("(display-mode: standalone)").matches || /[?&]fuente=app/.test(location.search) || document.referrer.startsWith("android-app://");
+  if (!window.ES_APP) {
+    const g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"; document.head.appendChild(g);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", "G-YZMZTJDH70");
+  }
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Quiz","name":"Cuestionario Brevet B, C y D","url":"https://ignacioporrini.github.io/cuestionario-brevet.html","inLanguage":"es","educationalLevel":"Permiso para patronear embarcaciones deportivas","about":["Reglamento para prevenir abordajes","Luces y señales","Balizamiento","Seguridad náutica"],"author":{"@type":"Person","name":"Ignacio Porrini","url":"https://ignacioporrini.github.io/"},"isAccessibleForFree":true}
@@ -127,6 +133,8 @@ footer a{color:var(--sea)}
   <footer>
     <p>Fuente: Cuestionario para la obtención de Permiso para Patronear Embarcaciones Deportivas, categorías B, C y D, Prefectura de Trouville (Prefectura Nacional Naval). Como respuesta correcta figura siempre la del cuestionario, porque es la que se pide en el examen. Donde el reglamento internacional vigente dice otra cosa, va una nota aparte.</p>
     <p>Las respuestas incorrectas de cada pregunta son de práctica y no forman parte del cuestionario oficial. Clases para preparar el examen: <a href="nautica.html">Centro de Estudios Náuticos</a>.</p>
+    <p>Esta app no es de Prefectura ni de ningún organismo oficial: es material de estudio hecho por Ignacio Porrini, instructor de vela. <a href="privacidad-apps.html">Privacidad</a>.</p>
+    <p id="instalar" hidden><button class="ghost" id="btn-instalar" type="button">Instalar la app en este teléfono</button></p>
   </footer>
 </div>
 
@@ -311,6 +319,11 @@ function endExam(){const ok=exam.qs.filter(it=>it.o[it.pick].ok).length;const be
   $("#re").onclick=()=>{exam={qs:shuffle(QS).slice(0,20).map(q=>({q,o:opts(q),pick:null})),i:0};drawExam()}}
 
 drawProgress();startPrac(pt);startFlash(ft);show(store.get("brevet_tab","prac"));
+if (window.ES_APP) { const b = document.querySelector(".back"); b.textContent = "Más de Ignacio Porrini ↗"; b.target = "_blank"; b.rel = "noopener"; }
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw-brevet.js", {scope: "/cuestionario-brevet.html"}).catch(() => {});
+let promptInstalar = null;
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); promptInstalar = e; $("#instalar").hidden = false; });
+$("#btn-instalar").onclick = async () => { if (!promptInstalar) return; promptInstalar.prompt(); await promptInstalar.userChoice; promptInstalar = null; $("#instalar").hidden = true; };
 </script>
 </body>
 </html>
