@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuestionario Brevet | Ignacio Porrini</title>
+<meta name="description" content="Las 100 preguntas del cuestionario de Prefectura para el Brevet B, C y D: luces, señales, reglas de gobierno, balizamiento, fondeo, meteorología, incendios y seguridad. Práctica por temas, tarjetas y simulacro.">
+<link rel="canonical" href="https://ignacioporrini.github.io/cuestionario-brevet.html">
+<link rel="icon" href="favicon.ico">
+<meta name="author" content="Ignacio Porrini">
+<meta name="twitter:card" content="summary">
+<meta property="og:title" content="Cuestionario Brevet: las 100 preguntas de Prefectura">
+<meta property="og:description" content="Las 100 preguntas del Brevet B, C y D para practicar por temas, con tarjetas y con un simulacro de examen.">
+<meta property="og:image" content="https://ignacioporrini.github.io/img/nacho-nautico.jpg">
+<meta property="og:url" content="https://ignacioporrini.github.io/cuestionario-brevet.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: una columna tipo bitácora, igual que Táctica a bordo; el amarillo de bandera marca la respuesta oficial */
+:root{
+  --bg:#EDF2F5; --surface:#FFFFFF; --ink:#0E2433; --muted:#4F6676; --line:#C9D6DE;
+  --sea:#0F4C6E; --flag:#E8B400; --flag-ink:#2A2100; --ok:#1F7A4D; --bad:#B3261E;
+  --ok-bg:#E3F3EA; --bad-bg:#FBE7E5; --note-bg:#FFF6D6;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; --note-bg:#2E2610; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; --note-bg:#2E2610; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.back{font:600 14px var(--body);color:var(--sea);text-decoration:none}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;margin:0;color:var(--sea);text-wrap:balance}
+h1 span{color:var(--ink)}
+.lede{color:var(--muted);margin:4px 0 0}
+.progress{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar>div{height:100%;background:var(--ok);width:0}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+nav button{font:600 15px var(--body);border:0;background:none;color:var(--muted);padding:10px 4px;border-radius:7px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--sea);color:var(--bg)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--flag);color:var(--flag-ink);border-color:var(--flag)}
+.chip small{font-family:var(--mono);font-size:11px;opacity:.75}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--bg);border:1px solid var(--line);padding:2px 8px;border-radius:4px}
+.q{font-family:var(--display);font-weight:600;font-size:1.45rem;line-height:1.2;margin:0;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font:16px/1.35 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px 14px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--sea)}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.explain{border-left:3px solid var(--flag);padding:4px 0 4px 12px;margin:0;display:flex;flex-direction:column;gap:6px}
+.explain b.ok{color:var(--ok)} .explain b.bad{color:var(--bad)}
+.official{font-size:15px}
+.official span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block}
+.note{background:var(--note-bg);border-radius:8px;padding:8px 10px;font-size:14px}
+.primary{font:700 16px var(--body);background:var(--sea);color:var(--bg);border:0;border-radius:9px;padding:13px 16px;cursor:pointer}
+.ghost{font:600 15px var(--body);background:none;color:var(--sea);border:1px solid var(--line);border-radius:9px;padding:11px 16px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 140px}
+.big{font-family:var(--display);font-weight:800;font-size:3.4rem;line-height:1;color:var(--sea);font-variant-numeric:tabular-nums}
+.small{font-size:14px;color:var(--muted);margin:0}
+.flash-a{background:var(--bg);border-radius:9px;padding:14px;font-size:17px}
+.review{display:flex;flex-direction:column;gap:10px}
+.rev{border-left:3px solid var(--line);padding:2px 0 2px 12px;font-size:15px}
+.rev.ok{border-color:var(--ok)} .rev.bad{border-color:var(--bad)}
+footer{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--sea)}
+@media (prefers-reduced-motion:no-preference){.opt,.chip,nav button{transition:background .15s,border-color .15s}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-YZMZTJDH70');
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Quiz","name":"Cuestionario Brevet B, C y D","url":"https://ignacioporrini.github.io/cuestionario-brevet.html","inLanguage":"es","educationalLevel":"Permiso para patronear embarcaciones deportivas","about":["Reglamento para prevenir abordajes","Luces y señales","Balizamiento","Seguridad náutica"],"author":{"@type":"Person","name":"Ignacio Porrini","url":"https://ignacioporrini.github.io/"},"isAccessibleForFree":true}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="nautica.html">← Volver a Náutica</a>
+  <header>
+    <p class="eyebrow">Brevet B, C y D · Prefectura</p>
+    <h1>Cuestionario <span>Brevet</span></h1>
+    <p class="lede">Las 100 preguntas del cuestionario de Prefectura para el permiso de patrón de embarcaciones deportivas. Practique por tema, repase con tarjetas o haga un simulacro de 20 preguntas.</p>
+  </header>
+
+  <div class="progress" aria-live="polite"><span id="mastered">0 de 100 dominadas</span><div class="bar"><div id="bar"></div></div></div>
+
+  <nav role="tablist" aria-label="Modos">
+    <button role="tab" id="t-prac" aria-selected="true">Practicar</button>
+    <button role="tab" id="t-flash" aria-selected="false">Tarjetas</button>
+    <button role="tab" id="t-exam" aria-selected="false">Simulacro</button>
+  </nav>
+
+  <section id="p-prac" style="display:flex;flex-direction:column;gap:14px">
+    <div class="chips" id="temas" aria-label="Temas"></div>
+    <div class="card" id="prac"></div>
+  </section>
+  <section id="p-flash" hidden style="display:flex;flex-direction:column;gap:14px">
+    <div class="chips" id="temas2" aria-label="Temas"></div>
+    <div class="card" id="flash"></div>
+  </section>
+  <section id="p-exam" hidden><div class="card" id="exam"></div></section>
+
+  <footer>
+    <p>Fuente: Cuestionario para la obtención de Permiso para Patronear Embarcaciones Deportivas, categorías B, C y D, Prefectura de Trouville (Prefectura Nacional Naval). Como respuesta correcta figura siempre la del cuestionario, porque es la que se pide en el examen. Donde el reglamento internacional vigente dice otra cosa, va una nota aparte.</p>
+    <p>Las respuestas incorrectas de cada pregunta son de práctica y no forman parte del cuestionario oficial. Clases para preparar el examen: <a href="nautica.html">Centro de Estudios Náuticos</a>.</p>
+  </footer>
+</div>
+
+<script>
+const TEMAS={L:"Luces y marcas",S:"Señales sonoras y luminosas",R:"Reglas de rumbo y gobierno",B:"Balizamiento y navegación",F:"Fondeo",M:"Meteorología",I:"Incendios",D:"Seguridad y trámites"};
+const N200="El reglamento internacional vigente (RIPA) usa 200 m como límite. El cuestionario mantiene 183 m: en el examen responda como dice el cuestionario.";
+const N50="El reglamento internacional vigente usa 50 m de eslora como límite. El cuestionario mantiene 45,75 m.";
+const QS=[
+{n:1,t:"L",q:"¿Cuál es la luz reglamentaria de tope?",c:"Una luz blanca.",d:["Una luz roja.","Una luz verde.","Una luz amarilla."]},
+{n:2,t:"L",q:"¿Qué luz debe llevar una embarcación en la banda de estribor?",c:"Una luz verde.",d:["Una luz roja.","Una luz blanca.","Una luz amarilla."]},
+{n:3,t:"L",q:"¿Qué luz debe llevar una embarcación en la banda de babor?",c:"Una luz roja.",d:["Una luz verde.","Una luz blanca.","Una luz azul."]},
+{n:4,t:"L",q:"¿Qué arco de horizonte visible debe tener la luz de tope?",c:"225°, repartidos desde la proa: 112°5' a cada banda.",d:["360°, todo el horizonte.","135°, hacia popa.","112°5', desde la proa hacia una sola banda."]},
+{n:5,t:"L",q:"¿Qué arco de horizonte visible deben tener las luces de banda?",c:"112°5' desde la proa.",d:["225° desde la proa.","135° hacia popa.","360°, todo el horizonte."]},
+{n:6,t:"L",q:"¿Qué alcance lumínico debe tener la luz de tope en un buque de menos de 12 metros de eslora?",c:"2 millas.",d:["1 milla.","3 millas.","6 millas."],r:"50 m o más: 6 millas. Entre 20 y 50 m: 5 millas. Entre 12 y 20 m: 3 millas. Menos de 12 m: 2 millas."},
+{n:7,t:"L",q:"¿Qué alcance lumínico deben tener las luces de banda de un buque de menos de 12 metros de eslora?",c:"1 milla.",d:["2 millas.","3 millas.","Media milla."],r:"50 m o más: 3 millas. Entre 12 y 50 m: 2 millas. Menos de 12 m: 1 milla."},
+{n:8,t:"L",q:"¿Qué luces adicionales debe llevar un buque que remolca, si la longitud del remolque es menor a 183 metros?",c:"Dos luces blancas en línea vertical.",d:["Tres luces blancas en línea vertical.","Dos luces rojas en línea vertical.","Una luz amarilla a popa."],x:N200},
+{n:9,t:"L",q:"¿Qué luces adicionales debe llevar un buque que remolca, si la longitud del remolque es superior a 183 metros?",c:"Tres luces blancas en línea vertical.",d:["Dos luces blancas en línea vertical.","Dos luces rojas en línea vertical.","Roja, blanca y roja en línea vertical."],x:N200},
+{n:10,t:"L",q:"¿Qué arco de horizonte deben tener las luces que indican un buque remolcando?",c:"El mismo que las luces de tope: 225°.",d:["360°, todo el horizonte.","135°, hacia popa.","112°5' a cada banda desde la popa."]},
+{n:11,t:"L",q:"¿Qué señal exhibe de día un buque remolcando, si el remolque supera los 183 metros?",c:"Una marca bicónica.",d:["Un balón negro.","Dos conos negros unidos por sus puntas.","Un cono con el vértice hacia abajo."],x:"La marca bicónica son dos conos unidos por sus bases (un rombo). "+N200},
+{n:12,t:"L",q:"¿Qué luces exhibe de noche todo buque remolcado?",c:"Luces de banda y luz de alcance.",d:["Luz de tope y luces de banda.","Dos luces rojas en línea vertical.","Ninguna, las lleva el remolcador."]},
+{n:13,t:"L",q:"¿Qué luces debe exhibir de noche una embarcación navegando a vela?",c:"Luces de banda.",d:["Luz de tope y luces de banda.","Una luz blanca todo horizonte.","Dos luces rojas en línea vertical."],x:"El reglamento internacional pide además la luz de alcance, blanca, a popa. El cuestionario responde solo «luces de banda»."},
+{n:14,t:"L",q:"¿Qué señal exhibe de día un buque que navega a vela y a motor a la vez?",c:"Un cono con el vértice hacia abajo.",d:["Un cono con el vértice hacia arriba.","Un balón negro.","Dos conos unidos por sus puntas."]},
+{n:15,t:"L",q:"¿Qué luces adicionales exhiben de noche los pesqueros de arrastre?",c:"Dos luces todo horizonte en línea vertical: verde arriba y blanca abajo.",d:["Dos luces todo horizonte en línea vertical: roja arriba y blanca abajo.","Dos luces todo horizonte en línea vertical: blanca arriba y verde abajo.","Dos luces rojas todo horizonte en línea vertical."]},
+{n:16,t:"L",q:"¿Qué señal muestra de día un pesquero de arrastre de 20 metros de eslora o más?",c:"Dos conos negros unidos por sus puntas en línea vertical.",d:["Un balón negro.","Dos balones negros.","Un cono con el vértice hacia abajo."]},
+{n:17,t:"L",q:"¿Qué señal debe tener izada de día un pesquero de arrastre de menos de 20 metros de eslora?",c:"Dos conos negros unidos por sus puntas, o un canasto de pesca.",d:["Un balón negro.","Ninguna, por su eslora.","Tres balones negros."]},
+{n:18,t:"L",q:"¿Qué luces exhiben, además de las reglamentarias, los pesqueros que no son de arrastre?",c:"Dos luces todo horizonte en línea vertical: roja arriba y blanca abajo.",d:["Dos luces todo horizonte en línea vertical: verde arriba y blanca abajo.","Dos luces rojas todo horizonte en línea vertical.","Dos luces todo horizonte en línea vertical: blanca arriba y roja abajo."]},
+{n:19,t:"L",q:"¿Qué luces debe exhibir un buque sin gobierno que no tiene arrancada?",c:"Dos luces rojas todo horizonte en línea vertical, en el lugar más visible.",d:["Dos luces todo horizonte en línea vertical: verde arriba y blanca abajo.","Una luz roja y una blanca en línea vertical.","Tres luces rojas en línea vertical."]},
+{n:20,t:"L",q:"¿Qué señal deben exhibir de día los buques sin gobierno?",c:"Dos balones negros.",d:["Un balón negro.","Tres balones negros.","Un cono con el vértice hacia abajo."]},
+{n:21,t:"L",q:"¿Qué señal debe tener izada de día toda embarcación fondeada?",c:"Un balón negro.",d:["Dos balones negros.","Tres balones negros.","Un cono con el vértice hacia abajo."]},
+{n:22,t:"L",q:"¿Qué luz debe tener de noche todo buque fondeado de menos de 45,75 metros de eslora?",c:"Una luz blanca todo horizonte a proa, en el lugar más visible.",d:["Dos luces rojas todo horizonte en línea vertical.","Las luces de banda encendidas.","Una luz verde todo horizonte."],x:N50},
+{n:23,t:"L",q:"¿Qué señal debe exhibir de día todo buque varado?",c:"Tres balones negros en línea vertical.",d:["Dos balones negros.","Un balón negro.","Una marca bicónica."]},
+{n:24,t:"L",q:"¿Qué luces debe mostrar de noche un buque de menos de 45,75 metros varado?",c:"Una luz blanca todo horizonte a proa y dos luces rojas todo horizonte en línea vertical.",d:["Solo dos luces rojas en línea vertical.","Las luces de banda y una luz blanca a popa.","Tres luces rojas en línea vertical."],x:N50},
+{n:25,t:"L",q:"Las embarcaciones de menos de 7 metros de eslora fondeadas o varadas fuera de zonas de navegación, pasos o canales, ¿deben llevar las luces o señales de buque fondeado o varado?",c:"No.",d:["Sí, siempre.","Solo de noche.","Solo de día."]},
+{n:26,t:"S",q:"¿Qué se entiende por pitada corta?",c:"Un sonido de aproximadamente un segundo.",d:["Un sonido de 4 a 6 segundos.","Un sonido de 2 a 3 segundos.","Un sonido de unos 10 segundos."]},
+{n:27,t:"S",q:"¿Qué se entiende por pitada larga?",c:"Un sonido de aproximadamente 4 a 6 segundos.",d:["Un sonido de aproximadamente un segundo.","Un sonido de unos 2 segundos.","Un sonido de unos 10 segundos."]},
+{n:28,t:"S",q:"¿Qué significa una pitada corta?",c:"Caigo a estribor.",d:["Caigo a babor.","Estoy dando atrás.","No entiendo sus intenciones."]},
+{n:29,t:"S",q:"¿Qué significan dos pitadas cortas?",c:"Caigo a babor.",d:["Caigo a estribor.","Estoy dando atrás.","Pretendo alcanzarle por babor."]},
+{n:30,t:"S",q:"¿Qué significan tres pitadas cortas?",c:"Estoy dando atrás.",d:["Caigo a estribor.","Caigo a babor.","Peligro: no entiendo sus intenciones."]},
+{n:31,t:"S",q:"¿Cómo indica con destellos que caerá a estribor?",c:"Un destello.",d:["Dos destellos.","Tres destellos.","Cinco destellos."]},
+{n:32,t:"S",q:"¿Cómo indica con destellos que caerá a babor?",c:"Dos destellos.",d:["Un destello.","Tres destellos.","Cuatro destellos."]},
+{n:33,t:"S",q:"¿Cómo indica con destellos que está dando máquina atrás?",c:"Tres destellos.",d:["Un destello.","Dos destellos.","Cinco destellos."]},
+{n:34,t:"S",q:"¿Cuál es la duración aproximada de un destello?",c:"1 segundo.",d:["De 4 a 6 segundos.","Medio segundo.","3 segundos."]},
+{n:35,t:"S",q:"¿Cuál es el intervalo entre destello y destello?",c:"1 segundo.",d:["3 segundos.","10 segundos.","Medio segundo."]},
+{n:36,t:"S",q:"¿Cuál es el intervalo entre señales sucesivas?",c:"No menor de 10 segundos.",d:["1 segundo.","5 segundos.","2 minutos."]},
+{n:37,t:"S",q:"En un paso o canal angosto, ¿qué señal hace el buque que pretende alcanzar a otro por su banda de estribor?",c:"Dos pitadas largas seguidas de una corta.",d:["Dos pitadas largas seguidas de dos cortas.","Una pitada larga seguida de una corta.","Cinco pitadas cortas y rápidas."],r:"Dos pitadas largas seguidas de una corta: pretendo alcanzarle por su banda de estribor. Dos pitadas largas seguidas de dos cortas: pretendo alcanzarle por su banda de babor."},
+{n:38,t:"S",q:"¿Qué señal debe hacer todo buque que no entiende las intenciones del otro?",c:"Cinco pitadas cortas y rápidas.",d:["Tres pitadas cortas.","Una pitada larga.","Dos pitadas largas."]},
+{n:39,t:"S",q:"¿Qué señal debe hacer un buque navegando en zona de visibilidad reducida?",c:"Una pitada larga cada dos minutos.",d:["Una pitada corta cada minuto.","Tres pitadas cortas cada dos minutos.","Repiques de campana cada minuto."]},
+{n:40,t:"S",q:"En visibilidad reducida, ¿qué señal hacen los buques sin gobierno, pesqueros, veleros, con capacidad de maniobra reducida o remolcados?",c:"Una pitada larga seguida de dos cortas, con intervalo de 2 minutos.",d:["Una pitada larga cada 2 minutos.","Cinco pitadas cortas y rápidas.","Dos pitadas largas cada minuto."]},
+{n:41,t:"S",q:"¿Qué señal sonora debe hacer todo buque fondeado en zona de visibilidad reducida?",c:"Repiques de campana de unos 5 segundos, a intervalos de un minuto.",d:["Una pitada larga cada 2 minutos.","Tres pitadas cortas cada minuto.","Una pitada larga seguida de dos cortas."],r:"Repiques de campana con una duración de 5 segundos con un intervalo de más de un minuto.",x:"El cuestionario dice «más de un minuto». El reglamento internacional dice intervalos de no más de un minuto."},
+{n:42,t:"R",q:"¿Qué es la velocidad de seguridad?",c:"La que permite hacer una maniobra adecuada y eficaz para evitar un abordaje.",d:["La velocidad máxima del barco.","5 nudos, en cualquier situación.","La que fija el club para su zona."]},
+{n:43,t:"R",q:"¿Qué elementos se tienen en cuenta para determinar la velocidad de seguridad?",c:"Visibilidad, densidad del tráfico, maniobrabilidad del buque, viento, mar y corriente, y calado respecto de la profundidad.",d:["Solo la visibilidad.","La potencia del motor y la eslora.","La hora del día y la cantidad de tripulantes."]},
+{n:44,t:"R",q:"¿Cómo determina que existe riesgo de colisión con un buque que se aproxima?",c:"Si la marcación al buque que se aproxima se mantiene constante o sin variación apreciable.",d:["Si la marcación cambia rápido.","Si el otro buque es más grande.","Si el otro buque está a sotavento."]},
+{n:45,t:"R",q:"¿Cómo debe hacerse una buena maniobra para evitar un abordaje?",c:"De forma que los buques pasen a distancia segura.",d:["Lo más tarde posible, para no confundir al otro.","Solo con señales sonoras, sin cambiar el rumbo.","Bajando siempre las velas."]},
+{n:46,t:"R",q:"Si dos embarcaciones se encuentran en un canal con rumbos encontrados, ¿qué maniobra deben hacer?",c:"Arrimarse lo más posible al límite exterior del canal que les queda por estribor.",d:["Arrimarse al límite del canal que les queda por babor.","La más pequeña debe salir del canal.","Detenerse las dos hasta comunicarse."]},
+{n:47,t:"R",q:"Un buque de propulsión mecánica y un velero avanzan con riesgo de colisión en aguas libres. ¿Quién debe mantenerse apartado?",c:"El buque de propulsión mecánica.",d:["El velero.","El más pequeño.","El que está a barlovento."]},
+{n:48,t:"R",q:"¿Puede un buque cruzar un paso o canal si al hacerlo interfiere el tránsito de otro buque?",c:"No.",d:["Sí, si es un velero.","Sí, si hace las señales sonoras.","Sí, de día."]},
+{n:49,t:"R",q:"¿Pueden las embarcaciones de menos de 20 metros, o los veleros, entorpecer el tránsito de buques que solo pueden navegar con seguridad dentro de un paso o canal angosto?",c:"No.",d:["Sí, los veleros siempre tienen preferencia.","Sí, si navegan a vela.","Solo de noche."]},
+{n:50,t:"R",q:"Dos veleros se aproximan y reciben el viento por bandas contrarias. ¿Cuál debe mantenerse apartado?",c:"El que recibe el viento por babor.",d:["El que recibe el viento por estribor.","El que está a barlovento.","El de mayor eslora."]},
+{n:51,t:"R",q:"¿Puede una embarcación fondear en un canal angosto?",c:"No. Si es posible, debe salir del canal para fondear.",d:["Sí, sin restricciones.","Sí, si es de día.","Sí, si muestra la luz de fondeo."]},
+{n:52,t:"R",q:"Dos veleros navegan con rumbos cruzados, con riesgo de abordaje, y reciben el viento por la misma banda. ¿Cuál se mantiene apartado?",c:"El que está a barlovento se aparta del que está a sotavento.",d:["El que está a sotavento se aparta del de barlovento.","El que recibe el viento por estribor.","El más rápido."]},
+{n:53,t:"R",q:"¿Qué significa barlovento?",c:"La banda de donde viene el viento.",d:["La banda opuesta a la que viene el viento.","La proa del barco.","La popa del barco."]},
+{n:54,t:"R",q:"¿Qué significa sotavento?",c:"La banda opuesta a la que viene el viento.",d:["La banda de donde viene el viento.","La banda de babor.","La popa del barco."]},
+{n:55,t:"R",q:"¿Qué se considera buque que alcanza?",c:"El que se aproxima a otro desde más de 22°5' a popa del través, de modo que de noche solo vea su luz de alcance.",d:["El que se aproxima a otro desde la proa.","El que se aproxima desde 45° a proa del través.","Cualquier buque más rápido que otro."],r:"Todo buque que se aproxima a otro viniendo desde una marcación mayor de 22°5' a popa del través del buque alcanzado, de tal forma que de noche solo sea visible la luz de coronamiento y ninguna de sus luces de costado."},
+{n:56,t:"R",q:"Entre el buque que alcanza y el alcanzado, ¿cuál se mantiene apartado?",c:"El buque que alcanza.",d:["El buque alcanzado.","El de mayor eslora.","El que tiene al otro por babor."]},
+{n:57,t:"R",q:"Si un buque duda de si está alcanzando a otro o no, ¿cómo se considera?",c:"Como buque que alcanza.",d:["Como buque alcanzado.","Como situación de vuelta encontrada.","Como situación de cruce."]},
+{n:58,t:"R",q:"Dos buques navegan de vuelta encontrada, a rumbos opuestos o casi opuestos, con riesgo de colisión. ¿Qué maniobra hacen?",c:"Cada uno cae a estribor.",d:["Cada uno cae a babor.","El más pequeño se aparta.","Los dos se detienen."]},
+{n:59,t:"R",q:"De noche, ¿cómo determina que dos buques vienen de vuelta encontrada?",c:"Cuando se ven por la proa las dos luces de banda y la luz de tope.",d:["Cuando se ve solo la luz verde.","Cuando se ve solo la luz roja.","Cuando se ve la luz de alcance."]},
+{n:60,t:"R",q:"De día, ¿cómo determina que dos buques están de vuelta encontrada?",c:"Cuando por la proa se ven enfilados los palos del otro buque.",d:["Cuando se ve todo el costado del otro buque.","Cuando se ve la popa del otro buque.","Cuando el otro hace una pitada larga."]},
+{n:61,t:"R",q:"¿Qué debe hacer si duda de que exista una situación de vuelta encontrada?",c:"Proceder como si lo fuera.",d:["Proceder como si fuera un alcance.","Proceder como si fuera un cruce.","Mantener rumbo y velocidad."]},
+{n:62,t:"R",q:"Cuando dos buques se cruzan con riesgo de colisión, ¿cuál se mantiene apartado?",c:"El que tiene al otro por su banda de estribor.",d:["El que tiene al otro por su banda de babor.","El más rápido.","El de mayor eslora."]},
+{n:63,t:"R",q:"En navegación libre, ¿de qué buques se mantienen apartadas las embarcaciones con propulsión mecánica?",c:"De buques sin gobierno, con capacidad de maniobra limitada, dedicados a la pesca y a vela.",d:["Solo de los buques de guerra.","Solo de los buques más grandes.","De ninguno: en aguas libres tienen preferencia."]},
+{n:64,t:"R",q:"¿Qué precauciones debe tomar toda embarcación navegando con visibilidad reducida?",c:"Reducir a velocidad de seguridad y hacer las señales correspondientes.",d:["Aumentar la velocidad para salir rápido de la zona.","Fondear siempre hasta que mejore.","Apagar las luces para no confundir a otros."]},
+{n:65,t:"B",q:"¿Qué indica una boya de luz blanca con grupos de destellos, y cómo está pintada?",c:"Casco a pique (peligro aislado). Tiene una o más franjas rojas y marca de tope de dos esferas negras superpuestas.",d:["Aguas seguras. Franjas verticales rojas y blancas, esfera roja en el tope.","Cardinal norte. Negra sobre amarilla, dos conos negros hacia arriba.","Canal a estribor. Roja, con cono en el tope."],x:"En el sistema IALA la marca de peligro aislado es negra con una o más franjas rojas horizontales, y su luz es de grupo de dos destellos."},
+{n:66,t:"B",q:"¿Qué indica una boya de luz blanca isofásica, de ocultación o Morse «A», y cómo está pintada?",c:"Aguas seguras. Franjas verticales blancas y rojas, con una esfera roja como marca de tope.",d:["Peligro aislado. Franjas rojas y dos esferas negras en el tope.","Cardinal sur. Amarilla sobre negra, dos conos hacia abajo.","Marca especial. Amarilla, con una X en el tope."]},
+{n:67,t:"B",q:"¿Qué indica una boya de luz blanca de ritmo Q o VQ continuo, y cómo está pintada?",c:"Cardinal norte: las aguas más profundas están al norte de la boya. Negra sobre amarilla, con dos conos negros con los vértices hacia arriba.",d:["Cardinal sur: las aguas más profundas están al sur. Amarilla sobre negra, conos hacia abajo.","Aguas seguras. Franjas verticales rojas y blancas.","Peligro aislado. Negra con franjas rojas."]},
+{n:68,t:"B",q:"¿Qué boyas se dejan a estribor al entrar en un canal de acceso a puerto o al remontar un río balizado?",c:"Las boyas rojas.",d:["Las boyas verdes.","Las boyas amarillas.","Las boyas negras."],x:"Uruguay usa el sistema IALA B: al entrar a puerto, rojo a estribor y verde a babor."},
+{n:69,t:"B",q:"¿Cómo pueden ser las boyas por sus características luminosas?",c:"De destellos, fija, de ocultación, isofásica o centelleante.",d:["Solo fijas.","Solo intermitentes.","Rojas, verdes o blancas, sin otra característica."]},
+{n:70,t:"B",q:"¿De dónde se pueden obtener las características de los faros?",c:"De las cartas náuticas, los derroteros y las listas de faros.",d:["Solo de la Prefectura del puerto.","Solo del GPS.","De la guía del club."],r:"De las cartas náuticas, que dan las características lumínicas, el alcance en millas y la altura del faro; de los derroteros y de las listas de faros."},
+{n:71,t:"B",q:"¿Qué normas se siguen para estudiar una derrota?",c:"Estudiarla en la carta, cuidando especialmente que no pase sobre peligros para la navegación.",d:["Seguir la línea recta entre los dos puertos.","Preguntar en el club por dónde ir.","Usar solo el GPS durante la navegación."]},
+{n:72,t:"B",q:"¿Qué precauciones se toman para entrar o salir de puerto?",c:"Ver si el puerto está abierto o cerrado y, con paso libre, entrar o salir a velocidad de seguridad.",d:["Salir a la máxima velocidad para despejar la boca.","Hacerlo siempre de noche, con menos tránsito.","Ninguna, si la embarcación es pequeña."]},
+{n:73,t:"F",q:"¿Qué es un fondeadero?",c:"Un lugar que da buena protección de los vientos predominantes y cuyo fondo es buen tenedero.",d:["Cualquier lugar cerca de la costa.","El lugar más profundo de la zona.","Un lugar dentro de un canal balizado."]},
+{n:74,t:"F",q:"¿Cuántas veces la profundidad conviene fondear de cadena?",c:"Por lo menos 3 veces la profundidad.",d:["Una vez la profundidad.","Dos veces la profundidad.","Diez veces la profundidad."]},
+{n:75,t:"F",q:"¿Cómo se toma un fondeadero?",c:"Con la proa a la corriente o al viento, llegando sin arrancada o con arrancada atrás; se fondea el ancla y se da cadena a medida que pide.",d:["A toda marcha, soltando el ancla al pasar.","Con la popa al viento, para no perder la posición.","Soltando ancla y toda la cadena juntas, sin controlar."]},
+{n:76,t:"F",q:"¿Qué significa garrear?",c:"Que el ancla no aguanta y la embarcación la arrastra por el fondo.",d:["Que la cadena se enreda en el ancla.","Que el barco gira alrededor del ancla.","Que el ancla se suelta del barco."]},
+{n:77,t:"F",q:"¿Cómo determina que una embarcación garrea?",c:"Cuando las marcaciones a por lo menos dos puntos notables en tierra varían en forma apreciable.",d:["Cuando cambia la dirección del viento.","Cuando la cadena hace ruido.","Cuando la profundidad aumenta."]},
+{n:78,t:"F",q:"Si estando fondeado se levanta mal tiempo, ¿qué precauciones toma?",c:"Cuidar que no garree, aumentando la cadena hasta por lo menos cinco veces la profundidad.",d:["Recoger cadena para que el barco borneé menos.","Izar las velas para estar listo.","Soltar el ancla y salir a navegar."]},
+{n:79,t:"M",q:"¿Qué indica un descenso rápido de la presión atmosférica?",c:"Un cambio de tiempo, generalmente con vientos fuertes.",d:["Buen tiempo estable.","Calma.","Niebla segura."]},
+{n:80,t:"M",q:"¿Qué aspecto presentan los cumulonimbus?",c:"Grandes masas nubosas que se alzan como montañas en el horizonte, de tonos oscuros casi negros.",d:["Nubes altas, finas y blancas.","Una capa gris uniforme que cubre el cielo.","Pequeñas nubes blancas y algodonosas."]},
+{n:81,t:"M",q:"¿Qué fenómenos acompañan a los cumulonimbus?",c:"Vientos fuertes, turbonadas y, en casos excepcionales, tornados.",d:["Niebla.","Calma.","Llovizna suave y sin viento."]},
+{n:82,t:"M",q:"¿Cuál es la presión atmosférica media al nivel del mar?",c:"760 mm.",d:["1000 mm.","700 mm.","860 mm."],x:"760 mm de mercurio equivalen a unos 1013 hPa."},
+{n:83,t:"M",q:"En verano y en situaciones normales, ¿cómo rota el viento en el Río de la Plata?",c:"De noche sopla del norte, por la mañana rota por el oeste y se coloca del este-sureste.",d:["Sopla del sur todo el día.","Sopla del norte de día y del sur de noche.","No rota: se mantiene del este."]},
+{n:84,t:"M",q:"¿Por debajo de qué valor la presión puede indicar un cambio sensible del tiempo?",c:"Por debajo de 760 mm.",d:["Por debajo de 800 mm.","Por debajo de 700 mm.","Por debajo de 1013 mm."]},
+{n:85,t:"M",q:"¿Qué trae generalmente un viento norte persistente?",c:"La entrada de un frente frío, con vientos fuertes del sector sur.",d:["Buen tiempo por varios días.","Calma.","Niebla."]},
+{n:86,t:"I",q:"¿Cuáles son los tres elementos que determinan un incendio?",c:"Combustible, aire y calor.",d:["Agua, aire y calor.","Combustible, agua y luz.","Electricidad, aire y humo."]},
+{n:87,t:"I",q:"¿Cuáles son las tres clases de incendio?",c:"A: combustibles sólidos. B: combustibles líquidos. C: materiales eléctricos.",d:["A: líquidos. B: sólidos. C: eléctricos.","A: eléctricos. B: líquidos. C: sólidos.","A: metales. B: gases. C: madera."]},
+{n:88,t:"I",q:"¿Qué se usa preferentemente en un incendio de combustibles sólidos?",c:"Chorro de agua.",d:["Anhídrido carbónico.","Espuma mecánica.","Ventilar el compartimento."]},
+{n:89,t:"I",q:"¿Qué se usa preferentemente en un incendio de combustibles líquidos?",c:"Espuma mecánica.",d:["Chorro de agua.","Ventilar el compartimento.","Dejarlo consumir."]},
+{n:90,t:"I",q:"¿Qué se usa preferentemente en un incendio de materiales eléctricos?",c:"Anhídrido carbónico.",d:["Chorro de agua.","Espuma mecánica.","Un balde de agua."]},
+{n:91,t:"I",q:"¿Cuál es la primera medida ante un incendio de materiales eléctricos?",c:"Desenergizar el sistema.",d:["Echar agua.","Abrir las escotillas.","Llamar por radio antes de nada."]},
+{n:92,t:"D",q:"¿Dónde se solicita el despacho de las embarcaciones deportivas?",c:"En la Prefectura del puerto donde está la embarcación o, si no hay, en la más próxima.",d:["En la secretaría del club.","En cualquier Prefectura del país.","Por radio, una vez en el agua."]},
+{n:93,t:"D",q:"¿Qué documentación se exhibe para solicitar despacho?",c:"Certificado de matrícula, de navegabilidad, brevet y documento de identidad.",d:["Solo el brevet.","Solo el documento de identidad.","La matrícula y el seguro."]},
+{n:94,t:"D",q:"¿Dónde está autorizada a navegar una embarcación habilitada para zona «B»?",c:"En todo el Río de la Plata y una franja costera oceánica de 15 millas de ancho hasta el arroyo Chuy.",d:["Dentro de 5 millas del puerto de despacho.","Dentro de 15 millas del puerto de despacho.","En navegación oceánica."]},
+{n:95,t:"D",q:"¿Dentro de qué radio está autorizada a navegar una embarcación habilitada para zona «C»?",c:"15 millas del puerto de despacho (20 millas en el Río de la Plata superior y el río Uruguay).",d:["5 millas del puerto de despacho.","En todo el Río de la Plata.","10 millas del puerto de despacho."]},
+{n:96,t:"B",q:"¿Cuántos metros tiene una milla marina?",c:"1852 metros.",d:["1609 metros.","1000 metros.","1500 metros."]},
+{n:97,t:"D",q:"¿Cuántos salvavidas debe llevar una embarcación?",c:"Tantos como tripulantes lleve.",d:["Uno.","Dos.","La mitad de los tripulantes."]},
+{n:98,t:"D",q:"¿Para qué sirven las tiras de tela naranja que deben llevar las embarcaciones?",c:"Para colocarlas en cruz sobre cubierta al pedir auxilio.",d:["Para marcar la posición del ancla.","Para indicar que el barco está en regata.","Para atar las velas al guardarlas."]},
+{n:99,t:"D",q:"¿Para qué sirve el espejo que deben llevar las embarcaciones?",c:"Para llamar la atención reflejando los rayos del sol.",d:["Para revisar el casco bajo el agua.","Para mirar el tope del mástil.","Para tomar marcaciones."]},
+{n:100,t:"B",q:"¿A cuántos metros equivale una braza (fathom)?",c:"1,83 metros.",d:["1,52 metros.","1 metro.","2,50 metros."]}
+];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let state=store.get("brevet_estado",{}); // n -> 1 acertada, 0 fallada
+function mark(n,ok){state[n]=ok?1:0;store.set("brevet_estado",state);drawProgress()}
+function drawProgress(){const m=QS.filter(q=>state[q.n]===1).length;$("#mastered").textContent=m+" de 100 dominadas";$("#bar").style.width=m+"%"}
+function opts(q){return shuffle([{t:q.c,ok:true},...q.d.map(t=>({t,ok:false}))])}
+function explainHTML(q,ok){return `<div class="explain">${ok===undefined?"":`<b class="${ok?"ok":"bad"}">${ok?"Correcto.":"No es esa."}</b>`}
+  <div class="official"><span>Respuesta del cuestionario · pregunta ${q.n}</span>${esc(q.r||q.c)}</div>${q.x?`<div class="note">${esc(q.x)}</div>`:""}</div>`}
+
+/* pestañas */
+const tabs={prac:["#t-prac","#p-prac"],flash:["#t-flash","#p-flash"],exam:["#t-exam","#p-exam"]};
+function show(k){for(const [n,[t,p]] of Object.entries(tabs)){$(t).setAttribute("aria-selected",n===k);$(p).hidden=n!==k}store.set("brevet_tab",k);if(k==="exam"&&!exam)examIntro()}
+$("#t-prac").onclick=()=>show("prac");$("#t-flash").onclick=()=>show("flash");$("#t-exam").onclick=()=>show("exam");
+
+/* chips de temas */
+function chipList(el,cur,onPick){
+  const keys=["T",...Object.keys(TEMAS),"X"];
+  const label=k=>k==="T"?"Todas":k==="X"?"Falladas":TEMAS[k];
+  const count=k=>pool(k).length;
+  el.innerHTML=keys.map(k=>`<button class="chip" aria-pressed="${k===cur}" data-k="${k}">${label(k)} <small>${count(k)}</small></button>`).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>onPick(b.dataset.k));
+}
+function pool(k){return k==="T"?QS:k==="X"?QS.filter(q=>state[q.n]===0):QS.filter(q=>q.t===k)}
+
+/* practicar */
+let pt=store.get("brevet_tema","T"),pq=[],pi=0;
+function startPrac(k){pt=k;store.set("brevet_tema",k);chipList($("#temas"),pt,startPrac);pq=shuffle(pool(k));pi=0;drawPrac()}
+function drawPrac(){const c=$("#prac");
+  if(!pq.length){c.innerHTML=`<p class="q">No tiene preguntas falladas.</p><p class="small">Cuando falle alguna en la práctica o en el simulacro, aparece en este filtro para repasarla.</p>`;return}
+  if(pi>=pq.length){c.innerHTML=`<p class="q">Terminó las ${pq.length} preguntas de este tema.</p><button class="primary" id="again">Empezar de nuevo</button>`;$("#again").onclick=()=>startPrac(pt);return}
+  const q=pq[pi],o=opts(q);
+  c.innerHTML=`<div class="meta"><span class="tag">${TEMAS[q.t]}</span><span>${pi+1} / ${pq.length}</span></div>
+  <p class="q">${esc(q.q)}</p><div class="opts">${o.map((x,i)=>`<button class="opt" data-i="${i}">${esc(x.t)}</button>`).join("")}</div><div id="pfb"></div>`;
+  c.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=o[+b.dataset.i].ok;mark(q.n,ok);
+    c.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(o[j].ok)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
+    $("#pfb").innerHTML=explainHTML(q,ok)+`<div style="height:12px"></div><button class="primary" id="pnext">Siguiente</button>`;
+    $("#pnext").onclick=()=>{pi++;drawPrac();chipList($("#temas"),pt,startPrac)};$("#pnext").focus()})}
+
+/* tarjetas */
+let ft=store.get("brevet_tema_t","T"),fq=[],fi=0;
+function startFlash(k){ft=k;store.set("brevet_tema_t",k);chipList($("#temas2"),ft,startFlash);fq=shuffle(pool(k));fi=0;drawFlash()}
+function drawFlash(){const c=$("#flash");
+  if(!fq.length){c.innerHTML=`<p class="q">No tiene preguntas falladas.</p>`;return}
+  if(fi>=fq.length){c.innerHTML=`<p class="q">Repasó las ${fq.length} tarjetas.</p><button class="primary" id="fagain">Otra vuelta</button>`;$("#fagain").onclick=()=>startFlash(ft);return}
+  const q=fq[fi];
+  c.innerHTML=`<div class="meta"><span class="tag">${TEMAS[q.t]}</span><span>${fi+1} / ${fq.length}</span></div>
+  <p class="q">${esc(q.q)}</p><p class="small">Piense la respuesta antes de darla vuelta.</p><button class="primary" id="flip">Ver respuesta</button><div id="fans"></div>`;
+  $("#flip").onclick=()=>{$("#flip").hidden=true;
+    $("#fans").innerHTML=`<div class="flash-a">${esc(q.r||q.c)}</div>${q.x?`<div class="note" style="margin-top:8px">${esc(q.x)}</div>`:""}<div style="height:12px"></div><div class="row"><button class="ghost" id="no">No la sabía</button><button class="primary" id="si">La sabía</button></div>`;
+    $("#si").onclick=()=>{mark(q.n,true);fi++;drawFlash();chipList($("#temas2"),ft,startFlash)};
+    $("#no").onclick=()=>{mark(q.n,false);fi++;drawFlash();chipList($("#temas2"),ft,startFlash)};$("#si").focus()}}
+
+/* simulacro */
+let exam=null;
+function examIntro(){exam=null;const best=store.get("brevet_mejor",null);
+  $("#exam").innerHTML=`<p class="eyebrow">Simulacro de examen</p><p class="q">20 preguntas al azar de todos los temas, sin ver la respuesta hasta el final.</p>
+  <p class="small">${best===null?"Todavía no hizo ningún simulacro.":"Su mejor resultado: "+best+" de 20."}</p><button class="primary" id="go">Empezar simulacro</button>`;
+  $("#go").onclick=()=>{exam={qs:shuffle(QS).slice(0,20).map(q=>({q,o:opts(q),pick:null})),i:0};drawExam()}}
+function drawExam(){const c=$("#exam");
+  if(exam.i>=exam.qs.length)return endExam();
+  const it=exam.qs[exam.i];
+  c.innerHTML=`<div class="meta"><span class="tag">${TEMAS[it.q.t]}</span><span>${exam.i+1} / 20</span></div><p class="q">${esc(it.q.q)}</p>
+  <div class="opts">${it.o.map((x,i)=>`<button class="opt" data-i="${i}">${esc(x.t)}</button>`).join("")}</div>`;
+  c.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{it.pick=+b.dataset.i;mark(it.q.n,it.o[it.pick].ok);exam.i++;drawExam();window.scrollTo({top:0})})}
+function endExam(){const ok=exam.qs.filter(it=>it.o[it.pick].ok).length;const best=store.get("brevet_mejor",null);if(best===null||ok>best)store.set("brevet_mejor",ok);
+  const msg=ok>=18?"Muy bien. Está para rendir.":ok>=14?"Buen nivel. Repase las que falló con el filtro «Falladas».":"Conviene practicar por tema y volver a intentarlo.";
+  $("#exam").innerHTML=`<p class="eyebrow">Resultado</p><div class="big">${ok}<span style="font-size:1.4rem;color:var(--muted)"> / 20</span></div><p>${msg}</p>
+  <div class="row"><button class="primary" id="re">Otro simulacro</button></div><div class="review">${exam.qs.map((it,i)=>{const g=it.o[it.pick].ok;
+    return `<div class="rev ${g?"ok":"bad"}"><b>${i+1}. ${g?"Bien":"Mal"}</b> · ${esc(it.q.q)}<br><span class="small">${g?"":"Usted eligió: "+esc(it.o[it.pick].t)+"<br>"}Respuesta: ${esc(it.q.r||it.q.c)}</span></div>`}).join("")}</div>`;
+  $("#re").onclick=()=>{exam={qs:shuffle(QS).slice(0,20).map(q=>({q,o:opts(q),pick:null})),i:0};drawExam()}}
+
+drawProgress();startPrac(pt);startFlash(ft);show(store.get("brevet_tab","prac"));
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revisión de seguridad | Ignacio Porrini</title>
+<meta name="description" content="Lista de revisión de seguridad para veleros pequeños y microtoners: traba de orza, flotación, remos, fondeo, chalecos, señales y documentación. Para usar en el celular antes de salir a navegar.">
+<link rel="canonical" href="https://ignacioporrini.github.io/revision-seguridad.html">
+<link rel="icon" href="favicon.ico">
+<meta name="author" content="Ignacio Porrini">
+<meta name="twitter:card" content="summary">
+<meta property="og:title" content="Revisión de seguridad para veleros pequeños">
+<meta property="og:description" content="Lista para revisar un microtoner o un velero pequeño desde el celular: orza, flotación, remos, fondeo, chalecos, señales y documentación.">
+<meta property="og:image" content="https://ignacioporrini.github.io/img/nacho-nautico.jpg">
+<meta property="og:url" content="https://ignacioporrini.github.io/revision-seguridad.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: lista de chequeo en una columna, pensada para el pulgar; estado OK/Falta con color y con texto */
+:root{
+  --bg:#EDF2F5; --surface:#FFFFFF; --ink:#0E2433; --muted:#4F6676; --line:#C9D6DE;
+  --sea:#0F4C6E; --flag:#E8B400; --flag-ink:#2A2100; --ok:#1F7A4D; --bad:#B3261E;
+  --ok-bg:#E3F3EA; --bad-bg:#FBE7E5;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --bad:#F08A82;
+  --ok-bg:#12301F; --bad-bg:#3A1A18; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.back{font:600 14px var(--body);color:var(--sea);text-decoration:none}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;margin:0;color:var(--sea);text-wrap:balance}
+h1 span{color:var(--ink)}
+h2{font-family:var(--display);font-weight:600;font-size:1.35rem;margin:0}
+.lede{color:var(--muted);margin:4px 0 0}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+label{font-weight:600;font-size:14px}
+input[type=text]{font:16px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--flag);color:var(--flag-ink);border-color:var(--flag)}
+.counts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.count{background:var(--bg);border-radius:9px;padding:8px 4px}
+.count b{display:block;font-family:var(--display);font-weight:800;font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.count span{font-size:13px;color:var(--muted)}
+.count.ok b{color:var(--ok)} .count.bad b{color:var(--bad)}
+.section{display:flex;flex-direction:column;gap:8px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:10px 12px}
+.item.ok{border-left-color:var(--ok)} .item.bad{border-left-color:var(--bad)}
+.item p{margin:0}
+.src{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.src.P{color:var(--sea)}
+.toggles{display:flex;gap:6px}
+.toggles button{font:700 14px var(--body);min-width:58px;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.toggles button.okb[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.toggles button.badb[aria-pressed="true"]{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.primary{font:700 16px var(--body);background:var(--sea);color:var(--bg);border:0;border-radius:9px;padding:13px 16px;cursor:pointer}
+.ghost{font:600 15px var(--body);background:none;color:var(--sea);border:1px solid var(--line);border-radius:9px;padding:11px 16px;cursor:pointer}
+.ghost.warn{color:var(--bad);border-color:var(--bad)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 150px}
+.small{font-size:14px;color:var(--muted);margin:0}
+textarea{width:100%;font:14px/1.4 var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;min-height:120px}
+footer{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--sea)}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-YZMZTJDH70');
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"Revisión de seguridad para veleros pequeños","url":"https://ignacioporrini.github.io/revision-seguridad.html","inLanguage":"es","description":"Lista de revisión de seguridad para microtoners y veleros pequeños antes de salir a navegar.","author":{"@type":"Person","name":"Ignacio Porrini","url":"https://ignacioporrini.github.io/"}}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="nautica.html">← Volver a Náutica</a>
+  <header>
+    <p class="eyebrow">Seguridad · veleros pequeños</p>
+    <h1>Revisión de <span>seguridad</span></h1>
+    <p class="lede">Una lista para recorrer el barco con el celular en la mano: orza, flotación, remos, fondeo, chalecos, señales y papeles. Marque cada punto como OK o Falta, y al final copie el resumen para mandárselo al patrón.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="barco-l">
+    <label id="barco-l" for="barco">Barco que está revisando</label>
+    <input type="text" id="barco" placeholder="Nombre del barco" autocomplete="off">
+    <div class="chips" id="guardados" aria-label="Revisiones guardadas en este celular"></div>
+    <div class="counts" aria-live="polite">
+      <div class="count ok"><b id="c-ok">0</b><span>OK</span></div>
+      <div class="count bad"><b id="c-bad">0</b><span>Falta</span></div>
+      <div class="count"><b id="c-none">0</b><span>Sin revisar</span></div>
+    </div>
+    <div class="chips" role="group" aria-label="Mostrar">
+      <button class="chip" id="f-all" aria-pressed="true">Toda la lista</button>
+      <button class="chip" id="f-pend" aria-pressed="false">Solo lo pendiente</button>
+    </div>
+  </section>
+
+  <div id="lista" style="display:flex;flex-direction:column;gap:18px"></div>
+
+  <section class="panel" aria-labelledby="res-t">
+    <h2 id="res-t">Resumen</h2>
+    <p class="small">Copie el resumen y péguelo en WhatsApp para el patrón o el dueño del barco.</p>
+    <textarea id="resumen" readonly aria-label="Resumen de la revisión"></textarea>
+    <div class="row">
+      <button class="primary" id="copiar">Copiar resumen</button>
+      <button class="ghost" id="nueva">Empezar una revisión nueva</button>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Origen de cada punto.</b> <span class="src P">Prefectura</span>: elementos que pide la Prefectura Nacional Naval (Disposición Marítima 165 y cuestionario del Brevet). <span class="src">Clase Micro</span>: lo que exige el reglamento de la clase Micro a los microtoners. <span class="src">Recomendado</span>: práctica de navegantes con experiencia.</p>
+    <p>La lista es una guía de revisión y no reemplaza la inspección de Prefectura. Las cantidades exigidas dependen de la zona de navegación: confírmelas en la Prefectura de su puerto. Las revisiones quedan guardadas solo en este celular.</p>
+    <p>Para preparar el examen: <a href="cuestionario-brevet.html">Cuestionario Brevet</a> · <a href="nautica.html">Centro de Estudios Náuticos</a>.</p>
+  </footer>
+</div>
+
+<script>
+const LISTA=[{"s":"Orza","items":[["Traba de la orza abajo, firme y confiable","M"],["Traba de la orza arriba","M"],["Cabo o cable de izado de la orza sin desgaste","R"],["Perno o pivote de la orza firme, sin juego","R"],["Caja de orza sin pérdidas de agua","R"]]},{"s":"Casco, flotación y achique","items":[["Flotación de espuma fija, sin bolsas inflables","M"],["Escotillas y tambuchos cierran bien","R"],["Achicador o bomba de achique manual","P"],["Balde de 10 litros o más, con asa y cabo de 1,5 m","M"]]},{"s":"Propulsión auxiliar","items":[["Remo de popa o par de remos de 1,20 m o más","M"],["Chumaceras en su lugar","M"],["Motor fuera de borda, si tiene: arranca y tiene combustible","R"]]},{"s":"Fondeo y remolque","items":[["Ancla de 5 kg o más","M"],["5 m de cadena de 6 mm","M"],["20 m de cabo de 10 mm para fondear","M"],["Cabo de remolque de 10 m y 10 mm","M"],["Cabos de amarre","P"],["Puntos de amarre firmes en proa y popa","M"]]},{"s":"Personas a bordo","items":[["Un chaleco por tripulante, con luz y silbato","P"],["Salvavidas de aro o de herradura","M"],["Bichero de 1,10 m o más","P"],["Cuchillo a mano en el cockpit","R"]]},{"s":"Señales y comunicación","items":[["VHF (puede ser portátil), con escucha en canal 16","P"],["Celular en funda estanca","R"],["2 bengalas de mano vigentes","P"],["2 cohetes con paracaídas vigentes","P"],["Pito o bocina","P"],["Reflector de radar","P"],["Linterna estanca con pilas de repuesto","P"],["Espejo de señales","P"],["Tiras de tela naranja para pedir auxilio","P"],["Luces de navegación funcionando","P"]]},{"s":"Jarcia y gobierno","items":[["Obenques y estay sin hilos cortados","R"],["Tensores con chaveta o cinta","R"],["Timón y caña firmes, con su pasador","R"],["Drizas y escotas sanas","R"]]},{"s":"Documentación","items":[["Matrícula, certificado de navegabilidad y brevet a bordo","P"],["Despacho hecho antes de salir","P"]]}];
+const ORIGEN={P:"Prefectura",M:"Clase Micro",R:"Recomendado"};
+const ITEMS=[];LISTA.forEach((s,si)=>s.items.forEach((it,ii)=>ITEMS.push({id:si+"-"+ii,s:s.s,t:it[0],o:it[1]})));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let todas=store.get("revision_todas",{}); // nombre -> {fecha, marcas:{id:'ok'|'bad'}}
+let actual=store.get("revision_actual","");
+let soloPend=false,confirmar=false;
+const key=n=>n.trim().toLowerCase();
+function rev(){const k=key(actual);if(!todas[k])todas[k]={nombre:actual.trim()||"Sin nombre",fecha:new Date().toISOString().slice(0,10),marcas:{}};return todas[k]}
+function guardar(){store.set("revision_todas",todas);store.set("revision_actual",actual)}
+
+function dibujar(){
+  const r=rev(),m=r.marcas;
+  const lista=$("#lista");lista.innerHTML="";
+  LISTA.forEach((s,si)=>{
+    const items=ITEMS.filter(i=>i.s===s.s&&(!soloPend||m[i.id]!=="ok"));
+    if(!items.length)return;
+    const sec=document.createElement("section");sec.className="section";
+    sec.innerHTML=`<h2>${esc(s.s)}</h2>`+items.map(i=>{const st=m[i.id]||"";
+      return `<div class="item ${st}"><div><p>${esc(i.t)}</p><span class="src ${i.o}">${ORIGEN[i.o]}</span></div>
+      <div class="toggles"><button class="okb" data-id="${i.id}" data-v="ok" aria-pressed="${st==="ok"}" aria-label="OK: ${esc(i.t)}">OK</button><button class="badb" data-id="${i.id}" data-v="bad" aria-pressed="${st==="bad"}" aria-label="Falta: ${esc(i.t)}">Falta</button></div></div>`}).join("");
+    lista.append(sec)});
+  if(!lista.children.length)lista.innerHTML=`<div class="panel"><p style="margin:0">Todo marcado como OK. Buen viento.</p></div>`;
+  lista.querySelectorAll(".toggles button").forEach(b=>b.onclick=()=>{const id=b.dataset.id,v=b.dataset.v;
+    if(m[id]===v)delete m[id];else m[id]=v;r.fecha=new Date().toISOString().slice(0,10);guardar();dibujar()});
+  const ok=ITEMS.filter(i=>m[i.id]==="ok").length,bad=ITEMS.filter(i=>m[i.id]==="bad").length;
+  $("#c-ok").textContent=ok;$("#c-bad").textContent=bad;$("#c-none").textContent=ITEMS.length-ok-bad;
+  const f=r.fecha.split("-").reverse().join("/");
+  let txt=`Revisión de seguridad · ${r.nombre} · ${f}\nOK: ${ok} · Falta: ${bad} · Sin revisar: ${ITEMS.length-ok-bad}`;
+  const faltan=ITEMS.filter(i=>m[i.id]==="bad");
+  if(faltan.length)txt+="\n\nFalta:\n"+faltan.map(i=>"- "+i.t).join("\n");
+  txt+="\n\nLista completa: ignacioporrini.github.io/revision-seguridad.html";
+  $("#resumen").value=txt;
+  dibujarGuardados();
+}
+function dibujarGuardados(){
+  const ks=Object.keys(todas).filter(k=>Object.keys(todas[k].marcas).length||k===key(actual));
+  $("#guardados").innerHTML=ks.length>1?ks.map(k=>`<button class="chip" data-k="${esc(k)}" aria-pressed="${k===key(actual)}">${esc(todas[k].nombre)}</button>`).join(""):"";
+  $("#guardados").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{actual=todas[b.dataset.k].nombre;$("#barco").value=actual;guardar();dibujar()});
+}
+$("#barco").value=actual;
+$("#barco").addEventListener("change",e=>{const viejo=key(actual),nuevo=e.target.value;
+  if(todas[viejo]&&!todas[key(nuevo)]&&!Object.keys(todas[viejo].marcas).length)delete todas[viejo];
+  actual=nuevo;const r=rev();r.nombre=nuevo.trim()||"Sin nombre";guardar();dibujar()});
+$("#f-all").onclick=()=>{soloPend=false;$("#f-all").setAttribute("aria-pressed","true");$("#f-pend").setAttribute("aria-pressed","false");dibujar()};
+$("#f-pend").onclick=()=>{soloPend=true;$("#f-pend").setAttribute("aria-pressed","true");$("#f-all").setAttribute("aria-pressed","false");dibujar()};
+$("#copiar").onclick=async e=>{const t=$("#resumen");try{await navigator.clipboard.writeText(t.value);e.target.textContent="Copiado"}catch(err){t.focus();t.select();e.target.textContent="Texto seleccionado: cópielo"}setTimeout(()=>e.target.textContent="Copiar resumen",2500)};
+$("#nueva").onclick=e=>{if(!confirmar){confirmar=true;e.target.textContent="Toque otra vez para borrar las marcas";e.target.classList.add("warn");setTimeout(()=>{confirmar=false;e.target.textContent="Empezar una revisión nueva";e.target.classList.remove("warn")},4000);return}
+  confirmar=false;const r=rev();r.marcas={};r.fecha=new Date().toISOString().slice(0,10);guardar();e.target.textContent="Empezar una revisión nueva";e.target.classList.remove("warn");dibujar()};
+dibujar();
+</script>
+</body>
+</html>
