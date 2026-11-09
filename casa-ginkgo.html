@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Casa Ginkgo</title>
+<meta name="description" content="Espacio de expresión y maestría personal: Tai Chi estilo Yang y Yin Yoga.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: una columna calma, como un cuaderno de práctica; dorado de hoja de ginkgo en otoño como único acento */
+:root{
+  --bg:#EEF1E8; --surface:#FAFBF6; --ink:#1F2A1C; --muted:#5B6853; --line:#D3DACB;
+  --leaf:#4F6F33; --gold:#B7861A; --gold-bg:#F6ECD2; --on-leaf:#FFFFFF;
+  --display:"Zen Old Mincho","Georgia",serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121610; --surface:#1A2017; --ink:#E7ECDF; --muted:#A3AE98; --line:#2E3828;
+  --leaf:#9CC173; --gold:#E3B850; --gold-bg:#33290F; --on-leaf:#121610; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121610; --surface:#1A2017; --ink:#E7ECDF; --muted:#A3AE98; --line:#2E3828;
+  --leaf:#9CC173; --gold:#E3B850; --gold-bg:#33290F; --on-leaf:#121610; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+.wrap{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+p{margin:0}
+h1{font:700 2.6rem/1.05 var(--display);margin:0;text-wrap:balance}
+h2{font:700 1.45rem/1.2 var(--display);margin:0;text-wrap:balance}
+h3{font:600 1.05rem/1.3 var(--body);margin:0}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+header{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:center}
+header svg{width:76px;height:auto}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav button{font:600 15px var(--body);border:0;background:none;color:var(--muted);padding:10px 6px;border-radius:999px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--leaf);color:var(--on-leaf)}
+button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.list li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.list li:first-child{border-top:0}
+.n{font:500 13px var(--mono);color:var(--gold);padding-top:2px;font-variant-numeric:tabular-nums}
+.form li{grid-template-columns:34px minmax(0,1fr) auto;align-items:center}
+.state{font:600 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+.state[data-s="1"]{border-color:var(--gold);background:var(--gold-bg);color:var(--ink)}
+.state[data-s="2"]{border-color:var(--leaf);background:var(--leaf);color:var(--on-leaf)}
+.meter{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--leaf);width:0}
+@media (prefers-reduced-motion:no-preference){.meter i{transition:width .4s}}
+.timer{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:8px 0}
+.clock{font:500 3.4rem/1 var(--mono);font-variant-numeric:tabular-nums;color:var(--leaf)}
+.pose{font:700 1.6rem/1.2 var(--display)}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.primary{font:600 16px var(--body);background:var(--leaf);color:var(--on-leaf);border:0;border-radius:999px;padding:12px 22px;cursor:pointer}
+.ghost{font:600 15px var(--body);background:none;color:var(--leaf);border:1px solid var(--leaf);border-radius:999px;padding:10px 18px;cursor:pointer}
+select{font:500 15px var(--body);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.note{background:var(--gold-bg);border-radius:10px;padding:12px 14px;font-size:14px}
+.cue{color:var(--muted);font-size:15px;max-width:44ch}
+.mark{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center}
+.mark svg{width:120px;height:auto}
+footer{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 100 110">
+    <path d="M50 92 C43 74 16 62 9 38 Q24 10 44 16 L50 30 L56 16 Q76 10 91 38 C84 62 57 74 50 92 Z" fill="var(--gold)"/>
+    <g stroke="var(--leaf)" stroke-width="1.6" fill="none" opacity=".55"><path d="M50 88 L50 32"/><path d="M50 86 L30 30"/><path d="M50 86 L70 30"/><path d="M50 88 L18 44"/><path d="M50 88 L82 44"/></g>
+    <g stroke="var(--ink)" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="M37 50 q5 4 10 0"/><path d="M53 50 q5 4 10 0"/></g>
+    <path d="M50 92 C51 100 47 106 39 105" stroke="var(--leaf)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 100 110" role="img" aria-label="Logo de Casa Ginkgo: una hoja de ginkgo con cara de gato dormido"><use href="#logo"/></svg>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+      <p class="eyebrow">Espacio de expresión y maestría personal</p>
+      <h1>Casa Ginkgo</h1>
+      <p class="muted">Tai Chi estilo Yang y Yin Yoga para practicar en casa, a su ritmo.</p>
+    </div>
+  </header>
+
+  <nav role="tablist" aria-label="Secciones">
+    <button role="tab" id="t-taichi" aria-selected="true" data-v="taichi">Tai Chi</button>
+    <button role="tab" id="t-yin" aria-selected="false" data-v="yin">Yin Yoga</button>
+    <button role="tab" id="t-casa" aria-selected="false" data-v="casa">La casa</button>
+  </nav>
+
+  <!-- TAI CHI -->
+  <section id="v-taichi" role="tabpanel" aria-labelledby="t-taichi" style="display:flex;flex-direction:column;gap:18px">
+    <div class="panel">
+      <p class="eyebrow">Forma de 24 movimientos · estilo Yang</p>
+      <h2>Mi forma</h2>
+      <p class="small muted">La forma simplificada de Beijing (1956) se basa en el estilo Yang. Toque cada movimiento para marcar si lo está aprendiendo o si ya lo sabe. Queda guardado en este teléfono.</p>
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="meter" aria-hidden="true"><i id="form-bar"></i></div><p class="small" id="form-count" aria-live="polite"></p></div>
+      <ol class="list form" id="form"></ol>
+    </div>
+    <div class="panel">
+      <p class="eyebrow">Yang Chengfu · los 10 puntos esenciales</p>
+      <h2>Principios para cada práctica</h2>
+      <ol class="list" id="principios"></ol>
+    </div>
+  </section>
+
+  <!-- YIN -->
+  <section id="v-yin" role="tabpanel" aria-labelledby="t-yin" hidden style="display:flex;flex-direction:column;gap:18px">
+    <div class="panel">
+      <p class="eyebrow">Práctica guiada</p>
+      <h2>Sesión de Yin Yoga</h2>
+      <div class="row" style="justify-content:flex-start">
+        <label for="hold" class="small">Permanencia por postura</label>
+        <select id="hold"><option value="2">2 min</option><option value="3" selected>3 min</option><option value="4">4 min</option><option value="5">5 min</option></select>
+        <span class="small muted" id="total"></span>
+      </div>
+      <div class="timer">
+        <p class="eyebrow" id="step"></p>
+        <p class="pose" id="pose"></p>
+        <p class="clock" id="clock" aria-live="off">03:00</p>
+        <p class="cue" id="cue"></p>
+        <div class="row"><button class="primary" id="play">Empezar</button><button class="ghost" id="skip">Siguiente</button><button class="ghost" id="reset">Reiniciar</button></div>
+        <p class="small muted">Suena una campana suave al cambiar de postura.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <p class="eyebrow">Paul Grilley y Sarah Powers</p>
+      <h2>Las tres claves del Yin</h2>
+      <ol class="list">
+        <li><span class="n">1</span><p><b>Llegar a un borde adecuado.</b> Entrar en la postura hasta sentir un estiramiento claro, nunca dolor. Usar almohadones o mantas para apoyar.</p></li>
+        <li><span class="n">2</span><p><b>Quedarse quieto.</b> Soltar los músculos y no acomodarse a cada rato. La quietud deja trabajar a los tejidos profundos.</p></li>
+        <li><span class="n">3</span><p><b>Sostener en el tiempo.</b> De 3 a 5 minutos por postura. Salir despacio y descansar un momento antes de la siguiente.</p></li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h2>Las posturas de la sesión</h2>
+      <ol class="list" id="poses"></ol>
+      <p class="note">Práctica general, no reemplaza la guía de un docente. Si tiene lesiones, embarazo o dolor, consulte antes y use las variantes más suaves.</p>
+    </div>
+  </section>
+
+  <!-- CASA -->
+  <section id="v-casa" role="tabpanel" aria-labelledby="t-casa" hidden style="display:flex;flex-direction:column;gap:18px">
+    <div class="panel">
+      <h2>Qué es Casa Ginkgo</h2>
+      <p>Un espacio en casa para la expresión y la maestría personal: moverse despacio, respirar, pintar, hacer música. Toma el nombre del árbol ginkgo, que lleva millones de años en la Tierra, y del gato de la casa.</p>
+      <p>Esta página reúne la base para quien viene a practicar: la forma de Tai Chi, sus principios y una sesión de Yin Yoga para seguir con el teléfono.</p>
+    </div>
+    <div class="panel">
+      <p class="eyebrow">Propuesta de logo</p>
+      <div class="mark">
+        <svg viewBox="0 0 100 110" role="img" aria-label="Logo propuesto"><use href="#logo"/></svg>
+        <p class="small">Una hoja de ginkgo con el corte del centro como orejas de gato, ojos cerrados de gato dormido y el tallo como cola. Es un boceto, para reemplazar o ajustar con el logo que usted ya tiene.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Para la próxima versión</h2>
+      <ul class="list">
+        <li><span class="n">·</span><p>Días y horarios de práctica en la casa.</p></li>
+        <li><span class="n">·</span><p>Cómo anotarse y qué traer: ropa cómoda, manta, almohadón.</p></li>
+        <li><span class="n">·</span><p>Fotos del espacio y del gato Ginkgo.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Casa Ginkgo · Ignacio Porrini · Borrador de trabajo</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const store={get(k,v){try{const s=localStorage.getItem(k);return s===null?v:JSON.parse(s)}catch(e){return v}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* Tabs */
+const tabs=[...document.querySelectorAll('nav button')];
+function show(v){tabs.forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-selected',on);$('v-'+b.dataset.v).hidden=!on});store.set('cg-tab',v)}
+tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
+
+/* Forma 24 */
+const FORMA=["Apertura","Separar la crin del caballo salvaje (3 veces)","La grulla blanca extiende las alas","Cepillar la rodilla y empujar (3 veces)","Tocar el laúd","Retroceder rechazando al mono (4 veces)","Agarrar la cola del pájaro, a la izquierda","Agarrar la cola del pájaro, a la derecha","Látigo simple","Manos como nubes (3 veces)","Látigo simple","Acariciar alto al caballo","Patada con el talón derecho","Golpear las orejas del oponente con ambos puños","Girar y patada con el talón izquierdo","Serpiente que se arrastra y gallo dorado sobre la pierna izquierda","Serpiente que se arrastra y gallo dorado sobre la pierna derecha","La doncella de jade teje a ambos lados","Aguja en el fondo del mar","Abrir el abanico a través de la espalda","Girar, desviar, parar y golpear","Cierre aparente","Cruzar las manos","Cierre"];
+const LABEL=["Por aprender","Aprendiendo","La sé"];
+let st=store.get('cg-forma',FORMA.map(()=>0));
+function renderForma(){$('form').innerHTML='';FORMA.forEach((m,i)=>{const li=document.createElement('li');li.innerHTML=`<span class="n">${String(i+1).padStart(2,'0')}</span><span>${m}</span>`;const b=document.createElement('button');b.className='state';b.dataset.s=st[i];b.textContent=LABEL[st[i]];b.setAttribute('aria-label',`${m}: ${LABEL[st[i]]}. Tocar para cambiar`);b.onclick=()=>{st[i]=(st[i]+1)%3;store.set('cg-forma',st);renderForma()};li.append(b);$('form').append(li)});
+  const ok=st.filter(s=>s===2).length,mid=st.filter(s=>s===1).length;$('form-bar').style.width=(ok/24*100)+'%';$('form-count').textContent=`${ok} de 24 aprendidos · ${mid} en práctica`}
+renderForma();
+
+const PRIN=[["Cabeza erguida","La coronilla sube sin rigidez, como suspendida de un hilo."],["Pecho suelto, espalda redondeada","No sacar pecho; dejar que la espalda se abra."],["Relajar la cintura","La cintura manda el movimiento y gira libre."],["Distinguir lleno y vacío","Saber en cada momento qué pierna lleva el peso."],["Hundir hombros y codos","Hombros caídos y codos hacia abajo, sin tensión."],["Usar la intención, no la fuerza","La mente guía; el cuerpo sigue sin esfuerzo de más."],["Arriba y abajo coordinados","Manos, cintura y pies se mueven como una sola cosa."],["Interno y externo unidos","La respiración y la atención acompañan el gesto."],["Continuidad sin cortes","Un movimiento nace del anterior, sin pausas."],["Calma en el movimiento","Moverse despacio, con la mente quieta."]];
+$('principios').innerHTML=PRIN.map((p,i)=>`<li><span class="n">${i+1}</span><p><b>${p[0]}.</b> ${p[1]}</p></li>`).join('');
+
+/* Yin */
+const POSES=[
+ {n:"Mariposa",k:1,c:"Plantas de los pies juntas, rodillas abiertas, plegarse hacia adelante sin forzar. Almohadones bajo los muslos si molestan las rodillas.",z:"Caderas y espalda baja"},
+ {n:"Esfinge",k:1,c:"Boca abajo, apoyado en los antebrazos. Si molesta la espalda baja, bajar el pecho o salir.",z:"Curva de la zona lumbar"},
+ {n:"Niño",k:.5,c:"Rodillas separadas, frente apoyada. Pausa de descanso.",z:"Descanso"},
+ {n:"Dragón, lado derecho",k:.6,c:"Pie derecho adelante, rodilla izquierda atrás sobre una manta. Bajar la cadera sin dolor.",z:"Flexores de la cadera"},
+ {n:"Dragón, lado izquierdo",k:.6,c:"Pie izquierdo adelante, rodilla derecha atrás sobre una manta.",z:"Flexores de la cadera"},
+ {n:"Cisne, lado derecho",k:1,c:"Pierna derecha doblada adelante, la otra extendida atrás. Variante suave: boca arriba, tobillo sobre la rodilla contraria.",z:"Glúteos y cadera"},
+ {n:"Cisne, lado izquierdo",k:1,c:"Pierna izquierda doblada adelante. Misma variante suave boca arriba si hace falta.",z:"Glúteos y cadera"},
+ {n:"Oruga",k:1,c:"Sentado, piernas estiradas, dejar caer el tronco. Doblar las rodillas si tira la espalda o la parte de atrás de las piernas.",z:"Espalda e isquiotibiales"},
+ {n:"Bananasana",k:.6,c:"Boca arriba, llevar pies y brazos hacia la derecha, como una banana. Después, al otro lado.",z:"Costados del cuerpo"},
+ {n:"Torsión acostado",k:.6,c:"Rodillas hacia un lado y mirada al otro. La mitad del tiempo de cada lado.",z:"Columna"},
+ {n:"Savasana",k:1.6,c:"Boca arriba, brazos y piernas sueltos. Respirar y no hacer nada.",z:"Integración"}
+];
+$('poses').innerHTML=POSES.map((p,i)=>`<li><span class="n">${String(i+1).padStart(2,'0')}</span><p><b>${p.n}</b> · <span class="muted">${p.z}</span><br><span class="small">${p.c}</span></p></li>`).join('');
+let hold=+store.get('cg-hold',3);$('hold').value=String(hold);
+let idx=0,left=0,running=false,tid=null,lock=null,ac=null;
+const dur=i=>Math.round(POSES[i].k*hold*60/10)*10;
+const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+function totalTxt(){const t=POSES.reduce((a,_,i)=>a+dur(i),0);$('total').textContent=`Sesión de unos ${Math.round(t/60)} min`}
+function load(i){idx=i;left=dur(i);const p=POSES[i];$('step').textContent=`Postura ${i+1} de ${POSES.length}`;$('pose').textContent=p.n;$('cue').textContent=p.c;$('clock').textContent=fmt(left)}
+function bell(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime;[528,792].forEach((f,j)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(.25/(j+1),t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+3);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+3)})}catch(e){}}
+async function wake(on){try{if(on&&navigator.wakeLock){lock=await navigator.wakeLock.request('screen')}else if(lock){await lock.release();lock=null}}catch(e){}}
+function tick(){left--;$('clock').textContent=fmt(Math.max(left,0));if(left<=0){bell();if(idx<POSES.length-1){load(idx+1)}else{stop();$('pose').textContent='Sesión terminada';$('cue').textContent='Quedarse un momento sentado antes de levantarse.';$('clock').textContent='00:00'}}}
+function start(){if(!ac){bell()}running=true;$('play').textContent='Pausa';tid=setInterval(tick,1000);wake(true)}
+function stop(){running=false;$('play').textContent='Seguir';clearInterval(tid);wake(false)}
+$('play').onclick=()=>running?stop():start();
+$('skip').onclick=()=>{if(idx<POSES.length-1){load(idx+1);if(running)bell()}};
+$('reset').onclick=()=>{stop();$('play').textContent='Empezar';load(0)};
+$('hold').onchange=e=>{hold=+e.target.value;store.set('cg-hold',hold);totalTxt();if(!running)load(idx)};
+totalTxt();load(0);
+
+show(store.get('cg-tab','taichi'));
+</script>
+</body>
+</html>
