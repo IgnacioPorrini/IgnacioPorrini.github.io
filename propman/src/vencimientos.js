@@ -92,3 +92,12 @@ export function avisos(properties, hoy = new Date()) {
     const urgencia = x => Math.min(PRIORIDAD[x.ajuste.estado] ?? 9, PRIORIDAD[x.fin.estado] ?? 9);
     return lista.sort((a, b) => urgencia(a) - urgencia(b) || (a.property.direccion || '').localeCompare(b.property.direccion || ''));
 }
+
+/**
+ * Nuevo monto tras aplicar un ajuste porcentual (por ejemplo el coeficiente del INE del mes).
+ * Redondea a entero en pesos y a 2 decimales en otras monedas.
+ */
+export function montoAjustado(monto, porcentaje, moneda = 'UYU') {
+    const nuevo = (Number(monto) || 0) * (1 + (Number(porcentaje) || 0) / 100);
+    return moneda === 'UYU' ? Math.round(nuevo) : Math.round(nuevo * 100) / 100;
+}

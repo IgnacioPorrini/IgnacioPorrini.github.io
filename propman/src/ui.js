@@ -433,7 +433,7 @@ function renderVencimientos() {
                     <tr class="${x.ajuste.estado === 'ajusta-este-mes' || x.fin.estado === 'vencido' ? 'row-late' : ''}">
                         <td>${escapeHtml(x.property.direccion) || '(sin dirección)'} ${x.property.origen === 'delegada' ? '<span class="badge badge-delegated">D</span>' : ''}</td>
                         <td>${x.tramo ? data.formatMonto(x.tramo.monto, x.tramo.moneda) : '—'}${x.tramo?.indice ? ` <span class="text-muted small">(${escapeHtml(x.tramo.indice)})</span>` : ''}</td>
-                        <td>${etiqueta(ETIQUETA_AJUSTE[x.ajuste.estado])}</td>
+                        <td>${etiqueta(ETIQUETA_AJUSTE[x.ajuste.estado])}${x.ajuste.estado === 'ajusta-este-mes' && x.property.origen !== 'delegada' && x.tramo ? ` <button class="btn btn-sm" data-action="calcular-ajuste" data-id="${x.property.id}"><i class="fas fa-calculator"></i> Calcular</button>` : ''}</td>
                         <td>${escapeHtml(x.ajuste.proximo || '—')}</td>
                         <td>${etiqueta(ETIQUETA_FIN[x.fin.estado])}${x.fin.dias !== null && x.fin.estado !== 'vigente' ? ` <span class="text-muted small">${x.fin.dias < 0 ? `hace ${-x.fin.dias} días` : `en ${x.fin.dias} días`}</span>` : ''}${x.property.contrato?.renovacionAuto ? ' <span class="text-muted small">(renovación automática)</span>' : ''}</td>
                         <td>${escapeHtml(x.property.contrato?.fin || '—')}</td>
@@ -442,6 +442,22 @@ function renderVencimientos() {
             </tbody>
         </table></div>
     `;
+    viewRoot().querySelectorAll('[data-action="calcular-ajuste"]').forEach(btn => btn.addEventListener('click', () => {
+        const list = storage.getProperties();
+        const prop = list.find(p => p.id === btn.dataset.id);
+        const tramo = prop && data.getTramoVigente(prop.historialAlquiler);
+        if (!tramo) return;
+        const entrada = prompt(`Ajuste de ${prop.direccion}\nAlquiler actual: ${data.formatMonto(tramo.monto, tramo.moneda)}\n\n¿Qué porcentaje de ajuste corresponde? (por ejemplo, el coeficiente del INE del mes o el que diga el contrato)`, '');
+        if (entrada === null) return;
+        const pct = Number(String(entrada).replace(',', '.').replace('%', '').trim());
+        if (!Number.isFinite(pct) || pct <= -100 || pct > 100) { alert('Escribí un porcentaje válido, por ejemplo 4,8.'); return; }
+        const nuevo = vencimientosLib.montoAjustado(tramo.monto, pct, tramo.moneda);
+        const periodo = data.todayISO().slice(0, 7);
+        if (!confirm(`Nuevo alquiler desde ${periodo}: ${data.formatMonto(nuevo, tramo.moneda)} (${pct} %).\n\n¿Lo agrego como nuevo tramo?`)) return;
+        prop.historialAlquiler = [...(prop.historialAlquiler || []), { desde: periodo, monto: nuevo, moneda: tramo.moneda, indice: tramo.indice || '' }];
+        storage.setProperties(list);
+        renderVencimientos();
+    }));
 }
 
 // ---------------------------------------------------------------------------
