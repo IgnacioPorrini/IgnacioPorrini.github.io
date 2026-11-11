@@ -138,3 +138,5 @@ legend { padding: 0 0.4rem; color: var(--text-gray); font-size: 0.85rem; }
 /* Footer */
 .app-footer { border-top: 1px solid var(--border); padding: 1.5rem 0; text-align: center; color: var(--text-gray); font-size: 0.85rem; }
 .app-footer a { display: inline-block; margin-top: 0.4rem; text-decoration: none; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
