@@ -7,6 +7,7 @@ import * as delegacionLib from './delegacion.js';
 import * as charts from './charts.js';
 import * as vencimientosLib from './vencimientos.js';
 import * as liquidacionLib from './liquidacion.js';
+import * as recibos from './recibos.js';
 
 const BACKUP_REMINDER_DIAS = 14;
 
@@ -859,6 +860,8 @@ function renderPagos() {
                         <td>
                             ${p.__origen === 'propia' ? `
                                 ${p.estado !== 'pagado' ? `<button class="btn btn-sm" data-action="marcar-pagado" data-id="${p.id}"><i class="fas fa-check"></i> Marcar pagado</button>` : ''}
+                                ${p.estado !== 'pagado' ? `<button class="btn btn-sm" data-action="aviso-wa" data-id="${p.id}" title="Abre WhatsApp con el mensaje escrito; lo enviás vos"><i class="fab fa-whatsapp"></i> Avisar</button>` : ''}
+                                ${p.estado === 'pagado' ? `<button class="btn btn-sm" data-action="recibo" data-id="${p.id}"><i class="fas fa-receipt"></i> Recibo</button>` : ''}
                                 <button class="btn btn-sm" data-action="edit-pago" data-id="${p.id}"><i class="fas fa-pen"></i></button>
                                 <button class="btn btn-sm btn-danger" data-action="delete-pago" data-id="${p.id}"><i class="fas fa-trash"></i></button>
                             ` : '<span class="text-muted small">Solo lectura</span>'}
@@ -877,6 +880,25 @@ function renderPagos() {
             if (!confirm('¿Eliminar este pago?')) return;
             storage.setPagos(storage.getPagos().filter(p => p.id !== btn.dataset.id));
             renderPagos();
+        }));
+    const contextoPago = (id) => {
+        const pago = storage.getPagos().find(x => x.id === id);
+        const property = propiedades.find(pr => pr.id === pago?.propertyId);
+        const inquilino = storage.getInquilinos().find(i => i.id === property?.inquilinoId) || property?.inquilinoDelegado || null;
+        return { pago, property, inquilino, titular: storage.getAccount()?.titular };
+    };
+    viewRoot().querySelectorAll('[data-action="aviso-wa"]').forEach(btn =>
+        btn.addEventListener('click', () => {
+            const ctx = contextoPago(btn.dataset.id);
+            if (!ctx.pago) return;
+            window.open(recibos.linkWhatsApp(ctx.inquilino?.contacto, recibos.mensajeCobro(ctx)), '_blank', 'noopener');
+        }));
+    viewRoot().querySelectorAll('[data-action="recibo"]').forEach(btn =>
+        btn.addEventListener('click', () => {
+            const ctx = contextoPago(btn.dataset.id);
+            if (!ctx.pago) return;
+            const blob = new Blob([recibos.htmlRecibo(ctx)], { type: 'text/html' });
+            window.open(URL.createObjectURL(blob), '_blank');
         }));
     viewRoot().querySelectorAll('[data-action="marcar-pagado"]').forEach(btn =>
         btn.addEventListener('click', () => {
