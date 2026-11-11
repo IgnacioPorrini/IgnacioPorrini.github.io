@@ -8,7 +8,8 @@ export const KEYS = {
     pagos: 'propman_pagos',
     gastosCompartidos: 'propman_gastosCompartidos',
     delegated: 'propman_delegated',
-    lastBackup: 'propman_lastBackup'
+    lastBackup: 'propman_lastBackup',
+    comision: 'propman_comision'
 };
 
 export const MAX_PROPIEDADES_PROPIAS = 5;
@@ -50,6 +51,9 @@ export const setDelegated = (list) => write(KEYS.delegated, list);
 export const getLastBackup = () => read(KEYS.lastBackup, null);
 export const setLastBackup = (isoDate) => write(KEYS.lastBackup, isoDate);
 
+export const getComision = () => read(KEYS.comision, 0);
+export const setComision = (pct) => write(KEYS.comision, pct);
+
 export function exportAllData() {
     return {
         account: getAccount(),
@@ -58,7 +62,8 @@ export function exportAllData() {
         movimientos: getMovimientos(),
         pagos: getPagos(),
         gastosCompartidos: getGastosCompartidos(),
-        delegated: getDelegated()
+        delegated: getDelegated(),
+        comision: getComision()
     };
 }
 
@@ -70,4 +75,5 @@ export function importAllData(data) {
     if (Array.isArray(data.pagos)) setPagos(data.pagos);
     if (Array.isArray(data.gastosCompartidos)) setGastosCompartidos(data.gastosCompartidos);
     if (Array.isArray(data.delegated)) setDelegated(data.delegated);
+    if (typeof data.comision === 'number') setComision(data.comision);
 }

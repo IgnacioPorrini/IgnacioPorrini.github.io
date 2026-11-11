@@ -6,6 +6,7 @@ import * as pagosLib from './pagos.js';
 import * as delegacionLib from './delegacion.js';
 import * as charts from './charts.js';
 import * as vencimientosLib from './vencimientos.js';
+import * as liquidacionLib from './liquidacion.js';
 
 const BACKUP_REMINDER_DIAS = 14;
 
@@ -26,6 +27,7 @@ const NAV_ITEMS = [
     { hash: '#/propiedades', label: 'Propiedades', icon: 'fa-building' },
     { hash: '#/inquilinos', label: 'Inquilinos', icon: 'fa-users' },
     { hash: '#/pagos', label: 'Pagos', icon: 'fa-file-invoice-dollar' },
+    { hash: '#/liquidacion', label: 'Liquidación', icon: 'fa-hand-holding-dollar' },
     { hash: '#/movimientos', label: 'Movimientos', icon: 'fa-right-left' },
     { hash: '#/gastos', label: 'Gastos compartidos', icon: 'fa-scale-balanced' },
     { hash: '#/delegacion', label: 'Delegación', icon: 'fa-key' },
@@ -58,6 +60,7 @@ function route() {
         propiedades: renderPropiedades,
         inquilinos: renderInquilinos,
         pagos: renderPagos,
+        liquidacion: renderLiquidacion,
         movimientos: renderMovimientos,
         gastos: renderGastos,
         delegacion: renderDelegacion,
@@ -436,6 +439,75 @@ function renderVencimientos() {
             </tbody>
         </table></div>
     `;
+}
+
+// ---------------------------------------------------------------------------
+// Liquidación al propietario (cobrado − comisión − gastos, por mes)
+// ---------------------------------------------------------------------------
+
+function renderLiquidacion() {
+    const params = new URLSearchParams(location.hash.split('?')[1] || '');
+    const periodo = params.get('periodo') || data.todayISO().slice(0, 7);
+    const comision = Number(storage.getComision()) || 0;
+    const propiedades = getPropiedadesCombinadas();
+    const grupos = liquidacionLib.liquidarPorPropietario(propiedades, pagosDeParaPropiedad, movimientosDeParaPropiedad, periodo, comision);
+
+    viewRoot().innerHTML = `
+        <div class="view-header">
+            <h1>Liquidación</h1>
+        </div>
+        <div class="form-row">
+            <label>Mes
+                <input type="month" id="liq-periodo" value="${escapeHtml(periodo)}">
+            </label>
+            <label>Comisión de administración (%)
+                <input type="number" id="liq-comision" min="0" max="100" step="0.5" value="${comision}">
+            </label>
+        </div>
+        <p class="text-muted small">Cobrado = pagos del mes con fecha de pago. Se descuentan la comisión y los gastos del mes cargados en Movimientos, en la misma moneda del alquiler.</p>
+        <div id="liq-body">
+            ${propiedades.length === 0 ? '<p class="empty-state">Todavía no cargaste propiedades.</p>' : ''}
+            ${grupos.map((g, idx) => `
+                <div class="group-section">
+                    <h3>${escapeHtml(g.titular?.nombre || g.titular?.email || 'Sin datos')}</h3>
+                    <div class="table-wrap"><table class="table">
+                        <thead><tr><th>Propiedad</th><th>Cobrado</th><th>Comisión</th><th>Gastos</th><th>A liquidar</th></tr></thead>
+                        <tbody>
+                            ${g.filas.map(f => `
+                                <tr>
+                                    <td>${escapeHtml(f.property.direccion) || '(sin dirección)'}${f.gastosOtraMoneda.length ? ` <span class="text-muted small">(${f.gastosOtraMoneda.length} gasto${f.gastosOtraMoneda.length === 1 ? '' : 's'} en otra moneda, sin descontar)</span>` : ''}</td>
+                                    <td>${data.formatMonto(f.cobrado, f.moneda)}</td>
+                                    <td>${data.formatMonto(f.comision, f.moneda)}</td>
+                                    <td>${data.formatMonto(f.gastos, f.moneda)}</td>
+                                    <td><strong>${data.formatMonto(f.neto, f.moneda)}</strong></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table></div>
+                    <button class="btn btn-sm mt-2" data-action="copiar-liq" data-idx="${idx}"><i class="fas fa-copy"></i> Copiar resumen para el propietario</button>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    const go = () => {
+        location.hash = `#/liquidacion?periodo=${document.getElementById('liq-periodo').value}`;
+    };
+    document.getElementById('liq-periodo').addEventListener('change', go);
+    document.getElementById('liq-comision').addEventListener('change', (e) => {
+        const pct = Math.min(100, Math.max(0, Number(e.target.value) || 0));
+        storage.setComision(pct);
+        renderLiquidacion();
+    });
+    viewRoot().querySelectorAll('[data-action="copiar-liq"]').forEach(btn => btn.addEventListener('click', async () => {
+        const texto = liquidacionLib.textoLiquidacion(grupos[Number(btn.dataset.idx)], periodo, comision, data.formatMonto);
+        try {
+            await navigator.clipboard.writeText(texto);
+            btn.innerHTML = '<i class="fas fa-check"></i> Copiado';
+        } catch {
+            prompt('Copiá el resumen:', texto);
+        }
+    }));
 }
 
 // ---------------------------------------------------------------------------
