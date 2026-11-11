@@ -597,7 +597,7 @@ function renderPropiedades() {
     viewRoot().innerHTML = `
         <div class="view-header">
             <h1>Propiedades <span class="text-muted small">(${properties.length}/${storage.MAX_PROPIEDADES_PROPIAS})</span></h1>
-            <button class="btn btn-primary" data-action="new-property" ${properties.length >= storage.MAX_PROPIEDADES_PROPIAS ? 'disabled title="Máximo de 5 propiedades propias"' : ''}>
+            <button class="btn btn-primary" data-action="new-property" ${properties.length >= storage.MAX_PROPIEDADES_PROPIAS ? `disabled title="Máximo de ${storage.MAX_PROPIEDADES_PROPIAS} propiedades"` : ''}>
                 <i class="fas fa-plus"></i> Nueva propiedad
             </button>
         </div>
@@ -741,7 +741,7 @@ function openPropertyForm(propertyId) {
             list = list.map(p => p.id === property.id ? payload : p);
         } else {
             if (list.length >= storage.MAX_PROPIEDADES_PROPIAS) {
-                alert('Ya alcanzaste el máximo de 5 propiedades propias.');
+                alert(`Ya alcanzaste el máximo de ${storage.MAX_PROPIEDADES_PROPIAS} propiedades.`);
                 return;
             }
             list = [...list, payload];
@@ -1329,6 +1329,7 @@ function renderDatos() {
             <p class="text-muted small">Último backup: ${last ? new Date(last).toLocaleString('es-UY') : 'nunca'}</p>
             <div class="btn-row">
                 <button class="btn" data-action="export-json"><i class="fas fa-file-export"></i> Exportar JSON</button>
+                <button class="btn" data-action="share-json" hidden><i class="fas fa-share-nodes"></i> Guardar en Drive o compartir</button>
                 <label class="file-input">
                     <i class="fas fa-file-import"></i> Importar JSON
                     <input type="file" id="import-json" accept="application/json" hidden>
@@ -1368,6 +1369,23 @@ function renderDatos() {
     document.querySelector('[data-action="export-json"]').addEventListener('click', () => {
         exportarBackupCompleto();
         renderDatos();
+    });
+    // En Android, la hoja de compartir del sistema permite guardar el backup directo en Google Drive.
+    const shareBtn = document.querySelector('[data-action="share-json"]');
+    try {
+        const prueba = new File(['{}'], 'prueba.json', { type: 'application/json' });
+        if (navigator.canShare && navigator.canShare({ files: [prueba] })) shareBtn.hidden = false;
+    } catch { /* sin soporte: queda oculto */ }
+    shareBtn.addEventListener('click', async () => {
+        const nombre = `propman-backup-${data.todayISO()}.json`;
+        const archivo = new File([JSON.stringify(storage.exportAllData(), null, 2)], nombre, { type: 'application/json' });
+        try {
+            await navigator.share({ files: [archivo], title: 'Backup de PropMan' });
+            storage.setLastBackup(new Date().toISOString());
+            renderDatos();
+        } catch (err) {
+            if (err?.name !== 'AbortError') alert('No se pudo compartir. Usá "Exportar JSON".');
+        }
     });
     document.getElementById('import-json').addEventListener('change', async (e) => {
         const file = e.target.files[0];
