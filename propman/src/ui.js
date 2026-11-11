@@ -5,6 +5,7 @@ import * as data from './data.js';
 import * as pagosLib from './pagos.js';
 import * as delegacionLib from './delegacion.js';
 import * as charts from './charts.js';
+import * as vencimientosLib from './vencimientos.js';
 
 const BACKUP_REMINDER_DIAS = 14;
 
@@ -21,6 +22,7 @@ export function escapeHtml(str) {
 
 const NAV_ITEMS = [
     { hash: '#/resumen', label: 'Resumen', icon: 'fa-chart-pie' },
+    { hash: '#/vencimientos', label: 'Vencimientos', icon: 'fa-calendar-check' },
     { hash: '#/propiedades', label: 'Propiedades', icon: 'fa-building' },
     { hash: '#/inquilinos', label: 'Inquilinos', icon: 'fa-users' },
     { hash: '#/pagos', label: 'Pagos', icon: 'fa-file-invoice-dollar' },
@@ -52,6 +54,7 @@ function route() {
     const view = hash.replace('#/', '').split('?')[0] || 'resumen';
     const renderers = {
         resumen: renderResumen,
+        vencimientos: renderVencimientos,
         propiedades: renderPropiedades,
         inquilinos: renderInquilinos,
         pagos: renderPagos,
@@ -380,6 +383,59 @@ function renderResumenMora(body, propiedades) {
         </div>
     `;
     charts.renderMoraChart('chart-mora', conteo);
+}
+
+// ---------------------------------------------------------------------------
+// Vencimientos (ajustes anuales y fin de contrato)
+// ---------------------------------------------------------------------------
+
+const ETIQUETA_AJUSTE = {
+    'ajusta-este-mes': ['Ajusta este mes', 'badge-danger'],
+    'ajustado': ['Ajuste cargado', 'badge-own'],
+    'proximo': ['Ajusta pronto', 'badge-delegated'],
+    'sin-novedad': ['—', ''],
+    'sin-datos': ['Sin fecha de inicio', '']
+};
+
+const ETIQUETA_FIN = {
+    'vencido': ['Vencido', 'badge-danger'],
+    'vence-pronto': ['Vence pronto', 'badge-delegated'],
+    'vigente': ['Vigente', ''],
+    'sin-datos': ['Sin fecha de fin', '']
+};
+
+function etiqueta([texto, clase]) {
+    return clase ? `<span class="badge ${clase}">${texto}</span>` : `<span class="text-muted small">${texto}</span>`;
+}
+
+function renderVencimientos() {
+    const propiedades = getPropiedadesCombinadas();
+    const lista = vencimientosLib.avisos(propiedades);
+    const urgentes = lista.filter(x => ['ajusta-este-mes', 'proximo'].includes(x.ajuste.estado) || ['vencido', 'vence-pronto'].includes(x.fin.estado)).length;
+
+    viewRoot().innerHTML = `
+        <div class="view-header">
+            <h1>Vencimientos</h1>
+        </div>
+        <p class="text-muted">${urgentes === 0 ? 'Nada urgente por ahora.' : `${urgentes} propiedad${urgentes === 1 ? '' : 'es'} con algo para mirar.`}
+            El ajuste anual se calcula desde el mes de inicio del contrato. Cuando ajustes, agregá un tramo nuevo en la propiedad con el monto actualizado (en Uruguay, en general, con el coeficiente que publica el INE cada mes, o el índice que diga el contrato).</p>
+        <div class="table-wrap"><table class="table">
+            <thead><tr><th>Propiedad</th><th>Alquiler vigente</th><th>Ajuste</th><th>Próximo ajuste</th><th>Contrato</th><th>Fin</th></tr></thead>
+            <tbody>
+                ${lista.length === 0 ? '<tr><td colspan="6" class="empty-state">Todavía no cargaste propiedades.</td></tr>' : ''}
+                ${lista.map(x => `
+                    <tr class="${x.ajuste.estado === 'ajusta-este-mes' || x.fin.estado === 'vencido' ? 'row-late' : ''}">
+                        <td>${escapeHtml(x.property.direccion) || '(sin dirección)'} ${x.property.origen === 'delegada' ? '<span class="badge badge-delegated">D</span>' : ''}</td>
+                        <td>${x.tramo ? data.formatMonto(x.tramo.monto, x.tramo.moneda) : '—'}${x.tramo?.indice ? ` <span class="text-muted small">(${escapeHtml(x.tramo.indice)})</span>` : ''}</td>
+                        <td>${etiqueta(ETIQUETA_AJUSTE[x.ajuste.estado])}</td>
+                        <td>${escapeHtml(x.ajuste.proximo || '—')}</td>
+                        <td>${etiqueta(ETIQUETA_FIN[x.fin.estado])}${x.fin.dias !== null && x.fin.estado !== 'vigente' ? ` <span class="text-muted small">${x.fin.dias < 0 ? `hace ${-x.fin.dias} días` : `en ${x.fin.dias} días`}</span>` : ''}${x.property.contrato?.renovacionAuto ? ' <span class="text-muted small">(renovación automática)</span>' : ''}</td>
+                        <td>${escapeHtml(x.property.contrato?.fin || '—')}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table></div>
+    `;
 }
 
 // ---------------------------------------------------------------------------
