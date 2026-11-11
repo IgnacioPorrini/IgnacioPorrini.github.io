@@ -140,3 +140,11 @@ legend { padding: 0 0.4rem; color: var(--text-gray); font-size: 0.85rem; }
 .app-footer a { display: inline-block; margin-top: 0.4rem; text-decoration: none; }
 
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+@media print {
+    #nav-root, #backup-banner, .app-footer, .no-print { display: none !important; }
+    body { background: #fff; color: #000; }
+    .table { background: #fff; }
+    .table th, .table td { color: #000; border-color: #ccc; }
+    .table-wrap { overflow: visible; }
+}
