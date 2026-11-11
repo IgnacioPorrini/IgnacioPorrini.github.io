@@ -22,7 +22,7 @@ PropMan es una aplicación web para administrar alquileres de inmuebles desde el
 | Vencimientos | Qué alquiler ajusta este mes o pronto (según el mes de inicio del contrato) y qué contrato vence en los próximos 60 días o ya venció. |
 | Propiedades | Hasta 100 propiedades, con contrato (inicio, fin, renovación) e historial de montos por tramos con su índice de ajuste. |
 | Inquilinos | Datos de contacto de cada inquilino. |
-| Pagos | Pagos mensuales con estado: pagado, pendiente o atrasado. |
+| Pagos | Pagos mensuales con estado: pagado, pendiente o atrasado. Recibo de alquiler imprimible o en PDF, y aviso de cobro por WhatsApp con el mensaje ya escrito (lo envía la persona, no la app). |
 | Liquidación | Por mes y por propietario: cobrado − comisión de administración − gastos. Botón para copiar el resumen y mandarlo por WhatsApp o mail. |
 | Resumen anual | Para el contador: totales del año por propietario y detalle mes a mes. Exporta CSV e imprime o guarda PDF. |
 | Movimientos | Ingresos y gastos en pesos o dólares. |
@@ -40,11 +40,9 @@ PropMan es una aplicación web para administrar alquileres de inmuebles desde el
 
 ## Próximos pasos
 
-1. Recibo de alquiler en PDF, listo para mandar al inquilino.
-2. Aviso de cobro por WhatsApp: un botón que abre el mensaje ya escrito (lo envía la persona, no la app).
-3. Ayuda para el ajuste anual: cargar el coeficiente del INE del mes y que la app proponga el nuevo monto.
-4. Vista para el inquilino: ver sus pagos y vencimientos.
-5. Sincronización entre dispositivos y entre administrador y contador.
+1. Ayuda para el ajuste anual: cargar el coeficiente del INE del mes y que la app proponga el nuevo monto.
+2. Vista para el inquilino: ver sus pagos y vencimientos.
+3. Sincronización entre dispositivos y entre administrador y contador.
 
 ## A quién está dirigido
 
