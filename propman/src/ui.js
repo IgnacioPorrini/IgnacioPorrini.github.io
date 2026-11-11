@@ -28,6 +28,7 @@ const NAV_ITEMS = [
     { hash: '#/inquilinos', label: 'Inquilinos', icon: 'fa-users' },
     { hash: '#/pagos', label: 'Pagos', icon: 'fa-file-invoice-dollar' },
     { hash: '#/liquidacion', label: 'Liquidación', icon: 'fa-hand-holding-dollar' },
+    { hash: '#/anual', label: 'Resumen anual', icon: 'fa-file-invoice' },
     { hash: '#/movimientos', label: 'Movimientos', icon: 'fa-right-left' },
     { hash: '#/gastos', label: 'Gastos compartidos', icon: 'fa-scale-balanced' },
     { hash: '#/delegacion', label: 'Delegación', icon: 'fa-key' },
@@ -61,6 +62,7 @@ function route() {
         inquilinos: renderInquilinos,
         pagos: renderPagos,
         liquidacion: renderLiquidacion,
+        anual: renderAnual,
         movimientos: renderMovimientos,
         gastos: renderGastos,
         delegacion: renderDelegacion,
@@ -511,6 +513,80 @@ function renderLiquidacion() {
 }
 
 // ---------------------------------------------------------------------------
+// Resumen anual (para el contador)
+// ---------------------------------------------------------------------------
+
+function renderAnual() {
+    const params = new URLSearchParams(location.hash.split('?')[1] || '');
+    const anio = Number(params.get('anio')) || new Date().getFullYear();
+    const comision = Number(storage.getComision()) || 0;
+    const propiedades = getPropiedadesCombinadas();
+    const { filas, totales } = liquidacionLib.resumenAnual(propiedades, pagosDeParaPropiedad, movimientosDeParaPropiedad, anio, comision);
+    const m = (n, moneda) => data.formatMonto(n, moneda);
+
+    viewRoot().innerHTML = `
+        <div class="view-header">
+            <h1>Resumen anual ${anio}</h1>
+            <div class="no-print">
+                <button class="btn btn-sm" data-action="anual-csv"><i class="fas fa-file-csv"></i> Exportar CSV</button>
+                <button class="btn btn-sm" data-action="anual-print"><i class="fas fa-print"></i> Imprimir o guardar PDF</button>
+            </div>
+        </div>
+        <div class="form-row no-print">
+            <label>Año
+                <input type="number" id="anual-anio" min="2000" max="2100" value="${anio}">
+            </label>
+        </div>
+        <p class="text-muted small">Para el contador: lo cobrado (pagos con fecha de pago), la comisión de administración (${comision} %) y los gastos de cada mes, por propietario. Base para la declaración de rentas por arrendamientos; el contador define qué se declara.</p>
+
+        <h3 class="mt-3">Totales por propietario</h3>
+        <div class="table-wrap"><table class="table">
+            <thead><tr><th>Propietario</th><th>Cobrado</th><th>Comisión</th><th>Gastos</th><th>Neto</th></tr></thead>
+            <tbody>
+                ${totales.length === 0 ? '<tr><td colspan="5" class="empty-state">No hay pagos ni gastos registrados en este año.</td></tr>' : ''}
+                ${totales.map(t => `
+                    <tr>
+                        <td>${escapeHtml(t.propietario) || '—'}</td>
+                        <td>${m(t.cobrado, t.moneda)}</td>
+                        <td>${m(t.comision, t.moneda)}</td>
+                        <td>${m(t.gastos, t.moneda)}</td>
+                        <td><strong>${m(t.neto, t.moneda)}</strong></td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table></div>
+
+        <h3 class="mt-3">Detalle por mes</h3>
+        <div class="table-wrap"><table class="table">
+            <thead><tr><th>Mes</th><th>Propiedad</th><th>Propietario</th><th>Cobrado</th><th>Comisión</th><th>Gastos</th><th>Neto</th></tr></thead>
+            <tbody>
+                ${filas.length === 0 ? '<tr><td colspan="7" class="empty-state">Sin movimientos.</td></tr>' : ''}
+                ${filas.map(f => `
+                    <tr>
+                        <td>${escapeHtml(f.periodo)}</td>
+                        <td>${escapeHtml(f.direccion)}</td>
+                        <td>${escapeHtml(f.propietario)}</td>
+                        <td>${m(f.cobrado, f.moneda)}</td>
+                        <td>${m(f.comision, f.moneda)}</td>
+                        <td>${m(f.gastos, f.moneda)}</td>
+                        <td>${m(f.neto, f.moneda)}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table></div>
+    `;
+
+    document.getElementById('anual-anio').addEventListener('change', (e) => {
+        location.hash = `#/anual?anio=${Number(e.target.value) || anio}`;
+    });
+    viewRoot().querySelector('[data-action="anual-csv"]').addEventListener('click', () => {
+        const csv = data.toCSV(filas, ['propietario', 'direccion', 'periodo', 'moneda', 'cobrado', 'comision', 'gastos', 'neto']);
+        data.downloadFile(`propman-resumen-anual-${anio}.csv`, csv, 'text/csv');
+    });
+    viewRoot().querySelector('[data-action="anual-print"]').addEventListener('click', () => window.print());
+}
+
+// ---------------------------------------------------------------------------
 // Propiedades
 // ---------------------------------------------------------------------------
 
@@ -521,7 +597,7 @@ function renderPropiedades() {
     viewRoot().innerHTML = `
         <div class="view-header">
             <h1>Propiedades <span class="text-muted small">(${properties.length}/${storage.MAX_PROPIEDADES_PROPIAS})</span></h1>
-            <button class="btn btn-primary" data-action="new-property" ${properties.length >= storage.MAX_PROPIEDADES_PROPIAS ? 'disabled title="Máximo de 5 propiedades propias"' : ''}>
+            <button class="btn btn-primary" data-action="new-property" ${properties.length >= storage.MAX_PROPIEDADES_PROPIAS ? `disabled title="Máximo de ${storage.MAX_PROPIEDADES_PROPIAS} propiedades"` : ''}>
                 <i class="fas fa-plus"></i> Nueva propiedad
             </button>
         </div>
@@ -665,7 +741,7 @@ function openPropertyForm(propertyId) {
             list = list.map(p => p.id === property.id ? payload : p);
         } else {
             if (list.length >= storage.MAX_PROPIEDADES_PROPIAS) {
-                alert('Ya alcanzaste el máximo de 5 propiedades propias.');
+                alert(`Ya alcanzaste el máximo de ${storage.MAX_PROPIEDADES_PROPIAS} propiedades.`);
                 return;
             }
             list = [...list, payload];
@@ -1253,6 +1329,7 @@ function renderDatos() {
             <p class="text-muted small">Último backup: ${last ? new Date(last).toLocaleString('es-UY') : 'nunca'}</p>
             <div class="btn-row">
                 <button class="btn" data-action="export-json"><i class="fas fa-file-export"></i> Exportar JSON</button>
+                <button class="btn" data-action="share-json" hidden><i class="fas fa-share-nodes"></i> Guardar en Drive o compartir</button>
                 <label class="file-input">
                     <i class="fas fa-file-import"></i> Importar JSON
                     <input type="file" id="import-json" accept="application/json" hidden>
@@ -1292,6 +1369,23 @@ function renderDatos() {
     document.querySelector('[data-action="export-json"]').addEventListener('click', () => {
         exportarBackupCompleto();
         renderDatos();
+    });
+    // En Android, la hoja de compartir del sistema permite guardar el backup directo en Google Drive.
+    const shareBtn = document.querySelector('[data-action="share-json"]');
+    try {
+        const prueba = new File(['{}'], 'prueba.json', { type: 'application/json' });
+        if (navigator.canShare && navigator.canShare({ files: [prueba] })) shareBtn.hidden = false;
+    } catch { /* sin soporte: queda oculto */ }
+    shareBtn.addEventListener('click', async () => {
+        const nombre = `propman-backup-${data.todayISO()}.json`;
+        const archivo = new File([JSON.stringify(storage.exportAllData(), null, 2)], nombre, { type: 'application/json' });
+        try {
+            await navigator.share({ files: [archivo], title: 'Backup de PropMan' });
+            storage.setLastBackup(new Date().toISOString());
+            renderDatos();
+        } catch (err) {
+            if (err?.name !== 'AbortError') alert('No se pudo compartir. Usá "Exportar JSON".');
+        }
     });
     document.getElementById('import-json').addEventListener('change', async (e) => {
         const file = e.target.files[0];

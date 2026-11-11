@@ -12,7 +12,7 @@ export const KEYS = {
     comision: 'propman_comision'
 };
 
-export const MAX_PROPIEDADES_PROPIAS = 5;
+export const MAX_PROPIEDADES_PROPIAS = 100;
 
 function read(key, fallback) {
     try {
