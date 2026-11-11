@@ -10,6 +10,7 @@ Este archivo resume qué es PropMan, qué hace hoy y hacia dónde va. Está escr
 PropMan es una aplicación web para administrar alquileres de inmuebles desde el celular o la computadora. Está pensada para administradores de alquileres, dueños con varias propiedades y sus contadores, con las particularidades de Uruguay: ajuste anual de alquileres, pesos y dólares, gastos compartidos.
 
 - Dirección: https://ignacioporrini.github.io/propman/
+- Avances y video guía: https://ignacioporrini.github.io/propman/avances.html
 - Código: https://github.com/IgnacioPorrini/IgnacioPorrini.github.io/tree/main/propman
 - Costo: gratis, sin registro.
 - Privacidad: los datos se guardan solo en el navegador de quien la usa. No hay servidor ni base de datos central. Cada uno hace sus respaldos (archivo JSON).
