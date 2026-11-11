@@ -70,3 +70,36 @@ export function textoLiquidacion(grupo, periodo, comisionPct, formatMonto) {
     }
     return lineas.join('\n').trim();
 }
+
+/**
+ * Resumen anual para el contador: una fila por propiedad y mes, con totales por propietario y moneda.
+ */
+export function resumenAnual(propiedades, getPagos, getMovimientos, anio, comisionPct = 0) {
+    const meses = Array.from({ length: 12 }, (_, i) => `${anio}-${String(i + 1).padStart(2, '0')}`);
+    const filas = [];
+    for (const p of propiedades) {
+        const pagos = getPagos(p);
+        const movs = getMovimientos(p);
+        for (const periodo of meses) {
+            const f = liquidarPropiedad(p, pagos, movs, periodo, comisionPct);
+            if (f.cobrado === 0 && f.gastos === 0) continue;
+            filas.push({
+                propietario: p.titular?.nombre || p.titular?.email || '',
+                direccion: p.direccion || '',
+                periodo,
+                moneda: f.moneda,
+                cobrado: f.cobrado,
+                comision: f.comision,
+                gastos: f.gastos,
+                neto: f.neto
+            });
+        }
+    }
+    const totales = {};
+    for (const f of filas) {
+        const key = `${f.propietario}|${f.moneda}`;
+        const t = totales[key] || (totales[key] = { propietario: f.propietario, moneda: f.moneda, cobrado: 0, comision: 0, gastos: 0, neto: 0 });
+        for (const k of ['cobrado', 'comision', 'gastos', 'neto']) t[k] = redondear(t[k] + f[k]);
+    }
+    return { filas, totales: Object.values(totales) };
+}
