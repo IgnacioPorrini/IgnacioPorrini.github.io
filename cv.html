@@ -112,6 +112,10 @@
         }
 
         #cv-content { display: none; }
+        .cv-role + .cv-role { margin-top: 1.25rem; }
+        .cv-dates { font-size: 0.9rem; font-style: italic; opacity: 0.75; }
+        .cv-role ul { padding-left: 1.1rem; margin: 0.4rem 0 0; }
+        .cv-role li { margin-bottom: 0.3rem; }
     </style>
 </head>
 
@@ -191,8 +195,49 @@
                 </div>
             </section>
 
-            <!-- Habilidades -->
+            <!-- Experiencia -->
             <section class="section-padding">
+                <div class="container">
+                    <h2 class="section-title mb-4">Experiencia laboral</h2>
+                    <div class="cv-card">
+                        <div class="cv-role">
+                            <strong>Quality Assurance</strong> — Globant
+                            <div class="cv-dates">Jul – Ago 2026</div>
+                            <ul>
+                                <li>Seguimiento de casos con JQL (Jira) y documentación de soporte.</li>
+                                <li>Trabajo en equipo e inglés profesional.</li>
+                            </ul>
+                        </div>
+                        <div class="cv-role">
+                            <strong>Desarrollador Web</strong> — Muustack
+                            <div class="cv-dates">Feb 2022 – Mar 2023</div>
+                            <ul>
+                                <li>Desarrollo y mantenimiento de sitios WordPress (plantillas, PHP) y desarrollos a medida.</li>
+                                <li>Implementación de diseños (Illustrator) y trato directo con clientes.</li>
+                            </ul>
+                        </div>
+                        <div class="cv-role">
+                            <strong>Desarrollo de sitios web en WordPress</strong> — Freelance
+                            <div class="cv-dates">2020 – Actualidad</div>
+                            <ul>
+                                <li>Desarrollo, personalización y mantenimiento de sitios para clientes, desde el relevamiento hasta la publicación.</li>
+                            </ul>
+                        </div>
+                        <div class="cv-role">
+                            <strong>Atención telefónica al cliente</strong> — RUA <span class="cv-dates">· May – Jul 2026</span>
+                        </div>
+                        <div class="cv-role">
+                            <strong>Atención al cliente, sistema de alarmas</strong> — Prosegur <span class="cv-dates">· Dic 2024 – Ago 2025</span>
+                        </div>
+                        <div class="cv-role">
+                            <strong>Pasante administrativo</strong> — Intendencia de Montevideo, Servicio de Transporte <span class="cv-dates">· 2017 – 2019</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habilidades -->
+            <section class="section-padding bg-darker">
                 <div class="container">
                     <h2 class="section-title mb-4">Habilidades técnicas</h2>
                     <div class="cv-card">
@@ -213,7 +258,7 @@
             </section>
 
             <!-- Proyectos -->
-            <section class="section-padding bg-darker">
+            <section class="section-padding">
                 <div class="container">
                     <h2 class="section-title mb-4">Proyectos y trabajos realizados</h2>
                     <div class="row g-4">
