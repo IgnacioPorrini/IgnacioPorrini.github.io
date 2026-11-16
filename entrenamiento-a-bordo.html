@@ -149,6 +149,10 @@ body.sun .note,body.sun .lede{color:var(--ink)}
     <div class="tbl"><table><thead><tr><th>Control</th><th>Qué hacer</th></tr></thead><tbody id="aj-body"></tbody></table></div>
     <p class="note" id="aj-note"></p>
     <div id="aj-quote"></div>
+    <details id="aj-check-box">
+      <summary><b>Antes de salir al agua</b></summary>
+      <ul id="aj-check" style="margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px"></ul>
+    </details>
   </section>
 
   <!-- EJERCICIOS -->
@@ -170,7 +174,7 @@ body.sun .note,body.sun .lede{color:var(--ink)}
     <div class="meta"><span class="tag">Regla 26 · secuencia 5-4-1-0</span><span id="lg-mode">oficial</span></div>
     <h2>Cronómetro de largada</h2>
     <div class="clock" id="lg-clock" aria-live="off">5:00</div>
-    <p class="signal" id="lg-signal">Listo para la señal de atención</p>
+    <p class="signal" id="lg-signal" aria-live="polite">Listo para la señal de atención</p>
     <div class="flags">
       <div class="flagbox" id="f5"><b>5</b>Atención<br>bandera de clase</div>
       <div class="flagbox" id="f4"><b>4</b>Preparatoria<br>P, I, U o negra</div>
@@ -320,8 +324,15 @@ let cls='opti',wind=0;
 const $=s=>document.querySelector(s);
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 
+const CHECK={
+ todas:['Chaleco salvavidas puesto y abrochado.','Pronóstico revisado: viento, rachas y hora de regreso.','Avisar en tierra con quién sale y cuándo vuelve.'],
+ opti:['Flotadores inflados y bien atados.','Achicador y remo atados al bote.','Seguro de palo y de orza puestos.','Pala del timón con su traba.'],
+ ilca:['Tapón de inspección y de achique cerrados.','Cabo de la orza (retén) atado.','Traba del timón puesta.','Escota sin nudos, con nudo de tope al final.'],
+ snipe:['Tapones cerrados y achicadores funcionando.','Pasadores de jarcia con su seguro (cinta o anillo).','Orza y timón con su traba.','Cabo de remolque a bordo.'],
+ tabla:['Unión del pie de mástil firme y con cabo de seguridad.','Cabo para subir la vela y botavara bien trabados.','Aleta firme en su caja.','Navegar con viento hacia la costa, nunca hacia afuera.']};
 function renderAjuste(){
   const c=C[cls];
+  $('#aj-check').innerHTML=[...CHECK.todas,...CHECK[cls]].map(t=>`<li>${t}</li>`).join('');
   $('#aj-title').textContent=c.name+' · viento '+W[wind];
   $('#aj-sub').textContent=c.sub;
   $('#aj-body').innerHTML=c.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1][wind]}</td></tr>`).join('');
@@ -396,6 +407,7 @@ if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigat
 let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
 $('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
 const CAMBIOS=[
+ ['1.7','16/11/2026','Lista "Antes de salir al agua" por clase en la pestaña Ajuste, y mejoras para lectores de pantalla y teclado.'],
  ['1.6','16/11/2026','Nueva clase: tabla a vela (windsurf), con puesta a punto, waterstart, salida desde la playa y repaso.'],
  ['1.5','16/11/2026','Se puede instalar en el celular y funciona sin conexión.'],
  ['1.4','16/11/2026','Imagen de vista previa para compartir por WhatsApp.'],
@@ -405,6 +417,7 @@ const CAMBIOS=[
  ['1.0','16/11/2026','Primera versión: Optimist, Laser y Snipe con puesta a punto, ejercicios, largada, bitácora y repaso.']];
 $('#cb-ver').textContent='versión '+CAMBIOS[0][0];
 $('#cb-list').innerHTML=CAMBIOS.map(c=>`<li><b>${c[0]}</b> · ${c[1]}. ${c[2]}</li>`).join('');
+document.querySelector('nav').addEventListener('keydown',e=>{const tabs=[...document.querySelectorAll('[role=tab]')];const i=tabs.indexOf(document.activeElement);if(i<0)return;let j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j!==null){e.preventDefault();tabs[j].click();tabs[j].focus()}});
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
 const HASH={optimist:'opti',laser:'ilca',snipe:'snipe',tabla:'tabla'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe',tabla:'tabla'};
 function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
