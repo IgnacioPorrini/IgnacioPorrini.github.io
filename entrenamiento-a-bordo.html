@@ -98,6 +98,12 @@ input,select,textarea{font:16px var(--body);color:var(--ink);background:var(--bg
 .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
 .fb{font-size:15px}
 footer{font-size:13px;color:var(--muted);text-align:center}
+body.sun{--bg:#FFFFFF;--grid:#FFFFFF;--surface:#FFFFFF;--ink:#000000;--muted:#1E2A30;--line:#000000;--sea:#00314D;--sea-ink:#FFFFFF;--flag:#8A3A00;--flag-bg:#FFE7B8;color-scheme:light;background-image:none;font-size:18px}
+body.sun .panel,body.sun .cls,body.sun nav,body.sun .chip,body.sun .opt,body.sun .flagbox{border-width:2px}
+body.sun .clock{font-size:7rem}
+body.sun .note,body.sun .lede{color:var(--ink)}
+.sunbtn{align-self:flex-start}
+.btn,.chip,.opt{min-height:44px}
 @media (max-width:420px){.clock{font-size:4.4rem}nav button{font-size:13px}.grid2{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -109,6 +115,7 @@ footer{font-size:13px;color:var(--muted);text-align:center}
     <p class="eyebrow">Centro de Estudios Náuticos · Montevideo</p>
     <h1>Entrenamiento a bordo</h1>
     <p class="lede">Puesta a punto según el viento, ejercicios de agua, cronómetro de largada y bitácora de sesiones. Elegí la clase.</p>
+    <button class="chip sunbtn" id="sun" aria-pressed="false">Modo sol: alto contraste para usar en el agua</button>
   </header>
 
   <div class="classes" role="group" aria-label="Clase">
@@ -355,6 +362,8 @@ $('#qz-next').onclick=()=>{if(qi>=Q[cls].length){qi=0;score=0;answered=0}else qi
 document.querySelectorAll('.cls').forEach(b=>b.onclick=()=>{cls=b.dataset.c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x===b));qi=0;score=0;answered=0;store('ent-cls',cls);try{history.replaceState(null,'','#'+NAME[cls])}catch(e){}renderAll()});
 document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{wind=+b.dataset.w;document.querySelectorAll('[data-w]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderAjuste()});
 document.querySelectorAll('[role=tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[role=tab]').forEach(x=>{x.setAttribute('aria-selected',x===b);$('#t-'+x.dataset.t).hidden=x!==b})});
+function setSun(on){document.body.classList.toggle('sun',on);$('#sun').setAttribute('aria-pressed',on);store('ent-sun',on)}
+$('#sun').onclick=()=>setSun(!document.body.classList.contains('sun'));if(store('ent-sun'))setSun(true);
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
 const HASH={optimist:'opti',laser:'ilca',snipe:'snipe'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe'};
 function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
