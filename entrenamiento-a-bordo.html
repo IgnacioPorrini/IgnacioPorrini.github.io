@@ -212,6 +212,7 @@ body.sun .note,body.sun .lede{color:var(--ink)}
       <button class="btn" type="submit">Guardar sesión</button>
     </form>
     <div class="row"><button class="btn ghost small" id="bt-copy">Copiar bitácora como texto</button><span class="note" id="bt-msg"></span></div>
+    <div class="flags" id="bt-sum" style="grid-template-columns:repeat(3,1fr)"></div>
     <div class="log" id="bt-log"></div>
     <p class="note">Las sesiones quedan guardadas solo en este teléfono.</p>
   </section>
@@ -381,6 +382,10 @@ document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{seqLen=+b.datase
 const SAMPLE=[{d:'2026-11-15',w:12,dir:'SE',who:'Ejemplo · grupo escuela',work:'Viradas al silbato, largadas de 1 minuto',note:'Mejoró la salida de la virada. Falta mirar las lanitas en ceñida.',c:'opti',ex:1}];
 function getLog(){return store('ent-log')||[]}
 function renderLog(){const all=getLog();const mine=all.filter(e=>e.c===cls);const show=mine.length?mine:SAMPLE;
+  const winds=mine.map(e=>e.w).filter(w=>w!==null&&w!==undefined);
+  const byWho={};mine.forEach(e=>{const k=(e.who||'—').trim();byWho[k]=(byWho[k]||0)+1});
+  const top=Object.entries(byWho).sort((a,b)=>b[1]-a[1])[0];
+  $('#bt-sum').innerHTML=mine.length?`<div class="flagbox"><b>${mine.length}</b>sesiones</div><div class="flagbox"><b>${winds.length?Math.round(winds.reduce((a,b)=>a+b,0)/winds.length):'–'}</b>nudos promedio</div><div class="flagbox"><b>${top?top[1]:0}</b>${top?esc(top[0]):''}</div>`:'';
   $('#bt-count').textContent=mine.length?mine.length+' sesiones de '+C[cls].name:'sin sesiones todavía';
   $('#bt-log').innerHTML=show.slice().reverse().map((e,i)=>`<div class="entry${e.ex?' sample':''}"><div class="meta"><span>${e.d} · ${e.w??'?'} kn ${e.dir||''}</span><span>${e.ex?'ejemplo':C[e.c].name}</span></div><b>${esc(e.who||'—')}</b><span>${esc(e.work||'')}</span><span class="note">${esc(e.note||'')}</span>${e.ex?'':`<button class="btn ghost small" data-del="${all.indexOf(e)}">Borrar</button>`}</div>`).join('');
   $('#bt-log').querySelectorAll('[data-del]').forEach(b=>{let armed=false;b.onclick=()=>{if(!armed){armed=true;b.textContent='Tocar de nuevo para borrar';return}const a=getLog();a.splice(+b.dataset.del,1);store('ent-log',a);renderLog()}})}
@@ -407,6 +412,7 @@ if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigat
 let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
 $('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
 const CAMBIOS=[
+ ['1.9','16/11/2026','Resumen en la bitácora: cantidad de sesiones, viento promedio y el navegante o grupo con más sesiones.'],
  ['1.8','16/11/2026','Revisión de textos de la puesta a punto del Laser (escota y orza).'],
  ['1.7','16/11/2026','Lista "Antes de salir al agua" por clase en la pestaña Ajuste, y mejoras para lectores de pantalla y teclado.'],
  ['1.6','16/11/2026','Nueva clase: tabla a vela (windsurf), con puesta a punto, waterstart, salida desde la playa y repaso.'],
