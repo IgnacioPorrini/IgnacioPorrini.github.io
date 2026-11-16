@@ -251,9 +251,9 @@ const C={
    ['Cunningham',['Suelto, con arrugas en el gratil.','Sacar arrugas; algo más si el viento sube.','Al máximo: lleva la bolsa adelante y abre la parte alta.']],
    ['Pajarín (outhaul)',['Bolsa: unos 15–20 cm entre vela y botavara en el medio.','Unos 10 cm; más plano con agua lisa.','Casi plano, pocos centímetros.']],
    ['Vang',['Solo sin juego.','Firme en ceñida; aflojar un poco en popa.','Muy tenso antes de la ceñida: con escota filada la botavara no sube (vang sheeting).']],
-   ['Escota',['No cerrar la baluma; puño cerca de la esquina del carro.','Cazada a fondo en las calmas entre rachas.','Cazada a tope (dos motones juntos) y regular con la escota en las rachas.']],
+   ['Escota',['Sin sobrecazar: la baluma abierta y la botavara cerca de la esquina de popa.','Cazada hasta que la baluma quede alineada con la botavara; filar en las rachas.','Cazada a tope (dos motones juntos) y regular con la escota en las rachas.']],
    ['Peso y posición',['Adelante, cerca del pie de palo; bote con algo de escora a sotavento.','Centro de la bañera, bote plano.','Colgado a fondo y atrás para que la proa no clave en la ola.']],
-   ['Orza',['Abajo en ceñida; en popa subir hasta dejar un tercio.','Igual.','En través subir algo para controlar la escora.']]],
+   ['Orza',['Abajo en ceñida; en popa subir hasta dejar un tercio.','Abajo en ceñida; en popa subir hasta dejar un tercio.','En través subir algo para controlar la escora.']]],
   note:'Medidas de pajarín y cunningham como referencia general; ajustarlas al peso del navegante y al aparejo.'},
  snipe:{name:'Snipe',sub:'2 tripulantes · mayor y foque',
   rows:[
@@ -407,6 +407,7 @@ if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigat
 let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
 $('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
 const CAMBIOS=[
+ ['1.8','16/11/2026','Revisión de textos de la puesta a punto del Laser (escota y orza).'],
  ['1.7','16/11/2026','Lista "Antes de salir al agua" por clase en la pestaña Ajuste, y mejoras para lectores de pantalla y teclado.'],
  ['1.6','16/11/2026','Nueva clase: tabla a vela (windsurf), con puesta a punto, waterstart, salida desde la playa y repaso.'],
  ['1.5','16/11/2026','Se puede instalar en el celular y funciona sin conexión.'],
