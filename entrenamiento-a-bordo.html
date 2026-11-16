@@ -149,6 +149,7 @@ footer{font-size:13px;color:var(--muted);text-align:center}
       <div class="drilltimer" id="ej-clock">0:00</div>
       <div class="row" style="justify-content:center"><button class="btn" id="ej-pause">Pausar</button><button class="btn ghost" id="ej-stop">Terminar</button></div>
     </div>
+    <div class="row"><button class="btn ghost small" id="ej-copy">Copiar plan del día</button><span class="note" id="ej-msg"></span></div>
     <div id="ej-list"></div>
   </section>
 
@@ -216,7 +217,7 @@ const W=['suave','medio','fuerte'];
 const C={
  opti:{name:'Optimist',sub:'1 tripulante · vela 3,3 m²',
   rows:[
-   ['Rake (caída del palo)',['Palo más vertical. Medir del tope del palo al borde de popa y anotar la medida de cada día.','Medida intermedia de su guía; es la base para comparar.','Palo más atrás para despolvar el timón y abrir la parte alta.']],
+   ['Rake (caída del palo)',['Medir del tope del palo al borde de popa con cinta y anotar la medida del día.','La medida base de la guía de su vela; es la referencia para comparar.','Usar la medida de viento fuerte de su guía (cada velero la indica distinta) y anotar cómo anduvo.']],
    ['Pico (sprit)',['Tensión justa: pequeñas arrugas del puño de pico hacia la amura.','Sin arrugas, vela lisa.','Firme. Si aparecen arrugas del pico hacia el puño de escota, aflojar un poco.']],
    ['Pajarín (outhaul)',['Más bolsa abajo: un puño de distancia entre vela y botavara.','Algo menos de bolsa; con ola dejar un poco más.','Plano: la vela casi pegada a la botavara.']],
    ['Vang',['Suelto, solo sin juego.','Tomar el juego para que la botavara no suba en las rachas.','Firme: aplana y abre la baluma; ayuda en popa a que no se cierre.']],
@@ -238,10 +239,10 @@ const C={
    ['Tensión de jarcia',['Floja: el palo trabaja y hay más potencia.','Media, la de su guía de referencia.','Según su guía; el vang tensado le quita tensión a los obenques.']],
    ['Rake',['Palo más adelante.','Base.','Más atrás para descargar la mayor y abrir la baluma.']],
    ['Curvatura del palo',['Poca: mayor con bolsa.','Media.','Mucha con vang y escota: mayor plana.']],
-   ['Foque',['Escota un poco filada, lanitas fluyendo.','Cazado a la marca de referencia.','Abrir un poco el escotero o la escota para despolvar.']],
+   ['Foque',['Escota un poco filada, lanitas fluyendo.','Cazado a la marca de referencia.','Abrir un poco el escotero o la escota para descargar el barco.']],
    ['Escota de mayor',['Suave, baluma abierta.','Cazada, baluma alineada con la botavara.','Juega como el estay de popa: cazarla atrasa el palo y aplana.']],
    ['Tripulación',['Juntos y adelante; el tripulante a sotavento.','Barco plano; el tripulante canta las rachas.','Los dos colgados; trabajar la mayor en cada ola.']]],
-  note:'Material de base: apuntes de la clínica de Snipe (setiembre 2023), con Alexander Schewes.',
+  note:'Material de base: apuntes de la clínica de Snipe (setiembre 2023).',
   quote:'«El estay de popa del Snipe es la escota de mayor» y «el vang es enemigo de la tensión». Apuntes de la clínica de Snipe, 2023.'}
 };
 const D=[
@@ -311,13 +312,16 @@ const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 let dEnd=0,dLeft=0,dInt=null,dPaused=false;
 function runDrill(d){$('#ej-timerbox').hidden=false;$('#ej-tname').textContent=d.n;dLeft=d.m*60;dPaused=false;$('#ej-pause').textContent='Pausar';dEnd=Date.now()+dLeft*1000;clearInterval(dInt);beep(660,.2);keepAwake(true);dInt=setInterval(tickDrill,250);tickDrill();$('#ej-timerbox').scrollIntoView({block:'nearest'})}
 function tickDrill(){if(dPaused)return;dLeft=Math.max(0,(dEnd-Date.now())/1000);$('#ej-clock').textContent=fmt(Math.ceil(dLeft));if(dLeft<=0){clearInterval(dInt);beep(880,.4,3);$('#ej-clock').textContent='¡Listo!';keepAwake(false)}}
+$('#ej-copy').onclick=async()=>{const list=D.filter(d=>d.c.includes(cls)&&picked[cls+d.n]);if(!list.length){$('#ej-msg').textContent='Primero agregá ejercicios al plan.';return}
+  const t='Plan de entrenamiento · '+C[cls].name+'\n'+list.map((d,i)=>`${i+1}. ${d.n} (${d.m} min): ${d.h}`).join('\n')+'\nTotal: '+list.reduce((a,d)=>a+d.m,0)+' min';
+  try{await navigator.clipboard.writeText(t);$('#ej-msg').textContent='Plan copiado.'}catch(e){$('#ej-msg').textContent='No se pudo copiar desde aquí.'}};
 $('#ej-pause').onclick=()=>{if(dPaused){dEnd=Date.now()+dLeft*1000;dPaused=false;$('#ej-pause').textContent='Pausar'}else{dPaused=true;$('#ej-pause').textContent='Seguir'}};
 $('#ej-stop').onclick=()=>{clearInterval(dInt);$('#ej-timerbox').hidden=true;keepAwake(false)};
 // start sequence
 let seqLen=300,lEnd=0,lInt=null,lastSec=null;
-function marks(){return seqLen===300?{300:'5',240:'4',60:'1',0:'0'}:{[seqLen]:'5',0:'0'}}
+function marks(){if(seqLen===300)return {300:'5',240:'4',60:'1',0:'0'};const m={[seqLen]:'5',0:'0'};if(seqLen>60)m[60]='1';return m}
 function setFlags(left){const on=k=>$('#f'+k).classList.toggle('on',true),off=k=>$('#f'+k).classList.remove('on');['5','4','1','0'].forEach(off);
-  if(seqLen!==300){if(left>0)on('5');else on('0');return}
+  if(seqLen!==300){if(left>60||seqLen===60){if(left>0)on('5')}else if(left>0)on('1');if(left<=0)on('0');return}
   if(left>0)on('5');if(left<=240&&left>60)on('4');if(left<=60&&left>0)on('1');if(left<=0)on('0')}
 function tickL(){const left=Math.max(0,Math.ceil((lEnd-Date.now())/1000));$('#lg-clock').textContent=fmt(left);setFlags(left);
   if(left!==lastSec){const m=marks();if(m[left]!==undefined){const msg={5:'Señal de atención',4:'Preparatoria',1:'Un minuto',0:'¡Partida!'}[m[left]];$('#lg-signal').textContent=msg;beep(left===0?1100:880,left===0||left===60?.6:.3,left===0?2:1)}
@@ -340,12 +344,13 @@ $('#bt-form').addEventListener('submit',e=>{e.preventDefault();const a=getLog();
 $('#bt-copy').onclick=async()=>{const t=getLog().map(e=>`${e.d} · ${C[e.c].name} · ${e.w??'?'} kn ${e.dir||''}\n${e.who}\nTrabajo: ${e.work}\n${e.note}`).join('\n\n')||'Sin sesiones.';try{await navigator.clipboard.writeText(t);$('#bt-msg').textContent='Copiada.'}catch(err){$('#bt-msg').textContent='No se pudo copiar desde aquí.'}};
 // quiz
 let qi=0,score=0,answered=0;
-function renderQuiz(){const qs=Q[cls],q=qs[qi%qs.length];$('#qz-tag').textContent=C[cls].name+' · pregunta '+(qi%qs.length+1)+' de '+qs.length;$('#qz-score').textContent=answered?score+'/'+answered:'';
+function renderQuiz(){const qs=Q[cls];if(qi>=qs.length){$('#qz-tag').textContent=C[cls].name+' · repaso terminado';$('#qz-q').textContent=`Resultado: ${score} de ${answered}.`;$('#qz-opts').innerHTML='';$('#qz-fb').textContent=score===answered?'Todo bien. Probá con otra clase.':'Repasá la pestaña Ajuste y volvé a intentar.';$('#qz-next').textContent='Empezar de nuevo';$('#qz-next').hidden=false;$('#qz-score').textContent='';return}
+  $('#qz-next').textContent='Siguiente';const q=qs[qi];$('#qz-tag').textContent=C[cls].name+' · pregunta '+(qi+1)+' de '+qs.length;$('#qz-score').textContent=answered?score+'/'+answered:'';
   $('#qz-q').textContent=q[0];$('#qz-fb').textContent='';$('#qz-next').hidden=true;
   const order=q[1].map((t,i)=>i).sort(()=>Math.random()-.5);
   $('#qz-opts').innerHTML=order.map(i=>`<button class="opt" data-i="${i}">${q[1][i]}</button>`).join('');
   $('#qz-opts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(!$('#qz-next').hidden)return;const ok=+b.dataset.i===q[2];answered++;if(ok)score++;b.classList.add(ok?'right':'wrong');$('#qz-opts').querySelector(`[data-i="${q[2]}"]`).classList.add('right');$('#qz-fb').innerHTML=(ok?'<b>Bien.</b> ':'<b>Casi.</b> ')+q[3];$('#qz-score').textContent=score+'/'+answered;$('#qz-next').hidden=false})}
-$('#qz-next').onclick=()=>{qi++;renderQuiz()};
+$('#qz-next').onclick=()=>{if(qi>=Q[cls].length){qi=0;score=0;answered=0}else qi++;renderQuiz()};
 // nav
 document.querySelectorAll('.cls').forEach(b=>b.onclick=()=>{cls=b.dataset.c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x===b));qi=0;score=0;answered=0;store('ent-cls',cls);renderAll()});
 document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{wind=+b.dataset.w;document.querySelectorAll('[data-w]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderAjuste()});
