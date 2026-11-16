@@ -17,8 +17,8 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Entrenamiento a bordo</title>
 <meta property="og:title" content="Entrenamiento a bordo">
-<meta property="og:description" content="Puesta a punto, ejercicios de agua, cronómetro de largada y bitácora para Optimist, Laser y Snipe.">
-<meta name="description" content="Puesta a punto, ejercicios de agua, cronómetro de largada y bitácora para Optimist, Laser (ILCA) y Snipe.">
+<meta property="og:description" content="Puesta a punto, ejercicios de agua, cronómetro de largada y bitácora para Optimist, Laser, Snipe y tabla a vela.">
+<meta name="description" content="Puesta a punto, ejercicios de agua, cronómetro de largada y bitácora para Optimist, Laser (ILCA), Snipe y tabla a vela.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 /* Layout: una columna tipo cuaderno de entrenador en la lancha; selector de clase arriba como gallardetes de clase, pestañas fijas, acento amarillo de bandera de atención */
@@ -52,8 +52,8 @@ h3{font:700 1.15rem/1.2 var(--display);margin:0;letter-spacing:.02em}
 p{margin:0}
 .lede{color:var(--muted)}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.classes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cls{font:700 1.25rem/1 var(--display);letter-spacing:.03em;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:12px 6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.classes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cls{font:700 1.15rem/1 var(--display);letter-spacing:.03em;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:12px 6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
 .cls small{font:500 11px var(--mono);color:var(--muted);letter-spacing:.04em}
 .cls[aria-pressed="true"]{border-color:var(--sea);background:var(--sea);color:var(--sea-ink)}
 .cls[aria-pressed="true"] small{color:var(--sea-ink);opacity:.85}
@@ -69,7 +69,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 table{width:100%;border-collapse:collapse;font-size:15px}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-td:first-child{font-weight:600;white-space:nowrap}
+td:first-child{font-weight:600;width:38%}
 .tbl{overflow-x:auto}
 .note{font-size:14px;color:var(--muted)}
 .quote{border-left:3px solid var(--flag);padding:4px 0 4px 12px;font-style:italic}
@@ -126,6 +126,7 @@ body.sun .note,body.sun .lede{color:var(--ink)}
     <button class="cls" data-c="opti" aria-pressed="true">Optimist<small>7 a 15 años</small></button>
     <button class="cls" data-c="ilca" aria-pressed="false">Laser<small>ILCA 4·6·7</small></button>
     <button class="cls" data-c="snipe" aria-pressed="false">Snipe<small>doble</small></button>
+    <button class="cls" data-c="tabla" aria-pressed="false">Tabla<small>windsurf</small></button>
   </div>
 
   <nav role="tablist">
@@ -259,14 +260,23 @@ const C={
    ['Escota de mayor',['Suave, baluma abierta.','Cazada, baluma alineada con la botavara.','Juega como el estay de popa: cazarla atrasa el palo y aplana.']],
    ['Tripulación',['Juntos y adelante; el tripulante a sotavento.','Barco plano; el tripulante canta las rachas.','Los dos colgados; trabajar la mayor en cada ola.']]],
   note:'Material de base: apuntes de la clínica de Snipe (setiembre 2023).',
-  quote:'«El estay de popa del Snipe es la escota de mayor» y «el vang es enemigo de la tensión». Apuntes de la clínica de Snipe, 2023.'}
+  quote:'«El estay de popa del Snipe es la escota de mayor» y «el vang es enemigo de la tensión». Apuntes de la clínica de Snipe, 2023.'},
+ tabla:{name:'Tabla a vela',sub:'windsurf · 1 tripulante',
+  rows:[
+   ['Cunningham (downhaul)',['Justo: la baluma arriba apenas abierta, vela con bolsa.','Más tenso: la parte alta de la baluma se abre.','Al máximo: la baluma abierta en el tercio superior descarga las rachas.']],
+   ['Pajarín (outhaul)',['Más suelto: vela con bolsa para tener potencia.','Medio.','Tenso: vela plana y fácil de controlar.']],
+   ['Pie de mástil',['Algo adelante para ceñir mejor.','Al medio del riel.','Más atrás para que la tabla planee suelta.']],
+   ['Botavara',['A la altura del pecho.','Entre pecho y hombro.','Algo más alta si se usa arnés; más baja si cuesta sostener.']],
+   ['Orza',['Abajo para ceñir.','Abajo en ceñida, arriba en través y popa.','Arriba en través y popa para que la tabla no se ponga de canto.']],
+   ['Posición',['Pies adelante, cerca del pie de mástil.','Pies sobre la línea central.','Atrás, en las fijaciones (footstraps), cuerpo colgado del arnés.']]],
+  note:'Para gobernar: inclinar el aparejo hacia popa para orzar y hacia proa para derivar.'}
 };
 const D=[
- {n:'Viradas al silbato',m:10,c:['opti','ilca','snipe'],o:'Virar en cada pitada sin perder velocidad.',h:'Contar cuántas viradas limpias logra cada uno. Después probar con dos pitadas seguidas.'},
- {n:'Trasluchadas en zigzag',m:10,c:['opti','ilca','snipe'],o:'Pasar la botavara controlada en popa.',h:'Bajar entre dos boyas trasluchando en cada una. Mirar atrás antes de trasluchar.'},
- {n:'Largadas de un minuto',m:15,c:['opti','ilca','snipe'],o:'Llegar a la línea con velocidad en el momento justo.',h:'Usar la pestaña Largada en modo de 1 minuto. Repetir 5 o 6 veces y anotar quién quedó en primera fila.'},
- {n:'Tiempo y distancia',m:10,c:['opti','ilca','snipe'],o:'Saber cuánto se tarda en llegar a la línea.',h:'Desde la línea, navegar 30 segundos alejándose, virar y medir cuánto se tarda en volver.'},
- {n:'Seguir al líder',m:10,c:['opti','ilca','snipe'],o:'Copiar maniobras y mirar alrededor.',h:'Fila india detrás de un líder que vira y traslucha cuando quiere. Rotar el líder cada 3 minutos.'},
+ {n:'Viradas al silbato',m:10,c:['opti','ilca','snipe','tabla'],o:'Virar en cada pitada sin perder velocidad.',h:'Contar cuántas viradas limpias logra cada uno. Después probar con dos pitadas seguidas.'},
+ {n:'Trasluchadas en zigzag',m:10,c:['opti','ilca','snipe','tabla'],o:'Pasar la botavara controlada en popa.',h:'Bajar entre dos boyas trasluchando en cada una. Mirar atrás antes de trasluchar.'},
+ {n:'Largadas de un minuto',m:15,c:['opti','ilca','snipe','tabla'],o:'Llegar a la línea con velocidad en el momento justo.',h:'Usar la pestaña Largada en modo de 1 minuto. Repetir 5 o 6 veces y anotar quién quedó en primera fila.'},
+ {n:'Tiempo y distancia',m:10,c:['opti','ilca','snipe','tabla'],o:'Saber cuánto se tarda en llegar a la línea.',h:'Desde la línea, navegar 30 segundos alejándose, virar y medir cuánto se tarda en volver.'},
+ {n:'Seguir al líder',m:10,c:['opti','ilca','snipe','tabla'],o:'Copiar maniobras y mirar alrededor.',h:'Fila india detrás de un líder que vira y traslucha cuando quiere. Rotar el líder cada 3 minutos.'},
  {n:'Navegar sin timón',m:10,c:['opti','ilca'],o:'Gobernar con escora y vela.',h:'Sacar el timón, escorar a sotavento para orzar y a barlovento para derivar. Solo con viento suave y lancha cerca.'},
  {n:'Viradas rolando (roll tack)',m:10,c:['opti','ilca'],o:'Salir de la virada más rápido que entró.',h:'Con viento suave: escorar a barlovento al virar y adrizar fuerte al salir.'},
  {n:'Vuelta de penalización',m:5,c:['opti','ilca','snipe'],o:'Hacer los dos giros rápido y sin chocar.',h:'Cada giro con una virada y una trasluchada (regla 44.2). Cronometrar.'},
@@ -274,7 +284,10 @@ const D=[
  {n:'Colgado por intervalos',m:10,c:['ilca'],o:'Resistencia en ceñida con viento.',h:'3 tramos de 2 minutos colgado a fondo con 1 minuto de descanso.'},
  {n:'Cantar las rachas',m:10,c:['snipe'],o:'Comunicación de tripulación.',h:'El tripulante avisa cada racha y cada borneo con tiempo: "racha en 5 segundos". El timonel solo mira la vela.'},
  {n:'Foque con lanitas',m:10,c:['snipe'],o:'Trimar el foque en cada rumbo.',h:'El tripulante busca las tres alturas de lanitas fluyendo juntas; cambiar de rumbo y repetir.'},
- {n:'Recorrido corto',m:20,c:['opti','ilca','snipe'],o:'Juntar todo en una regata corta.',h:'Barlovento–sotavento corto, dos vueltas, con largada de 3 minutos.'}
+ {n:'Arranque en el agua (waterstart)',m:15,c:['tabla'],o:'Salir del agua sin subir la vela con el cabo.',h:'Con viento medio, cerca de la lancha: vela sobre la cabeza, pie trasero en la tabla y dejar que el viento levante.'},
+ {n:'Subir la vela con el cabo',m:10,c:['tabla'],o:'Levantar la vela cuidando la espalda.',h:'Piernas flexionadas, espalda derecha, tirar con las piernas. Repetir de un lado y del otro.'},
+ {n:'Salida desde la playa',m:10,c:['tabla'],o:'Arrancar navegando desde poca agua.',h:'Tabla a través del viento, pie delantero junto al pie de mástil, impulso con la pierna trasera.'},
+ {n:'Recorrido corto',m:20,c:['opti','ilca','snipe','tabla'],o:'Juntar todo en una regata corta.',h:'Barlovento–sotavento corto, dos vueltas, con largada de 3 minutos.'}
 ];
 const Q={
  opti:[
@@ -294,7 +307,13 @@ const Q={
   ['Según los apuntes de la clínica, ¿qué hace de estay de popa en el Snipe?',['La escota de mayor','El vang','El cunningham'],0,'Cazarla atrasa el palo y aplana la vela.'],
   ['Con mucho viento, el rake…',['Va más atrás','Va más adelante','No cambia'],0,'Descarga la mayor y abre la baluma.'],
   ['En la clínica: la regata se define en la largada, el primer cruce y…',['El fin del primer sotavento','La última popa','La protesta'],0,'"Estrategia dicta táctica", 16 de setiembre de 2023.'],
-  ['¿Qué hace el tripulante en el ejercicio de cantar rachas?',['Avisa rachas y borneos con tiempo','Timonea','Cambia el foque'],0,'El timonel puede mirar solo la vela.']]
+  ['¿Qué hace el tripulante en el ejercicio de cantar rachas?',['Avisa rachas y borneos con tiempo','Timonea','Cambia el foque'],0,'El timonel puede mirar solo la vela.']],
+ tabla:[
+  ['Para orzar en tabla, el aparejo se inclina hacia…',['Popa','Proa','Barlovento'],0,'Hacia popa orza y hacia proa deriva.'],
+  ['Con viento fuerte, el cunningham va…',['Tenso al máximo','Suelto','Igual que en suave'],0,'Abre la parte alta de la baluma y descarga las rachas.'],
+  ['En través y popa con viento, la orza…',['Se sube','Se baja del todo','Se saca de la tabla'],0,'Así la tabla no se pone de canto.'],
+  ['¿Qué es el waterstart?',['Arrancar desde el agua dejando que el viento levante la vela','Subir la vela con el cabo','Una largada en regata'],0,'Se usa con viento medio y fuerte.'],
+  ['Con viento suave, los pies van…',['Adelante, cerca del pie de mástil','En las fijaciones de atrás','Sobre la orza'],0,'Así la tabla no frena con la popa hundida.']]
 };
 
 let cls='opti',wind=0;
@@ -377,6 +396,7 @@ if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigat
 let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
 $('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
 const CAMBIOS=[
+ ['1.6','16/11/2026','Nueva clase: tabla a vela (windsurf), con puesta a punto, waterstart, salida desde la playa y repaso.'],
  ['1.5','16/11/2026','Se puede instalar en el celular y funciona sin conexión.'],
  ['1.4','16/11/2026','Imagen de vista previa para compartir por WhatsApp.'],
  ['1.3','16/11/2026','Modo sol de alto contraste y botones más grandes.'],
@@ -386,7 +406,7 @@ const CAMBIOS=[
 $('#cb-ver').textContent='versión '+CAMBIOS[0][0];
 $('#cb-list').innerHTML=CAMBIOS.map(c=>`<li><b>${c[0]}</b> · ${c[1]}. ${c[2]}</li>`).join('');
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
-const HASH={optimist:'opti',laser:'ilca',snipe:'snipe'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe'};
+const HASH={optimist:'opti',laser:'ilca',snipe:'snipe',tabla:'tabla'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe',tabla:'tabla'};
 function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
 const fromHash=HASH[location.hash.slice(1)];const saved=store('ent-cls');
 if(fromHash)pick(fromHash);else if(saved&&C[saved])pick(saved);

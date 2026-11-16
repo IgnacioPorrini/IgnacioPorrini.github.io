@@ -2,7 +2,7 @@
   "id": "/entrenamiento-a-bordo.html",
   "name": "Entrenamiento a bordo",
   "short_name": "Entrenamiento",
-  "description": "Puesta a punto según el viento, ejercicios de agua con cronómetro, largada 5-4-1-0 y bitácora para Optimist, Laser y Snipe. Funciona sin conexión.",
+  "description": "Puesta a punto según el viento, ejercicios de agua con cronómetro, largada 5-4-1-0 y bitácora para Optimist, Laser, Snipe y tabla a vela. Funciona sin conexión.",
   "lang": "es-UY",
   "start_url": "/entrenamiento-a-bordo.html?fuente=app",
   "scope": "/entrenamiento-a-bordo.html",
