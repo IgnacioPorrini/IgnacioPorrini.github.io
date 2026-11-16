@@ -310,8 +310,8 @@ let wake;async function keepAwake(on){try{if(on&&navigator.wakeLock)wake=await n
 const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 // drill timer
 let dEnd=0,dLeft=0,dInt=null,dPaused=false;
-function runDrill(d){$('#ej-timerbox').hidden=false;$('#ej-tname').textContent=d.n;dLeft=d.m*60;dPaused=false;$('#ej-pause').textContent='Pausar';dEnd=Date.now()+dLeft*1000;clearInterval(dInt);beep(660,.2);keepAwake(true);dInt=setInterval(tickDrill,250);tickDrill();$('#ej-timerbox').scrollIntoView({block:'nearest'})}
-function tickDrill(){if(dPaused)return;dLeft=Math.max(0,(dEnd-Date.now())/1000);$('#ej-clock').textContent=fmt(Math.ceil(dLeft));if(dLeft<=0){clearInterval(dInt);beep(880,.4,3);$('#ej-clock').textContent='¡Listo!';keepAwake(false)}}
+function runDrill(d){$('#ej-timerbox').hidden=false;$('#ej-tname').textContent=d.n;dLeft=d.m*60;dPaused=false;dWarned=false;$('#ej-pause').textContent='Pausar';dEnd=Date.now()+dLeft*1000;clearInterval(dInt);beep(660,.2);keepAwake(true);dInt=setInterval(tickDrill,250);tickDrill();$('#ej-timerbox').scrollIntoView({block:'nearest'})}
+let dWarned=false;function tickDrill(){if(dPaused)return;dLeft=Math.max(0,(dEnd-Date.now())/1000);if(!dWarned&&dLeft<=60&&dLeft>0){dWarned=true;beep(700,.2,2)}$('#ej-clock').textContent=fmt(Math.ceil(dLeft));if(dLeft<=0){clearInterval(dInt);beep(880,.4,3);$('#ej-clock').textContent='¡Listo!';keepAwake(false)}}
 $('#ej-copy').onclick=async()=>{const list=D.filter(d=>d.c.includes(cls)&&picked[cls+d.n]);if(!list.length){$('#ej-msg').textContent='Primero agregá ejercicios al plan.';return}
   const t='Plan de entrenamiento · '+C[cls].name+'\n'+list.map((d,i)=>`${i+1}. ${d.n} (${d.m} min): ${d.h}`).join('\n')+'\nTotal: '+list.reduce((a,d)=>a+d.m,0)+' min';
   try{await navigator.clipboard.writeText(t);$('#ej-msg').textContent='Plan copiado.'}catch(e){$('#ej-msg').textContent='No se pudo copiar desde aquí.'}};
@@ -352,11 +352,15 @@ function renderQuiz(){const qs=Q[cls];if(qi>=qs.length){$('#qz-tag').textContent
   $('#qz-opts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(!$('#qz-next').hidden)return;const ok=+b.dataset.i===q[2];answered++;if(ok)score++;b.classList.add(ok?'right':'wrong');$('#qz-opts').querySelector(`[data-i="${q[2]}"]`).classList.add('right');$('#qz-fb').innerHTML=(ok?'<b>Bien.</b> ':'<b>Casi.</b> ')+q[3];$('#qz-score').textContent=score+'/'+answered;$('#qz-next').hidden=false})}
 $('#qz-next').onclick=()=>{if(qi>=Q[cls].length){qi=0;score=0;answered=0}else qi++;renderQuiz()};
 // nav
-document.querySelectorAll('.cls').forEach(b=>b.onclick=()=>{cls=b.dataset.c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x===b));qi=0;score=0;answered=0;store('ent-cls',cls);renderAll()});
+document.querySelectorAll('.cls').forEach(b=>b.onclick=()=>{cls=b.dataset.c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x===b));qi=0;score=0;answered=0;store('ent-cls',cls);try{history.replaceState(null,'','#'+NAME[cls])}catch(e){}renderAll()});
 document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{wind=+b.dataset.w;document.querySelectorAll('[data-w]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderAjuste()});
 document.querySelectorAll('[role=tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[role=tab]').forEach(x=>{x.setAttribute('aria-selected',x===b);$('#t-'+x.dataset.t).hidden=x!==b})});
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
-const saved=store('ent-cls');if(saved&&C[saved]){cls=saved;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
+const HASH={optimist:'opti',laser:'ilca',snipe:'snipe'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe'};
+function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
+const fromHash=HASH[location.hash.slice(1)];const saved=store('ent-cls');
+if(fromHash)pick(fromHash);else if(saved&&C[saved])pick(saved);
+addEventListener('hashchange',()=>{const c=HASH[location.hash.slice(1)];if(c&&c!==cls){pick(c);qi=0;score=0;answered=0;renderAll()}});
 renderAll();
 </script>
 
