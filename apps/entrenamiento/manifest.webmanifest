@@ -1,0 +1,19 @@
+{
+  "id": "/entrenamiento-a-bordo.html",
+  "name": "Entrenamiento a bordo",
+  "short_name": "Entrenamiento",
+  "description": "Puesta a punto según el viento, ejercicios de agua con cronómetro, largada 5-4-1-0 y bitácora para Optimist, Laser y Snipe. Funciona sin conexión.",
+  "lang": "es-UY",
+  "start_url": "/entrenamiento-a-bordo.html?fuente=app",
+  "scope": "/entrenamiento-a-bordo.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDF2F4",
+  "theme_color": "#0E4F73",
+  "categories": ["sports", "education"],
+  "icons": [
+    {"src": "/apps/entrenamiento/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/apps/entrenamiento/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/apps/entrenamiento/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

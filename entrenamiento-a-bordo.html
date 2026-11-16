@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="favicon.ico">
+<link rel="manifest" href="/apps/entrenamiento/manifest.webmanifest">
+<meta name="theme-color" content="#0E4F73">
+<link rel="apple-touch-icon" href="/apps/entrenamiento/apple-180.png">
 <link rel="canonical" href="https://ignacioporrini.github.io/entrenamiento-a-bordo.html">
 <meta name="author" content="Ignacio Porrini">
 <meta name="twitter:card" content="summary_large_image">
@@ -115,7 +118,7 @@ body.sun .note,body.sun .lede{color:var(--ink)}
     <p class="eyebrow">Centro de Estudios Náuticos · Montevideo</p>
     <h1>Entrenamiento a bordo</h1>
     <p class="lede">Puesta a punto según el viento, ejercicios de agua, cronómetro de largada y bitácora de sesiones. Elegí la clase.</p>
-    <button class="chip sunbtn" id="sun" aria-pressed="false">Modo sol: alto contraste para usar en el agua</button>
+    <div class="row"><button class="chip sunbtn" id="sun" aria-pressed="false">Modo sol: alto contraste para usar en el agua</button><button class="chip" id="instalar" hidden>Instalar en el celular</button></div>
   </header>
 
   <div class="classes" role="group" aria-label="Clase">
@@ -364,6 +367,9 @@ document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{wind=+b.dataset.
 document.querySelectorAll('[role=tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[role=tab]').forEach(x=>{x.setAttribute('aria-selected',x===b);$('#t-'+x.dataset.t).hidden=x!==b})});
 function setSun(on){document.body.classList.toggle('sun',on);$('#sun').setAttribute('aria-pressed',on);store('ent-sun',on)}
 $('#sun').onclick=()=>setSun(!document.body.classList.contains('sun'));if(store('ent-sun'))setSun(true);
+if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigator.serviceWorker.register('/sw-entrenamiento.js',{scope:'/entrenamiento-a-bordo.html'}).catch(()=>{});
+let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
+$('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
 const HASH={optimist:'opti',laser:'ilca',snipe:'snipe'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe'};
 function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
