@@ -124,6 +124,7 @@ footer{font-size:13px;color:var(--muted);text-align:center}
 
   <section id="referentes">
     <h2>Referentes y asociaciones</h2>
+    <p class="note">Solo instituciones. Las personas aparecen únicamente cuando su asociación las publica como referentes en su propia fuente.</p>
     <div class="cards" id="refs"></div>
   </section>
 
@@ -150,10 +151,13 @@ const ESCUELAS=[
  {n:'Centro de Estudios Náuticos',d:'Montevideo',z:'Presencial y en línea',t:'Clases de cartas náuticas y Brevet; prácticas a demanda si el alumno tiene barco',c:[['wa','099 348 110']],s:['ignacioporrini.github.io','nautica.html']}
 ];
 const REFS=[
- {n:'ILCA Uruguay',t:'Asociación de la clase olímpica ILCA (ex Laser). Corre su calendario en Cabo.',l:[['Instagram @ilcauruguay','https://www.instagram.com/ilcauruguay/']],s:['mateovidal.com','https://mateovidal.com/']},
- {n:'Asociación Uruguaya de Optimist (AUDO)',t:'Organiza el circuito AUDO en distintos clubes del país, incluidos los selectivos internacionales.',l:[['Campeonatos en Viramos','https://viramos.com/championships/all']],s:['viramos.com','https://viramos.com/championships/all']},
- {n:'Yacht Club Uruguayo',t:'El club con más campeonatos del país: 29 en 2025 y 27 en 2026.',l:[['ycu.org.uy','https://ycu.org.uy/']],s:['viramos.com','https://viramos.com/championships/all']},
- {n:'Hernán Umpierre y Fernando Diz',t:'Dupla olímpica de 49er (París 2024). En 2026: campeones de Europa y número 1 del ranking mundial de la clase, según la prensa.',l:[],s:['El Observador, 3/11/2026','https://www.elobservador.com.uy/polideportivo/con-tres-olimpicos-uruguay-buscara-brasil-la-clasificacion-al-mundial-vela-los-10-integrantes-del-equipo-celeste-n6062588']}
+ {n:'Federación Uruguaya de Yachting a Vela',t:'Federación nacional de la vela, con sede en el edificio del Yacht Club Uruguayo, Puerto del Buceo. Afiliada al Comité Olímpico Uruguayo.',l:[['fedevela@fuyv.org','']],s:['Secretaría Nacional de Deporte, listado de federaciones (2019)','https://www.gub.uy/secretaria-nacional-deporte/comunicacion/publicaciones/listado-federaciones']},
+ {n:'World Sailing (ex ISAF)',t:'Federación internacional de la vela: reglamento de regatas, clases y calendario mundial.',l:[['sailing.org','https://www.sailing.org/']],s:['GAISF','https://gaisf.sport/members/World-Sailing/']},
+ {n:'Asociación Uruguaya de Optimist (AUDO)',t:'Circuito AUDO en distintos clubes del país, con selectivos para mundiales, sudamericanos y panamericanos.',l:[['Campeonatos en Viramos','https://viramos.com/championships/all']],s:['viramos.com','https://viramos.com/championships/all']},
+ {n:'ILCA Uruguay',t:'Asociación de la clase olímpica ILCA (ex Laser): ranking y calendario propios, gestionados en Cabo.',l:[['Instagram @ilcauruguay','https://www.instagram.com/ilcauruguay/']],s:['mateovidal.com','https://mateovidal.com/']},
+ {n:'Snipe en Uruguay',t:'Tres flotas registradas: 506 Yacht Club Uruguayo, 725 Punta del Este y 900 ACAL Náutico Club.',l:[['snipe.org','https://www.snipe.org/']],s:['Lista de flotas de Snipe','https://en.wikipedia.org/wiki/List_of_Snipe_fleets']},
+ {n:'Clase J24',t:'Una de las clases con más campeonatos en el Yacht Club Uruguayo (apertura, otoño, invierno, aniversario y uruguayo).',l:[['j24class.org','https://j24class.org/news/uruguay-is-the-new-south-american-champion/']],s:['viramos.com','https://viramos.com/championships/all']},
+ {n:'AUSAV',t:'Figura con una fecha de regata (14 y 15 de noviembre de 2026) en el calendario del Nautilus. Sitio propio no encontrado.',l:[['Aviso de regata (NYC)','https://nyc.com.uy/web/downloads/AVISO_REGATA_AUSAV.pdf']],s:['Nautilus Yachting Club','https://nyc.com.uy/']}
 ];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -168,7 +172,7 @@ function render(){const q=$('#q').value.trim().toLowerCase();
  document.querySelectorAll('#deptos .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.d===dep))}
 $('#deptos').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;dep=b.dataset.d;render()});
 $('#q').addEventListener('input',render);
-$('#refs').innerHTML=REFS.map(r=>`<div class="card"><h3>${esc(r.n)}</h3><p>${esc(r.t)}</p>${r.l.length?`<div class="contacts">${r.l.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('')}</div>`:''}<p class="src">${src(r.s)}</p></div>`).join('');
+$('#refs').innerHTML=REFS.map(r=>`<div class="card"><h3>${esc(r.n)}</h3><p>${esc(r.t)}</p>${r.l.length?`<div class="contacts">${r.l.map(x=>x[1]?`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`:`<span>${esc(x[0])}</span>`).join('')}</div>`:''}<p class="src">${src(r.s)}</p></div>`).join('');
 render();
 </script>
 
