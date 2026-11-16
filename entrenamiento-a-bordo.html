@@ -100,6 +100,7 @@ input,select,textarea{font:16px var(--body);color:var(--ink);background:var(--bg
 .opt.right{border-color:var(--ok);background:var(--ok-bg)}
 .opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
 .fb{font-size:15px}
+summary{cursor:pointer;font-size:16px}
 footer{font-size:13px;color:var(--muted);text-align:center}
 body.sun{--bg:#FFFFFF;--grid:#FFFFFF;--surface:#FFFFFF;--ink:#000000;--muted:#1E2A30;--line:#000000;--sea:#00314D;--sea-ink:#FFFFFF;--flag:#8A3A00;--flag-bg:#FFE7B8;color-scheme:light;background-image:none;font-size:18px}
 body.sun .panel,body.sun .cls,body.sun nav,body.sun .chip,body.sun .opt,body.sun .flagbox{border-width:2px}
@@ -218,6 +219,11 @@ body.sun .note,body.sun .lede{color:var(--ink)}
     <p class="fb" id="qz-fb"></p>
     <button class="btn small" id="qz-next" hidden>Siguiente</button>
   </section>
+
+  <details class="panel" id="cambios">
+    <summary><b>Novedades</b> <span class="note" id="cb-ver"></span></summary>
+    <ul class="log" id="cb-list" style="margin:0;padding-left:18px"></ul>
+  </details>
 
   <footer>Ignacio Porrini · instructor de vela. Referencias orientativas: siempre manda la guía del fabricante de su vela y lo que se ve en el agua.</footer>
 </div>
@@ -370,6 +376,15 @@ $('#sun').onclick=()=>setSun(!document.body.classList.contains('sun'));if(store(
 if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))navigator.serviceWorker.register('/sw-entrenamiento.js',{scope:'/entrenamiento-a-bordo.html'}).catch(()=>{});
 let promptInstalar=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;$('#instalar').hidden=false});
 $('#instalar').onclick=async()=>{if(!promptInstalar)return;promptInstalar.prompt();try{await promptInstalar.userChoice}catch(e){}promptInstalar=null;$('#instalar').hidden=true};
+const CAMBIOS=[
+ ['1.5','16/11/2026','Se puede instalar en el celular y funciona sin conexión.'],
+ ['1.4','16/11/2026','Imagen de vista previa para compartir por WhatsApp.'],
+ ['1.3','16/11/2026','Modo sol de alto contraste y botones más grandes.'],
+ ['1.2','16/11/2026','Enlaces directos por clase (#optimist, #laser, #snipe) y aviso del último minuto en los ejercicios.'],
+ ['1.1','16/11/2026','Señal de un minuto en largadas de práctica, fin del repaso con resultado y botón para copiar el plan del día.'],
+ ['1.0','16/11/2026','Primera versión: Optimist, Laser y Snipe con puesta a punto, ejercicios, largada, bitácora y repaso.']];
+$('#cb-ver').textContent='versión '+CAMBIOS[0][0];
+$('#cb-list').innerHTML=CAMBIOS.map(c=>`<li><b>${c[0]}</b> · ${c[1]}. ${c[2]}</li>`).join('');
 function renderAll(){renderAjuste();renderEjer();renderLog();renderQuiz()}
 const HASH={optimist:'opti',laser:'ilca',snipe:'snipe'},NAME={opti:'optimist',ilca:'laser',snipe:'snipe'};
 function pick(c){cls=c;document.querySelectorAll('.cls').forEach(x=>x.setAttribute('aria-pressed',x.dataset.c===cls))}
