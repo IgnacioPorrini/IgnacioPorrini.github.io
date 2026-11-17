@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<link rel="canonical" href="https://ignacioporrini.github.io/taller-musica-ukelele-ocarina.html">
+<meta name="author" content="Ignacio Porrini">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Ukelele y ocarina</title>
+<meta name="description" content="Guía práctica del Taller de Expresión Musical: acordes de ukelele, rasgueos con metrónomo, notas de la ocarina y canciones en Do para tocar juntos.">
+<meta property="og:title" content="Ukelele y ocarina · Taller de Expresión Musical">
+<meta property="og:description" content="Acordes de ukelele, rasgueos con metrónomo, notas de la ocarina y canciones en Do para tocar juntos.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+/* Layout: cuaderno de práctica en una columna, misma familia visual que la guía del Taller (Fredoka + Nunito, tonos cálidos); naranja para el ukelele, verde agua para la ocarina */
+:root{
+  --bg:#fffaf3; --card:#ffffff; --ink:#2b2a33; --muted:#6b6875; --line:#eadfce;
+  --uke:#e0603f; --uke-soft:#ffe7df; --oca:#1f9a8c; --oca-soft:#dcf5f1; --beat:#6c63ff; --beat-soft:#e8e6ff;
+  --display:"Fredoka",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17161c; --card:#211f28; --ink:#f1eef7; --muted:#aaa5b6; --line:#35323f;
+  --uke:#ff8a6b; --uke-soft:#3a2620; --oca:#4fd1c0; --oca-soft:#1c3532; --beat:#9d97ff; --beat-soft:#2a2846; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17161c; --card:#211f28; --ink:#f1eef7; --muted:#aaa5b6; --line:#35323f;
+  --uke:#ff8a6b; --uke-soft:#3a2620; --oca:#4fd1c0; --oca-soft:#1c3532; --beat:#9d97ff; --beat-soft:#2a2846; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+.wrap{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.1rem,7vw,2.9rem)}
+h2{font-size:1.6rem}
+h3{font-size:1.15rem}
+p{margin:0}
+.muted{color:var(--muted)}
+.pill{display:inline-block;font:700 .8rem var(--body);padding:3px 12px;border-radius:99px}
+.pill.uke{background:var(--uke-soft);color:var(--uke)}
+.pill.oca{background:var(--oca-soft);color:var(--oca)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 14px;color:var(--ink);text-decoration:none;font-weight:700;font-size:.95rem}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:700 1rem var(--body);border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;min-height:44px}
+button.uke{border-color:var(--uke);color:var(--uke)}
+button.oca{border-color:var(--oca);color:var(--oca)}
+button.on{background:var(--beat);border-color:var(--beat);color:#fff}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--beat);outline-offset:2px}
+.chords{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.chord{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--ink);font:inherit}
+.chord b{font-family:var(--display);font-size:1.4rem;color:var(--uke)}
+.chord small{color:var(--muted);font-size:.8rem}
+.chord svg{width:84px;height:auto}
+.chord.lvl2{border-style:dashed}
+.pattern{font:700 1.6rem var(--display);letter-spacing:.2em;display:flex;gap:6px;flex-wrap:wrap}
+.pattern span{min-width:34px;text-align:center;border-radius:8px;padding:2px 4px;color:var(--muted)}
+.pattern span.hit{color:var(--ink)}
+.pattern span.now{background:var(--beat-soft);color:var(--beat)}
+.notes{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.note{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 2px;border-radius:12px;border:2px solid var(--oca);background:var(--oca-soft);color:var(--ink);cursor:pointer;font:inherit}
+.note b{font-family:var(--display);font-size:1.15rem}
+.note small{font-size:.75rem;color:var(--muted)}
+.song{display:flex;flex-wrap:wrap;gap:4px 6px}
+.bar{display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--line);padding:2px 8px 4px}
+.bar .ch{font:700 .95rem var(--display);color:var(--uke)}
+.bar .mel{display:flex;gap:6px;font-weight:700}
+.bar .mel span{min-width:22px;text-align:center;border-radius:6px}
+.bar .mel span.now{background:var(--oca);color:#fff}
+label{font-weight:700;display:flex;gap:8px;align-items:center}
+input[type=range]{width:160px}
+.tip{border-left:4px solid var(--beat);padding:4px 0 4px 12px}
+footer{font-size:.9rem;color:var(--muted);text-align:center}
+@media (max-width:460px){.notes{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <p class="muted" style="font-weight:700">Taller de Expresión Musical · Ignacio Porrini</p>
+    <h1>Ukelele y ocarina</h1>
+    <p>Todo en <b>Do mayor</b>, para que el ukelele acompañe y la ocarina haga la melodía, al mismo tiempo. Toque cualquier acorde o nota para escuchar cómo suena.</p>
+    <nav class="toc"><a href="#afinar">Afinar</a><a href="#acordes">Acordes</a><a href="#rasgueos">Rasgueos</a><a href="#ocarina">Ocarina</a><a href="#canciones">Canciones</a><a href="#plan">Plan de 4 semanas</a></nav>
+  </header>
+
+  <section id="afinar">
+    <h2>Afinar el ukelele</h2>
+    <p>Cuerdas de arriba hacia abajo, con el ukelele en posición de tocar: <b>Sol, Do, Mi, La</b> (G C E A). La primera, Sol, es más aguda que la segunda: es la afinación clásica del ukelele soprano y concierto.</p>
+    <div class="row" id="tune"></div>
+    <p class="muted">Toque cada botón, toque la cuerda y gire la clavija hasta que suenen iguales. Con un afinador de celular es más preciso.</p>
+  </section>
+
+  <section id="acordes">
+    <h2>Acordes de ukelele</h2>
+    <p><span class="pill uke">Nivel 1</span> Con <b>Do, La menor, Fa y Sol</b> se tocan cientos de canciones. <span class="pill uke">Nivel 2</span> los de borde punteado.</p>
+    <div class="chords" id="chords"></div>
+    <p class="muted">El diagrama muestra el diapasón visto de frente: las cuatro líneas verticales son Sol, Do, Mi y La; el número es el dedo (1 índice, 2 mayor, 3 anular, 4 meñique).</p>
+  </section>
+
+  <section id="rasgueos">
+    <h2>Rasgueos con metrónomo</h2>
+    <div class="card">
+      <div class="row" id="pats"></div>
+      <div class="pattern" id="pat" aria-live="off"></div>
+      <div class="row">
+        <button id="metro">▶ Empezar</button>
+        <label for="bpm">Velocidad <input type="range" id="bpm" min="50" max="120" value="70"> <span id="bpmv">70</span> pulsos por minuto</label>
+      </div>
+      <p class="muted">↓ hacia abajo · ↑ hacia arriba · · = la mano pasa sin tocar. La mano nunca se detiene: sube y baja siempre, y solo toca donde hay flecha.</p>
+    </div>
+  </section>
+
+  <section id="ocarina">
+    <h2>Notas de la ocarina</h2>
+    <p>La escala de <b>Do</b> que usan las canciones de esta guía. Toque cada nota para escucharla y compárela con su ocarina.</p>
+    <div class="notes" id="notes"></div>
+    <div class="card tip">
+      <p><b>Digitación:</b> cada modelo de ocarina (de 4, 6 o 12 agujeros) tiene la suya. Use la tabla que trae su ocarina para saber qué agujeros tapar en cada nota; aquí están el nombre y el sonido para entrenar el oído.</p>
+      <p><b>Soplido:</b> suave y parejo, como para empañar un vidrio. Si sopla fuerte, la nota sube y desafina. Las notas agudas piden un poco más de aire; las graves, un poco menos.</p>
+    </div>
+  </section>
+
+  <section id="canciones">
+    <h2>Canciones para tocar juntos</h2>
+    <p>La ocarina toca las notas de abajo; el ukelele toca el acorde marcado arriba de cada compás, con el rasgueo 1. Botón de escuchar: suena la melodía y se marca la nota.</p>
+    <div id="songs" style="display:flex;flex-direction:column;gap:14px"></div>
+  </section>
+
+  <section id="plan">
+    <h2>Plan de práctica de 4 semanas</h2>
+    <div class="card">
+      <p><b>Semana 1:</b> afinar; acordes Do y La menor; rasgueo 1 a 60. En ocarina, Do, Re y Mi con soplido parejo.</p>
+      <p><b>Semana 2:</b> sumar Fa y Sol; pasar de un acorde a otro sin cortar el pulso. Ocarina: escala completa de Do subiendo y bajando, despacio.</p>
+      <p><b>Semana 3:</b> «Estrellita» completa: primero cada instrumento por separado, después juntos. Rasgueo 2.</p>
+      <p><b>Semana 4:</b> «Oda a la alegría». Nivel 2 de acordes. Grabar con el celular la versión a dúo y escucharla juntos.</p>
+      <p class="muted">Diez minutos por día rinden más que una hora una vez por semana.</p>
+    </div>
+  </section>
+
+  <footer>Taller de Expresión Musical · Ignacio Porrini · Montevideo. Canciones tradicionales y de dominio público.</footer>
+</div>
+
+<script>
+const NOTE={C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99,A5:880.00,B5:987.77,C6:1046.50,E4u:329.63};
+let ac=null;
+function ctx(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();}catch(e){ac=null}return ac}
+function tone(f,dur=0.5,when=0,type='triangle',vol=0.25){const a=ctx();if(!a)return;const t=a.currentTime+when;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur+0.05)}
+function pluck(f,when=0){tone(f,1.2,when,'triangle',0.22);tone(f*2,0.6,when,'sine',0.05)}
+// ukelele: open strings G4 C4 E4 A4 (afinación reentrante)
+const OPEN=[392.00,261.63,329.63,440.00];
+const semis=(f,n)=>f*Math.pow(2,n/12);
+// frets [G,C,E,A], fingers
+const CH=[
+ {n:'Do',s:'C',f:[0,0,0,3],d:[0,0,0,3],l:1},
+ {n:'La menor',s:'Am',f:[2,0,0,0],d:[2,0,0,0],l:1},
+ {n:'Fa',s:'F',f:[2,0,1,0],d:[2,0,1,0],l:1},
+ {n:'Sol',s:'G',f:[0,2,3,2],d:[0,1,3,2],l:1},
+ {n:'Sol 7',s:'G7',f:[0,2,1,2],d:[0,2,1,3],l:2},
+ {n:'Re menor',s:'Dm',f:[2,2,1,0],d:[2,3,1,0],l:2},
+ {n:'Mi menor',s:'Em',f:[0,4,3,2],d:[0,3,2,1],l:2},
+ {n:'La 7',s:'A7',f:[0,1,0,0],d:[0,1,0,0],l:2}
+];
+function diag(c){const W=84,H=104,x0=12,dx=20,y0=14,dy=20;let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Acorde ${c.n}">`;
+ s+=`<rect x="${x0}" y="${y0-3}" width="${dx*3}" height="4" fill="currentColor"/>`;
+ for(let i=0;i<4;i++)s+=`<line x1="${x0+i*dx}" y1="${y0}" x2="${x0+i*dx}" y2="${y0+dy*4}" stroke="currentColor" stroke-opacity=".55"/>`;
+ for(let j=1;j<=4;j++)s+=`<line x1="${x0}" y1="${y0+j*dy}" x2="${x0+dx*3}" y2="${y0+j*dy}" stroke="currentColor" stroke-opacity=".35"/>`;
+ c.f.forEach((fr,i)=>{if(fr>0){const cy=y0+(fr-0.5)*dy;s+=`<circle cx="${x0+i*dx}" cy="${cy}" r="7.5" fill="var(--uke)"/><text x="${x0+i*dx}" y="${cy+4}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">${c.d[i]}</text>`}else{s+=`<circle cx="${x0+i*dx}" cy="${y0-9}" r="3.5" fill="none" stroke="currentColor"/>`}});
+ return s+'</svg>'}
+function playChord(c){c.f.forEach((fr,i)=>pluck(semis(OPEN[i],fr),i*0.06))}
+document.getElementById('chords').innerHTML=CH.map((c,i)=>`<button class="chord ${c.l===2?'lvl2':''}" data-c="${i}"><b>${c.s}</b>${diag(c)}<small>${c.n}</small></button>`).join('');
+document.getElementById('chords').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b)playChord(CH[+b.dataset.c])});
+// afinación
+const TUNE=[['Sol (4.ª)',OPEN[0]],['Do (3.ª)',OPEN[1]],['Mi (2.ª)',OPEN[2]],['La (1.ª)',OPEN[3]]];
+document.getElementById('tune').innerHTML=TUNE.map((t,i)=>`<button class="uke" data-t="${i}">${t[0]}</button>`).join('');
+document.getElementById('tune').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(b)pluck(TUNE[+b.dataset.t][1])});
+// rasgueos: 8 corcheas por compás
+const PATS=[
+ {n:'1 · Cuatro abajo',p:['↓','·','↓','·','↓','·','↓','·']},
+ {n:'2 · Abajo, abajo-arriba',p:['↓','·','↓','↑','↓','·','↓','↑']},
+ {n:'3 · Isla',p:['↓','·','↓','↑','·','↑','↓','↑']}
+];
+let pi=0,timer=null,step=0;
+const patEl=document.getElementById('pat');
+function drawPat(){patEl.innerHTML=PATS[pi].p.map((x,i)=>`<span class="${x!=='·'?'hit':''}" data-i="${i}">${x}</span>`).join('')}
+document.getElementById('pats').innerHTML=PATS.map((p,i)=>`<button data-p="${i}" class="${i===0?'on':''}">${p.n}</button>`).join('');
+document.getElementById('pats').addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(!b)return;pi=+b.dataset.p;document.querySelectorAll('#pats button').forEach(x=>x.classList.toggle('on',x===b));drawPat()});
+drawPat();
+const bpm=document.getElementById('bpm');bpm.addEventListener('input',()=>{document.getElementById('bpmv').textContent=bpm.value;if(timer){stopM();startM()}});
+function tick(){const spans=patEl.querySelectorAll('span');spans.forEach(s=>s.classList.remove('now'));const s=spans[step];if(s)s.classList.add('now');if(step%2===0)tone(step===0?1200:800,0.05,0,'square',0.12);step=(step+1)%8}
+function startM(){ctx();step=0;tick();timer=setInterval(tick,60000/(+bpm.value)/2);document.getElementById('metro').textContent='■ Parar'}
+function stopM(){clearInterval(timer);timer=null;patEl.querySelectorAll('span').forEach(s=>s.classList.remove('now'));document.getElementById('metro').textContent='▶ Empezar'}
+document.getElementById('metro').addEventListener('click',()=>timer?stopM():startM());
+// ocarina: escala de Do de la octava 5 (registro de una ocarina alto en Do)
+const SCALE=[['Do','C5'],['Re','D5'],['Mi','E5'],['Fa','F5'],['Sol','G5'],['La','A5'],['Si','B5'],['Do','C6']];
+const flute=(f,dur=0.6,when=0)=>{tone(f,dur,when,'sine',0.28);tone(f*2,dur,when,'sine',0.03)};
+document.getElementById('notes').innerHTML=SCALE.map((n,i)=>`<button class="note" data-n="${i}"><b>${n[0]}</b><small>${n[1].replace(/\d/,'')}${i===7?' agudo':''}</small></button>`).join('');
+document.getElementById('notes').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b)flute(NOTE[SCALE[+b.dataset.n][1]])});
+// canciones: compases [acorde, [notas]] ; notas en la octava 5 salvo indicación
+const SOL={C5:'Do',D5:'Re',E5:'Mi',F5:'Fa',G5:'Sol',A5:'La',B5:'Si',C6:'Do+'};
+const SONGS=[
+ {t:'Estrellita, ¿dónde estás?',d:'Tradicional',bars:[
+  ['Do',['C5','C5','G5','G5']],['Fa',['A5','A5','G5']],['Fa',['F5','F5','E5','E5']],['Sol',['D5','D5','C5']],
+  ['Do',['G5','G5','F5','F5']],['Sol',['E5','E5','D5']],['Do',['G5','G5','F5','F5']],['Sol',['E5','E5','D5']],
+  ['Do',['C5','C5','G5','G5']],['Fa',['A5','A5','G5']],['Fa',['F5','F5','E5','E5']],['Sol',['D5','D5','C5']]]},
+ {t:'Oda a la alegría',d:'Beethoven, dominio público',bars:[
+  ['Do',['E5','E5','F5','G5']],['Sol',['G5','F5','E5','D5']],['Do',['C5','C5','D5','E5']],['Sol',['E5','D5','D5']],
+  ['Do',['E5','E5','F5','G5']],['Sol',['G5','F5','E5','D5']],['Do',['C5','C5','D5','E5']],['Sol',['D5','C5','C5']]]}
+];
+const songsEl=document.getElementById('songs');
+songsEl.innerHTML=SONGS.map((s,k)=>`<div class="card"><div class="row" style="justify-content:space-between"><h3>${s.t}</h3><span class="muted" style="font-size:.9rem">${s.d}</span></div><div class="song">${s.bars.map((b,i)=>`<div class="bar"><span class="ch">${b[0]}</span><span class="mel">${b[1].map((n,j)=>`<span data-k="${k}-${i}-${j}">${SOL[n]}</span>`).join('')}</span></div>`).join('')}</div><div class="row"><button class="oca" data-play="${k}">▶ Escuchar melodía</button><button class="uke" data-chords="${k}">▶ Solo acordes</button></div></div>`).join('');
+let playing=[];
+function clearPlay(){playing.forEach(clearTimeout);playing=[];document.querySelectorAll('.mel span.now').forEach(x=>x.classList.remove('now'))}
+function playSong(k,melody){clearPlay();ctx();const s=SONGS[k];const beat=60/80;let t=0;
+ s.bars.forEach((b,i)=>{const len=b[1].length===3?[1,1,2]:[1,1,1,1];
+  if(!melody){[0,1,2,3].forEach(q=>{const c=CH.find(x=>x.n===b[0]||x.n.startsWith(b[0]));if(c)playing.push(setTimeout(()=>playChord(c),(t+q*beat)*1000))})}
+  b[1].forEach((n,j)=>{const at=t;if(melody){playing.push(setTimeout(()=>{document.querySelectorAll('.mel span.now').forEach(x=>x.classList.remove('now'));const el=document.querySelector(`[data-k="${k}-${i}-${j}"]`);if(el)el.classList.add('now');flute(NOTE[n],len[j]*beat*0.9)},at*1000))}t+=len[j]*beat});});
+ playing.push(setTimeout(clearPlay,t*1000+300))}
+songsEl.addEventListener('click',e=>{const p=e.target.closest('[data-play]');if(p)return playSong(+p.dataset.play,true);const c=e.target.closest('[data-chords]');if(c)playSong(+c.dataset.chords,false)});
+</script>
+
+</body>
+</html>
