@@ -40,6 +40,23 @@
         .ar{stroke:#ffd34d;stroke-width:1.5;fill:none;stroke-linecap:round;marker-end:url(#ah)}
         .ori-btn{display:inline-block;font-size:.85rem;padding:.35rem .7rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);color:#e8eeeb;text-decoration:none;margin:0 .3rem .4rem 0}
         .ori-btn:hover{border-color:var(--accent);color:var(--accent)}
+        .stp{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.25rem}
+        .stp .num{font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+        .stp .txt{font-size:1.2rem;line-height:1.45;min-height:6.5rem;margin:.4rem 0 1rem}
+        .stp .bar{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+        .stp .bar>div{height:100%;background:var(--accent);width:0}
+        .ori-tab{font:600 .95rem 'Open Sans',sans-serif;background:none;color:#e8eeeb;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.45rem 1rem;margin:0 .4rem .6rem 0;cursor:pointer}
+        .ori-tab[aria-pressed="true"]{background:var(--accent);color:#08140f;border-color:var(--accent)}
+        .ori-act{font:700 1rem 'Open Sans',sans-serif;border:0;border-radius:10px;padding:.7rem 1.1rem;cursor:pointer;background:var(--accent);color:#08140f}
+        .ori-act.alt{background:none;color:#e8eeeb;border:1px solid rgba(255,255,255,.25)}
+        .ori-act:focus-visible,.ori-tab:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
+        .track{position:relative;height:84px;background:#15201c;border-radius:10px;overflow:hidden;margin:.6rem 0}
+        .track .fin{position:absolute;right:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(#fff 0 8px,#222 8px 16px)}
+        .frog{position:absolute;left:0;bottom:8px;width:64px;transition:left .25s ease-out}
+        .frog svg{width:64px;height:auto;display:block}
+        .frog.hop svg{animation:hop .3s ease-out}
+        @keyframes hop{0%{transform:translateY(0)}45%{transform:translateY(-26px) rotate(-8deg)}100%{transform:translateY(0)}}
+        @media (prefers-reduced-motion:reduce){.frog{transition:none}.frog.hop svg{animation:none}}
         .container a:not(.btn):not(.ori-btn){color:var(--accent)}
         .ori-btn{color:#e8eeeb!important}
     </style>
@@ -98,6 +115,44 @@
 
         <section class="section-padding">
             <div class="container">
+                <h2 class="section-title mb-2">Paso a paso interactivo</h2>
+                <p class="text-muted-light mb-3">Un paso por pantalla, con el avance guardado en este dispositivo. Son versiones sencillas con papel cuadrado.</p>
+                <div id="tabs" role="group" aria-label="Elegir modelo">
+                    <button class="ori-tab" type="button" data-m="rana" aria-pressed="true"><i class="fas fa-frog me-1"></i> Rana saltarina</button>
+                    <button class="ori-tab" type="button" data-m="mariposa" aria-pressed="false"><i class="fas fa-spa me-1"></i> Mariposa</button>
+                </div>
+                <div class="stp" aria-live="polite">
+                    <div class="num" id="s-num"></div>
+                    <div class="txt" id="s-txt"></div>
+                    <div class="bar" aria-hidden="true"><div id="s-bar"></div></div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="ori-act alt" type="button" id="s-prev">Anterior</button>
+                        <button class="ori-act" type="button" id="s-next">Hecho, siguiente</button>
+                        <button class="ori-act alt" type="button" id="s-reset">Empezar de nuevo</button>
+                    </div>
+                    <p class="small text-muted-light mt-3 mb-0" id="s-src"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker">
+            <div class="container">
+                <h2 class="section-title mb-2">Carrera de ranas</h2>
+                <p class="text-muted-light mb-3">Cuando la rana de papel esté lista, aprenda cómo se la hace saltar: se presiona atrás y se suelta. Acá toque el botón para practicar el ritmo.</p>
+                <div class="track" id="track" aria-hidden="true">
+                    <div class="fin"></div>
+                    <div class="frog" id="frog"><svg viewBox="0 0 64 44"><ellipse cx="32" cy="28" rx="22" ry="13" fill="#25d399" stroke="#0b2a20" stroke-width="1.5"/><circle cx="21" cy="14" r="7" fill="#25d399" stroke="#0b2a20" stroke-width="1.5"/><circle cx="43" cy="14" r="7" fill="#25d399" stroke="#0b2a20" stroke-width="1.5"/><circle cx="22" cy="13" r="3" fill="#fff"/><circle cx="42" cy="13" r="3" fill="#fff"/><circle cx="23" cy="13" r="1.4" fill="#0b2a20"/><circle cx="43" cy="13" r="1.4" fill="#0b2a20"/><path d="M10 38 L2 42 L16 40 Z M54 38 L62 42 L48 40 Z" fill="#1aa876" stroke="#0b2a20" stroke-width="1.2"/></svg></div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <button class="ori-act" type="button" id="jump">¡Saltar!</button>
+                    <span id="saltos" class="text-muted-light"></span>
+                    <span id="mejor" class="text-muted-light"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
                 <h2 class="section-title mb-2">Mis modelos</h2>
                 <p class="text-muted-light mb-4">Guías externas para los modelos que todavía no tienen diagrama propio en esta página.</p>
                 <div class="row g-4"><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-dove me-2"></i>Grulla</h3><p class="mb-2">Base preliminar → base pájaro → cuello, cola y alas.</p><p class="small text-muted-light mb-2">Tiene muchos pasos y conviene seguirla con foto o video.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://www.tutkit.com/es/diy-decoracion-manualidades/890-instrucciones-para-doblar-grulla-de-origami">Instrucciones con fotos y video (tutkit)</a></li></ul></div></div><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-dragon me-2"></i>Dragón</h3><p class="mb-2">Modelo tradicional de alas, cuello y cola.</p><p class="small text-muted-light mb-2">Diagrama paso a paso en PDF, de Mathigon.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://static.mathigon.org/origami/dragon.pdf">Diagrama del dragón (PDF, Mathigon)</a></li></ul></div></div><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-frog me-2"></i>Sapo (rana saltarina)</h3><p class="mb-2">Se pliega de manera que salte al presionarle la parte de atrás.</p><p class="small text-muted-light mb-2">Dos guías con fotos y video.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://www.tutkit.com/es/diy-decoracion-manualidades/1150-rana-de-origami">Rana saltarina (tutkit)</a></li><li><a target="_blank" rel="noopener" href="https://www.tutkit.com/es/diy-decoracion-manualidades/3513-instrucciones-de-origami-de-rana-saltarina-con-video-y-fotos">Otra versión de rana saltarina (tutkit)</a></li></ul></div></div><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-box me-2"></i>Caja</h3><p class="mb-2">Una caja útil para guardar cosas pequeñas. Conviene doblar varias.</p><p class="small text-muted-light mb-2">Guía con fotos entre las cinco figuras clásicas.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://www.tutkit.com/es/blog/423-las-5-figuras-clasicas-de-origami">Las 5 figuras clásicas, incluida la caja (tutkit)</a></li></ul></div></div><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-ship me-2"></i>Barco</h3><p class="mb-2">Barco clásico de una hoja rectangular. Los diagramas propios están más arriba.</p><p class="small text-muted-light mb-2">Y cinco variantes más, de simple a complicada.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://www.tutkit.com/es/blog/425-plegar-papel-barco-top-5-origami">Los 5 mejores barcos de origami (tutkit)</a></li></ul></div></div><div class="col-12 col-lg-6"><div class="ori-card"><h3 class="h5 fw-bold text-accent mb-2"><i class="fas fa-spa me-2"></i>Mariposa</h3><p class="mb-2">Modelo tradicional, de dominio público.</p><p class="small text-muted-light mb-2">Galería de modelos tradicionales del Museo de Origami y videotutoriales.</p><ul class="small mb-0"><li><a target="_blank" rel="noopener" href="https://origamimuseum.org/?p=298">Galería de modelos tradicionales (Origami Museum)</a></li><li><a target="_blank" rel="noopener" href="https://www.educaciontrespuntocero.com/recursos/videotutoriales-de-papiroflexia/">Videotutoriales de papiroflexia (Educación 3.0)</a></li></ul></div></div></div>
@@ -121,5 +176,72 @@
     <footer class="py-4 text-center bg-black">
         <div class="container"><small>© 2026 Ignacio Porrini. Todos los derechos reservados.</small></div>
     </footer>
+<script>
+(function(){
+  var DATA={
+    rana:{n:'Rana saltarina',src:'Versión resumida con mis palabras a partir de la guía de FCZ (papel de 15 cm).',url:'https://fcz.org/wp-content/uploads/2025/02/Origami-Frog-Craft_SP.pdf',steps:[
+      'Prepare un cuadrado de 15 cm de papel fino. Sirve hasta una hoja usada.',
+      'Dóblelo por la mitad en vertical y marque bien el pliegue.',
+      'Lleve cada esquina, de a una, hasta la línea del centro, arriba y abajo. Marque y desdoble: quedan líneas guía.',
+      'Empuje los costados hacia adentro y dóblelo para formar un triángulo arriba. Haga lo mismo abajo: queda un rombo.',
+      'Patas delanteras: en la mitad de arriba, doble dos veces por las marcas a cada lado.',
+      'Patas traseras: repita lo mismo en la mitad de abajo, de forma simétrica.',
+      'Dé vuelta la figura, con el lado liso arriba y las patas abajo. Marque la línea central y suba la punta de abajo hasta ella.',
+      'Lleve las dos puntas de los costados hacia el centro.',
+      'Doble la parte de abajo hacia atrás para que la rana se apoye de pie.',
+      'Ajuste la forma y dibuje los ojos. Para que salte, presione la parte trasera hacia abajo y suelte.']},
+    mariposa:{n:'Mariposa',src:'Versión resumida con mis palabras a partir de la guía de Guiainfantil. Sin tijeras.',url:'https://www.guiainfantil.com/articulos/ocio/manualidades/crea-una-mariposa-de-origami-manualidades-para-ninos/',steps:[
+      'Prepare una hoja cuadrada, preferiblemente de colores. No hacen falta tijeras.',
+      'Dóblela por cada diagonal y desdoble: quedan dos líneas cruzadas.',
+      'Lleve las cuatro esquinas al centro y marque. Dé vuelta y repita. Después abra todo.',
+      'Lleve cada lado hasta la línea central, y haga lo mismo con el lado opuesto.',
+      'Abra la parte de arriba por las marcas y baje un doblez para que quede como un techo de casa. Repita abajo y una los dos dobleces.',
+      'Baje una esquina para formar un triángulo y haga lo mismo con la otra.',
+      'Dé vuelta la figura y dóblela por la mitad.',
+      'Marque un pequeño doblez en el centro, primero de un lado y luego del otro. Abra las alas.']}
+  };
+  var KEY='origami-progreso-v1', cur='rana', st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){st={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function idx(){var n=st[cur]||0, t=DATA[cur].steps.length; return Math.max(0,Math.min(n,t))}
+  function render(){
+    var d=DATA[cur],i=idx(),t=d.steps.length;
+    var num=document.getElementById('s-num'),tx=document.getElementById('s-txt');
+    if(i>=t){num.textContent=d.n+' · terminada';tx.textContent='¡Listo! Terminó los '+t+' pasos. Si quiere repasar, vuelva al paso anterior o empiece de nuevo.'}
+    else{num.textContent=d.n+' · paso '+(i+1)+' de '+t;tx.textContent=d.steps[i]}
+    document.getElementById('s-bar').style.width=Math.round(i/t*100)+'%';
+    document.getElementById('s-prev').disabled=i===0;
+    document.getElementById('s-next').disabled=i>=t;
+    var s=document.getElementById('s-src');s.textContent='';
+    s.appendChild(document.createTextNode(d.src+' '));
+    var a=document.createElement('a');a.href=d.url;a.target='_blank';a.rel='noopener';a.textContent='Ver la guía original';s.appendChild(a);
+    var tabs=document.querySelectorAll('#tabs .ori-tab');
+    for(var k=0;k<tabs.length;k++)tabs[k].setAttribute('aria-pressed',tabs[k].getAttribute('data-m')===cur?'true':'false');
+  }
+  document.getElementById('s-next').addEventListener('click',function(){st[cur]=idx()+1;save();render()});
+  document.getElementById('s-prev').addEventListener('click',function(){st[cur]=Math.max(0,idx()-1);save();render()});
+  document.getElementById('s-reset').addEventListener('click',function(){st[cur]=0;save();render()});
+  document.getElementById('tabs').addEventListener('click',function(e){var b=e.target.closest('button[data-m]');if(!b)return;cur=b.getAttribute('data-m');render()});
+  render();
+
+  // Carrera de ranas
+  var KEY2='origami-rana-mejor-v1', saltos=0, pos=0, mejor=null;
+  try{var m=parseInt(localStorage.getItem(KEY2),10);if(m>0)mejor=m}catch(e){}
+  var frog=document.getElementById('frog'),track=document.getElementById('track');
+  function txt(){document.getElementById('saltos').textContent='Saltos: '+saltos;document.getElementById('mejor').textContent=mejor?'Mejor carrera: '+mejor+' saltos':''}
+  document.getElementById('jump').addEventListener('click',function(){
+    var max=track.clientWidth-64-12;
+    pos=Math.min(max,pos+max/7+Math.random()*max/10);saltos++;
+    frog.style.left=pos+'px';frog.classList.remove('hop');void frog.offsetWidth;frog.classList.add('hop');
+    if(pos>=max-1){
+      if(!mejor||saltos<mejor){mejor=saltos;try{localStorage.setItem(KEY2,String(mejor))}catch(e){}}
+      txt();document.getElementById('saltos').textContent='¡Llegó en '+saltos+' saltos!';
+      saltos=0;pos=0;setTimeout(function(){frog.style.left='0px';txt()},1200);return;
+    }
+    txt();
+  });
+  txt();
+})();
+</script>
 </body>
 </html>
