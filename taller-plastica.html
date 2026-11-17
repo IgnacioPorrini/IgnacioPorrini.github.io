@@ -94,6 +94,25 @@ footer a{color:var(--c)}
 }
 .mix{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 6px;font-weight:700}
 .sw{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line)}
+
+.mixer{display:grid;gap:14px}
+.mx-pick{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}
+.mx-pick b{min-width:5.2em}
+.mx-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px 6px 8px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.mx-btn .sw{width:26px;height:26px}
+.mx-btn[aria-pressed="true"]{border-color:var(--c);background:var(--soft-c)}
+.mx-btn:focus-visible,.mx-range:focus-visible,.mx-hide:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.mx-range{width:100%;height:44px;accent-color:var(--c)}
+.mx-result{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.mx-big{width:120px;height:120px;border-radius:20px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-family:"Fredoka";color:var(--muted)}
+.mx-name{font-family:"Fredoka";font-size:1.25rem;font-weight:600}
+.mx-hex{color:var(--muted);font-size:.95rem}
+.mx-hide{min-height:44px;margin-top:8px;padding:6px 14px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.mx-strip{display:flex;border-radius:12px;overflow:hidden;border:1px solid var(--line);height:44px}
+.mx-strip span{flex:1}
+.mx-ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+@media (max-width:480px){.mx-result{grid-template-columns:96px 1fr}.mx-big{width:96px;height:96px}}
+@media print{.mixer-sec{display:none}}
 </style>
 </head>
 <body>
@@ -108,6 +127,7 @@ footer a{color:var(--c)}
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
     <a href="#tarjetas">Tarjetas de color</a>
+    <a href="#mezclador">Mezclador</a>
     <a href="#materiales">Materiales</a>
     <a href="#edades">Según la edad</a>
   </nav>
@@ -214,6 +234,35 @@ footer a{color:var(--c)}
   </div>
 </section>
 
+<section id="mezclador" class="mixer-sec">
+  <h2>Mezclador de témperas</h2>
+  <p style="color:var(--muted)">Para usar desde el celular durante la clase. Elegí dos pinturas, movés la barra para cambiar cuánto lleva de cada una y se ve el color que sale. Es una aproximación en pantalla: la pintura real cambia según la marca, el agua y el papel. Siempre conviene probar en una hoja.</p>
+  <div class="card mixer">
+    <div>
+      <div class="mx-pick" role="group" aria-label="Primera pintura"><b>Pintura A</b></div>
+      <div class="mx-pick" role="group" aria-label="Segunda pintura"><b>Pintura B</b></div>
+    </div>
+    <div>
+      <label for="mx-range"><b>Proporción:</b> <span id="mx-prop"></span></label>
+      <input id="mx-range" class="mx-range" type="range" min="0" max="100" value="50" step="5">
+      <div class="mx-ends"><span id="mx-endA">A</span><span id="mx-endB">B</span></div>
+    </div>
+    <div class="mx-result">
+      <div id="mx-big" class="mx-big" aria-hidden="true">?</div>
+      <div>
+        <div id="mx-name" class="mx-name" aria-live="polite"></div>
+        <div id="mx-hex" class="mx-hex"></div>
+        <button type="button" id="mx-hide" class="mx-hide" aria-pressed="false">Adivinar primero: ocultar el resultado</button>
+      </div>
+    </div>
+    <div>
+      <div id="mx-strip" class="mx-strip" aria-hidden="true"></div>
+      <div class="mx-ends"><span>Todo A</span><span>Todo B</span></div>
+    </div>
+    <div class="tip">Juego para la clase: cada uno elige dos pinturas, dice en voz alta qué color cree que va a salir, y recién después se lo muestra. Después lo prueban con la témpera de verdad.</div>
+  </div>
+</section>
+
 <section id="materiales">
   <h2>Materiales</h2>
   <div class="grid">
@@ -270,5 +319,67 @@ footer a{color:var(--c)}
 </footer>
 
 </div>
+<script>
+(function(){
+  var P=[["Rojo",[214,58,47]],["Amarillo",[244,194,13]],["Azul",[36,86,201]],["Blanco",[255,255,255]],["Negro",[25,25,25]]];
+  var a=0,b=1,hidden=false;
+  var range=document.getElementById("mx-range");
+  var groups=document.querySelectorAll(".mx-pick");
+  function hex(c){return "#"+c.map(function(v){return ("0"+v.toString(16)).slice(-2)}).join("")}
+  function mix(c1,c2,t){ // mezcla multiplicativa (geométrica) por canal: se parece más a pintura que un promedio
+    return c1.map(function(v,i){return Math.round(Math.pow(Math.max(v,1),1-t)*Math.pow(Math.max(c2[i],1),t))});
+  }
+  function name(c){
+    var r=c[0]/255,g=c[1]/255,bl=c[2]/255,mx=Math.max(r,g,bl),mn=Math.min(r,g,bl),l=(mx+mn)/2,d=mx-mn,h=0,s=0;
+    if(d>0){s=d/(1-Math.abs(2*l-1));
+      if(mx===r)h=60*(((g-bl)/d)%6);else if(mx===g)h=60*((bl-r)/d+2);else h=60*((r-g)/d+4);
+      if(h<0)h+=360;}
+    var tono=l>0.85?"muy claro":l>0.65?"claro":l<0.2?"muy oscuro":l<0.35?"oscuro":"";
+    if(s<0.15||d<0.08){return l>0.9?"Blanco":l<0.2?"Negro":tono?"Gris "+tono:"Gris"}
+    var n=h<15||h>=345?"Rojo":h<40?"Naranja":h<65?"Amarillo":h<95?"Verde amarillento":h<165?"Verde":h<200?"Verde azulado":h<255?"Azul":h<290?"Violeta":h<345?"Rosado":"Rojo";
+    if(n==="Rojo"&&l>0.65)n="Rosado";
+    if(n==="Naranja"&&l<0.4)n="Marrón";
+    if(n==="Amarillo"&&l<0.45)n="Ocre";
+    if(n==="Rojo"&&l<0.3)n="Bordó";
+    return n+(tono&&n!=="Rosado"&&n!=="Marrón"&&n!=="Ocre"&&n!=="Bordó"?" "+tono:"")
+  }
+  function build(g,idx,set){
+    P.forEach(function(p,i){
+      var bt=document.createElement("button");bt.type="button";bt.className="mx-btn";
+      bt.innerHTML='<span class="sw" style="background:'+hex(p[1])+'"></span>'+p[0];
+      bt.setAttribute("data-i",i);
+      bt.addEventListener("click",function(){set(i);update()});
+      g.appendChild(bt);
+    });
+  }
+  build(groups[0],0,function(i){a=i});
+  build(groups[1],1,function(i){b=i});
+  function update(){
+    [[groups[0],a],[groups[1],b]].forEach(function(x){
+      x[0].querySelectorAll(".mx-btn").forEach(function(bt){bt.setAttribute("aria-pressed",String(+bt.getAttribute("data-i")===x[1]))});
+    });
+    var t=range.value/100,A=P[a],B=P[b];
+    var c=mix(A[1],B[1],t);
+    document.getElementById("mx-prop").textContent=(100-range.value)+" % "+A[0].toLowerCase()+" y "+range.value+" % "+B[0].toLowerCase();
+    document.getElementById("mx-endA").textContent=A[0];
+    document.getElementById("mx-endB").textContent=B[0];
+    var big=document.getElementById("mx-big");
+    if(hidden){big.style.background="transparent";big.textContent="?";
+      document.getElementById("mx-name").textContent="¿Qué color saldrá?";document.getElementById("mx-hex").textContent="";}
+    else{big.style.background=hex(c);big.textContent="";
+      document.getElementById("mx-name").textContent=name(c);document.getElementById("mx-hex").textContent=hex(c).toUpperCase()+" (aproximado en pantalla)";}
+    var st=document.getElementById("mx-strip");st.innerHTML="";
+    for(var i=0;i<=10;i++){var sp=document.createElement("span");sp.style.background=hid()?"transparent":hex(mix(A[1],B[1],i/10));st.appendChild(sp)}
+  }
+  function hid(){return hidden}
+  range.addEventListener("input",update);
+  var hb=document.getElementById("mx-hide");
+  hb.addEventListener("click",function(){
+    hidden=!hidden;hb.setAttribute("aria-pressed",String(hidden));
+    hb.textContent=hidden?"Mostrar el resultado":"Adivinar primero: ocultar el resultado";update();
+  });
+  update();
+})();
+</script>
 </body>
 </html>
