@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Plan semanal de entrenamiento para regata de larga distancia: sesiones cortas, cuenta regresiva y racha. Gratis, sin registro.">
+<link rel="icon" href="favicon.ico">
+<link rel="canonical" href="https://ignacioporrini.github.io/entrenamiento-regata.html">
+<title>Plan semanal de regata | Ignacio Porrini</title>
+<meta property="og:title" content="Plan semanal de regata: sesiones cortas">
+<meta property="og:description" content="Cuenta regresiva a tu regata, sesiones cortas por día y racha. Todo se guarda en tu celular.">
+<meta property="og:image" content="https://ignacioporrini.github.io/img/nacho-nautico.jpg">
+<meta property="og:url" content="https://ignacioporrini.github.io/entrenamiento-regata.html">
+<meta property="og:type" content="website">
+<meta name="author" content="Ignacio Porrini">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{
+  --bg:#EDF2F5; --surface:#FFFFFF; --ink:#0E2433; --muted:#4F6676; --line:#C9D6DE;
+  --sea:#0F4C6E; --flag:#E8B400; --flag-ink:#2A2100; --ok:#1F7A4D; --ok-bg:#E3F3EA;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#08151E; --surface:#102331; --ink:#E4EEF3; --muted:#93AAB8; --line:#22394A;
+  --sea:#6FB6DD; --flag:#F2C94C; --flag-ink:#1E1700; --ok:#5CC98E; --ok-bg:#12301F; color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding:20px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.back{font:600 14px var(--body);color:var(--sea);text-decoration:none}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;margin:4px 0 0;color:var(--sea);text-wrap:balance}
+h1 span{color:var(--ink)}
+.lede{color:var(--muted);margin:6px 0 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.big{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;color:var(--sea);font-variant-numeric:tabular-nums}
+.small{font-size:14px;color:var(--muted);margin:0}
+.day{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:16px/1.35 var(--body);color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.day[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--ok)}
+.day.today{box-shadow:0 0 0 2px var(--flag)}
+.box{flex:0 0 26px;height:26px;border:2px solid var(--line);border-radius:7px;display:grid;place-items:center;font-weight:700;color:var(--ok);margin-top:2px}
+.day[aria-pressed="true"] .box{border-color:var(--ok)}
+.dn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.dt{font-family:var(--display);font-weight:600;font-size:1.3rem;line-height:1.15}
+.dd{font-size:14px;color:var(--muted)}
+.dd a{color:var(--sea);font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar>div{height:100%;background:var(--flag)}
+label{font-size:14px;color:var(--muted)}
+input{font:16px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.ghost{font:600 14px var(--body);background:none;color:var(--sea);border:1px solid var(--line);border-radius:9px;padding:10px 14px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="nautica.html">← Náutica</a>
+  <header>
+    <div class="eyebrow">Regata de larga distancia</div>
+    <h1>Plan semanal <span>de regata</span></h1>
+    <p class="lede">Una sesión corta por día, sin aburrirse. Tocá cada día cuando lo hagas. Todo queda guardado en este dispositivo.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="big" id="dias">–</div><p class="small" id="dias-t">días para la regata</p></div>
+    <div class="stat"><div class="big" id="racha">0</div><p class="small" id="racha-t">días seguidos</p></div>
+  </div>
+
+  <section class="card" aria-label="Esta semana">
+    <div class="small" id="semana-t"></div>
+    <div class="bar" aria-hidden="true"><div id="barra" style="width:0%"></div></div>
+    <div id="dias-lista" style="display:flex;flex-direction:column;gap:8px"></div>
+  </section>
+
+  <section class="card" aria-label="Tu regata">
+    <div class="row">
+      <div><label for="rn">Nombre de la regata</label><input id="rn" type="text" maxlength="60" placeholder="Ej.: Regata de larga distancia"></div>
+      <div><label for="rf">Fecha</label><input id="rf" type="date"></div>
+    </div>
+    <p class="small">Cambiá el nombre y la fecha cuando quieras. Se guardan solos.</p>
+    <button class="ghost" id="reset" type="button">Borrar mi progreso</button>
+  </section>
+
+  <p class="small">¿Querés entrenar táctica ahora? Probá el <a href="tactica-a-bordo.html" style="color:var(--sea);font-weight:600">quiz y las roladas</a>.</p>
+</div>
+
+<script>
+(function(){
+  var KEY='entrenamiento-regata-v1';
+  var PLAN=[
+    {d:'Lunes',t:'Cardio suave',x:'Remo o trote, 30–40 min a ritmo cómodo. Es la base para aguantar horas a bordo.'},
+    {d:'Martes',t:'Fuerza y core',x:'30 min: sentadillas, plancha, remo con banda. Piernas y abdomen para ir sentado a la banda.'},
+    {d:'Miércoles',t:'Táctica, 10 minutos',x:'Un set del quiz y una ronda de roladas.',l:'tactica-a-bordo.html',lt:'Abrir Táctica a bordo'},
+    {d:'Jueves',t:'Fuerza y movilidad',x:'30 min: hombros, espalda y caderas. Cerrá con 10 min de estiramientos.'},
+    {d:'Viernes',t:'Reglas y parte del tiempo',x:'10 min repasando reglas de rumbos y mirando viento y corriente de la salida.',l:'cuestionario-brevet.html',lt:'Repasar reglas'},
+    {d:'Sábado',t:'Agua',x:'Salir a navegar, lo más largo posible. Practicá trimado, guardia y comidas a bordo.'},
+    {d:'Domingo',t:'Regata o descanso activo',x:'Si hay regata, a competir. Si no, caminata o natación suave y dormir bien.'}
+  ];
+  var s;
+  try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
+  if(!s||typeof s!=='object')s={};
+  if(!s.done)s.done={};
+  if(!s.name)s.name='Regata de larga distancia';
+  if(!s.date)s.date='';
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function atNoon(y,m,d){return new Date(y,m,d,12)}
+  var today=new Date();today=atNoon(today.getFullYear(),today.getMonth(),today.getDate());
+  var dow=(today.getDay()+6)%7; // lunes=0
+  var monday=atNoon(today.getFullYear(),today.getMonth(),today.getDate()-dow);
+  var list=document.getElementById('dias-lista');
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function renderWeek(){
+    list.innerHTML='';
+    var hechos=0;
+    PLAN.forEach(function(p,i){
+      var dt=atNoon(monday.getFullYear(),monday.getMonth(),monday.getDate()+i);
+      var k=iso(dt), on=!!s.done[k]; if(on)hechos++;
+      var b=document.createElement('button');
+      b.type='button';b.className='day'+(i===dow?' today':'');
+      b.setAttribute('aria-pressed',on?'true':'false');
+      b.innerHTML='<span class="box">'+(on?'✓':'')+'</span><span><span class="dn">'+p.d+' '+dt.getDate()+(i===dow?' · hoy':'')+'</span><br><span class="dt">'+esc(p.t)+'</span><br><span class="dd">'+esc(p.x)+(p.l?' <a href="'+p.l+'">'+esc(p.lt)+'</a>':'')+'</span></span>';
+      b.addEventListener('click',function(e){
+        if(e.target.tagName==='A')return;
+        if(s.done[k])delete s.done[k];else s.done[k]=1;
+        save();renderAll();
+      });
+      list.appendChild(b);
+    });
+    document.getElementById('semana-t').textContent='Esta semana: '+hechos+' de 7 sesiones';
+    document.getElementById('barra').style.width=Math.round(hechos/7*100)+'%';
+  }
+  function renderStreak(){
+    var n=0,d=new Date(today);
+    if(!s.done[iso(d)])d=atNoon(d.getFullYear(),d.getMonth(),d.getDate()-1);
+    while(s.done[iso(d)]){n++;d=atNoon(d.getFullYear(),d.getMonth(),d.getDate()-1)}
+    document.getElementById('racha').textContent=n;
+    document.getElementById('racha-t').textContent=n===1?'día seguido':'días seguidos';
+  }
+  function renderCountdown(){
+    var el=document.getElementById('dias'),t=document.getElementById('dias-t');
+    if(!s.date){el.textContent='–';t.textContent='Elegí la fecha de tu regata';return}
+    var p=s.date.split('-'),r=atNoon(+p[0],+p[1]-1,+p[2]);
+    var n=Math.round((r-today)/86400000);
+    if(n>1){el.textContent=n;t.textContent='días para '+s.name}
+    else if(n===1){el.textContent='1';t.textContent='día para '+s.name}
+    else if(n===0){el.textContent='Hoy';t.textContent=s.name}
+    else{el.textContent='–';t.textContent='La fecha ya pasó: elegí la próxima regata'}
+  }
+  function renderAll(){renderWeek();renderStreak();renderCountdown()}
+  var rn=document.getElementById('rn'),rf=document.getElementById('rf');
+  rn.value=s.name;rf.value=s.date;
+  rn.addEventListener('input',function(){s.name=rn.value.trim()||'Regata de larga distancia';save();renderCountdown()});
+  rf.addEventListener('change',function(){s.date=rf.value;save();renderCountdown()});
+  document.getElementById('reset').addEventListener('click',function(){
+    if(confirm('¿Borrar el progreso guardado en este dispositivo?')){s.done={};save();renderAll()}
+  });
+  renderAll();
+})();
+</script>
+</body>
+</html>
