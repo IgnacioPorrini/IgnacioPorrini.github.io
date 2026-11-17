@@ -59,7 +59,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .pattern span{min-width:34px;text-align:center;border-radius:8px;padding:2px 4px;color:var(--muted)}
 .pattern span.hit{color:var(--ink)}
 .pattern span.now{background:var(--beat-soft);color:var(--beat)}
-.notes{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.notes{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.note svg{width:100%;max-width:170px;height:auto}
 .note{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 2px;border-radius:12px;border:2px solid var(--oca);background:var(--oca-soft);color:var(--ink);cursor:pointer;font:inherit}
 .note b{font-family:var(--display);font-size:1.15rem}
 .note small{font-size:.75rem;color:var(--muted)}
@@ -73,7 +74,7 @@ label{font-weight:700;display:flex;gap:8px;align-items:center}
 input[type=range]{width:160px}
 .tip{border-left:4px solid var(--beat);padding:4px 0 4px 12px}
 footer{font-size:.9rem;color:var(--muted);text-align:center}
-@media (max-width:460px){.notes{grid-template-columns:repeat(4,1fr)}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -115,11 +116,16 @@ footer{font-size:.9rem;color:var(--muted);text-align:center}
   </section>
 
   <section id="ocarina">
-    <h2>Notas de la ocarina</h2>
-    <p>La escala de <b>Do</b> que usan las canciones de esta guía. Toque cada nota para escucharla y compárela con su ocarina.</p>
+    <h2>Ocarina de 12 agujeros en Do</h2>
+    <p>Para la ocarina transversal de 12 agujeros (como la Mahalo o la de Zelda). Va del Do al Fa agudo. Toque cada nota para escucharla.</p>
+    <div class="card">
+      <p><b>Cómo leer el dibujo:</b> la boquilla queda a la izquierda. Arriba están los cuatro agujeros de cada mano (izquierda: índice, mayor, anular y meñique; derecha: igual). Abajo, los dos pulgares por detrás. Círculo lleno: tapar. Círculo vacío: destapar.</p>
+      <p><b>La regla:</b> en el Do grave se tapan los 10 agujeros principales. Para subir, se destapa uno por vez, empezando por el meñique derecho y siguiendo hacia la boquilla: meñique, anular, mayor e índice derechos; después los de la mano izquierda; y por último los pulgares, primero el izquierdo y después el derecho.</p>
+      <p><b>Los dos agujeritos pequeños</b> (sub-agujeros, cerca de la mano derecha) quedan destapados en toda esta escala. Se tapan solo para las notas más graves que el Do: La y Si.</p>
+    </div>
     <div class="notes" id="notes"></div>
     <div class="card tip">
-      <p><b>Digitación:</b> cada modelo de ocarina (de 4, 6 o 12 agujeros) tiene la suya. Use la tabla que trae su ocarina para saber qué agujeros tapar en cada nota; aquí están el nombre y el sonido para entrenar el oído.</p>
+      <p><b>Para verificar:</b> compare con la tabla de digitación que trae su ocarina. Si algún modelo cambia el orden de los pulgares, manda la tabla del fabricante.</p>
       <p><b>Soplido:</b> suave y parejo, como para empañar un vidrio. Si sopla fuerte, la nota sube y desafina. Las notas agudas piden un poco más de aire; las graves, un poco menos.</p>
     </div>
   </section>
@@ -195,9 +201,19 @@ function startM(){ctx();step=0;tick();timer=setInterval(tick,60000/(+bpm.value)/
 function stopM(){clearInterval(timer);timer=null;patEl.querySelectorAll('span').forEach(s=>s.classList.remove('now'));document.getElementById('metro').textContent='▶ Empezar'}
 document.getElementById('metro').addEventListener('click',()=>timer?stopM():startM());
 // ocarina: escala de Do de la octava 5 (registro de una ocarina alto en Do)
-const SCALE=[['Do','C5'],['Re','D5'],['Mi','E5'],['Fa','F5'],['Sol','G5'],['La','A5'],['Si','B5'],['Do','C6']];
+const SCALE=[['Do','C5'],['Re','D5'],['Mi','E5'],['Fa','F5'],['Sol','G5'],['La','A5'],['Si','B5'],['Do','C6'],['Re','D6'],['Mi','E6'],['Fa','F6']];
+NOTE.D6=1174.66;NOTE.E6=1318.51;NOTE.F6=1396.91;
+const LIFT=['R4','R3','R2','R1','L4','L3','L2','L1','LT','RT'];
+const HOLES={L1:[22,20],L2:[36,16],L3:[50,15],L4:[63,17],R1:[84,17],R2:[97,15],R3:[111,16],R4:[124,20],LT:[48,56],RT:[100,56]};
+function ocaSvg(k){const open=new Set(LIFT.slice(0,k));let s='<svg viewBox="0 0 150 72" role="img" aria-label="Digitación">';
+ s+='<path d="M6 34 C6 14 40 6 75 8 C112 6 146 16 146 34 C146 52 112 62 75 60 C40 62 6 52 6 34 Z" fill="none" stroke="currentColor" stroke-opacity=".5"/>';
+ s+='<rect x="0" y="29" width="10" height="10" rx="2" fill="currentColor" fill-opacity=".35"/>';
+ Object.entries(HOLES).forEach(([h,[x,y]])=>{const th=h.endsWith('T');const r=th?5:6;const shut=!open.has(h);s+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${shut?'var(--oca)':'none'}" stroke="var(--oca)" stroke-width="1.5" ${th?'stroke-dasharray="2 2"':''}/>`});
+ s+='<circle cx="118" cy="34" r="2.5" fill="none" stroke="var(--oca)"/><circle cx="126" cy="38" r="2.5" fill="none" stroke="var(--oca)"/>';
+ s+='<text x="48" y="70" font-size="7" text-anchor="middle" fill="currentColor" fill-opacity=".6">pulgar izq.</text><text x="100" y="70" font-size="7" text-anchor="middle" fill="currentColor" fill-opacity=".6">pulgar der.</text>';
+ return s+'</svg>'}
 const flute=(f,dur=0.6,when=0)=>{tone(f,dur,when,'sine',0.28);tone(f*2,dur,when,'sine',0.03)};
-document.getElementById('notes').innerHTML=SCALE.map((n,i)=>`<button class="note" data-n="${i}"><b>${n[0]}</b><small>${n[1].replace(/\d/,'')}${i===7?' agudo':''}</small></button>`).join('');
+document.getElementById('notes').innerHTML=SCALE.map((n,i)=>`<button class="note" data-n="${i}"><b>${n[0]}${i>=7?' agudo':''}</b>${ocaSvg(i)}<small>${n[1].replace(/\d/,'')}${i>=7?'′':''}</small></button>`).join('');
 document.getElementById('notes').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b)flute(NOTE[SCALE[+b.dataset.n][1]])});
 // canciones: compases [acorde, [notas]] ; notas en la octava 5 salvo indicación
 const SOL={C5:'Do',D5:'Re',E5:'Mi',F5:'Fa',G5:'Sol',A5:'La',B5:'Si',C6:'Do+'};
