@@ -113,6 +113,21 @@ footer a{color:var(--c)}
 .mx-ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
 @media (max-width:480px){.mx-result{grid-template-columns:96px 1fr}.mx-big{width:96px;height:96px}}
 @media print{.mixer-sec{display:none}}
+
+.tm-presets{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.tm-p{min-height:44px;min-width:56px;padding:6px 14px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.tm-p[aria-pressed="true"]{border-color:var(--c);background:var(--soft-c)}
+.tm-clock{font-family:"Fredoka";font-weight:700;font-size:clamp(3.5rem,22vw,5.5rem);text-align:center;line-height:1.1;margin:10px 0;font-variant-numeric:tabular-nums}
+.tm-clock.end{color:var(--a)}
+.tm-bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.tm-bar span{display:block;height:100%;width:100%;background:var(--b);transition:width .25s linear}
+.tm-row{display:flex;gap:10px;margin-top:14px}
+.tm-go,.tm-rs,.tm-pr{min-height:48px;padding:8px 18px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.tm-go{flex:1;background:var(--b);border-color:var(--b);color:#fff}
+.tm-pr{flex:1;width:100%}
+.tm-p:focus-visible,.tm-go:focus-visible,.tm-rs:focus-visible,.tm-pr:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.tm-prompt{margin-top:14px;padding:14px;border-radius:14px;background:var(--soft-a);font-weight:700;min-height:3.4em}
+@media print{.timer-sec{display:none}}
 </style>
 </head>
 <body>
@@ -128,6 +143,7 @@ footer a{color:var(--c)}
     <a href="#plan">Plan de la clase 0</a>
     <a href="#tarjetas">Tarjetas de color</a>
     <a href="#mezclador">Mezclador</a>
+    <a href="#temporizador">Temporizador</a>
     <a href="#materiales">Materiales</a>
     <a href="#edades">Según la edad</a>
   </nav>
@@ -263,6 +279,24 @@ footer a{color:var(--c)}
   </div>
 </section>
 
+<section id="temporizador" class="timer-sec">
+  <h2>Temporizador de dibujo</h2>
+  <p style="color:var(--muted)">Para marcar los tiempos de los ejercicios desde el celular. Elegí una duración, tocá Empezar y al terminar suena un aviso corto y vibra (si el celular lo permite). Los tiempos cortos obligan a soltar la mano y dejar de corregir.</p>
+  <div class="card">
+    <div class="tm-presets" role="group" aria-label="Duración"></div>
+    <div id="tm-clock" class="tm-clock" role="timer" aria-live="off">2:00</div>
+    <div class="tm-bar" aria-hidden="true"><span id="tm-fill"></span></div>
+    <div id="tm-status" class="mx-hex" aria-live="polite" style="text-align:center;margin-top:6px">Listo para empezar</div>
+    <div class="tm-row">
+      <button type="button" id="tm-go" class="tm-go">Empezar</button>
+      <button type="button" id="tm-rs" class="tm-rs">Reiniciar</button>
+    </div>
+    <div class="tm-prompt" id="tm-prompt" aria-live="polite">Consigna: tocá el botón de abajo para sacar una al azar.</div>
+    <button type="button" id="tm-pr" class="tm-pr" style="margin-top:10px">Otra consigna</button>
+    <div class="tip">Sugerencia: 30 s para gestos rápidos, 1 o 2 min para el dibujo a ciegas, 5 min para una textura o una mezcla de color, 10 min para observar y dibujar con calma.</div>
+  </div>
+</section>
+
 <section id="materiales">
   <h2>Materiales</h2>
   <div class="grid">
@@ -379,6 +413,63 @@ footer a{color:var(--c)}
     hb.textContent=hidden?"Mostrar el resultado":"Adivinar primero: ocultar el resultado";update();
   });
   update();
+})();
+
+(function(){
+  var D=[[30,"30 s"],[60,"1 min"],[120,"2 min"],[300,"5 min"],[600,"10 min"]];
+  var C=["Dibujá tu mano apoyada sobre la mesa, sin levantar el lápiz.","Dibujá un objeto de tu mochila usando solo líneas rectas.","Dibujá lo que ves frente a vos sin mirar la hoja.","Dibujá la sombra de un objeto en lugar del objeto.","Hacé un paisaje con solo tres formas: círculo, triángulo y rectángulo.","Dibujá un animal con una sola línea continua.","Dibujá el mismo objeto tres veces: grande, chico y de costado.","Dibujá con la mano que no usás para escribir.","Rellená una hoja con un solo tipo de trazo: puntos, rayas, ondas o espirales.","Dibujá una cara usando únicamente figuras geométricas.","Dibujá algo que esté lejos y algo que esté cerca, en la misma hoja.","Dibujá un camino que empiece en una esquina y termine en la otra."];
+  var dur=120,left=120,timer=null,endAt=0,last=-1;
+  var clock=document.getElementById("tm-clock"),fill=document.getElementById("tm-fill"),st=document.getElementById("tm-status"),go=document.getElementById("tm-go");
+  var box=document.querySelector(".tm-presets");
+  function fmt(n){var m=Math.floor(n/60),s=n%60;return m+":"+("0"+s).slice(-2)}
+  function paint(){
+    clock.textContent=fmt(Math.max(0,Math.ceil(left)));
+    fill.style.width=(dur?Math.max(0,left/dur)*100:0)+"%";
+    clock.className="tm-clock"+(left<=0?" end":"");
+  }
+  function beep(){
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+      var ctx=new AC(),t=ctx.currentTime;
+      [0,0.28,0.56].forEach(function(d){
+        var o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=880;
+        g.gain.setValueAtTime(0.0001,t+d);g.gain.exponentialRampToValueAtTime(0.3,t+d+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d+0.2);
+        o.connect(g);g.connect(ctx.destination);o.start(t+d);o.stop(t+d+0.22);
+      });
+      setTimeout(function(){try{ctx.close()}catch(e){}},1500);
+    }catch(e){}
+    try{if(navigator.vibrate)navigator.vibrate([200,100,200,100,200])}catch(e){}
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  function tick(){
+    left=(endAt-Date.now())/1000;
+    if(left<=0){left=0;stop();paint();go.textContent="Empezar";st.textContent="Tiempo. Soltá el lápiz.";beep();return}
+    paint();
+  }
+  function start(){
+    if(left<=0)left=dur;
+    endAt=Date.now()+left*1000;stop();timer=setInterval(tick,250);
+    go.textContent="Pausar";st.textContent="En marcha";tick();
+  }
+  go.addEventListener("click",function(){
+    if(timer){stop();go.textContent="Seguir";st.textContent="En pausa";}else start();
+  });
+  document.getElementById("tm-rs").addEventListener("click",function(){stop();left=dur;go.textContent="Empezar";st.textContent="Listo para empezar";paint()});
+  D.forEach(function(d){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=d[1];
+    b.setAttribute("aria-pressed",String(d[0]===dur));
+    b.addEventListener("click",function(){
+      stop();dur=d[0];left=dur;go.textContent="Empezar";st.textContent="Listo para empezar";
+      box.querySelectorAll(".tm-p").forEach(function(x){x.setAttribute("aria-pressed","false")});
+      b.setAttribute("aria-pressed","true");paint();
+    });
+    box.appendChild(b);
+  });
+  document.getElementById("tm-pr").addEventListener("click",function(){
+    var i;do{i=Math.floor(Math.random()*C.length)}while(i===last&&C.length>1);last=i;
+    document.getElementById("tm-prompt").textContent="Consigna: "+C[i];
+  });
+  paint();
 })();
 </script>
 </body>
