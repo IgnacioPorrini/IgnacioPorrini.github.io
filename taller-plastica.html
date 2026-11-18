@@ -174,6 +174,11 @@ footer a{color:var(--c)}
 .ct-rg label{font-weight:700}
 .ct-rg input[type=range]{width:100%;min-height:44px;accent-color:var(--c)}
 @media print{.ct-sec{display:none}}
+.pv-sec .gr-stage{margin-top:4px}
+.pv-sec canvas{cursor:crosshair;touch-action:manipulation}
+.pv-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.pv-nudge{display:flex;flex-wrap:wrap;gap:8px}
+@media print{.pv-sec{display:none}}
 
 .pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
 .pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
@@ -221,6 +226,7 @@ footer a{color:var(--c)}
     <a href="#paleta-foto">Paleta de una foto</a>
     <a href="#composicion">Composición</a>
     <a href="#contorno">Contorno</a>
+    <a href="#perspectiva">Perspectiva</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -495,6 +501,33 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="ct-cv" width="600" height="450" role="img" aria-label="Dibujo de líneas con los bordes de la imagen"></canvas></div>
     <p class="gr-info" id="ct-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: con pocas líneas quedan solo las formas grandes, que es por donde conviene empezar; sumá líneas de a poco para ver los detalles. Mirá el resultado un rato y dibujalo en tu hoja a mano, primero las formas grandes y después las chicas. Si la foto tiene poca luz o mucha textura, aparecen manchas que no son bordes reales: probá con menos líneas. Detecta bordes por cambios de claridad (método de Sobel), por eso no distingue dos colores que tengan el mismo gris.</div>
+  </div>
+</section>
+
+<section id="perspectiva" class="pv-sec">
+  <h2>Perspectiva: punto de fuga</h2>
+  <p style="color:var(--muted)">En una calle, un pasillo o una vía de tren, las líneas que en la realidad son paralelas parecen juntarse en un punto de la lejanía: el punto de fuga. Tocá la imagen para ubicarlo y la herramienta traza las líneas que salen de ahí, junto con la línea del horizonte. Sirve para entender una foto antes de dibujarla o para armar tu propia escena. La foto se queda en tu equipo.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="pv-file" accept="image/*">
+        <label for="pv-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="pv-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-opts" id="pv-n" role="group" aria-label="Cantidad de líneas"><b>Líneas:</b></div>
+      <div class="gr-opts" role="group" aria-label="Vista">
+        <button type="button" class="gr-opt" id="pv-hz" aria-pressed="true">Mostrar el horizonte</button>
+      </div>
+      <div class="pv-nudge" role="group" aria-label="Mover el punto de fuga">
+        <button type="button" class="gr-opt" data-d="l">Izquierda</button>
+        <button type="button" class="gr-opt" data-d="r">Derecha</button>
+        <button type="button" class="gr-opt" data-d="u">Arriba</button>
+        <button type="button" class="gr-opt" data-d="d">Abajo</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="pv-cv" width="600" height="450" tabindex="0" role="img" aria-label="Imagen con líneas que salen del punto de fuga"></canvas></div>
+    <p class="gr-info" id="pv-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: tocá donde las líneas del piso, los techos o los bordes de una calle parecen encontrarse; si las líneas trazadas no acompañan esos bordes, corré el punto de a poco con los botones (o con las flechas del teclado, con la imagen seleccionada). El horizonte coincide con la altura de tus ojos: todo lo que está por encima de esa línea lo ves desde abajo y lo que está por debajo, desde arriba. Para dibujar en tu hoja, marcá primero el horizonte y el punto, trazá las líneas con regla y recién después ubicá las formas (cajas, puertas, ventanas) entre ellas: los bordes verticales quedan verticales y los que se alejan van hacia el punto. Es perspectiva de un solo punto; en fotos tomadas en diagonal hay dos puntos de fuga, que se pueden probar poniendo uno a cada lado.</div>
   </div>
 </section>
 
@@ -1062,6 +1095,65 @@ footer a{color:var(--c)}
     im.src=u;
   });
   document.getElementById("cm-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("pv-cv"),ctx=cv.getContext("2d"),info=document.getElementById("pv-info"),box=document.getElementById("pv-n");
+  var img=null,url=null,vx=0.5,vy=0.45,hz=true,cnt=1,OPT=[["Pocas",8],["Medias",16],["Muchas",32]];
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var X=400,Y=270;
+    g.fillStyle="#bfe1f5";g.fillRect(0,0,800,600);
+    g.fillStyle="#6b6f78";g.beginPath();g.moveTo(0,600);g.lineTo(X-6,Y);g.lineTo(X+6,Y);g.lineTo(800,600);g.closePath();g.fill();
+    g.fillStyle="#c9b79c";g.beginPath();g.moveTo(0,600);g.lineTo(X-6,Y);g.lineTo(0,150);g.closePath();g.fill();
+    g.fillStyle="#b4a285";g.beginPath();g.moveTo(800,600);g.lineTo(X+6,Y);g.lineTo(800,150);g.closePath();g.fill();
+    g.strokeStyle="#fff";g.lineWidth=3;g.beginPath();g.moveTo(X,Y);g.lineTo(X,600);g.setLineDash([22,16]);g.stroke();g.setLineDash([]);
+    g.strokeStyle="#7a5a3a";g.lineWidth=2;
+    [[0,150],[0,40]].forEach(function(p){g.beginPath();g.moveTo(p[0],p[1]);g.lineTo(X-6,Y);g.stroke()});
+    return c;
+  }
+  function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+  function draw(){
+    var src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,900/w);cv.width=Math.round(w*sc);cv.height=Math.round(h*sc);
+    ctx.drawImage(src,0,0,cv.width,cv.height);
+    var W=cv.width,H=cv.height,X=vx*W,Y=vy*H,lw=Math.max(2,W/260),n=OPT[cnt][1],R=Math.hypot(W,H)*1.2;
+    [["rgba(0,0,0,.55)",lw*2],["#ffd34d",lw]].forEach(function(st){
+      ctx.strokeStyle=st[0];ctx.lineWidth=st[1];
+      for(var i=0;i<n;i++){var a=Math.PI*2*i/n;line(X,Y,X+Math.cos(a)*R,Y+Math.sin(a)*R)}
+      if(hz)line(0,Y,W,Y);
+    });
+    ctx.fillStyle="#ffd34d";ctx.strokeStyle="#000";ctx.lineWidth=2;ctx.beginPath();ctx.arc(X,Y,Math.max(6,W/90),0,7);ctx.fill();ctx.stroke();
+    info.textContent="Punto de fuga a "+Math.round(vx*100)+" % del ancho y "+Math.round(vy*100)+" % del alto. "+(hz?"La línea del horizonte pasa por ese punto.":"Horizonte oculto.");
+    cv.setAttribute("aria-label","Imagen con "+n+" líneas que salen del punto de fuga");
+  }
+  function place(e){
+    var r=cv.getBoundingClientRect();
+    vx=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));vy=Math.min(1,Math.max(0,(e.clientY-r.top)/r.height));draw();
+  }
+  cv.addEventListener("click",place);
+  function nudge(d){var s=0.01;if(d==="l")vx=Math.max(0,vx-s);if(d==="r")vx=Math.min(1,vx+s);if(d==="u")vy=Math.max(0,vy-s);if(d==="d")vy=Math.min(1,vy+s);draw()}
+  cv.addEventListener("keydown",function(e){var m={ArrowLeft:"l",ArrowRight:"r",ArrowUp:"u",ArrowDown:"d"};if(m[e.key]){e.preventDefault();nudge(m[e.key])}});
+  document.querySelectorAll(".pv-nudge button").forEach(function(b){b.addEventListener("click",function(){nudge(b.getAttribute("data-d"))})});
+  OPT.forEach(function(o,i){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=o[0];
+    b.setAttribute("aria-pressed",String(i===cnt));
+    b.addEventListener("click",function(){cnt=i;box.querySelectorAll(".gr-opt").forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");draw()});
+    box.appendChild(b);
+  });
+  var hb=document.getElementById("pv-hz");
+  hb.addEventListener("click",function(){hz=!hz;hb.setAttribute("aria-pressed",String(hz));draw()});
+  document.getElementById("pv-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;vx=0.5;vy=0.45;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("pv-sample").addEventListener("click",function(){img=null;vx=0.5;vy=0.45;draw()});
   draw();
 })();
 </script>
