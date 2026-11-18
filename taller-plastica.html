@@ -165,6 +165,10 @@ footer a{color:var(--c)}
 .gr-stage canvas{width:100%;height:auto;display:block}
 .gr-info{color:var(--muted);font-size:.95rem;margin:8px 0 0}
 @media print{.grid-sec{display:none}}
+.vl-sec .gr-stage{margin-top:4px}
+.vl-bar{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0 0;min-height:48px}
+.vl-bar span{flex:1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;padding:6px 2px}
+@media print{.vl-sec{display:none}}
 
 .cw-wrap{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:18px;align-items:center}
 .cw-svg{width:100%;height:auto;display:block;max-width:320px;margin:0 auto}
@@ -197,6 +201,7 @@ footer a{color:var(--c)}
     <a href="#rueda">Rueda de color</a>
     <a href="#temporizador">Temporizador</a>
     <a href="#cuadricula">Cuadrícula</a>
+    <a href="#valores">Valores</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -387,6 +392,28 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="gr-cv" width="600" height="450" role="img" aria-label="Imagen con cuadrícula superpuesta"></canvas></div>
     <p class="gr-info" id="gr-info" aria-live="polite"></p>
     <div class="tip">Cómo usarla: dibujá en tu hoja un rectángulo con la misma proporción y la misma cantidad de columnas y filas (cuadrados del mismo tamaño entre sí). Copiá cuadradito por cuadradito, mirando solo las líneas que cruzan los bordes. Probá el modo blanco y negro para ver mejor las zonas claras y oscuras antes de sombrear. El método de la cuadrícula es una técnica tradicional de copia y ampliación; sirve para entrenar la mirada, no para reemplazar el dibujo de observación.</div>
+  </div>
+</section>
+
+<section id="valores" class="vl-sec">
+  <h2>Estudio de valores</h2>
+  <p style="color:var(--muted)">El valor es qué tan claro u oscuro es un tono, sin importar el color. Antes de pintar conviene resolver las luces y las sombras con pocos grises. Elegí una foto del celular (se queda en tu equipo), decidí cuántos valores usar y copiá en papel esas manchas con lápiz blando o témpera gris. Con 3 valores se ve la composición; con 5 aparece el modelado.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="vl-file" accept="image/*">
+        <label for="vl-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="vl-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-n" id="vl-n" role="group" aria-label="Cantidad de valores"><b>Valores:</b></div>
+      <div class="gr-opts" role="group" aria-label="Vista">
+        <button type="button" class="gr-opt" id="vl-orig" aria-pressed="false">Ver la foto original</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="vl-cv" width="600" height="450" role="img" aria-label="Imagen reducida a pocos valores de gris"></canvas></div>
+    <div class="vl-bar" id="vl-bar" aria-hidden="true"></div>
+    <p class="gr-info" id="vl-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: pintá o sombreá primero la tira de grises en tu hoja (de blanco a negro en pasos parejos) y usala de referencia. Después ubicá cada mancha en uno de esos valores, sin detalles. Si dudás entre dos, entrecerrá los ojos: lo que se funde con el fondo es del mismo valor. Es un ejercicio clásico de dibujo y pintura para entrenar la mirada.</div>
   </div>
 </section>
 
@@ -746,6 +773,68 @@ footer a{color:var(--c)}
     im.src=u;
   });
   document.getElementById("gr-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("vl-cv"),ctx=cv.getContext("2d",{willReadFrequently:true}),info=document.getElementById("vl-info"),bar=document.getElementById("vl-bar");
+  var box=document.getElementById("vl-n"),NS=[3,4,5],n=4,img=null,url=null,orig=false;
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var gr=g.createLinearGradient(0,0,0,600);gr.addColorStop(0,"#9fd3f0");gr.addColorStop(1,"#f4f1e6");
+    g.fillStyle=gr;g.fillRect(0,0,800,600);
+    g.fillStyle="#4a7a3f";g.fillRect(0,430,800,170);
+    g.fillStyle="#ffd34d";g.beginPath();g.arc(660,110,60,0,7);g.fill();
+    g.fillStyle="#e8a07a";g.fillRect(220,260,300,190);
+    g.fillStyle="#7a2a22";g.beginPath();g.moveTo(190,260);g.lineTo(370,130);g.lineTo(550,260);g.closePath();g.fill();
+    g.fillStyle="#3a2a1a";g.fillRect(340,340,60,110);
+    g.fillStyle="#fff";g.fillRect(250,300,60,50);g.fillRect(430,300,60,50);
+    return c;
+  }
+  function draw(){
+    var src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,900/w);cv.width=Math.round(w*sc);cv.height=Math.round(h*sc);
+    ctx.drawImage(src,0,0,cv.width,cv.height);
+    var i,counts=[],k;for(k=0;k<n;k++)counts.push(0);
+    if(!orig){
+      var d=ctx.getImageData(0,0,cv.width,cv.height),px=d.data,tot=px.length/4;
+      for(i=0;i<px.length;i+=4){
+        var L=0.299*px[i]+0.587*px[i+1]+0.114*px[i+2];
+        var q=Math.min(n-1,Math.floor(L/256*n)),v=Math.round(q*255/(n-1));
+        px[i]=px[i+1]=px[i+2]=v;counts[q]++;
+      }
+      ctx.putImageData(d,0,0);
+      bar.innerHTML="";
+      for(k=0;k<n;k++){
+        var v2=Math.round(k*255/(n-1)),sp=document.createElement("span");
+        sp.style.background="rgb("+v2+","+v2+","+v2+")";sp.style.color=v2>127?"#17161c":"#fff";
+        sp.textContent=Math.round(counts[k]/tot*100)+"%";bar.appendChild(sp);
+      }
+      bar.style.display="flex";
+      info.textContent=n+" valores, de más oscuro a más claro: "+counts.map(function(c){return Math.round(c/tot*100)+"%"}).join(", ")+" de la imagen.";
+    }else{
+      bar.style.display="none";info.textContent="Foto original, para comparar.";
+    }
+    cv.setAttribute("aria-label",orig?"Foto original":"Imagen reducida a "+n+" valores de gris");
+  }
+  NS.forEach(function(m){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=m;
+    b.setAttribute("aria-pressed",String(m===n));
+    b.addEventListener("click",function(){n=m;orig=false;ob.setAttribute("aria-pressed","false");box.querySelectorAll(".tm-p").forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");draw()});
+    box.appendChild(b);
+  });
+  var ob=document.getElementById("vl-orig");
+  ob.addEventListener("click",function(){orig=!orig;ob.setAttribute("aria-pressed",String(orig));draw()});
+  document.getElementById("vl-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("vl-sample").addEventListener("click",function(){img=null;draw()});
   draw();
 })();
 </script>
