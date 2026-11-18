@@ -170,6 +170,13 @@ footer a{color:var(--c)}
 .vl-bar span{flex:1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;padding:6px 2px}
 @media print{.vl-sec{display:none}}
 
+.pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
+.pf-sw button:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.pf-sw small{font-weight:400;font-size:.8rem}
+.pf-stage canvas{cursor:crosshair;touch-action:manipulation}
+@media print{.pf-sec{display:none}}
+
 .cw-wrap{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:18px;align-items:center}
 .cw-svg{width:100%;height:auto;display:block;max-width:320px;margin:0 auto}
 .cw-svg path{stroke:var(--card);stroke-width:2;cursor:pointer}
@@ -202,6 +209,7 @@ footer a{color:var(--c)}
     <a href="#temporizador">Temporizador</a>
     <a href="#cuadricula">Cuadrícula</a>
     <a href="#valores">Valores</a>
+    <a href="#paleta-foto">Paleta de una foto</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -414,6 +422,22 @@ footer a{color:var(--c)}
     <div class="vl-bar" id="vl-bar" aria-hidden="true"></div>
     <p class="gr-info" id="vl-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: pintá o sombreá primero la tira de grises en tu hoja (de blanco a negro en pasos parejos) y usala de referencia. Después ubicá cada mancha en uno de esos valores, sin detalles. Si dudás entre dos, entrecerrá los ojos: lo que se funde con el fondo es del mismo valor. Es un ejercicio clásico de dibujo y pintura para entrenar la mirada.</div>
+  </div>
+</section>
+
+<section id="paleta-foto" class="pf-sec">
+  <h2>Paleta de una foto</h2>
+  <p style="color:var(--muted)">Sacá una foto de un paisaje, una flor o una obra que te guste y la herramienta propone los colores que más aparecen. Sirve para decidir con qué pocas témperas vas a pintar. Tocá la foto con el dedo para sumar el color de un punto exacto (como un gotero). La foto se queda en su equipo.</p>
+  <div class="card">
+    <div class="gr-file">
+      <input type="file" id="pf-file" accept="image/*">
+      <label for="pf-file" class="tm-go">Elegir una foto</label>
+      <button type="button" id="pf-sample" class="tm-rs">Usar dibujo de prueba</button>
+    </div>
+    <div class="gr-stage pf-stage" style="margin-top:12px"><canvas id="pf-cv" width="600" height="450" role="img" aria-label="Foto de la que se extraen los colores"></canvas></div>
+    <ul class="pf-sw" id="pf-sw" aria-label="Colores encontrados"></ul>
+    <p class="gr-info" id="pf-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: elegí 4 o 5 colores de la lista y buscá en tu caja de témperas los más parecidos, más el blanco. Lo que no esté lo mezclás con el Mezclador de más arriba. Tocar un color copia su código (por ejemplo #4a7a3f), útil si después lo querés usar en el celular. Las fotos cambian con la luz y la pantalla, así que tomá los colores como guía y no como receta exacta.</div>
   </div>
 </section>
 
@@ -835,6 +859,79 @@ footer a{color:var(--c)}
     im.src=u;
   });
   document.getElementById("vl-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("pf-cv"),ctx=cv.getContext("2d",{willReadFrequently:true}),info=document.getElementById("pf-info"),ul=document.getElementById("pf-sw");
+  var img=null,url=null,found=[],picked=[];
+  function hex(c){return "#"+c.map(function(v){return ("0"+v.toString(16)).slice(-2)}).join("")}
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var gr=g.createLinearGradient(0,0,0,600);gr.addColorStop(0,"#e9894a");gr.addColorStop(.55,"#f6d58a");gr.addColorStop(1,"#f6d58a");
+    g.fillStyle=gr;g.fillRect(0,0,800,600);
+    g.fillStyle="#2f5f8f";g.fillRect(0,380,800,220);
+    g.fillStyle="#1d3b57";g.fillRect(0,470,800,130);
+    g.fillStyle="#fff3c4";g.beginPath();g.arc(400,380,70,Math.PI,0);g.fill();
+    g.fillStyle="#3b2a2f";g.beginPath();g.moveTo(100,380);g.lineTo(180,300);g.lineTo(260,380);g.fill();
+    return c;
+  }
+  function extract(){
+    var d=ctx.getImageData(0,0,cv.width,cv.height).data,m={},i,k,key;
+    for(i=0;i<d.length;i+=16){
+      key=(d[i]>>4)+","+(d[i+1]>>4)+","+(d[i+2]>>4);
+      if(!m[key])m[key]={n:0,r:0,g:0,b:0};
+      k=m[key];k.n++;k.r+=d[i];k.g+=d[i+1];k.b+=d[i+2];
+    }
+    var arr=Object.keys(m).map(function(q){var o=m[q];return {n:o.n,c:[Math.round(o.r/o.n),Math.round(o.g/o.n),Math.round(o.b/o.n)]}});
+    arr.sort(function(a,b){return b.n-a.n});
+    var out=[];
+    arr.forEach(function(a){
+      if(out.length>=6||a.n*16*100/d.length<1)return;
+      var far=out.every(function(o){var dr=o.c[0]-a.c[0],dg=o.c[1]-a.c[1],db=o.c[2]-a.c[2];return Math.sqrt(dr*dr+dg*dg+db*db)>60});
+      if(far)out.push(a);
+    });
+    var tot=d.length/16;
+    return out.map(function(o){return {c:o.c,p:Math.round(o.n/tot*100)}});
+  }
+  function show(){
+    ul.innerHTML="";
+    found.concat(picked).forEach(function(o){
+      var li=document.createElement("li"),b=document.createElement("button"),h=hex(o.c),L=0.299*o.c[0]+0.587*o.c[1]+0.114*o.c[2];
+      b.type="button";b.style.background=h;b.style.color=L>140?"#17161c":"#fff";
+      b.setAttribute("aria-label","Copiar el color "+h+(o.p!=null?", "+o.p+" por ciento de la foto":", tomado de un punto"));
+      b.innerHTML="<span>"+h+"</span><small>"+(o.p!=null?o.p+"%":"punto")+"</small>";
+      b.addEventListener("click",function(){
+        var done=function(){info.textContent="Copiado "+h+"."};
+        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(h).then(done,function(){info.textContent="Código "+h+" (no se pudo copiar solo)."})}
+        else info.textContent="Código "+h+".";
+      });
+      li.appendChild(b);ul.appendChild(li);
+    });
+  }
+  function draw(){
+    var src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,700/w);cv.width=Math.round(w*sc);cv.height=Math.round(h*sc);
+    ctx.drawImage(src,0,0,cv.width,cv.height);
+    picked=[];found=extract();show();
+    info.textContent=found.length+" colores principales. Tocá la foto para sumar un color puntual.";
+  }
+  cv.addEventListener("click",function(e){
+    var r=cv.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)*cv.width/r.width),y=Math.floor((e.clientY-r.top)*cv.height/r.height);
+    var p=ctx.getImageData(Math.max(0,Math.min(cv.width-1,x)),Math.max(0,Math.min(cv.height-1,y)),1,1).data;
+    picked.push({c:[p[0],p[1],p[2]]});if(picked.length>6)picked.shift();
+    show();info.textContent="Sumado "+hex([p[0],p[1],p[2]])+".";
+  });
+  document.getElementById("pf-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("pf-sample").addEventListener("click",function(){img=null;draw()});
   draw();
 })();
 </script>
