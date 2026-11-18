@@ -177,6 +177,10 @@ footer a{color:var(--c)}
 .pf-stage canvas{cursor:crosshair;touch-action:manipulation}
 @media print{.pf-sec{display:none}}
 
+
+.cm-sec .gr-stage{margin-top:4px}
+@media print{.cm-sec{display:none}}
+
 .cw-wrap{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:18px;align-items:center}
 .cw-svg{width:100%;height:auto;display:block;max-width:320px;margin:0 auto}
 .cw-svg path{stroke:var(--card);stroke-width:2;cursor:pointer}
@@ -210,6 +214,7 @@ footer a{color:var(--c)}
     <a href="#cuadricula">Cuadrícula</a>
     <a href="#valores">Valores</a>
     <a href="#paleta-foto">Paleta de una foto</a>
+    <a href="#composicion">Composición</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -438,6 +443,28 @@ footer a{color:var(--c)}
     <ul class="pf-sw" id="pf-sw" aria-label="Colores encontrados"></ul>
     <p class="gr-info" id="pf-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: elegí 4 o 5 colores de la lista y buscá en tu caja de témperas los más parecidos, más el blanco. Lo que no esté lo mezclás con el Mezclador de más arriba. Tocar un color copia su código (por ejemplo #4a7a3f), útil si después lo querés usar en el celular. Las fotos cambian con la luz y la pantalla, así que tomá los colores como guía y no como receta exacta.</div>
+  </div>
+</section>
+
+<section id="composicion" class="cm-sec">
+  <h2>Guías de composición</h2>
+  <p style="color:var(--muted)">Antes de dibujar conviene decidir dónde va lo importante dentro de la hoja. Elegí una foto del celular (se queda en tu equipo) y superponele una guía: tercios, proporción áurea, diagonales o centro. No son reglas obligatorias, son ayudas para probar encuadres y mirar cómo cambia la sensación.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="cm-file" accept="image/*">
+        <label for="cm-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="cm-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-opts" id="cm-opts" role="group" aria-label="Tipo de guía"></div>
+      <div class="gr-opts" role="group" aria-label="Formato de la hoja">
+        <button type="button" class="gr-opt" id="cm-fmt" aria-pressed="false">Recortar a hoja cuadrada</button>
+        <button type="button" class="gr-opt" id="cm-flip" aria-pressed="false">Espejar la imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="cm-cv" width="600" height="450" role="img" aria-label="Imagen con guía de composición superpuesta"></canvas></div>
+    <p class="gr-info" id="cm-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: ubicá el centro de interés (un ojo, el horizonte, la vela) sobre una línea o un cruce de la guía, no en el medio justo. Con tercios, el horizonte va en la línea de arriba o de abajo, nunca en el centro. Espejar la imagen sirve para detectar desequilibrios: si algo se ve raro al darla vuelta, probablemente la composición estaba descompensada. Trasladá la guía a tu hoja con dobleces: doblá en tres para los tercios. La regla de los tercios y la proporción áurea son recursos tradicionales de pintura y fotografía; probá, comparalas y quedate con lo que funcione para tu dibujo.</div>
   </div>
 </section>
 
@@ -932,6 +959,79 @@ footer a{color:var(--c)}
     im.src=u;
   });
   document.getElementById("pf-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("cm-cv"),ctx=cv.getContext("2d"),info=document.getElementById("cm-info"),box=document.getElementById("cm-opts");
+  var img=null,url=null,mode="t",sq=false,flip=false;
+  var G=[
+    {k:"t",n:"Tercios",d:"Regla de los tercios: dos líneas verticales y dos horizontales que dividen en tres partes iguales. Los cuatro cruces son puntos fuertes."},
+    {k:"a",n:"Proporción áurea",d:"Líneas al 38 % y al 62 % del ancho y del alto. Parecida a los tercios, pero con los puntos fuertes un poco más cerca del centro."},
+    {k:"d",n:"Diagonales",d:"Las dos diagonales de la hoja y, desde cada esquina, una línea perpendicular a la diagonal contraria. Ayudan a ubicar direcciones y movimiento."},
+    {k:"c",n:"Centro y mitades",d:"Cruz central y mitades. Útil para ver si la imagen queda quieta y simétrica o si conviene correrla."},
+    {k:"n",n:"Sin guía",d:"La imagen sola, para comparar."}
+  ];
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var gr=g.createLinearGradient(0,0,0,600);gr.addColorStop(0,"#9fd3f0");gr.addColorStop(1,"#f4f1e6");
+    g.fillStyle=gr;g.fillRect(0,0,800,600);
+    g.fillStyle="#2f5f8f";g.fillRect(0,400,800,200);
+    g.fillStyle="#ffd34d";g.beginPath();g.arc(560,140,50,0,7);g.fill();
+    g.fillStyle="#fff";g.beginPath();g.moveTo(330,400);g.lineTo(330,230);g.lineTo(450,400);g.closePath();g.fill();
+    g.fillStyle="#7a2a22";g.fillRect(300,400,170,22);
+    return c;
+  }
+  function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+  function draw(){
+    var src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sx=0,sy=0,sw=w,sh=h;
+    if(sq){var m=Math.min(w,h);sx=(w-m)/2;sy=(h-m)/2;sw=sh=m}
+    var sc=Math.min(1,900/sw);cv.width=Math.round(sw*sc);cv.height=Math.round(sh*sc);
+    ctx.save();
+    if(flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+    ctx.drawImage(src,sx,sy,sw,sh,0,0,cv.width,cv.height);
+    ctx.restore();
+    var W=cv.width,H=cv.height,gd=G.filter(function(x){return x.k===mode})[0];
+    if(mode!=="n"){
+      var lw=Math.max(2,W/220);
+      [["rgba(0,0,0,.55)",lw*2],["#ffd34d",lw]].forEach(function(st){
+        ctx.strokeStyle=st[0];ctx.lineWidth=st[1];
+        if(mode==="t"||mode==="a"){
+          var f=mode==="t"?1/3:0.382,f2=1-f;
+          line(W*f,0,W*f,H);line(W*f2,0,W*f2,H);line(0,H*f,W,H*f);line(0,H*f2,W,H*f2);
+        }else if(mode==="d"){
+          line(0,0,W,H);line(W,0,0,H);
+          var d=W*W+H*H,t1=(H*H)/d,t2=(W*W)/d;
+          line(0,H,W*t1,H*t1);line(W,0,W*t2,H*t2);
+          line(0,0,W*(1-t2),H*t2);line(W,H,W*(1-t1),H*t1);
+        }else if(mode==="c"){
+          line(W/2,0,W/2,H);line(0,H/2,W,H/2);
+        }
+      });
+    }
+    info.textContent=gd.d;
+    cv.setAttribute("aria-label",mode==="n"?"Imagen sin guía":"Imagen con guía: "+gd.n);
+  }
+  G.forEach(function(x){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=x.n;
+    b.setAttribute("aria-pressed",String(x.k===mode));
+    b.addEventListener("click",function(){mode=x.k;box.querySelectorAll(".gr-opt").forEach(function(o){o.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");draw()});
+    box.appendChild(b);
+  });
+  var fb=document.getElementById("cm-fmt"),lb=document.getElementById("cm-flip");
+  fb.addEventListener("click",function(){sq=!sq;fb.setAttribute("aria-pressed",String(sq));draw()});
+  lb.addEventListener("click",function(){flip=!flip;lb.setAttribute("aria-pressed",String(flip));draw()});
+  document.getElementById("cm-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("cm-sample").addEventListener("click",function(){img=null;draw()});
   draw();
 })();
 </script>
