@@ -137,6 +137,19 @@ footer a{color:var(--c)}
 .mat-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-weight:700}
 .mat-foot .tm-rs{min-height:44px;padding:6px 14px;font-size:.9rem}
 @media print{.mat-foot{display:none}}
+.bt-form{display:grid;gap:10px}
+.bt-form label{font-weight:700;display:grid;gap:4px}
+.bt-form select,.bt-form input,.bt-form textarea{width:100%;min-height:44px;padding:8px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.bt-form textarea{min-height:84px;resize:vertical}
+.bt-form select:focus-visible,.bt-form input:focus-visible,.bt-form textarea:focus-visible,.bt-del:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.bt-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bt-list{list-style:none;padding:0;margin:14px 0 0}
+.bt-list li{margin:0;padding:12px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
+.bt-meta{font-weight:700}
+.bt-meta small{color:var(--muted);font-weight:600}
+.bt-note{color:var(--muted);font-size:.95rem;margin:2px 0 0;overflow-wrap:anywhere}
+.bt-del{min-height:44px;min-width:44px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+@media print{.bitacora-sec{display:none}}
 </style>
 </head>
 <body>
@@ -154,6 +167,7 @@ footer a{color:var(--c)}
     <a href="#mezclador">Mezclador</a>
     <a href="#temporizador">Temporizador</a>
     <a href="#materiales">Materiales</a>
+    <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
   </nav>
 </header>
@@ -337,6 +351,29 @@ footer a{color:var(--c)}
   </div>
 </section>
 
+<section id="bitacora" class="bitacora-sec">
+  <h2>Bitácora de sesiones</h2>
+  <div class="card">
+    <p style="color:var(--muted);margin:0 0 10px;font-size:.95rem">Anotá en dos toques qué hiciste hoy. Se guarda solo en este celular y no se envía a ningún lado.</p>
+    <form class="bt-form" id="bt-form">
+      <div class="bt-row">
+        <label for="bt-tema">Tema
+          <select id="bt-tema"><option>Dibujo</option><option>Color</option><option>Textura</option><option>Collage</option><option>Origami</option><option>Otro</option></select>
+        </label>
+        <label for="bt-min">Minutos
+          <input id="bt-min" type="number" inputmode="numeric" min="1" max="600" value="20">
+        </label>
+      </div>
+      <label for="bt-nota">Nota (opcional)
+        <textarea id="bt-nota" maxlength="200" placeholder="Qué probé, qué me gustó, qué repetiría"></textarea>
+      </label>
+      <button type="submit" class="tm-go">Guardar sesión</button>
+    </form>
+    <div class="mat-foot"><span id="bt-count" aria-live="polite">Sin sesiones todavía</span><button type="button" id="bt-clear" class="tm-rs">Borrar bitácora</button></div>
+    <ul class="bt-list" id="bt-list"></ul>
+  </div>
+</section>
+
 <section id="edades">
   <h2>Adaptar según la edad</h2>
   <div class="card" style="overflow-x:auto">
@@ -505,6 +542,40 @@ footer a{color:var(--c)}
     upd();
   });
   upd();
+})();
+</script>
+<script>
+(function(){
+  var KEY="plastica-bitacora",data=[];
+  try{data=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(data))data=[]}catch(e){data=[]}
+  var list=document.getElementById("bt-list"),cnt=document.getElementById("bt-count");
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+  function today(){var d=new Date();return ("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear()}
+  function render(){
+    list.textContent="";
+    var tot=0;
+    data.forEach(function(e,i){tot+=e.m||0});
+    cnt.textContent=data.length?data.length+(data.length===1?" sesión":" sesiones")+" · "+tot+" min en total":"Sin sesiones todavía";
+    data.slice().reverse().slice(0,20).forEach(function(e){
+      var idx=data.indexOf(e),li=document.createElement("li"),d=document.createElement("div"),m=document.createElement("div"),sm=document.createElement("small"),b=document.createElement("button");
+      m.className="bt-meta";m.appendChild(document.createTextNode(e.t+" · "+e.m+" min "));sm.textContent=e.d;m.appendChild(sm);d.appendChild(m);
+      if(e.n){var p=document.createElement("p");p.className="bt-note";p.textContent=e.n;d.appendChild(p)}
+      b.type="button";b.className="bt-del";b.textContent="Quitar";b.setAttribute("aria-label","Quitar la sesión de "+e.t+" del "+e.d);
+      b.addEventListener("click",function(){data.splice(idx,1);save();render()});
+      li.appendChild(d);li.appendChild(b);list.appendChild(li);
+    });
+  }
+  document.getElementById("bt-form").addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var m=parseInt(document.getElementById("bt-min").value,10);
+    if(!(m>0))m=1;if(m>600)m=600;
+    data.push({d:today(),t:document.getElementById("bt-tema").value,m:m,n:document.getElementById("bt-nota").value.trim().slice(0,200)});
+    document.getElementById("bt-nota").value="";save();render();
+  });
+  document.getElementById("bt-clear").addEventListener("click",function(){
+    if(data.length&&confirm("¿Borrar toda la bitácora de este celular?")){data=[];save();render()}
+  });
+  render();
 })();
 </script>
 </body>
