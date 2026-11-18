@@ -189,6 +189,15 @@ footer a{color:var(--c)}
 .ms-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
 .ms-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 @media print{.ms-sec{display:none}}
+.ls-sec canvas{background:#fff}
+.ls-rg{display:grid;gap:6px}
+.ls-rg label{font-weight:700}
+.ls-rg input[type=range]{width:100%;min-height:44px;accent-color:var(--c)}
+.ls-rg input[type=range]:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.ls-leg{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
+.ls-leg li{margin:0;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.ls-leg b.n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-size:.85rem}
+@media print{.ls-sec{display:none}}
 
 .pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
 .pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
@@ -239,6 +248,7 @@ footer a{color:var(--c)}
     <a href="#perspectiva">Perspectiva</a>
     <a href="#simetria">Simetría</a>
     <a href="#mosaico">Mosaico</a>
+    <a href="#luz-sombra">Luz y sombra</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -586,6 +596,44 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="ms-cv" width="600" height="600" tabindex="0" role="img" aria-label="Cuadrícula para pintar. Tocá o deslizá el dedo; con teclado, flechas para moverte y Espacio para pintar."></canvas></div>
     <p class="gr-info" id="ms-info" aria-live="polite"></p>
     <div class="tip">Ideas para empezar: una guarda de una sola fila que repita dos colores y una forma (escalera, zigzag, rombo); un patrón de tablero de ajedrez con tres colores; con el espejo, media figura (un corazón, una flor, una letra) que se completa sola. Para pasarlo al papel, copiá la cuadrícula con regla sobre hoja cuadriculada y pintá con lápices o témperas. Si usás pocos colores y los repetís con orden, el resultado se ve armónico casi siempre.</div>
+  </div>
+</section>
+
+<section id="luz-sombra" class="ls-sec">
+  <h2>Luz y sombra sobre una esfera</h2>
+  <p style="color:var(--muted)">Para que un dibujo se vea con volumen, casi siempre alcanza con entender cómo la luz cae sobre una esfera. Mové la luz y mirá cómo cambian las partes: la zona más clara, el tono medio, la sombra propia, la luz que rebota del piso y la sombra que la esfera tira sobre la mesa. Copiá lo que ves en una hoja con lápiz blando. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="ls-rg">
+        <label for="ls-az">Luz de izquierda a derecha: <span id="ls-azv"></span></label>
+        <input type="range" id="ls-az" min="-150" max="150" step="5" value="-40">
+      </div>
+      <div class="ls-rg">
+        <label for="ls-el">Altura de la luz: <span id="ls-elv"></span></label>
+        <input type="range" id="ls-el" min="15" max="85" step="5" value="45">
+      </div>
+      <div class="gr-opts" role="group" aria-label="Ejemplos de luz">
+        <button type="button" class="gr-opt" id="ls-p1">Luz de la mañana</button>
+        <button type="button" class="gr-opt" id="ls-p2">Mediodía</button>
+        <button type="button" class="gr-opt" id="ls-p3">Luz de costado</button>
+        <button type="button" class="gr-opt" id="ls-p4">Contraluz</button>
+      </div>
+      <div class="gr-opts" role="group" aria-label="Vista">
+        <button type="button" class="gr-opt" id="ls-band" aria-pressed="false">Ver en 5 grises</button>
+        <button type="button" class="gr-opt" id="ls-num" aria-pressed="true">Mostrar números</button>
+        <button type="button" class="gr-opt" id="ls-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="ls-cv" width="600" height="450" role="img" aria-label="Esfera iluminada sobre una mesa, con su sombra proyectada. Los controles cambian la posición de la luz."></canvas></div>
+    <p class="gr-info" id="ls-info" aria-live="polite"></p>
+    <ul class="ls-leg" id="ls-leg">
+      <li><b class="n">1</b><span><b>Luz directa:</b> la zona más clara, donde la superficie mira de frente a la luz.</span></li>
+      <li><b class="n">2</b><span><b>Tono medio:</b> el paso gradual entre la luz y la sombra.</span></li>
+      <li><b class="n">3</b><span><b>Sombra propia:</b> la franja más oscura de la esfera, un poco antes del borde.</span></li>
+      <li><b class="n">4</b><span><b>Luz reflejada:</b> el borde de la sombra se aclara un poco porque rebota luz de la mesa; nunca es más clara que el tono medio.</span></li>
+      <li><b class="n">5</b><span><b>Sombra proyectada:</b> la que cae sobre la mesa, del lado opuesto a la luz y más oscura cerca del contacto.</span></li>
+    </ul>
+    <div class="tip">Cómo usarlo: dibujá primero un círculo y una elipse chata abajo para la mesa. Marcá con un lápiz suave de qué lado viene la luz, ubicá la sombra proyectada en el lado contrario y recién después sombreá la esfera, de la luz hacia la sombra, sin saltos bruscos. Si la luz está baja, la sombra en la mesa se alarga; si está arriba, se achica y queda casi debajo. Esto es un modelo simplificado (una sola luz y una esfera lisa y mate): sirve para entender la idea, no reemplaza mirar un objeto real con una lámpara.</div>
   </div>
 </section>
 
@@ -1447,6 +1495,152 @@ footer a{color:var(--c)}
     }catch(_){say("No se pudo guardar la imagen.")}
   });
   blank();render();say();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("ls-cv"),ctx=cv.getContext("2d"),info=document.getElementById("ls-info");
+  var az=document.getElementById("ls-az"),el=document.getElementById("ls-el");
+  var azv=document.getElementById("ls-azv"),elv=document.getElementById("ls-elv");
+  var bb=document.getElementById("ls-band"),nb=document.getElementById("ls-num");
+  var W=600,H=450,R=125,CX=270,BASE=350,VT=0.38,VH=0.92,band=false,nums=true;
+  var buf=document.createElement("canvas");buf.width=buf.height=2*R+2;
+  var bx=buf.getContext("2d");
+  function vec(){
+    var a=az.value*Math.PI/180,e=el.value*Math.PI/180;
+    return [Math.cos(e)*Math.sin(a),Math.sin(e),Math.cos(e)*Math.cos(a)];
+  }
+  // punto 3D (x derecha, y arriba, z hacia el espectador) con el contacto en el origen
+  function scr(x,y,z){return [CX+x,BASE-z*VT-y*VH]}
+  function lev(i){
+    if(band){return Math.min(4,Math.floor(i*5))/4}
+    return i;
+  }
+  function inten(nx,ny,nz,L){
+    var d=nx*L[0]+ny*L[1]+nz*L[2];
+    var v=Math.max(0,d)*0.82+0.07;
+    var ref=Math.max(0,-ny)*0.2*(d<=0.25?1:0.3);
+    v=Math.min(1,v+ref);
+    if(d>0)v=Math.max(v,0.07);
+    return v;
+  }
+  function shadowPts(L){
+    var pts=[],i,t,ux=L[0],uz=L[2],h=Math.sqrt(ux*ux+uz*uz),dx,dz,major=R/L[1],px,pz,ex,ez;
+    if(h<0.001){dx=0;dz=-1}else{dx=-ux/h;dz=-uz/h}
+    // la sombra se corre hacia el lado opuesto a la luz
+    var cxs=-L[0]/L[1]*R,czs=-L[2]/L[1]*R;
+    for(i=0;i<48;i++){
+      t=i/48*2*Math.PI;
+      ex=Math.cos(t)*major;ez=Math.sin(t)*R;
+      px=cxs+ex*dx-ez*dz;pz=czs+ex*dz+ez*dx;
+      pts.push(scr(px,0,pz));
+    }
+    return pts;
+  }
+  function render(){
+    var L=vec(),i,j,p,g;
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
+    // mesa
+    g=ctx.createLinearGradient(0,BASE-VT*260,0,H);
+    g.addColorStop(0,"#ece7de");g.addColorStop(1,"#d9d2c4");
+    ctx.fillStyle=g;ctx.fillRect(0,BASE-VT*260,W,H-(BASE-VT*260));
+    // sombra proyectada (si la luz viene de atrás de la esfera la sombra va hacia el espectador)
+    p=shadowPts(L);
+    ctx.save();
+    ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);
+    for(i=1;i<p.length;i++)ctx.lineTo(p[i][0],p[i][1]);
+    ctx.closePath();
+    var c0=scr(0,0,0),c1=scr(-L[0]/L[1]*R*1.8,0,-L[2]/L[1]*R*1.8);
+    g=ctx.createLinearGradient(c0[0],c0[1],c1[0],c1[1]);
+    if(Math.abs(c0[0]-c1[0])+Math.abs(c0[1]-c1[1])<2){g=ctx.createLinearGradient(0,0,1,1)}
+    g.addColorStop(0,"rgba(40,32,24,.78)");g.addColorStop(1,band?"rgba(40,32,24,.5)":"rgba(40,32,24,.28)");
+    ctx.fillStyle=g;ctx.fill();ctx.restore();
+    // sombra de contacto
+    ctx.fillStyle="rgba(25,20,15,.55)";
+    ctx.beginPath();ctx.ellipse(CX,BASE+2,R*0.34,R*0.34*VT*1.2,0,0,2*Math.PI);ctx.fill();
+    // esfera por pixel
+    var D=2*R+2,img=bx.createImageData(D,D),d=img.data,x,y,nx,ny,nz,r2,v,k,o,s;
+    for(y=0;y<D;y++)for(x=0;x<D;x++){
+      nx=(x-R-1+0.5)/R;ny=-(y-R-1+0.5)/R;r2=nx*nx+ny*ny;o=(y*D+x)*4;
+      if(r2>1){d[o+3]=0;continue}
+      nz=Math.sqrt(1-r2);
+      v=lev(inten(nx,ny,nz,L));
+      k=Math.round(30+v*215);
+      s=Math.min(1,(1-Math.sqrt(r2))*R/1.2);
+      d[o]=k;d[o+1]=Math.round(k*0.97);d[o+2]=Math.round(k*0.93);d[o+3]=Math.round(255*s);
+    }
+    bx.putImageData(img,0,0);
+    var sc=scr(0,R,0);
+    ctx.drawImage(buf,sc[0]-R-1,sc[1]-R-1);
+    ctx.strokeStyle="rgba(0,0,0,.25)";ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(sc[0],sc[1],R,0,2*Math.PI);ctx.stroke();
+    if(nums)marks(L,sc,p);
+  }
+  function mark(n,x,y){
+    ctx.fillStyle="#6c63ff";ctx.strokeStyle="#fff";ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(x,y,12,0,2*Math.PI);ctx.fill();ctx.stroke();
+    ctx.fillStyle="#fff";ctx.font="700 15px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(String(n),x,y+1);
+  }
+  function marks(L,sc,p){
+    // dirección en pantalla desde la luz hacia la sombra
+    var lx=L[0],ly=L[1],h=Math.sqrt(lx*lx+ly*ly),dx,dy,q,v;
+    if(h<0.12){dx=0;dy=-1}else{dx=-lx/h;dy=-ly/h}
+    // 1: punto más brillante
+    var hx=lx,hy=ly;if(h>0.95){hx=lx/h*0.95;hy=ly/h*0.95}
+    if(L[2]>0||h<0.95){mark(1,sc[0]+hx*R*0.85,sc[1]-hy*R*0.85)}
+    // 2: tono medio, 3: sombra propia, 4: luz reflejada, buscando sobre la recta que une luz y sombra
+    var t;
+    var ox=hx*0.85,oy=hy*0.85;
+    // recorremos desde el punto de luz hacia el lado opuesto, hasta el borde
+    var steps=60;
+    var minI=2,maxI=0,minAt=null,midAt=null,midD=2;
+    for(t=0;t<=steps;t++){
+      var f=t/steps,xx=ox+(-hx*1.0*0.98-ox)*f,yy=oy+(-hy*1.0*0.98-oy)*f;
+      if(h<0.12){xx=0;yy=-0.98*f}
+      var rr=xx*xx+yy*yy;if(rr>=0.995)break;
+      v=inten(xx,yy,Math.sqrt(1-rr),L);
+      if(Math.abs(v-0.5)<midD&&f>0.02){midD=Math.abs(v-0.5);midAt=[xx,yy]}
+      if(v<minI){minI=v;minAt=[xx,yy]}
+      if(v>maxI)maxI=v;
+    }
+    if(midAt&&minI<0.3&&maxI>0.6){mark(2,sc[0]+midAt[0]*R,sc[1]-midAt[1]*R)}
+    if(minAt&&minI<0.3){
+      mark(3,sc[0]+minAt[0]*R,sc[1]-minAt[1]*R);
+      var rx=minAt[0],ry=minAt[1],rl=Math.sqrt(rx*rx+ry*ry)||1;
+      var ex=rx/rl*0.93,ey=ry/rl*0.93;
+      if(Math.hypot(ex-rx,ey-ry)>0.12)mark(4,sc[0]+ex*R,sc[1]-ey*R);
+    }
+    var sx=0,sy=0;for(q=0;q<p.length;q++){sx+=p[q][0];sy+=p[q][1]}
+    sx/=p.length;sy/=p.length;
+    if(sx>20&&sx<W-20&&sy>20&&sy<H-20)mark(5,sx,sy);
+  }
+  function say(){
+    var a=+az.value,e=+el.value,lado=a<-15?"izquierda":(a>15?"derecha":"el frente");
+    if(Math.abs(a)>105)lado=(a<0?"izquierda":"derecha")+" y atrás";
+    azv.textContent=(a===0?"de frente":(a<0?"desde la izquierda ":"desde la derecha ")+Math.abs(a)+"°");
+    elv.textContent=e+"° sobre la mesa";
+    info.textContent="La luz viene desde "+lado+(e<30?", baja: la sombra en la mesa sale larga.":(e>65?", alta: la sombra queda corta y casi debajo.":", a media altura.")) + (Math.abs(a)>105?" Con luz de atrás la esfera queda casi toda en sombra y se ve un borde claro.":"");
+  }
+  function upd(){say();render()}
+  az.addEventListener("input",upd);el.addEventListener("input",upd);
+  function pre(id,a,e){document.getElementById(id).addEventListener("click",function(){az.value=a;el.value=e;upd()})}
+  pre("ls-p1",-60,25);pre("ls-p2",0,85);pre("ls-p3",-90,45);pre("ls-p4",150,40);
+  bb.addEventListener("click",function(){band=!band;bb.setAttribute("aria-pressed",String(band));render()});
+  nb.addEventListener("click",function(){nums=!nums;nb.setAttribute("aria-pressed",String(nums));render()});
+  document.getElementById("ls-save").addEventListener("click",function(){
+    try{
+      var keep=nums;nums=false;render();
+      cv.toBlob(function(b){
+        nums=keep;render();
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="luz-y-sombra.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){nums=true;render();info.textContent="No se pudo guardar la imagen."}
+  });
+  upd();
 })();
 </script>
 </body>
