@@ -169,6 +169,11 @@ footer a{color:var(--c)}
 .vl-bar{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0 0;min-height:48px}
 .vl-bar span{flex:1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;padding:6px 2px}
 @media print{.vl-sec{display:none}}
+.ct-sec .gr-stage{margin-top:4px}
+.ct-rg{display:grid;gap:6px}
+.ct-rg label{font-weight:700}
+.ct-rg input[type=range]{width:100%;min-height:44px;accent-color:var(--c)}
+@media print{.ct-sec{display:none}}
 
 .pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
 .pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
@@ -215,6 +220,7 @@ footer a{color:var(--c)}
     <a href="#valores">Valores</a>
     <a href="#paleta-foto">Paleta de una foto</a>
     <a href="#composicion">Composición</a>
+    <a href="#contorno">Contorno</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -465,6 +471,30 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="cm-cv" width="600" height="450" role="img" aria-label="Imagen con guía de composición superpuesta"></canvas></div>
     <p class="gr-info" id="cm-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: ubicá el centro de interés (un ojo, el horizonte, la vela) sobre una línea o un cruce de la guía, no en el medio justo. Con tercios, el horizonte va en la línea de arriba o de abajo, nunca en el centro. Espejar la imagen sirve para detectar desequilibrios: si algo se ve raro al darla vuelta, probablemente la composición estaba descompensada. Trasladá la guía a tu hoja con dobleces: doblá en tres para los tercios. La regla de los tercios y la proporción áurea son recursos tradicionales de pintura y fotografía; probá, comparalas y quedate con lo que funcione para tu dibujo.</div>
+  </div>
+</section>
+
+<section id="contorno" class="ct-sec">
+  <h2>Contorno de una foto</h2>
+  <p style="color:var(--muted)">Para dibujar de observación a veces conviene empezar solo con las líneas: dónde termina una forma y empieza otra. Elegí una foto del celular (se queda en tu equipo) y la herramienta marca los bordes más fuertes como un dibujo de líneas. Sirve de modelo para copiar a mano, no para calcar con el celular encima de la hoja.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="ct-file" accept="image/*">
+        <label for="ct-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="ct-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="ct-rg">
+        <label for="ct-det">Cantidad de líneas: <span id="ct-val">media</span></label>
+        <input type="range" id="ct-det" min="1" max="5" step="1" value="3" aria-describedby="ct-info">
+      </div>
+      <div class="gr-opts" role="group" aria-label="Vista">
+        <button type="button" class="gr-opt" id="ct-ghost" aria-pressed="false">Mostrar la foto tenue de fondo</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="ct-cv" width="600" height="450" role="img" aria-label="Dibujo de líneas con los bordes de la imagen"></canvas></div>
+    <p class="gr-info" id="ct-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: con pocas líneas quedan solo las formas grandes, que es por donde conviene empezar; sumá líneas de a poco para ver los detalles. Mirá el resultado un rato y dibujalo en tu hoja a mano, primero las formas grandes y después las chicas. Si la foto tiene poca luz o mucha textura, aparecen manchas que no son bordes reales: probá con menos líneas. Detecta bordes por cambios de claridad (método de Sobel), por eso no distingue dos colores que tengan el mismo gris.</div>
   </div>
 </section>
 
@@ -1032,6 +1062,66 @@ footer a{color:var(--c)}
     im.src=u;
   });
   document.getElementById("cm-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("ct-cv"),ctx=cv.getContext("2d",{willReadFrequently:true}),info=document.getElementById("ct-info");
+  var rg=document.getElementById("ct-det"),vl=document.getElementById("ct-val"),gb=document.getElementById("ct-ghost");
+  var img=null,url=null,ghost=false,NAMES=["muy pocas","pocas","media","muchas","muchísimas"],TH=[260,200,150,105,70];
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var gr=g.createLinearGradient(0,0,0,600);gr.addColorStop(0,"#9fd3f0");gr.addColorStop(1,"#f4f1e6");
+    g.fillStyle=gr;g.fillRect(0,0,800,600);
+    g.fillStyle="#4a7a3f";g.fillRect(0,430,800,170);
+    g.fillStyle="#ffd34d";g.beginPath();g.arc(660,110,60,0,7);g.fill();
+    g.fillStyle="#e8a07a";g.fillRect(220,260,300,190);
+    g.fillStyle="#7a2a22";g.beginPath();g.moveTo(190,260);g.lineTo(370,130);g.lineTo(550,260);g.closePath();g.fill();
+    g.fillStyle="#3a2a1a";g.fillRect(340,340,60,110);
+    g.fillStyle="#fff";g.fillRect(250,300,60,50);g.fillRect(430,300,60,50);
+    return c;
+  }
+  function draw(){
+    var src=img||sample(),lvl=+rg.value;
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,700/w);cv.width=Math.max(8,Math.round(w*sc));cv.height=Math.max(8,Math.round(h*sc));
+    var W=cv.width,H=cv.height,x,y;
+    ctx.drawImage(src,0,0,W,H);
+    var d=ctx.getImageData(0,0,W,H),px=d.data,L=new Float32Array(W*H),i;
+    for(i=0;i<W*H;i++)L[i]=0.299*px[4*i]+0.587*px[4*i+1]+0.114*px[4*i+2];
+    var B=new Float32Array(W*H);
+    for(y=1;y<H-1;y++)for(x=1;x<W-1;x++){
+      i=y*W+x;
+      B[i]=(L[i-W-1]+2*L[i-1]+L[i+W-1]+L[i-W]+2*L[i]+L[i+W]+L[i-W+1]+2*L[i+1]+L[i+W+1])/12;
+    }
+    var th=TH[lvl-1];
+    for(y=1;y<H-1;y++)for(x=1;x<W-1;x++){
+      i=y*W+x;
+      var gx=-B[i-W-1]-2*B[i-1]-B[i+W-1]+B[i-W+1]+2*B[i+1]+B[i+W+1];
+      var gy=-B[i-W-1]-2*B[i-W]-B[i-W+1]+B[i+W-1]+2*B[i+W]+B[i+W+1];
+      var m=Math.sqrt(gx*gx+gy*gy)/4*(260/th)*1.0;
+      var a=Math.max(0,Math.min(1,(m-18)/40));
+      var base=ghost?235+(L[i]/255)*20:255,v=Math.round(base*(1-a)+30*a);
+      var o=4*i;px[o]=px[o+1]=px[o+2]=ghost?Math.round(v):v;px[o+3]=255;
+    }
+    for(x=0;x<W;x++){var t=4*x,b=4*((H-1)*W+x);px[t]=px[t+1]=px[t+2]=px[b]=px[b+1]=px[b+2]=255;px[t+3]=px[b+3]=255}
+    for(y=0;y<H;y++){var l=4*(y*W),r=4*(y*W+W-1);px[l]=px[l+1]=px[l+2]=px[r]=px[r+1]=px[r+2]=255;px[l+3]=px[r+3]=255}
+    ctx.putImageData(d,0,0);
+    vl.textContent=NAMES[lvl-1];
+    info.textContent="Líneas: "+NAMES[lvl-1]+". "+(lvl<=2?"Quedan las formas grandes: buen punto de partida para el boceto.":lvl>=4?"Aparecen los detalles y también texturas: usalo para sumar de a poco.":"Equilibrio entre formas grandes y detalles.");
+    cv.setAttribute("aria-label","Dibujo de líneas de la imagen, cantidad de líneas "+NAMES[lvl-1]);
+  }
+  rg.addEventListener("input",draw);
+  gb.addEventListener("click",function(){ghost=!ghost;gb.setAttribute("aria-pressed",String(ghost));draw()});
+  document.getElementById("ct-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("ct-sample").addEventListener("click",function(){img=null;draw()});
   draw();
 })();
 </script>
