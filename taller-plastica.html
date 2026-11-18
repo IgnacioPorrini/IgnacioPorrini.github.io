@@ -128,6 +128,15 @@ footer a{color:var(--c)}
 .tm-p:focus-visible,.tm-go:focus-visible,.tm-rs:focus-visible,.tm-pr:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 .tm-prompt{margin-top:14px;padding:14px;border-radius:14px;background:var(--soft-a);font-weight:700;min-height:3.4em}
 @media print{.timer-sec{display:none}}
+.mat-list{list-style:none;padding:0;margin:0}
+.mat-list li{margin:0;border-bottom:1px solid var(--line)}
+.mat-list label{display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:10px 4px;cursor:pointer}
+.mat-list input{flex:none;width:24px;height:24px;margin-top:2px;accent-color:var(--b)}
+.mat-list input:checked+span{text-decoration:line-through;color:var(--muted)}
+.mat-list input:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.mat-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-weight:700}
+.mat-foot .tm-rs{min-height:44px;padding:6px 14px;font-size:.9rem}
+@media print{.mat-foot{display:none}}
 </style>
 </head>
 <body>
@@ -302,16 +311,18 @@ footer a{color:var(--c)}
   <div class="grid">
     <div class="card">
       <h3>La mochila nómade</h3>
-      <ul class="check">
-        <li>Témpera lavable: rojo, amarillo, azul y blanco</li>
-        <li>Pinceles, y tapitas o bandejas como paleta</li>
-        <li>Crayones y lápices</li>
-        <li>Hojas blancas, hojas finas y una tira larga de papel</li>
-        <li>Papeles de revista o de descarte</li>
-        <li>Plasticola o adhesivo en barra</li>
-        <li>Frasco con agua y trapo</li>
-        <li>Nylon o manta para cubrir la superficie</li>
+      <p style="color:var(--muted);margin:0 0 8px;font-size:.95rem">Tildá lo que ya está en la mochila. Queda guardado en este celular.</p>
+      <ul class="mat-list" id="mat-list">
+        <li><label><input type="checkbox" data-k="0"><span>Témpera lavable: rojo, amarillo, azul y blanco</span></label></li>
+        <li><label><input type="checkbox" data-k="1"><span>Pinceles, y tapitas o bandejas como paleta</span></label></li>
+        <li><label><input type="checkbox" data-k="2"><span>Crayones y lápices</span></label></li>
+        <li><label><input type="checkbox" data-k="3"><span>Hojas blancas, hojas finas y una tira larga de papel</span></label></li>
+        <li><label><input type="checkbox" data-k="4"><span>Papeles de revista o de descarte</span></label></li>
+        <li><label><input type="checkbox" data-k="5"><span>Plasticola o adhesivo en barra</span></label></li>
+        <li><label><input type="checkbox" data-k="6"><span>Frasco con agua y trapo</span></label></li>
+        <li><label><input type="checkbox" data-k="7"><span>Nylon o manta para cubrir la superficie</span></label></li>
       </ul>
+      <div class="mat-foot"><span id="mat-count" aria-live="polite">0 de 8 listos</span><button type="button" id="mat-reset" class="tm-rs">Destildar todo</button></div>
     </div>
     <div class="card">
       <h3>El espacio</h3>
@@ -470,6 +481,30 @@ footer a{color:var(--c)}
     document.getElementById("tm-prompt").textContent="Consigna: "+C[i];
   });
   paint();
+})();
+</script>
+<script>
+(function(){
+  var KEY="plastica-mochila",boxes=document.querySelectorAll("#mat-list input"),st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){st={}}
+  function upd(){
+    var n=0;boxes.forEach(function(b){if(b.checked)n++});
+    document.getElementById("mat-count").textContent=n===boxes.length?"Mochila completa: "+n+" de "+boxes.length:n+" de "+boxes.length+" listos";
+  }
+  boxes.forEach(function(b){
+    b.checked=!!st[b.getAttribute("data-k")];
+    b.addEventListener("change",function(){
+      st[b.getAttribute("data-k")]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+      upd();
+    });
+  });
+  document.getElementById("mat-reset").addEventListener("click",function(){
+    boxes.forEach(function(b){b.checked=false});st={};
+    try{localStorage.removeItem(KEY)}catch(e){}
+    upd();
+  });
+  upd();
 })();
 </script>
 </body>
