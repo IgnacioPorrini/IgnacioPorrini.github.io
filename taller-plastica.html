@@ -186,6 +186,9 @@ footer a{color:var(--c)}
 .sy-col[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 3px var(--c)}
 .sy-col:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 @media print{.sy-sec{display:none}}
+.ms-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
+.ms-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+@media print{.ms-sec{display:none}}
 
 .pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
 .pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
@@ -235,6 +238,7 @@ footer a{color:var(--c)}
     <a href="#contorno">Contorno</a>
     <a href="#perspectiva">Perspectiva</a>
     <a href="#simetria">Simetría</a>
+    <a href="#mosaico">Mosaico</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -559,6 +563,29 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="sy-cv" width="600" height="600" role="img" aria-label="Lienzo de dibujo con simetría radial. Dibujá con el dedo o el mouse."></canvas></div>
     <p class="gr-info" id="sy-info" aria-live="polite"></p>
     <div class="tip">Ideas para empezar: con 6 repeticiones y espejo, probá una sola línea ondulada desde el centro hacia el borde; con 8, una serie de puntos en el borde; con 12, círculos chicos a distintas distancias del centro. Después copiá en papel lo que más te gustó, con compás o a mano alzada. Los copos de nieve tienen seis ejes, así que 6 con espejo es un buen primer ensayo. Como el dibujo sale de tu propio trazo, no hay forma de equivocarse: si no te gusta, deshacés o borrás.</div>
+  </div>
+</section>
+
+<section id="mosaico" class="ms-sec">
+  <h2>Mosaico de cuadritos</h2>
+  <p style="color:var(--muted)">Pintá una cuadrícula cuadrito por cuadrito, como en un mosaico, un tejido o un punto cruz. Con pocos colores y formas simples se arman guardas, patrones y dibujos. Elegí el tamaño, un color y deslizá el dedo sobre el lienzo; con el espejo, lo que pintás a la izquierda aparece también a la derecha. Sirve para pensar ritmo, repetición y equilibrio antes de pasar al papel. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-opts" id="ms-n" role="group" aria-label="Tamaño de la cuadrícula"><b>Tamaño:</b></div>
+      <div class="gr-opts" role="group" aria-label="Opciones">
+        <button type="button" class="gr-opt" id="ms-mir" aria-pressed="false">Espejo izquierda-derecha</button>
+        <button type="button" class="gr-opt" id="ms-era" aria-pressed="false">Goma</button>
+      </div>
+      <div class="sy-cols" id="ms-cols" role="group" aria-label="Color"></div>
+      <div class="gr-opts">
+        <button type="button" class="gr-opt" id="ms-undo">Deshacer</button>
+        <button type="button" class="gr-opt" id="ms-clear">Borrar todo</button>
+        <button type="button" class="gr-opt" id="ms-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="ms-cv" width="600" height="600" tabindex="0" role="img" aria-label="Cuadrícula para pintar. Tocá o deslizá el dedo; con teclado, flechas para moverte y Espacio para pintar."></canvas></div>
+    <p class="gr-info" id="ms-info" aria-live="polite"></p>
+    <div class="tip">Ideas para empezar: una guarda de una sola fila que repita dos colores y una forma (escalera, zigzag, rombo); un patrón de tablero de ajedrez con tres colores; con el espejo, media figura (un corazón, una flor, una letra) que se completa sola. Para pasarlo al papel, copiá la cuadrícula con regla sobre hoja cuadriculada y pintá con lápices o témperas. Si usás pocos colores y los repetís con orden, el resultado se ve armónico casi siempre.</div>
   </div>
 </section>
 
@@ -1324,6 +1351,102 @@ footer a{color:var(--c)}
     },"image/png")}catch(_){say("No se pudo guardar la imagen.")}
   });
   render();say();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("ms-cv"),ctx=cv.getContext("2d"),info=document.getElementById("ms-info");
+  var box=document.getElementById("ms-n"),cols=document.getElementById("ms-cols");
+  var mb=document.getElementById("ms-mir"),eb=document.getElementById("ms-era");
+  var NS=[8,12,16,24],COLS=[["#2b2a33","negro"],["#ff7a59","naranja"],["#2bb3a3","verde azulado"],["#6c63ff","violeta"],["#e0a800","amarillo"],["#d6336c","rosa"]];
+  var N=12,ci=0,mir=false,era=false,cells=[],hist=[],down=false,snap=null,kx=0,ky=0,W=600;
+  var nb=[],cb=[];
+  function blank(){cells=[];for(var i=0;i<N*N;i++)cells.push(-1)}
+  NS.forEach(function(n){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=n+" x "+n;
+    b.setAttribute("aria-pressed",String(n===N));b.setAttribute("aria-label","Cuadrícula de "+n+" por "+n);
+    b.addEventListener("click",function(){N=n;nb.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});blank();hist=[];kx=ky=0;render();say("Cuadrícula nueva.")});
+    box.appendChild(b);nb.push(b);
+  });
+  COLS.forEach(function(c,i){
+    var b=document.createElement("button");b.type="button";b.className="sy-col";b.style.background=c[0];
+    b.setAttribute("aria-label","Color "+c[1]);b.setAttribute("aria-pressed",String(i===ci));
+    b.addEventListener("click",function(){ci=i;era=false;eb.setAttribute("aria-pressed","false");cb.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))})});
+    cols.appendChild(b);cb.push(b);
+  });
+  function count(){var k=0;cells.forEach(function(v){if(v>=0)k++});return k}
+  function say(extra){
+    var k=count();
+    info.textContent=(extra?extra+" ":"")+N+" x "+N+(mir?", con espejo":"")+". "+(k?k+(k===1?" cuadrito pintado.":" cuadritos pintados."):"Todavía no pintaste ningún cuadrito.");
+  }
+  function render(){
+    var s=W/N,i,j,v;
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,W,W);
+    for(i=0;i<N;i++)for(j=0;j<N;j++){v=cells[i*N+j];if(v>=0){ctx.fillStyle=COLS[v][0];ctx.fillRect(j*s,i*s,s,s)}}
+    ctx.strokeStyle="rgba(120,120,140,.35)";ctx.lineWidth=1;ctx.beginPath();
+    for(i=0;i<=N;i++){var q=Math.round(i*s)+.5;ctx.moveTo(q,0);ctx.lineTo(q,W);ctx.moveTo(0,q);ctx.lineTo(W,q)}
+    ctx.stroke();
+    if(mir){ctx.save();ctx.strokeStyle="rgba(108,99,255,.7)";ctx.setLineDash([8,6]);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,W);ctx.stroke();ctx.restore()}
+    if(document.activeElement===cv){ctx.strokeStyle="#6c63ff";ctx.lineWidth=3;ctx.strokeRect(kx*s+1.5,ky*s+1.5,s-3,s-3)}
+  }
+  function setCell(x,y){
+    if(x<0||y<0||x>=N||y>=N)return;
+    var v=era?-1:ci;cells[y*N+x]=v;
+    if(mir)cells[y*N+(N-1-x)]=v;
+  }
+  function pos(e){
+    var r=cv.getBoundingClientRect();
+    return [Math.floor((e.clientX-r.left)/r.width*N),Math.floor((e.clientY-r.top)/r.height*N)];
+  }
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    snap=cells.slice();down=true;var p=pos(e);setCell(p[0],p[1]);render();
+  });
+  cv.addEventListener("pointermove",function(e){
+    if(!down)return;e.preventDefault();var p=pos(e);setCell(p[0],p[1]);render();
+  });
+  function end(){
+    if(!down)return;down=false;
+    if(snap&&snap.join()!==cells.join()){hist.push(snap);if(hist.length>60)hist.shift()}
+    snap=null;render();say();
+  }
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  cv.addEventListener("focus",render);cv.addEventListener("blur",render);
+  cv.addEventListener("keydown",function(e){
+    var k=e.key,m=true;
+    if(k==="ArrowLeft")kx=Math.max(0,kx-1);
+    else if(k==="ArrowRight")kx=Math.min(N-1,kx+1);
+    else if(k==="ArrowUp")ky=Math.max(0,ky-1);
+    else if(k==="ArrowDown")ky=Math.min(N-1,ky+1);
+    else if(k===" "||k==="Enter"){
+      var before=cells.slice();setCell(kx,ky);
+      if(before.join()!==cells.join())hist.push(before);
+      say("Fila "+(ky+1)+", columna "+(kx+1)+".");
+    }else m=false;
+    if(m){e.preventDefault();render()}
+  });
+  mb.addEventListener("click",function(){mir=!mir;mb.setAttribute("aria-pressed",String(mir));render();say()});
+  eb.addEventListener("click",function(){era=!era;eb.setAttribute("aria-pressed",String(era))});
+  document.getElementById("ms-undo").addEventListener("click",function(){
+    if(hist.length){cells=hist.pop();render();say("Se deshizo el último trazo.")}else say("No hay nada para deshacer.");
+  });
+  document.getElementById("ms-clear").addEventListener("click",function(){
+    if(count())hist.push(cells.slice());blank();render();say("Lienzo en blanco.");
+  });
+  document.getElementById("ms-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");o.width=o.height=600;var c=o.getContext("2d"),s=600/N,i,j,v;
+      c.fillStyle="#fff";c.fillRect(0,0,600,600);
+      for(i=0;i<N;i++)for(j=0;j<N;j++){v=cells[i*N+j];if(v>=0){c.fillStyle=COLS[v][0];c.fillRect(j*s,i*s,s,s)}}
+      o.toBlob(function(b){
+        if(!b){say("No se pudo guardar la imagen.");return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="mosaico.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        say("Imagen guardada.");
+      },"image/png");
+    }catch(_){say("No se pudo guardar la imagen.")}
+  });
+  blank();render();say();
 })();
 </script>
 </body>
