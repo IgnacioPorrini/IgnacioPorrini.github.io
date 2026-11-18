@@ -227,6 +227,9 @@ footer a{color:var(--c)}
 .bl-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 .bl-clock{font-weight:700;font-variant-numeric:tabular-nums}
 @media print{.bl-sec{display:none}}
+.rs-sec .gr-stage{margin-top:4px}
+.rs-sec .ct-rg{margin-top:8px}
+@media print{.rs-sec{display:none}}
 </style>
 </head>
 <body>
@@ -254,6 +257,7 @@ footer a{color:var(--c)}
     <a href="#mosaico">Mosaico</a>
     <a href="#luz-sombra">Luz y sombra</a>
     <a href="#a-ciegas">Dibujo a ciegas</a>
+    <a href="#rostro">Proporciones del rostro</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -658,6 +662,35 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="bl-cv" width="600" height="450" role="img" aria-label="Lienzo para dibujar a ciegas. La línea queda oculta hasta que toques Revelar."></canvas></div>
     <p class="gr-info"><span class="bl-clock" id="bl-clock" role="timer" aria-live="off"></span> <span id="bl-info" aria-live="polite"></span></p>
     <div class="tip">Cómo hacerlo: apoyá el celular en la mesa y poné el dedo en el lienzo. Elegí un punto del objeto y avanzá con la mirada por el borde, muy despacio, moviendo el dedo al mismo ritmo que el ojo. No levantes el dedo ni espíes la pantalla hasta el final. Cuando le agarres la mano, probá lo mismo con lápiz y hoja, sin mirar el papel. Después compará: las proporciones suelen estar torcidas pero la línea tiene vida propia, y eso es parte de lo que se busca.</div>
+  </div>
+</section>
+
+<section id="rostro" class="rs-sec">
+  <h2>Proporciones del rostro</h2>
+  <p style="color:var(--muted)">Cuando se dibuja una cara de frente, la convención más usada es ubicar los ojos a la mitad de la cabeza, la base de la nariz a mitad de camino entre los ojos y el mentón, y la boca a un tercio de ahí hacia abajo; el ancho de la cabeza equivale a unos cinco ojos. Elegí una foto del celular (se queda en tu equipo), acomodá el óvalo sobre la cabeza y compará. Es una guía simplificada: cada persona se aparta de ella, y justamente esas diferencias dan el parecido.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="rs-file" accept="image/*">
+        <label for="rs-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="rs-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-opts" id="rs-opts" role="group" aria-label="Qué guías mostrar"></div>
+      <div class="ct-rg"><label for="rs-x">Izquierda a derecha: <span id="rs-x-v"></span></label>
+        <input type="range" id="rs-x" min="0" max="100" step="1" value="50"></div>
+      <div class="ct-rg"><label for="rs-y">Arriba a abajo: <span id="rs-y-v"></span></label>
+        <input type="range" id="rs-y" min="0" max="100" step="1" value="50"></div>
+      <div class="ct-rg"><label for="rs-s">Tamaño: <span id="rs-s-v"></span></label>
+        <input type="range" id="rs-s" min="20" max="100" step="1" value="60"></div>
+      <div class="ct-rg"><label for="rs-r">Inclinación: <span id="rs-r-v"></span></label>
+        <input type="range" id="rs-r" min="-30" max="30" step="1" value="0"></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="rs-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="rs-cv" width="600" height="450" role="img" aria-label="Imagen con guías de proporción de un rostro de frente"></canvas></div>
+    <p class="gr-info" id="rs-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: mové el óvalo hasta cubrir la cabeza sin el pelo (de la coronilla al mentón) y girá la inclinación hasta que el eje vertical siga la nariz. Mirá dónde caen los ojos, la nariz y la boca respecto de las líneas: casi siempre algo se corre un poco. Anotá esas diferencias en tu dibujo en lugar de corregirlas. Funciona para rostros de frente; si la cabeza está de perfil o muy girada, las líneas dejan de servir. Son proporciones de dibujo tradicionales y aproximadas, no una medida exacta de nadie. Si querés profundizar, buscá "proporciones de la cara dibujo" o "método Loomis" y compará varias guías.</div>
   </div>
 </section>
 
@@ -1746,6 +1779,93 @@ footer a{color:var(--c)}
         say("Imagen guardada.");
       },"image/png");
     }catch(_){say("No se pudo guardar la imagen.")}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("rs-cv"),ctx=cv.getContext("2d"),info=document.getElementById("rs-info"),box=document.getElementById("rs-opts");
+  var img=null,url=null;
+  var OPT=[
+    {k:"o",n:"Óvalo y eje",on:true,d:"Óvalo de cabeza (de la coronilla al mentón, un poco más alto que ancho) y eje vertical que pasa por la nariz."},
+    {k:"e",n:"Línea de ojos",on:true,d:"Los ojos van más o menos a la mitad de la cabeza, no cerca de la frente como suele dibujarse al principio."},
+    {k:"b",n:"Nariz y boca",on:true,d:"La base de la nariz queda a mitad de camino entre los ojos y el mentón; la boca, a un tercio de ahí hacia el mentón."},
+    {k:"c",n:"Cinco ojos",on:false,d:"El ancho de la cabeza se divide en cinco partes del ancho de un ojo: dos ojos y tres espacios (uno entre ellos y uno a cada lado)."}
+  ];
+  var st={o:true,e:true,b:false,c:false};
+  OPT.forEach(function(x){st[x.k]=x.on});
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    g.fillStyle="#d9e6ee";g.fillRect(0,0,800,600);
+    g.fillStyle="#3b2a22";g.beginPath();g.ellipse(400,285,175,215,0,0,7);g.fill();
+    g.fillStyle="#e8b894";g.beginPath();g.ellipse(400,310,140,185,0,0,7);g.fill();
+    g.fillStyle="#fff";[[340,300],[460,300]].forEach(function(p){g.beginPath();g.ellipse(p[0],p[1],27,13,0,0,7);g.fill()});
+    g.fillStyle="#3a2b22";[[340,300],[460,300]].forEach(function(p){g.beginPath();g.arc(p[0],p[1],9,0,7);g.fill()});
+    g.strokeStyle="#7a4a35";g.lineWidth=5;g.lineCap="round";
+    g.beginPath();g.moveTo(400,310);g.lineTo(392,385);g.lineTo(412,388);g.stroke();
+    g.strokeStyle="#9a3b3b";g.lineWidth=7;g.beginPath();g.moveTo(360,435);g.quadraticCurveTo(400,452,440,435);g.stroke();
+    return c;
+  }
+  function rd(id){return +document.getElementById("rs-"+id).value}
+  function ln(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+  function draw(t){
+    var g=t||ctx,src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,900/w),W=Math.round(w*sc),H=Math.round(h*sc);
+    if(g.canvas.width!==W||g.canvas.height!==H){g.canvas.width=W;g.canvas.height=H}
+    g.drawImage(src,0,0,W,H);
+    var Hh=Math.min(W,H)*rd("s")/100*1.15,Wh=Hh*0.72;
+    var cx=W*rd("x")/100,cy=H*rd("y")/100,ang=rd("r")*Math.PI/180;
+    var lw=Math.max(2,W/260);
+    g.save();g.translate(cx,cy);g.rotate(ang);
+    var top=-Hh/2,eyeY=0,noseY=Hh/4,mouthY=noseY+(Hh/2-noseY)/3;
+    function L(x1,y1,x2,y2){g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()}
+    [["rgba(0,0,0,.55)",lw*2],["#ffd34d",lw]].forEach(function(p){
+      g.strokeStyle=p[0];g.lineWidth=p[1];g.lineCap="round";
+      if(st.o){g.beginPath();g.ellipse(0,0,Wh/2,Hh/2,0,0,7);g.stroke();L(0,top-Hh*0.06,0,Hh/2+Hh*0.06)}
+      if(st.e)L(-Wh*0.62,eyeY,Wh*0.62,eyeY);
+      if(st.b){var hw=Wh*0.2;L(-hw,noseY,hw,noseY);var mw=Wh*0.17;L(-mw,mouthY,mw,mouthY)}
+      if(st.c){
+        var u=Wh/5;
+        for(var i=0;i<=5;i++){var x=-Wh/2+i*u;L(x,eyeY-Hh*0.07,x,eyeY+Hh*0.07)}
+        [1,3].forEach(function(i){g.beginPath();g.ellipse(-Wh/2+(i+0.5)*u,eyeY,u/2,u*0.2,0,0,7);g.stroke()});
+      }
+    });
+    g.restore();
+    return g.canvas;
+  }
+  function render(){
+    ["x","y","s","r"].forEach(function(i){var v=rd(i);document.getElementById("rs-"+i+"-v").textContent=i==="r"?v+"°":v+" %"});
+    draw();
+    var on=OPT.filter(function(x){return st[x.k]});
+    info.textContent=on.length?on.map(function(x){return x.d}).join(" "):"Sin guías: la imagen sola, para comparar.";
+  }
+  OPT.forEach(function(x){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=x.n;
+    b.setAttribute("aria-pressed",String(!!st[x.k]));
+    b.addEventListener("click",function(){st[x.k]=!st[x.k];b.setAttribute("aria-pressed",String(st[x.k]));render()});
+    box.appendChild(b);
+  });
+  ["x","y","s","r"].forEach(function(i){document.getElementById("rs-"+i).addEventListener("input",render)});
+  document.getElementById("rs-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;render()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("rs-sample").addEventListener("click",function(){img=null;render()});
+  document.getElementById("rs-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");draw(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="proporciones-del-rostro.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
   });
   render();
 })();
