@@ -165,6 +165,20 @@ footer a{color:var(--c)}
 .gr-stage canvas{width:100%;height:auto;display:block}
 .gr-info{color:var(--muted);font-size:.95rem;margin:8px 0 0}
 @media print{.grid-sec{display:none}}
+
+.cw-wrap{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:18px;align-items:center}
+.cw-svg{width:100%;height:auto;display:block;max-width:320px;margin:0 auto}
+.cw-svg path{stroke:var(--card);stroke-width:2;cursor:pointer}
+.cw-svg path:focus-visible{outline:none;stroke:var(--ink);stroke-width:4}
+.cw-svg path.sel{stroke:var(--ink);stroke-width:4}
+.cw-svg text{font:700 12px "Nunito",sans-serif;fill:var(--muted);pointer-events:none}
+.cw-opts{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.cw-res{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.cw-chip{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem}
+.cw-chip .sw{width:34px;height:34px}
+.cw-desc{color:var(--muted);font-size:.95rem;margin:6px 0 0}
+@media (max-width:560px){.cw-wrap{grid-template-columns:1fr}}
+@media print{.wheel-sec{display:none}}
 </style>
 </head>
 <body>
@@ -180,6 +194,7 @@ footer a{color:var(--c)}
     <a href="#plan">Plan de la clase 0</a>
     <a href="#tarjetas">Tarjetas de color</a>
     <a href="#mezclador">Mezclador</a>
+    <a href="#rueda">Rueda de color</a>
     <a href="#temporizador">Temporizador</a>
     <a href="#cuadricula">Cuadrícula</a>
     <a href="#materiales">Materiales</a>
@@ -315,6 +330,22 @@ footer a{color:var(--c)}
       <div class="mx-ends"><span>Todo A</span><span>Todo B</span></div>
     </div>
     <div class="tip">Juego para la clase: cada uno elige dos pinturas, dice en voz alta qué color cree que va a salir, y recién después se lo muestra. Después lo prueban con la témpera de verdad.</div>
+  </div>
+</section>
+
+<section id="rueda" class="wheel-sec">
+  <h2>Rueda de color y armonías</h2>
+  <p style="color:var(--muted)">Tocá un color de la rueda y elegí una armonía: la herramienta te muestra qué otros colores combinan con él. Sirve para planear una pintura o un collage antes de abrir los frascos. Es una rueda de doce colores armada con el criterio clásico de rojo, amarillo y azul; en pantalla los tonos son aproximados.</p>
+  <div class="card">
+    <div class="cw-wrap">
+      <svg id="cw-svg" class="cw-svg" viewBox="0 0 300 300" role="group" aria-label="Rueda de doce colores"></svg>
+      <div>
+        <div class="cw-opts" id="cw-opts" role="group" aria-label="Tipo de armonía"></div>
+        <div id="cw-res" class="cw-res" aria-live="polite"></div>
+        <p id="cw-desc" class="cw-desc"></p>
+      </div>
+    </div>
+    <div class="tip">Juego para la clase: sacar un color al azar y pedir una obra chica usando solo esa armonía, más blanco y negro si hace falta.</div>
   </div>
 </section>
 
@@ -557,6 +588,43 @@ footer a{color:var(--c)}
     document.getElementById("tm-prompt").textContent="Consigna: "+C[i];
   });
   paint();
+})();
+</script>
+<script>
+(function(){
+  var W=[["Amarillo","#f7d117"],["Amarillo anaranjado","#f9b21a"],["Naranja","#f28a1e"],["Rojo anaranjado","#e5582a"],["Rojo","#d63a2f"],["Rojo violáceo","#a8326b"],["Violeta","#7b3fa0"],["Azul violáceo","#4a49b5"],["Azul","#2456c9"],["Azul verdoso","#1f8f9e"],["Verde","#3f9a3c"],["Verde amarillento","#98c035"]];
+  var H=[["Complementario",[6],"Dos colores opuestos en la rueda: contrastan al máximo y se hacen resaltar uno al otro."],["Análogos",[-1,1],"Tres colores vecinos: quedan parecidos y dan una obra calma y unida."],["Complementario dividido",[5,7],"El color base y los dos vecinos de su opuesto: contraste fuerte pero menos brusco."],["Triádico",[4,8],"Tres colores a igual distancia entre sí: variado y equilibrado."],["Rectángulo",[2,6,8],"Dos pares de opuestos: muchos colores para combinar, conviene que uno domine."]];
+  var svg=document.getElementById("cw-svg"),NS="http://www.w3.org/2000/svg",sel=0,hi=0,paths=[];
+  function pt(r,a){return[150+r*Math.cos(a),150+r*Math.sin(a)]}
+  W.forEach(function(c,i){
+    var a0=(i*30-105)*Math.PI/180,a1=((i+1)*30-105)*Math.PI/180,o0=pt(140,a0),o1=pt(140,a1),i1=pt(50,a1),i0=pt(50,a0);
+    var p=document.createElementNS(NS,"path");
+    p.setAttribute("d","M"+o0+" A140 140 0 0 1 "+o1+" L"+i1+" A50 50 0 0 0 "+i0+" Z");
+    p.setAttribute("fill",c[1]);p.setAttribute("tabindex","0");p.setAttribute("role","button");
+    p.setAttribute("aria-label",c[0]);p.setAttribute("aria-pressed","false");
+    function pick(){sel=i;upd()}
+    p.addEventListener("click",pick);
+    p.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
+    svg.appendChild(p);paths.push(p);
+  });
+  var box=document.getElementById("cw-opts");
+  H.forEach(function(h,i){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=h[0];
+    b.addEventListener("click",function(){hi=i;upd()});box.appendChild(b);
+  });
+  function upd(){
+    var h=H[hi],idx=[0].concat(h[1]).map(function(o){return(sel+o+12)%12}),res=document.getElementById("cw-res");
+    paths.forEach(function(p,i){var on=idx.indexOf(i)>-1;p.setAttribute("aria-pressed",String(on));p.setAttribute("class",on?"sel":"")});
+    box.querySelectorAll(".tm-p").forEach(function(b,i){b.setAttribute("aria-pressed",String(i===hi))});
+    res.textContent="";
+    idx.forEach(function(i){
+      var d=document.createElement("div"),s=document.createElement("span");
+      d.className="cw-chip";s.className="sw";s.style.background=W[i][1];
+      d.appendChild(s);d.appendChild(document.createTextNode(W[i][0]));res.appendChild(d);
+    });
+    document.getElementById("cw-desc").textContent=h[0]+": "+h[2];
+  }
+  upd();
 })();
 </script>
 <script>
