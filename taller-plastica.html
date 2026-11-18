@@ -150,6 +150,21 @@ footer a{color:var(--c)}
 .bt-note{color:var(--muted);font-size:.95rem;margin:2px 0 0;overflow-wrap:anywhere}
 .bt-del{min-height:44px;min-width:44px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
 @media print{.bitacora-sec{display:none}}
+
+.gr-ctl{display:grid;gap:10px;margin-bottom:12px}
+.gr-file{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.gr-file label.tm-go{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:48px;cursor:pointer}
+.gr-file input[type=file]{position:absolute;opacity:0;width:1px;height:1px}
+.gr-file input[type=file]:focus-visible+label{outline:3px solid var(--c);outline-offset:2px}
+.gr-n{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gr-opts{display:flex;flex-wrap:wrap;gap:8px}
+.gr-opt{min-height:44px;padding:6px 14px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.gr-opt[aria-pressed="true"]{border-color:var(--c);background:var(--soft-c)}
+.gr-opt:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.gr-stage{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--soft-d);line-height:0}
+.gr-stage canvas{width:100%;height:auto;display:block}
+.gr-info{color:var(--muted);font-size:.95rem;margin:8px 0 0}
+@media print{.grid-sec{display:none}}
 </style>
 </head>
 <body>
@@ -166,6 +181,7 @@ footer a{color:var(--c)}
     <a href="#tarjetas">Tarjetas de color</a>
     <a href="#mezclador">Mezclador</a>
     <a href="#temporizador">Temporizador</a>
+    <a href="#cuadricula">Cuadrícula</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -317,6 +333,29 @@ footer a{color:var(--c)}
     <div class="tm-prompt" id="tm-prompt" aria-live="polite">Consigna: tocá el botón de abajo para sacar una al azar.</div>
     <button type="button" id="tm-pr" class="tm-pr" style="margin-top:10px">Otra consigna</button>
     <div class="tip">Sugerencia: 30 s para gestos rápidos, 1 o 2 min para el dibujo a ciegas, 5 min para una textura o una mezcla de color, 10 min para observar y dibujar con calma.</div>
+  </div>
+</section>
+
+<section id="cuadricula" class="grid-sec">
+  <h2>Cuadrícula para dibujar</h2>
+  <p style="color:var(--muted)">Sirve para copiar una imagen con el método de la cuadrícula: se divide la foto en cuadraditos y se dibuja una hoja con la misma cantidad de cuadraditos, copiando de a uno lo que hay en cada uno. Elegí una foto del celular (no se sube a ningún lado, se queda en tu equipo), poné la cantidad de columnas y dibujá en papel una grilla igual.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="gr-file" accept="image/*">
+        <label for="gr-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="gr-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-n" role="group" aria-label="Cantidad de columnas"><b>Columnas:</b></div>
+      <div class="gr-opts" role="group" aria-label="Ayudas">
+        <button type="button" class="gr-opt" id="gr-lab" aria-pressed="true">Letras y números</button>
+        <button type="button" class="gr-opt" id="gr-diag" aria-pressed="false">Diagonales</button>
+        <button type="button" class="gr-opt" id="gr-bw" aria-pressed="false">Blanco y negro</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="gr-cv" width="600" height="450" role="img" aria-label="Imagen con cuadrícula superpuesta"></canvas></div>
+    <p class="gr-info" id="gr-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarla: dibujá en tu hoja un rectángulo con la misma proporción y la misma cantidad de columnas y filas (cuadrados del mismo tamaño entre sí). Copiá cuadradito por cuadradito, mirando solo las líneas que cruzan los bordes. Probá el modo blanco y negro para ver mejor las zonas claras y oscuras antes de sombrear. El método de la cuadrícula es una técnica tradicional de copia y ampliación; sirve para entrenar la mirada, no para reemplazar el dibujo de observación.</div>
   </div>
 </section>
 
@@ -576,6 +615,70 @@ footer a{color:var(--c)}
     if(data.length&&confirm("¿Borrar toda la bitácora de este celular?")){data=[];save();render()}
   });
   render();
+})();
+
+(function(){
+  var cv=document.getElementById("gr-cv"),ctx=cv.getContext("2d"),info=document.getElementById("gr-info");
+  var img=null,url=null,cols=4,lab=true,diag=false,bw=false;
+  var box=document.querySelector(".gr-n"),NS=[3,4,5,6,8,10];
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    g.fillStyle="#bfe3f5";g.fillRect(0,0,800,600);
+    g.fillStyle="#7cc576";g.fillRect(0,430,800,170);
+    g.fillStyle="#ffd34d";g.beginPath();g.arc(660,110,60,0,7);g.fill();
+    g.fillStyle="#e8a07a";g.fillRect(220,260,300,190);
+    g.fillStyle="#b5473a";g.beginPath();g.moveTo(190,260);g.lineTo(370,130);g.lineTo(550,260);g.closePath();g.fill();
+    g.fillStyle="#6b4a2f";g.fillRect(340,340,60,110);
+    g.fillStyle="#fff";g.fillRect(250,300,60,50);g.fillRect(430,300,60,50);
+    return c;
+  }
+  function letter(i){return String.fromCharCode(65+i)}
+  function draw(){
+    var src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var maxW=1000,sc=Math.min(1,maxW/w);cv.width=Math.round(w*sc);cv.height=Math.round(h*sc);
+    ctx.filter=bw?"grayscale(1) contrast(1.15)":"none";
+    ctx.drawImage(src,0,0,cv.width,cv.height);ctx.filter="none";
+    var cell=cv.width/cols,rows=Math.max(1,Math.round(cv.height/cell)),ch=cv.height/rows;
+    function lines(color,wd){
+      ctx.strokeStyle=color;ctx.lineWidth=wd;ctx.beginPath();
+      for(var i=1;i<cols;i++){ctx.moveTo(i*cell,0);ctx.lineTo(i*cell,cv.height)}
+      for(var j=1;j<rows;j++){ctx.moveTo(0,j*ch);ctx.lineTo(cv.width,j*ch)}
+      if(diag){ctx.moveTo(0,0);ctx.lineTo(cv.width,cv.height);ctx.moveTo(cv.width,0);ctx.lineTo(0,cv.height)}
+      ctx.stroke();
+    }
+    var lw=Math.max(2,cv.width/300);
+    lines("rgba(255,255,255,.9)",lw*2.2);lines("rgba(20,20,30,.85)",lw);
+    if(lab){
+      var fs=Math.max(12,Math.min(cell,ch)*.28);ctx.font="700 "+fs+"px sans-serif";ctx.textBaseline="top";
+      for(var c=0;c<cols;c++)for(var r=0;r<rows;r++){
+        var t=letter(c)+(r+1),x=c*cell+4,y=r*ch+3,m=ctx.measureText(t).width;
+        ctx.fillStyle="rgba(255,255,255,.75)";ctx.fillRect(x-2,y-1,m+4,fs+3);
+        ctx.fillStyle="#17161c";ctx.fillText(t,x,y);
+      }
+    }
+    cv.setAttribute("aria-label","Imagen con cuadrícula de "+cols+" columnas y "+rows+" filas");
+    info.textContent="Cuadrícula de "+cols+" columnas por "+rows+" filas ("+(cols*rows)+" cuadrados). Tu hoja tiene que tener la misma cantidad.";
+  }
+  NS.forEach(function(n){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=n;
+    b.setAttribute("aria-pressed",String(n===cols));
+    b.addEventListener("click",function(){cols=n;box.querySelectorAll(".tm-p").forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");draw()});
+    box.appendChild(b);
+  });
+  function tog(id,get,set){var b=document.getElementById(id);b.addEventListener("click",function(){set(!get());b.setAttribute("aria-pressed",String(get()));draw()})}
+  tog("gr-lab",function(){return lab},function(v){lab=v});
+  tog("gr-diag",function(){return diag},function(v){diag=v});
+  tog("gr-bw",function(){return bw},function(v){bw=v});
+  document.getElementById("gr-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;draw()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("gr-sample").addEventListener("click",function(){img=null;draw()});
+  draw();
 })();
 </script>
 </body>
