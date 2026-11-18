@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://ignacioporrini.github.io/imprimibles.html">
+<title>Imprimibles de náutica y expresión | Ignacio Porrini</title>
+<meta name="description" content="Hojas para imprimir en A4: listas antes de salir, ajustes y ejercicios por clase, bitácora, campo de regata, Beaufort, acordes de ukelele, digitación de ocarina, cuadrícula, rueda de color y hojas de origami.">
+<link rel="icon" href="favicon.ico">
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--ink:#1d2320;--muted:#5d6762;--line:#d5dad6;--ac:#1f8a4c;--soft:#e4f3ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121513;--card:#1b1f1c;--ink:#eef2ef;--muted:#a3ada7;--line:#343b36;--ac:#4cc47f;--soft:#1d3326}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 56px}
+header{padding:36px 0 12px}
+h1{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.15;margin:0 0 8px}
+h2{font-size:1.3rem;margin:0 0 4px}
+h3{font-size:1.05rem;margin:14px 0 6px}
+.lead{color:var(--muted);max-width:60ch}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+nav.toc a,.btn{display:inline-flex;align-items:center;min-height:44px;padding:6px 14px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:#fff}
+.btn[aria-pressed=true]{border-color:var(--ac);background:var(--soft)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.grp{margin:34px 0 6px;padding-bottom:6px;border-bottom:3px solid var(--ac);font-size:1.5rem}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+.sub{color:var(--muted);margin:0 0 10px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.note{color:var(--muted);font-size:.9rem}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.bx{display:inline-block;width:15px;height:15px;border:2px solid currentColor;border-radius:3px;vertical-align:-2px;margin-right:8px}
+ul.chk{list-style:none;padding:0;margin:0}
+ul.chk li{padding:8px 0;border-bottom:1px solid var(--line)}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+.fields span{border-bottom:1.5px solid currentColor;min-height:26px;display:block;font-size:.85rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.cd{border:1.5px solid var(--line);border-radius:10px;padding:6px;text-align:center;font-size:.82rem}
+.cd svg{width:100%;height:auto;display:block}
+.cd b{display:block}
+svg text{fill:currentColor}
+.sw{display:inline-block;width:22px;height:22px;border-radius:50%;border:1px solid #555;vertical-align:middle;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.bars{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1.5px solid currentColor}
+.bar{border:1px solid var(--line);padding:6px;min-height:58px;font-size:.9rem}
+.bar b{display:block;font-size:1.05rem}
+.sheetfoot{margin-top:12px;font-size:.78rem;color:var(--muted)}
+.gridsvg{width:100%;height:auto;display:block;color:#000;background:#fff}
+.story{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.story div{border:1.5px solid currentColor;border-radius:6px;aspect-ratio:4/3;padding:4px;font-size:.8rem;color:var(--muted)}
+@media (max-width:560px){.fields{grid-template-columns:1fr}.bars{grid-template-columns:repeat(2,1fr)}table{font-size:.82rem}th,td{padding:4px}}
+@page{size:A4;margin:12mm}
+@media print{
+  body{background:#fff;color:#000;font-size:11.5pt}
+  :root{--card:#fff;--ink:#000;--muted:#333;--line:#888;--soft:#eee;--ac:#000}
+  header,nav.toc,.tools,.grp,.screen-only{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .sheet{border:none;border-radius:0;padding:0;margin:0;break-after:page;page-break-after:always;display:block}
+  body[data-print] .sheet{display:none}
+  body[data-print] .sheet.pr{display:block}
+  table,.cd,.bar{break-inside:avoid}
+  th{background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Imprimibles</h1>
+  <p class="lead">Hojas en A4, en blanco y negro, listas para imprimir o guardar como PDF desde el celular o la computadora. Cada hoja tiene su propio botón; también se puede imprimir todo junto. Son para llevar a la clase, a la playa o al agua.</p>
+  <nav class="toc" aria-label="Grupos">
+    <a href="#nautica">Náutica</a><a href="#expresion">Expresión</a>
+    <button type="button" class="btn pri" id="all">Imprimir todo</button>
+  </nav>
+</header>
+<h2 class="grp" id="nautica">Náutica</h2>
+<div id="s-nautica"></div>
+<h2 class="grp" id="expresion">Expresión</h2>
+<div id="s-expresion"></div>
+<p class="note screen-only">Las referencias náuticas son orientativas: siempre manda la guía del fabricante de su vela y lo que se ve en el agua. La digitación de ocarina debe compararse con la tabla de su instrumento. <a href="index.html">ignacioporrini.github.io</a></p>
+</div>
+<script>
+const C={
+ opti:{name:'Optimist',sub:'1 tripulante · vela 3,3 m²',
+  rows:[
+   ['Rake (caída del palo)',['Medir del tope del palo al borde de popa con cinta y anotar la medida del día.','La medida base de la guía de su vela; es la referencia para comparar.','Usar la medida de viento fuerte de su guía (cada velero la indica distinta) y anotar cómo anduvo.']],
+   ['Pico (sprit)',['Tensión justa: pequeñas arrugas del puño de pico hacia la amura.','Sin arrugas, vela lisa.','Firme. Si aparecen arrugas del pico hacia el puño de escota, aflojar un poco.']],
+   ['Pajarín (outhaul)',['Más bolsa abajo: un puño de distancia entre vela y botavara.','Algo menos de bolsa; con ola dejar un poco más.','Plano: la vela casi pegada a la botavara.']],
+   ['Vang',['Suelto, solo sin juego.','Tomar el juego para que la botavara no suba en las rachas.','Firme: aplana y abre la baluma; ayuda en popa a que no se cierre.']],
+   ['Escota',['Botavara sobre la esquina de popa, sin sobrecazar.','Cazada hasta la esquina; filar en racha.','Filar y orzar en las rachas antes que escorar.']],
+   ['Peso y posición',['Adelante y a sotavento para bajar superficie mojada.','Centrado, bote plano.','Bien colgado y un poco atrás; bote plano siempre.']],
+   ['Orza',['Abajo en ceñida; en popa subirla hasta la mitad.','Abajo en ceñida.','En través y popa subirla para que no tumbe.']]],
+  note:'Material de base: Curso Básico Optimist (adaptación 2023 para La Estacada) y guías North de Optimist del Drive.'},
+ ilca:{name:'Laser (ILCA)',sub:'1 tripulante · ILCA 4: 4,7 m² · ILCA 6: 5,76 m² · ILCA 7: 7,06 m²',
+  rows:[
+   ['Cunningham',['Suelto, con arrugas en el gratil.','Sacar arrugas; algo más si el viento sube.','Al máximo: lleva la bolsa adelante y abre la parte alta.']],
+   ['Pajarín (outhaul)',['Bolsa: unos 15–20 cm entre vela y botavara en el medio.','Unos 10 cm; más plano con agua lisa.','Casi plano, pocos centímetros.']],
+   ['Vang',['Solo sin juego.','Firme en ceñida; aflojar un poco en popa.','Muy tenso antes de la ceñida: con escota filada la botavara no sube (vang sheeting).']],
+   ['Escota',['Sin sobrecazar: la baluma abierta y la botavara cerca de la esquina de popa.','Cazada hasta que la baluma quede alineada con la botavara; filar en las rachas.','Cazada a tope (dos motones juntos) y regular con la escota en las rachas.']],
+   ['Peso y posición',['Adelante, cerca del pie de palo; bote con algo de escora a sotavento.','Centro de la bañera, bote plano.','Colgado a fondo y atrás para que la proa no clave en la ola.']],
+   ['Orza',['Abajo en ceñida; en popa subir hasta dejar un tercio.','Abajo en ceñida; en popa subir hasta dejar un tercio.','En través subir algo para controlar la escora.']]],
+  note:'Medidas de pajarín y cunningham como referencia general; ajustarlas al peso del navegante y al aparejo.'},
+ snipe:{name:'Snipe',sub:'2 tripulantes · mayor y foque',
+  rows:[
+   ['Tensión de jarcia',['Floja: el palo trabaja y hay más potencia.','Media, la de su guía de referencia.','Según su guía; el vang tensado le quita tensión a los obenques.']],
+   ['Rake',['Palo más adelante.','Base.','Más atrás para descargar la mayor y abrir la baluma.']],
+   ['Curvatura del palo',['Poca: mayor con bolsa.','Media.','Mucha con vang y escota: mayor plana.']],
+   ['Foque',['Escota un poco filada, lanitas fluyendo.','Cazado a la marca de referencia.','Abrir un poco el escotero o la escota para descargar el barco.']],
+   ['Escota de mayor',['Suave, baluma abierta.','Cazada, baluma alineada con la botavara.','Juega como el estay de popa: cazarla atrasa el palo y aplana.']],
+   ['Tripulación',['Juntos y adelante; el tripulante a sotavento.','Barco plano; el tripulante canta las rachas.','Los dos colgados; trabajar la mayor en cada ola.']]],
+  note:'Material de base: apuntes de la clínica de Snipe (setiembre 2023).',
+  quote:'«El estay de popa del Snipe es la escota de mayor» y «el vang es enemigo de la tensión». Apuntes de la clínica de Snipe, 2023.'},
+ tabla:{name:'Tabla a vela',sub:'windsurf · 1 tripulante',
+  rows:[
+   ['Cunningham (downhaul)',['Justo: la baluma arriba apenas abierta, vela con bolsa.','Más tenso: la parte alta de la baluma se abre.','Al máximo: la baluma abierta en el tercio superior descarga las rachas.']],
+   ['Pajarín (outhaul)',['Más suelto: vela con bolsa para tener potencia.','Medio.','Tenso: vela plana y fácil de controlar.']],
+   ['Pie de mástil',['Algo adelante para ceñir mejor.','Al medio del riel.','Más atrás para que la tabla planee suelta.']],
+   ['Botavara',['A la altura del pecho.','Entre pecho y hombro.','Algo más alta si se usa arnés; más baja si cuesta sostener.']],
+   ['Orza',['Abajo para ceñir.','Abajo en ceñida, arriba en través y popa.','Arriba en través y popa para que la tabla no se ponga de canto.']],
+   ['Posición',['Pies adelante, cerca del pie de mástil.','Pies sobre la línea central.','Atrás, en las fijaciones (footstraps), cuerpo colgado del arnés.']]],
+  note:'Para gobernar: inclinar el aparejo hacia popa para orzar y hacia proa para derivar.'}
+};
+const D=[
+ {n:'Viradas al silbato',m:10,c:['opti','ilca','snipe','tabla'],o:'Virar en cada pitada sin perder velocidad.',h:'Contar cuántas viradas limpias logra cada uno. Después probar con dos pitadas seguidas.'},
+ {n:'Trasluchadas en zigzag',m:10,c:['opti','ilca','snipe','tabla'],o:'Pasar la botavara controlada en popa.',h:'Bajar entre dos boyas trasluchando en cada una. Mirar atrás antes de trasluchar.'},
+ {n:'Largadas de un minuto',m:15,c:['opti','ilca','snipe','tabla'],o:'Llegar a la línea con velocidad en el momento justo.',h:'Usar la pestaña Largada en modo de 1 minuto. Repetir 5 o 6 veces y anotar quién quedó en primera fila.'},
+ {n:'Tiempo y distancia',m:10,c:['opti','ilca','snipe','tabla'],o:'Saber cuánto se tarda en llegar a la línea.',h:'Desde la línea, navegar 30 segundos alejándose, virar y medir cuánto se tarda en volver.'},
+ {n:'Seguir al líder',m:10,c:['opti','ilca','snipe','tabla'],o:'Copiar maniobras y mirar alrededor.',h:'Fila india detrás de un líder que vira y traslucha cuando quiere. Rotar el líder cada 3 minutos.'},
+ {n:'Navegar sin timón',m:10,c:['opti','ilca'],o:'Gobernar con escora y vela.',h:'Sacar el timón, escorar a sotavento para orzar y a barlovento para derivar. Solo con viento suave y lancha cerca.'},
+ {n:'Viradas rolando (roll tack)',m:10,c:['opti','ilca'],o:'Salir de la virada más rápido que entró.',h:'Con viento suave: escorar a barlovento al virar y adrizar fuerte al salir.'},
+ {n:'Vuelta de penalización',m:5,c:['opti','ilca','snipe'],o:'Hacer los dos giros rápido y sin chocar.',h:'Cada giro con una virada y una trasluchada (regla 44.2). Cronometrar.'},
+ {n:'Tumbada y adrizado',m:10,c:['opti','ilca'],o:'Adrizar con calma y volver a navegar.',h:'Tumbar a propósito cerca de la lancha. Subirse a la orza, adrizar, achicar. Siempre con chaleco.'},
+ {n:'Colgado por intervalos',m:10,c:['ilca'],o:'Resistencia en ceñida con viento.',h:'3 tramos de 2 minutos colgado a fondo con 1 minuto de descanso.'},
+ {n:'Cantar las rachas',m:10,c:['snipe'],o:'Comunicación de tripulación.',h:'El tripulante avisa cada racha y cada borneo con tiempo: "racha en 5 segundos". El timonel solo mira la vela.'},
+ {n:'Foque con lanitas',m:10,c:['snipe'],o:'Trimar el foque en cada rumbo.',h:'El tripulante busca las tres alturas de lanitas fluyendo juntas; cambiar de rumbo y repetir.'},
+ {n:'Arranque en el agua (waterstart)',m:15,c:['tabla'],o:'Salir del agua sin subir la vela con el cabo.',h:'Con viento medio, cerca de la lancha: vela sobre la cabeza, pie trasero en la tabla y dejar que el viento levante.'},
+ {n:'Subir la vela con el cabo',m:10,c:['tabla'],o:'Levantar la vela cuidando la espalda.',h:'Piernas flexionadas, espalda derecha, tirar con las piernas. Repetir de un lado y del otro.'},
+ {n:'Salida desde la playa',m:10,c:['tabla'],o:'Arrancar navegando desde poca agua.',h:'Tabla a través del viento, pie delantero junto al pie de mástil, impulso con la pierna trasera.'},
+ {n:'Recorrido corto',m:20,c:['opti','ilca','snipe','tabla'],o:'Juntar todo en una regata corta.',h:'Barlovento–sotavento corto, dos vueltas, con largada de 3 minutos.'}
+];
+const CHECK={
+ todas:['Chaleco salvavidas puesto y abrochado.','Pronóstico revisado: viento, rachas y hora de regreso.','Avisar en tierra con quién sale y cuándo vuelve.'],
+ opti:['Flotadores inflados y bien atados.','Achicador y remo atados al bote.','Seguro de palo y de orza puestos.','Pala del timón con su traba.'],
+ ilca:['Tapón de inspección y de achique cerrados.','Cabo de la orza (retén) atado.','Traba del timón puesta.','Escota sin nudos, con nudo de tope al final.'],
+ snipe:['Tapones cerrados y achicadores funcionando.','Pasadores de jarcia con su seguro (cinta o anillo).','Orza y timón con su traba.','Cabo de remolque a bordo.'],
+ tabla:['Unión del pie de mástil firme y con cabo de seguridad.','Cabo para subir la vela y botavara bien trabados.','Aleta firme en su caja.','Navegar con viento hacia la costa, nunca hacia afuera.']};
+const CH=[
+ {n:'Do',s:'C',f:[0,0,0,3],d:[0,0,0,3],l:1},
+ {n:'La menor',s:'Am',f:[2,0,0,0],d:[2,0,0,0],l:1},
+ {n:'Fa',s:'F',f:[2,0,1,0],d:[2,0,1,0],l:1},
+ {n:'Sol',s:'G',f:[0,2,3,2],d:[0,1,3,2],l:1},
+ {n:'Sol 7',s:'G7',f:[0,2,1,2],d:[0,2,1,3],l:2},
+ {n:'Re menor',s:'Dm',f:[2,2,1,0],d:[2,3,1,0],l:2},
+ {n:'Mi menor',s:'Em',f:[0,4,3,2],d:[0,3,2,1],l:2},
+ {n:'La 7',s:'A7',f:[0,1,0,0],d:[0,1,0,0],l:2}
+];
+const SONGS=[
+ {t:'Estrellita, ¿dónde estás?',d:'Tradicional',bars:[
+  ['Do',['C5','C5','G5','G5']],['Fa',['A5','A5','G5']],['Fa',['F5','F5','E5','E5']],['Sol',['D5','D5','C5']],
+  ['Do',['G5','G5','F5','F5']],['Sol',['E5','E5','D5']],['Do',['G5','G5','F5','F5']],['Sol',['E5','E5','D5']],
+  ['Do',['C5','C5','G5','G5']],['Fa',['A5','A5','G5']],['Fa',['F5','F5','E5','E5']],['Sol',['D5','D5','C5']]]},
+ {t:'Oda a la alegría',d:'Beethoven, dominio público',bars:[
+  ['Do',['E5','E5','F5','G5']],['Sol',['G5','F5','E5','D5']],['Do',['C5','C5','D5','E5']],['Sol',['E5','D5','D5']],
+  ['Do',['E5','E5','F5','G5']],['Sol',['G5','F5','E5','D5']],['Do',['C5','C5','D5','E5']],['Sol',['D5','C5','C5']]]}
+];
+const W12=[["Amarillo","#f7d117"],["Amarillo anaranjado","#f9b21a"],["Naranja","#f28a1e"],["Rojo anaranjado","#e5582a"],["Rojo","#d63a2f"],["Rojo violáceo","#a8326b"],["Violeta","#7b3fa0"],["Azul violáceo","#4a49b5"],["Azul","#2456c9"],["Azul verdoso","#1f8f9e"],["Verde","#3f9a3c"],["Verde amarillento","#98c035"]];
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const FOOT='<div class="sheetfoot">Ignacio Porrini · ignacioporrini.github.io/imprimibles.html</div>';
+function sheet(g,id,title,sub,body,tools){
+  const s=document.createElement('section');s.className='sheet';s.id=id;
+  s.innerHTML='<h2>'+title+'</h2>'+(sub?'<p class="sub">'+sub+'</p>':'')+'<div class="tools"><button type="button" class="btn pri" data-pr="'+id+'">Imprimir esta hoja</button>'+(tools||'')+'</div>'+body+FOOT;
+  document.getElementById('s-'+g).appendChild(s);return s;
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-pr]');
+  if(b){document.querySelectorAll('.sheet.pr').forEach(x=>x.classList.remove('pr'));document.getElementById(b.dataset.pr).classList.add('pr');document.body.dataset.print='1';window.print()}
+  if(e.target.closest('#all')){delete document.body.dataset.print;window.print()}
+});
+window.addEventListener('afterprint',()=>{delete document.body.dataset.print;document.querySelectorAll('.sheet.pr').forEach(x=>x.classList.remove('pr'))});
+const FIELDS='<div class="fields"><span>Fecha:</span><span>Viento (fuerza / dirección):</span><span>Navegante o grupo:</span></div>';
+
+/* ---------- NÁUTICA ---------- */
+Object.keys(C).forEach(k=>{
+  const c=C[k];
+  sheet('nautica','lista-'+k,'Antes de salir · '+esc(c.name),'Marcar cada punto con lápiz antes de entrar al agua.',
+    FIELDS+'<ul class="chk">'+[...CHECK.todas,...CHECK[k]].map(t=>'<li><span class="bx"></span>'+esc(t)+'</li>').join('')+'</ul>'+
+    '<h3>Antes de volver</h3><ul class="chk"><li><span class="bx"></span>Enjuagar el equipo con agua dulce y revisar daños.</li><li><span class="bx"></span>Avisar en tierra que ya volvió.</li></ul>'+
+    '<h3>Notas</h3>'+'<div style="border-bottom:1.5px solid currentColor;height:26px"></div>'.repeat(4));
+  sheet('nautica','ajuste-'+k,'Ajustes según el viento · '+esc(c.name),esc(c.sub),
+    '<table><thead><tr><th>Parte</th><th>Viento suave</th><th>Viento medio</th><th>Viento fuerte</th></tr></thead><tbody>'+
+    c.rows.map(r=>'<tr><td><b>'+esc(r[0])+'</b></td><td>'+esc(r[1][0])+'</td><td>'+esc(r[1][1])+'</td><td>'+esc(r[1][2])+'</td></tr>').join('')+'</tbody></table>'+
+    '<p class="note">'+esc(c.note)+'</p>'+(c.quote?'<p class="note">'+esc(c.quote)+'</p>':''));
+  const ds=D.filter(d=>d.c.includes(k)),tot=ds.reduce((a,d)=>a+d.m,0);
+  sheet('nautica','ejer-'+k,'Ejercicios de la sesión · '+esc(c.name),'Elegir los ejercicios del día (hay '+ds.length+' posibles, '+tot+' min en total si se hicieran todos).',
+    FIELDS+'<table><thead><tr><th></th><th>Ejercicio</th><th>Min</th><th>Objetivo y cómo</th></tr></thead><tbody>'+
+    ds.map(d=>'<tr><td><span class="bx"></span></td><td><b>'+esc(d.n)+'</b></td><td>'+d.m+'</td><td>'+esc(d.o)+' <span class="note">'+esc(d.h)+'</span></td></tr>').join('')+'</tbody></table>');
+});
+sheet('nautica','bitacora','Bitácora de entrenamiento','Una fila por sesión.',
+  '<table><thead><tr><th>Fecha</th><th>Viento</th><th>Clase / grupo</th><th>Qué se trabajó</th><th>Qué mejoró y qué falta</th></tr></thead><tbody>'+
+  '<tr style="height:34px"><td></td><td></td><td></td><td></td><td></td></tr>'.repeat(14)+'</tbody></table>');
+(function(){
+  let g='';for(let x=10;x<190;x+=10)g+='<line x1="'+x+'" y1="8" x2="'+x+'" y2="242"/>';for(let y=10;y<245;y+=10)g+='<line x1="8" y1="'+y+'" x2="182" y2="'+y+'"/>';
+  const svg='<svg viewBox="0 0 190 250" class="gridsvg" style="max-width:150mm;margin:0 auto" role="img" aria-label="Campo de regata en blanco con viento, boya de barlovento, puerta de sotavento y línea de largada"><rect x="2" y="2" width="186" height="246" fill="none" stroke="#000" stroke-width="1"/>'+
+   '<g stroke="#bbb" stroke-width=".3">'+g+'</g>'+
+   '<g stroke="#000" fill="none" stroke-width="1.2"><path d="M95 20 v-8 M91 17 l4 -5 l4 5"/></g><text x="95" y="9" font-size="6" text-anchor="middle" font-weight="700">VIENTO</text>'+
+   '<circle cx="95" cy="45" r="5" fill="#fff" stroke="#000" stroke-width="1.2"/><text x="95" y="62" font-size="5.5" text-anchor="middle">Boya de barlovento</text>'+
+   '<circle cx="70" cy="190" r="4" fill="#fff" stroke="#000" stroke-width="1.2"/><circle cx="120" cy="190" r="4" fill="#fff" stroke="#000" stroke-width="1.2"/><text x="95" y="182" font-size="5.5" text-anchor="middle">Puerta de sotavento</text>'+
+   '<line x1="40" y1="225" x2="150" y2="225" stroke="#000" stroke-width="1.2" stroke-dasharray="4 2"/><rect x="34" y="222" width="8" height="6" fill="#fff" stroke="#000"/><circle cx="150" cy="225" r="3.5" fill="#fff" stroke="#000"/>'+
+   '<text x="95" y="239" font-size="5.5" text-anchor="middle">Línea de largada</text></svg>';
+  sheet('nautica','campo','Campo de regata en blanco','Para dibujar trayectorias, ceñidas, popas y posiciones de largada. Cada cuadrado es una unidad que usted define (por ejemplo, 20 metros).',svg);
+})();
+(function(){
+  const B=[['0','Calma','menos de 1'],['1','Ventolina','1 a 3'],['2','Brisa muy débil (flojito)','4 a 6'],['3','Brisa débil (flojo)','7 a 10'],['4','Brisa moderada (bonancible)','11 a 16'],['5','Brisa fresca','17 a 21'],['6','Brisa fuerte (fresquito)','22 a 27'],['7','Viento fuerte (frescachón)','28 a 33'],['8','Temporal','34 a 40'],['9','Temporal fuerte','41 a 47'],['10','Temporal duro','48 a 55'],['11','Borrasca','56 a 63'],['12','Huracán','64 o más']];
+  sheet('nautica','beaufort','Escala de Beaufort','Fuerza del viento en nudos. Tarjeta para recortar y plastificar.',
+    '<table><thead><tr><th>Fuerza</th><th>Nombre</th><th>Nudos</th><th>Hoy</th></tr></thead><tbody>'+B.map(r=>'<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td></td></tr>').join('')+'</tbody></table><p class="note">Para decidir si se sale al agua, además del número cuenta la edad, el nivel del grupo y el pronóstico de rachas.</p>');
+})();
+
+/* ---------- EXPRESIÓN ---------- */
+(function(){
+  const W=84,H=104,x0=12,dx=20,y0=18,dy=20;
+  function diag(c){let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Acorde '+esc(c.n)+'"><rect x="'+x0+'" y="'+(y0-3)+'" width="'+dx*3+'" height="4" fill="#000"/>';
+    for(let i=0;i<4;i++)s+='<line x1="'+(x0+i*dx)+'" y1="'+y0+'" x2="'+(x0+i*dx)+'" y2="'+(y0+dy*4)+'" stroke="#000" stroke-width=".9"/>';
+    for(let j=1;j<=4;j++)s+='<line x1="'+x0+'" y1="'+(y0+j*dy)+'" x2="'+(x0+dx*3)+'" y2="'+(y0+j*dy)+'" stroke="#555" stroke-width=".7"/>';
+    c.f.forEach((fr,i)=>{if(fr>0){const cy=y0+(fr-.5)*dy;s+='<circle cx="'+(x0+i*dx)+'" cy="'+cy+'" r="7.5" fill="#000"/><text x="'+(x0+i*dx)+'" y="'+(cy+3.8)+'" text-anchor="middle" font-size="10" font-weight="700" style="fill:#fff">'+c.d[i]+'</text>'}else s+='<circle cx="'+(x0+i*dx)+'" cy="'+(y0-9)+'" r="3.5" fill="none" stroke="#000" stroke-width="1"/>'});
+    ['G','C','E','A'].forEach((n,i)=>{s+='<text x="'+(x0+i*dx)+'" y="'+(H-4)+'" text-anchor="middle" font-size="8">'+n+'</text>'});
+    return s+'</svg>'}
+  sheet('expresion','ukelele','Acordes de ukelele','Afinación sol-do-mi-la (G C E A). Los números dentro de los círculos son los dedos: 1 índice, 2 mayor, 3 anular, 4 meñique. Círculo vacío arriba: cuerda al aire.',
+    '<div class="cards">'+CH.map(c=>'<div class="cd">'+diag(c)+'<b>'+esc(c.s)+'</b>'+esc(c.n)+(c.l===2?' · nivel 2':'')+'</div>').join('')+'</div>');
+})();
+(function(){
+  const NMS=[['Do','C'],['Re','D'],['Mi','E'],['Fa','F'],['Sol','G'],['La','A'],['Si','B'],['Do','C'],['Re','D'],['Mi','E'],['Fa','F']];
+  const LIFT=['R4','R3','R2','R1','L4','L3','L2','L1','LT','RT'];
+  const HO={L1:[22,20],L2:[36,16],L3:[50,15],L4:[63,17],R1:[84,17],R2:[97,15],R3:[111,16],R4:[124,20],LT:[48,56],RT:[100,56]};
+  function svg(k){const open=new Set(LIFT.slice(0,k));let s='<svg viewBox="0 0 150 72" role="img" aria-label="Digitación"><path d="M6 34 C6 14 40 6 75 8 C112 6 146 16 146 34 C146 52 112 62 75 60 C40 62 6 52 6 34 Z" fill="none" stroke="#000" stroke-width=".8"/><rect x="0" y="29" width="10" height="10" rx="2" fill="#000"/>';
+    Object.entries(HO).forEach(([h,[x,y]])=>{const th=h.endsWith('T');s+='<circle cx="'+x+'" cy="'+y+'" r="'+(th?5:6)+'" fill="'+(open.has(h)?'#fff':'#000')+'" stroke="#000" stroke-width="1.5"'+(th?' stroke-dasharray="2 2"':'')+'/>'});
+    s+='<circle cx="118" cy="34" r="2.5" fill="#fff" stroke="#000"/><circle cx="126" cy="38" r="2.5" fill="#fff" stroke="#000"/>';
+    return s+'<text x="48" y="70" font-size="7" text-anchor="middle">pulgar izq.</text><text x="100" y="70" font-size="7" text-anchor="middle">pulgar der.</text></svg>'}
+  sheet('expresion','ocarina','Ocarina de 12 agujeros en Do','Do a Fa agudo. Círculo lleno: tapar. Círculo vacío: destapar. La boquilla queda a la izquierda. Los dos agujeritos chicos quedan destapados en toda la escala.',
+    '<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">'+NMS.map((n,i)=>'<div class="cd">'+svg(i)+'<b>'+n[0]+(i>=7?' agudo':'')+'</b>'+n[1]+(i>=7?'′':'')+'</div>').join('')+'</div>'+
+    '<p class="note"><b>Para verificar:</b> compare con la tabla que trae su ocarina. Si su modelo difiere, manda la tabla del fabricante.</p>');
+})();
+(function(){
+  const SOL={C5:'Do',D5:'Re',E5:'Mi',F5:'Fa',G5:'Sol',A5:'La',B5:'Si',C6:'Do+'};
+  sheet('expresion','canciones','Canciones en Do para ukelele y ocarina','El acorde va arriba de cada compás; abajo, las notas de la ocarina. Un guion indica que la última nota dura el doble.',
+    SONGS.map(s=>'<h3>'+esc(s.t)+' <span class="note">'+esc(s.d)+'</span></h3><div class="bars">'+s.bars.map(b=>'<div class="bar"><b>'+esc(b[0])+'</b>'+b[1].map(n=>SOL[n]||n).join(' ')+(b[1].length===3?' –':'')+'</div>').join('')+'</div>').join(''));
+})();
+(function(){
+  const box=sheet('expresion','cuadricula','Cuadrícula para dibujar en blanco','Para dibujar sobre una cuadrícula con letras y números, o para copiar una foto cuadradito por cuadradito. Elija la cantidad de columnas y la forma de la hoja.',
+    '<div id="gsv"></div><p class="note">Dibuje en su hoja o en la pantalla una imagen con la misma proporción y copie lo que cae en cada cuadrado.</p>',
+    '<span class="screen-only" style="display:contents"><span id="gc" style="display:contents"></span><button type="button" class="btn" id="gh" aria-pressed="true">Horizontal</button><button type="button" class="btn" id="gv" aria-pressed="false">Vertical</button></span>');
+  let cols=5,hor=true;
+  function draw(){
+    const w=hor?4:3,h=hor?3:4,cell=40,rows=Math.max(1,Math.round(cols*h/w)),W=cols*cell,H=rows*cell,m=18;
+    let s='<svg viewBox="'+(-m)+' '+(-m)+' '+(W+m+4)+' '+(H+m+4)+'" class="gridsvg" role="img" aria-label="Cuadrícula en blanco de '+cols+' columnas y '+rows+' filas"><g stroke="#000" stroke-width="1" fill="none"><rect x="0" y="0" width="'+W+'" height="'+H+'"/>';
+    for(let i=1;i<cols;i++)s+='<line x1="'+i*cell+'" y1="0" x2="'+i*cell+'" y2="'+H+'"/>';
+    for(let j=1;j<rows;j++)s+='<line x1="0" y1="'+j*cell+'" x2="'+W+'" y2="'+j*cell+'"/>';
+    s+='</g><g font-size="13" text-anchor="middle" font-weight="700" style="fill:#000">';
+    for(let i=0;i<cols;i++)s+='<text x="'+(i*cell+cell/2)+'" y="-5">'+String.fromCharCode(65+i)+'</text>';
+    for(let j=0;j<rows;j++)s+='<text x="-9" y="'+(j*cell+cell/2+5)+'">'+(j+1)+'</text>';
+    document.getElementById('gsv').innerHTML=s+'</g></svg>';
+    document.getElementById('gh').setAttribute('aria-pressed',String(hor));document.getElementById('gv').setAttribute('aria-pressed',String(!hor));
+    document.querySelectorAll('#gc .btn').forEach(b=>b.setAttribute('aria-pressed',String(+b.textContent===cols)));
+  }
+  [3,4,5,6,8,10].forEach(n=>{const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=n;b.setAttribute('aria-label',n+' columnas');b.addEventListener('click',()=>{cols=n;draw()});document.getElementById('gc').appendChild(b)});
+  document.getElementById('gh').addEventListener('click',()=>{hor=true;draw()});
+  document.getElementById('gv').addEventListener('click',()=>{hor=false;draw()});
+  draw();
+})();
+(function(){
+  const M=[['Rojo','#d63a2f','Amarillo','#f4c20d','naranja','#f28a1e'],['Amarillo','#f4c20d','azul','#2456c9','verde','#3f9a3c'],['Azul','#2456c9','rojo','#d63a2f','violeta','#7b3fa0'],['Naranja','#f28a1e','azul','#2456c9','marrón','#7a5230'],['Azul','#2456c9','blanco','#ffffff','celeste','#6fa3e8'],['Rojo','#d63a2f','blanco','#ffffff','rosado','#f29a9a']];
+  const sw=c=>'<span class="sw" style="background:'+c+'"></span>';
+  sheet('expresion','tarjetas','Tarjetas de mezcla de color','Para recortar. En pintura real las proporciones cambian el resultado: probar con la témpera.',
+    '<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">'+M.map(m=>'<div class="cd">'+sw(m[1])+' + '+sw(m[3])+' = '+sw(m[5])+'<b>'+m[0]+' + '+m[2]+' = '+m[4]+'</b></div>').join('')+'</div>');
+})();
+(function(){
+  const NS=W12.map(w=>w);
+  function wheel(paint){
+    const P=n=>[150+n[0]*Math.cos(n[1]),150+n[0]*Math.sin(n[1])];
+    let s='<svg viewBox="0 0 300 300" class="gridsvg" role="img" aria-label="Rueda de doce sectores">';
+    NS.forEach((c,i)=>{const a0=(i*30-105)*Math.PI/180,a1=((i+1)*30-105)*Math.PI/180,am=(a0+a1)/2,o0=P([140,a0]),o1=P([140,a1]),i1=P([50,a1]),i0=P([50,a0]),t=P([95,am]);
+      s+='<path d="M'+o0+' A140 140 0 0 1 '+o1+' L'+i1+' A50 50 0 0 0 '+i0+' Z" fill="'+(paint?c[1]:'#fff')+'" stroke="#000" stroke-width="1.5" style="-webkit-print-color-adjust:exact;print-color-adjust:exact"/><text x="'+t[0]+'" y="'+(t[1]+5)+'" text-anchor="middle" font-size="14" font-weight="700" style="fill:'+(paint?'#fff':'#000')+';paint-order:stroke;stroke:'+(paint?'#000':'none')+';stroke-width:2px">'+(i+1)+'</text>'});
+    return s+'</svg>'}
+  sheet('expresion','rueda','Rueda de color para pintar','Pintar cada sector con el color que indica la lista de la derecha, mezclando témperas, y comparar con la rueda de referencia.',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px"><div><b>Para pintar</b>'+wheel(false)+'</div><div><b>Referencia (colores de pantalla, aproximados)</b>'+wheel(true)+'</div></div>'+
+    '<table style="margin-top:10px"><tbody>'+[0,1,2].map(r=>'<tr>'+[0,1,2,3].map(c=>{const i=r*4+c;return '<td><b>'+(i+1)+'.</b> '+esc(NS[i][0])+'</td>'}).join('')+'</tr>').join('')+'</tbody></table>'+
+    '<p class="note">Armonías: complementarios (sectores separados por 6), análogos (vecinos), triádico (cada 4).</p>');
+})();
+(function(){
+  const sym='<svg viewBox="0 0 330 150" class="gridsvg" style="max-width:170mm" role="img" aria-label="Símbolos de pliegue"><g stroke="#000" stroke-width="2" fill="none"><line x1="10" y1="22" x2="110" y2="22" stroke-dasharray="8 5"/><line x1="10" y1="60" x2="110" y2="60" stroke-dasharray="10 4 2 4"/><line x1="10" y1="98" x2="110" y2="98" stroke-dasharray="1 5" stroke-linecap="round"/><path d="M30 138 q30 -30 70 0 M92 130 l8 8 l-10 3"/></g><g font-size="12" style="fill:#000"><text x="120" y="26">Pliegue valle (hacia adelante)</text><text x="120" y="64">Pliegue montaña (hacia atrás)</text><text x="120" y="102">Línea de guía (ya marcada)</text><text x="120" y="138">Flecha: dirección del pliegue</text></g></svg>';
+  const sq='<svg viewBox="0 0 160 160" class="gridsvg" style="max-width:95mm;margin:0 auto" role="img" aria-label="Cuadrado con ejes y diagonales"><rect x="5" y="5" width="150" height="150" fill="none" stroke="#000" stroke-width="1.5"/><g stroke="#000" stroke-width="1" stroke-dasharray="1 4" stroke-linecap="round"><line x1="80" y1="5" x2="80" y2="155"/><line x1="5" y1="80" x2="155" y2="80"/><line x1="5" y1="5" x2="155" y2="155"/><line x1="155" y1="5" x2="5" y2="155"/></g></svg>';
+  sheet('expresion','origami-guia','Origami: símbolos y papel guía','Los símbolos son los habituales de los diagramas de origami. El cuadrado tiene los ejes y las diagonales dibujados: sirve para practicar los pliegues previos de las bases. Se puede fotocopiar y plegar.',
+    '<h3>Símbolos</h3>'+sym+'<h3>Cuadrado guía</h3>'+sq);
+  sheet('expresion','origami-pasos','Origami: hoja de pasos en blanco','Para dibujar sus propios diagramas, un paso por casilla. Anote el nombre del modelo y la fuente de donde aprendió el pliegue.',
+    '<div class="fields" style="grid-template-columns:2fr 1fr"><span>Modelo:</span><span>Fuente:</span></div><div class="story">'+[1,2,3,4,5,6].map(n=>'<div>Paso '+n+'</div>').join('')+'</div>');
+})();
+</script>
+</body>
+</html>
