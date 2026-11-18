@@ -230,6 +230,10 @@ footer a{color:var(--c)}
 .rs-sec .gr-stage{margin-top:4px}
 .rs-sec .ct-rg{margin-top:8px}
 @media print{.rs-sec{display:none}}
+.tr-sec .gr-stage{margin-top:4px}
+.tr-sec .ct-rg{margin-top:8px}
+.tr-sec canvas{background:#fff}
+@media print{.tr-sec{display:none}}
 </style>
 </head>
 <body>
@@ -258,6 +262,7 @@ footer a{color:var(--c)}
     <a href="#luz-sombra">Luz y sombra</a>
     <a href="#a-ciegas">Dibujo a ciegas</a>
     <a href="#rostro">Proporciones del rostro</a>
+    <a href="#tramas">Tramas y rayados</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -691,6 +696,31 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="rs-cv" width="600" height="450" role="img" aria-label="Imagen con guías de proporción de un rostro de frente"></canvas></div>
     <p class="gr-info" id="rs-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: mové el óvalo hasta cubrir la cabeza sin el pelo (de la coronilla al mentón) y girá la inclinación hasta que el eje vertical siga la nariz. Mirá dónde caen los ojos, la nariz y la boca respecto de las líneas: casi siempre algo se corre un poco. Anotá esas diferencias en tu dibujo en lugar de corregirlas. Funciona para rostros de frente; si la cabeza está de perfil o muy girada, las líneas dejan de servir. Son proporciones de dibujo tradicionales y aproximadas, no una medida exacta de nadie. Si querés profundizar, buscá "proporciones de la cara dibujo" o "método Loomis" y compará varias guías.</div>
+  </div>
+</section>
+
+<section id="tramas" class="tr-sec">
+  <h2>Tramas y rayados</h2>
+  <p style="color:var(--muted)">Con una sola lapicera o un lápiz duro se pueden lograr muchos grises si se combinan líneas o puntos: cuanto más juntas y más capas, más oscuro. Elegí una técnica y mirá cómo arma una escala de seis valores y una esfera con luz desde arriba a la izquierda. Después probalo en papel con lapicera negra. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-opts" id="tr-tec" role="group" aria-label="Técnica">
+        <button type="button" class="gr-opt" data-k="p" aria-pressed="true">Rayado paralelo</button>
+        <button type="button" class="gr-opt" data-k="c" aria-pressed="false">Rayado cruzado</button>
+        <button type="button" class="gr-opt" data-k="z" aria-pressed="false">Garabato en zigzag</button>
+        <button type="button" class="gr-opt" data-k="d" aria-pressed="false">Punteado</button>
+      </div>
+      <div class="ct-rg"><label for="tr-s">Separación de las líneas: <span id="tr-s-v"></span></label>
+        <input type="range" id="tr-s" min="4" max="14" step="1" value="7"></div>
+      <div class="ct-rg"><label for="tr-a">Inclinación: <span id="tr-a-v"></span></label>
+        <input type="range" id="tr-a" min="0" max="170" step="5" value="45"></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="tr-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="tr-cv" width="600" height="450" role="img" aria-label="Escala de seis valores y una esfera sombreadas con la técnica elegida"></canvas></div>
+    <p class="gr-info" id="tr-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: en el papel, hacé primero la escala de seis cuadritos, del blanco del papel al más oscuro que puedas lograr, y comprobá que cada paso se note distinto del vecino. Para oscurecer sumá capas con otra inclinación antes que apretar más el lápiz; así los grises quedan parejos. Sombreá siguiendo la forma (en una esfera, líneas que la envuelvan) y dejá el papel limpio en la zona de más luz. Es un modelo simplificado con una sola luz; sirve para practicar la idea. Si querés ver más ejemplos, buscá "hatching y crosshatching" o "rayado y punteado en dibujo".</div>
   </div>
 </section>
 
@@ -1862,6 +1892,111 @@ footer a{color:var(--c)}
       o.toBlob(function(b){
         if(!b){info.textContent="No se pudo guardar la imagen.";return}
         var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="proporciones-del-rostro.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("tr-cv"),ctx=cv.getContext("2d"),info=document.getElementById("tr-info");
+  var tec="p";
+  var DESC={
+    p:"Rayado paralelo: todas las líneas van para el mismo lado; cada capa nueva se intercala entre las anteriores.",
+    c:"Rayado cruzado: cada capa cambia de inclinación y cruza a las anteriores; da grises más profundos con menos líneas.",
+    z:"Garabato en zigzag: una línea continua que va y viene; es rápida y se parece al trazo suelto de un boceto.",
+    d:"Punteado: solo puntos; cuantos más y más juntos, más oscuro. Lleva tiempo, pero los pasos de gris quedan muy suaves."
+  };
+  function hs(i,j,k){var x=Math.sin(i*127.1+j*311.7+k*74.7)*43758.5453;return x-Math.floor(x)}
+  function rd(id){return +document.getElementById("tr-"+id).value}
+  var L=(function(){var x=-0.5,y=-0.6,z=0.62,n=Math.sqrt(x*x+y*y+z*z);return [x/n,y/n,z/n]})();
+  var SPH={cx:300,cy:290,r:115};
+  function sphereF(x,y){
+    var dx=(x-SPH.cx)/SPH.r,dy=(y-SPH.cy)/SPH.r,q=dx*dx+dy*dy;
+    if(q<=1){
+      var nz=Math.sqrt(1-q),lam=Math.max(0,dx*L[0]+dy*L[1]+nz*L[2]);
+      return 1-(0.1+0.88*lam);
+    }
+    var ex=(x-(SPH.cx+SPH.r*0.95))/(SPH.r*1.05),ey=(y-(SPH.cy+SPH.r*0.95))/(SPH.r*0.2);
+    if(ex*ex+ey*ey<=1)return 0.72;
+    return 0;
+  }
+  function tone(g,x0,y0,x1,y1,f,t,s,ang){
+    var cx=(x0+x1)/2,cy=(y0+y1)/2,D=Math.sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0))/2;
+    var a=ang*Math.PI/180;
+    g.strokeStyle="#1b1b1b";g.fillStyle="#1b1b1b";g.lineWidth=1.1;g.lineCap="round";
+    function inside(x,y){return x>=x0&&x<=x1&&y>=y0&&y<=y1}
+    if(t==="d"){
+      var cell=s*0.8;
+      for(var yy=y0;yy<y1;yy+=cell)for(var xx=x0;xx<x1;xx+=cell){
+        var d=f(xx+cell/2,yy+cell/2);if(d<=0.04)continue;
+        var n=Math.floor(d*5+hs(xx,yy,9)),i;
+        for(i=0;i<n;i++){
+          var px=xx+hs(xx,yy,i)*cell,py=yy+hs(yy,xx,i+3)*cell;
+          if(!inside(px,py)||f(px,py)<=0.04)continue;
+          g.beginPath();g.arc(px,py,0.85,0,6.2832);g.fill();
+        }
+      }
+      return;
+    }
+    var layers;
+    if(t==="p")layers=[[0,.1,0],[0,.35,.5],[0,.6,.25],[0,.8,.75]];
+    else if(t==="c")layers=[[0,.1,0],[90,.3,0],[45,.55,0],[135,.8,0]];
+    else layers=[[0,.1,0],[0,.35,.5],[0,.6,.25],[0,.8,.75]];
+    layers.forEach(function(ly){
+      var th=ly[0]*Math.PI/180+a,c=Math.cos(th),sn=Math.sin(th),thr=ly[1],off=ly[2]*s;
+      g.beginPath();
+      for(var v=-D+off;v<=D;v+=s){
+        var on=false,step=t==="z"?1.5:2,k=0;
+        for(var u=-D;u<=D;u+=step,k++){
+          var w=0;
+          if(t==="z"){var ph=(u/(s*1.1))%2;if(ph<0)ph+=2;w=(ph<1?ph:2-ph)*s*0.55-s*0.27}
+          var x=cx+u*c-(v+w)*sn,y=cy+u*sn+(v+w)*c;
+          var ok=inside(x,y)&&f(x,y)>thr;
+          if(ok){if(!on){g.moveTo(x,y);on=true}else g.lineTo(x,y)}else on=false;
+        }
+      }
+      g.stroke();
+    });
+  }
+  function draw(g){
+    var s=rd("s"),a=rd("a");
+    g.fillStyle="#fff";g.fillRect(0,0,600,450);
+    var i,w=86,gap=12,x0=12;
+    for(i=0;i<6;i++){
+      var bx=x0+i*(w+gap),d=i/5;
+      tone(g,bx,14,bx+w,100,function(){return d*0.96},tec,s,a);
+      g.strokeStyle="#9a9a9a";g.lineWidth=1;g.strokeRect(bx+0.5,14.5,w,86);
+    }
+    g.fillStyle="#555";g.font="13px sans-serif";g.textAlign="left";g.fillText("claro",12,120);g.textAlign="right";g.fillText("oscuro",588,120);
+    tone(g,60,150,560,440,sphereF,tec,s,a);
+    g.strokeStyle="#777";g.lineWidth=1.2;g.beginPath();g.arc(SPH.cx,SPH.cy,SPH.r,0,6.2832);g.stroke();
+  }
+  function render(){
+    document.getElementById("tr-s-v").textContent=rd("s")+" px";
+    document.getElementById("tr-a-v").textContent=rd("a")+"°";
+    var b=document.querySelectorAll("#tr-tec .gr-opt");
+    for(var i=0;i<b.length;i++)b[i].setAttribute("aria-pressed",b[i].getAttribute("data-k")===tec?"true":"false");
+    var dis=tec==="d";
+    document.getElementById("tr-a").disabled=dis;
+    info.textContent=DESC[tec]+(dis?" La inclinación no se usa en el punteado.":"");
+    draw(ctx);
+  }
+  document.getElementById("tr-tec").addEventListener("click",function(e){
+    var k=e.target.getAttribute&&e.target.getAttribute("data-k");
+    if(k){tec=k;render()}
+  });
+  document.getElementById("tr-s").addEventListener("input",render);
+  document.getElementById("tr-a").addEventListener("input",render);
+  document.getElementById("tr-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");o.width=600;o.height=450;draw(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="tramas-y-rayados.png";
         document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
         info.textContent="Imagen guardada.";
       },"image/png");
