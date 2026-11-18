@@ -179,6 +179,13 @@ footer a{color:var(--c)}
 .pv-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 .pv-nudge{display:flex;flex-wrap:wrap;gap:8px}
 @media print{.pv-sec{display:none}}
+.sy-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
+.sy-sec canvas:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.sy-cols{display:flex;flex-wrap:wrap;gap:8px}
+.sy-col{width:44px;height:44px;border-radius:50%;border:3px solid var(--line);cursor:pointer;padding:0}
+.sy-col[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 3px var(--c)}
+.sy-col:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+@media print{.sy-sec{display:none}}
 
 .pf-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
 .pf-sw button{width:100%;min-height:88px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:6px 4px}
@@ -227,6 +234,7 @@ footer a{color:var(--c)}
     <a href="#composicion">Composición</a>
     <a href="#contorno">Contorno</a>
     <a href="#perspectiva">Perspectiva</a>
+    <a href="#simetria">Simetría</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -528,6 +536,29 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="pv-cv" width="600" height="450" tabindex="0" role="img" aria-label="Imagen con líneas que salen del punto de fuga"></canvas></div>
     <p class="gr-info" id="pv-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: tocá donde las líneas del piso, los techos o los bordes de una calle parecen encontrarse; si las líneas trazadas no acompañan esos bordes, corré el punto de a poco con los botones (o con las flechas del teclado, con la imagen seleccionada). El horizonte coincide con la altura de tus ojos: todo lo que está por encima de esa línea lo ves desde abajo y lo que está por debajo, desde arriba. Para dibujar en tu hoja, marcá primero el horizonte y el punto, trazá las líneas con regla y recién después ubicá las formas (cajas, puertas, ventanas) entre ellas: los bordes verticales quedan verticales y los que se alejan van hacia el punto. Es perspectiva de un solo punto; en fotos tomadas en diagonal hay dos puntos de fuga, que se pueden probar poniendo uno a cada lado.</div>
+  </div>
+</section>
+
+<section id="simetria" class="sy-sec">
+  <h2>Dibujo con simetría</h2>
+  <p style="color:var(--muted)">Dibujá con el dedo en cualquier parte del lienzo y la herramienta repite el trazo alrededor del centro, como en un mandala o un copo de nieve. Elegí cuántas repeticiones querés, activá el espejo si querés que cada una sea simétrica y probá con trazos simples: la repetición hace el resto. Sirve para pensar patrones, ritmo y equilibrio antes de pasar al papel. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-opts" id="sy-n" role="group" aria-label="Cantidad de repeticiones"><b>Repeticiones:</b></div>
+      <div class="gr-opts" role="group" aria-label="Opciones">
+        <button type="button" class="gr-opt" id="sy-mir" aria-pressed="true">Espejo</button>
+        <button type="button" class="gr-opt" id="sy-thick" aria-pressed="false">Trazo grueso</button>
+      </div>
+      <div class="sy-cols" id="sy-cols" role="group" aria-label="Color del trazo"></div>
+      <div class="gr-opts">
+        <button type="button" class="gr-opt" id="sy-undo">Deshacer</button>
+        <button type="button" class="gr-opt" id="sy-clear">Borrar todo</button>
+        <button type="button" class="gr-opt" id="sy-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="sy-cv" width="600" height="600" role="img" aria-label="Lienzo de dibujo con simetría radial. Dibujá con el dedo o el mouse."></canvas></div>
+    <p class="gr-info" id="sy-info" aria-live="polite"></p>
+    <div class="tip">Ideas para empezar: con 6 repeticiones y espejo, probá una sola línea ondulada desde el centro hacia el borde; con 8, una serie de puntos en el borde; con 12, círculos chicos a distintas distancias del centro. Después copiá en papel lo que más te gustó, con compás o a mano alzada. Los copos de nieve tienen seis ejes, así que 6 con espejo es un buen primer ensayo. Como el dibujo sale de tu propio trazo, no hay forma de equivocarse: si no te gusta, deshacés o borrás.</div>
   </div>
 </section>
 
@@ -1215,6 +1246,84 @@ footer a{color:var(--c)}
   });
   document.getElementById("ct-sample").addEventListener("click",function(){img=null;draw()});
   draw();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("sy-cv"),ctx=cv.getContext("2d"),info=document.getElementById("sy-info");
+  var box=document.getElementById("sy-n"),cols=document.getElementById("sy-cols");
+  var mb=document.getElementById("sy-mir"),tb=document.getElementById("sy-thick");
+  var NS=[2,3,4,6,8,12],COLS=[["#2b2a33","negro"],["#ff7a59","naranja"],["#2bb3a3","verde azulado"],["#6c63ff","violeta"],["#e0a800","amarillo"],["#d6336c","rosa"]];
+  var N=6,mir=true,thick=false,ci=0,strokes=[],cur=null,W=600;
+  var nb=[],cb=[];
+  function fit(){W=cv.width;}
+  NS.forEach(function(n){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=n;
+    b.setAttribute("aria-pressed",String(n===N));b.setAttribute("aria-label",n+" repeticiones");
+    b.addEventListener("click",function(){N=n;nb.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});render();say()});
+    box.appendChild(b);nb.push(b);
+  });
+  COLS.forEach(function(c,i){
+    var b=document.createElement("button");b.type="button";b.className="sy-col";b.style.background=c[0];
+    b.setAttribute("aria-label","Color "+c[1]);b.setAttribute("aria-pressed",String(i===ci));
+    b.addEventListener("click",function(){ci=i;cb.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))})});
+    cols.appendChild(b);cb.push(b);
+  });
+  function say(extra){
+    var t=N+" repeticiones"+(mir?" con espejo":"")+". "+(strokes.length?strokes.length+(strokes.length===1?" trazo":" trazos")+".":"Todavía no hay trazos.");
+    info.textContent=(extra?extra+" ":"")+t;
+  }
+  function paint(st){
+    var c=W/2,k,m,i;
+    ctx.strokeStyle=st.col;ctx.fillStyle=st.col;ctx.lineWidth=st.w;ctx.lineCap="round";ctx.lineJoin="round";
+    for(k=0;k<st.n;k++){
+      for(m=0;m<(st.mir?2:1);m++){
+        ctx.save();ctx.translate(c,c);ctx.rotate(k*2*Math.PI/st.n);if(m)ctx.scale(1,-1);
+        ctx.beginPath();
+        for(i=0;i<st.p.length;i++){var x=st.p[i][0]-c,y=st.p[i][1]-c;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}
+        if(st.p.length===1)ctx.lineTo(st.p[0][0]-c+0.01,st.p[0][1]-c);
+        ctx.stroke();ctx.restore();
+      }
+    }
+  }
+  function guides(){
+    var c=W/2,k;
+    ctx.save();ctx.strokeStyle="rgba(120,120,140,.28)";ctx.lineWidth=1;ctx.setLineDash([6,6]);
+    for(k=0;k<N;k++){var a=k*2*Math.PI/N;ctx.beginPath();ctx.moveTo(c,c);ctx.lineTo(c+Math.cos(a)*c,c+Math.sin(a)*c);ctx.stroke()}
+    ctx.setLineDash([]);ctx.beginPath();ctx.arc(c,c,3,0,7);ctx.fillStyle="rgba(120,120,140,.5)";ctx.fill();ctx.restore();
+  }
+  function render(){
+    fit();ctx.fillStyle="#fff";ctx.fillRect(0,0,W,W);
+    strokes.forEach(paint);if(cur)paint(cur);
+    if(!strokes.length&&!cur)guides();
+  }
+  function pt(e){
+    var r=cv.getBoundingClientRect();
+    return [(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*W/r.height];
+  }
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    cur={p:[pt(e)],col:COLS[ci][0],w:thick?10:4,n:N,mir:mir};render();
+  });
+  cv.addEventListener("pointermove",function(e){
+    if(!cur)return;e.preventDefault();cur.p.push(pt(e));render();
+  });
+  function end(){if(!cur)return;strokes.push(cur);cur=null;render();say()}
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  mb.addEventListener("click",function(){mir=!mir;mb.setAttribute("aria-pressed",String(mir));say()});
+  tb.addEventListener("click",function(){thick=!thick;tb.setAttribute("aria-pressed",String(thick))});
+  document.getElementById("sy-undo").addEventListener("click",function(){strokes.pop();render();say("Se deshizo el último trazo.")});
+  document.getElementById("sy-clear").addEventListener("click",function(){strokes=[];render();say("Lienzo en blanco.")});
+  document.getElementById("sy-save").addEventListener("click",function(){
+    cur=null;render();
+    try{cv.toBlob(function(b){
+      if(!b){say("No se pudo guardar la imagen.");return}
+      var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="dibujo-simetria.png";
+      document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+      say("Imagen guardada.");
+    },"image/png")}catch(_){say("No se pudo guardar la imagen.")}
+  });
+  render();say();
 })();
 </script>
 </body>
