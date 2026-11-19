@@ -248,7 +248,16 @@ footer a{color:var(--c)}
 .es-base input[type=color]{width:64px;height:48px;padding:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer}
 .es-base input[type=color]:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 @media (min-width:600px){.es-sw{grid-template-columns:repeat(6,1fr)}}
-@media print{.es-sec{display:none}}
+.cs-pair{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:14px;border:2px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+.cs-box{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.cs-box span{display:block;width:42%;height:42%}
+.cs-bridge{position:absolute;left:29%;right:29%;top:45%;height:10%;opacity:0;pointer-events:none}
+.cs-bridge.on{opacity:1}
+.cs-ctl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:12px}
+.cs-ctl label{display:flex;align-items:center;gap:8px;font-weight:700}
+.cs-ctl input[type=color]{width:56px;height:44px;padding:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer}
+.cs-ctl input[type=color]:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+@media print{.es-sec,.cs-sec{display:none}}
 .tr-sec .gr-stage{margin-top:4px}
 .tr-sec .ct-rg{margin-top:8px}
 .tr-sec canvas{background:#fff}
@@ -289,6 +298,7 @@ footer a{color:var(--c)}
     <a href="#figura">Figura en cabezas</a>
     <a href="#volumenes">Volúmenes básicos</a>
     <a href="#escala-color">Escala de un color</a>
+    <a href="#contraste">Contraste simultáneo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -845,6 +855,31 @@ footer a{color:var(--c)}
     <div class="es-row"><h3>Sombras: color + negro</h3><ul class="es-sw" id="es-s"></ul></div>
     <p class="gr-info" id="es-info" aria-live="polite">Tocá un recuadro para copiar su código.</p>
     <div class="tip">Cómo usarlo: pintá en una hoja una tira de seis cuadritos, el primero con el color puro y los otros con las recetas de una fila, y comparalas con la pantalla. Con el negro conviene sumarlo de a poquito en la pintura real, porque es muy fuerte: las recetas "1 + 1" y "1 + 2 negro" muestran el efecto en pantalla, pero en la hoja probá primero con mucho menos negro. Con "Ver en grises" se nota que los tintes suben de valor (más claros) y las sombras bajan; es la misma idea del estudio de valores de más arriba.</div>
+  </div>
+</section>
+
+<section id="contraste" class="es-sec cs-sec">
+  <h2>Contraste simultáneo</h2>
+  <p style="color:var(--muted)">Un mismo color se ve distinto según lo que tiene alrededor. Acá los dos cuadros del centro son exactamente iguales; cambiá los fondos y fijate cómo el de un lado parece más claro, más cálido o más apagado que el del otro. Es un efecto de la vista, no de la pantalla, y sirve para entender por qué un color "cambia" cuando se pinta al lado de otro.</p>
+  <div class="card">
+    <div class="cs-ctl">
+      <label for="cs-a">Fondo izquierdo <input type="color" id="cs-a" value="#f2f2f2"></label>
+      <label for="cs-b">Fondo derecho <input type="color" id="cs-b" value="#202020"></label>
+      <label for="cs-c">Centro (igual en los dos) <input type="color" id="cs-c" value="#808080"></label>
+    </div>
+    <div class="cs-ctl">
+      <button type="button" class="gr-opt" id="cs-bridge" aria-pressed="false">Unir los centros con una franja</button>
+      <button type="button" class="gr-opt" id="cs-p1">Gris sobre claro y oscuro</button>
+      <button type="button" class="gr-opt" id="cs-p2">Gris sobre rojo y verde</button>
+      <button type="button" class="gr-opt" id="cs-p3">Amarillo sobre azul y naranja</button>
+    </div>
+    <div class="cs-pair" role="img" aria-label="Dos cuadros con fondos distintos y un cuadrado central del mismo color en cada uno">
+      <div class="cs-box" id="cs-ba"><span id="cs-ca"></span></div>
+      <div class="cs-box" id="cs-bb"><span id="cs-cb"></span></div>
+      <div class="cs-bridge" id="cs-br"></div>
+    </div>
+    <p class="gr-info" id="cs-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: mirá un rato los dos centros y decidí cuál parece más claro; después tocá "Unir los centros con una franja" y vas a ver que son el mismo color. Con un fondo claro el centro parece más oscuro, y con uno oscuro, más claro. Con fondos de color pasa algo parecido con el tono: un gris sobre rojo se ve algo verdoso y sobre verde, algo rojizo. Para practicarlo en papel, pintá un mismo cuadrito de témpera sobre dos fondos distintos y compará. Es una explicación simplificada; el efecto cambia un poco con el brillo y la calidad de cada pantalla. Para profundizar, buscá "contraste simultáneo del color" o "Josef Albers, la interacción del color" y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -2526,6 +2561,28 @@ footer a{color:var(--c)}
   }
   inp.addEventListener("input",render);
   bw.addEventListener("click",function(){gray=!gray;bw.setAttribute("aria-pressed",gray?"true":"false");render()});
+  render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var a=$("cs-a"),b=$("cs-b"),c=$("cs-c"),ba=$("cs-ba"),bb=$("cs-bb"),ca=$("cs-ca"),cb=$("cs-cb"),br=$("cs-br"),bt=$("cs-bridge"),info=$("cs-info");
+  function lin(v){v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)}
+  function L(h){var n=parseInt(h.slice(1),16);return 0.2126*lin(n>>16&255)+0.7152*lin(n>>8&255)+0.0722*lin(n&255)}
+  function ratio(x,y){var p=L(x),q=L(y);return (Math.max(p,q)+0.05)/(Math.min(p,q)+0.05)}
+  function render(){
+    ba.style.background=a.value;bb.style.background=b.value;
+    ca.style.background=c.value;cb.style.background=c.value;br.style.background=c.value;
+    info.textContent="Relación de luminosidad del centro con el fondo izquierdo: "+ratio(c.value,a.value).toFixed(1)+" a 1; con el derecho: "+ratio(c.value,b.value).toFixed(1)+" a 1. Cuanto más baja, menos se separa el centro de su fondo.";
+  }
+  function set(x,y,z){a.value=x;b.value=y;c.value=z;render()}
+  [a,b,c].forEach(function(e){e.addEventListener("input",render)});
+  bt.addEventListener("click",function(){var on=!br.classList.contains("on");br.classList.toggle("on",on);bt.setAttribute("aria-pressed",on?"true":"false")});
+  $("cs-p1").addEventListener("click",function(){set("#f2f2f2","#202020","#808080")});
+  $("cs-p2").addEventListener("click",function(){set("#c62828","#2e8b57","#808080")});
+  $("cs-p3").addEventListener("click",function(){set("#1f4fb4","#f08a24","#f2d230")});
   render();
 })();
 </script>
