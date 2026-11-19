@@ -257,7 +257,13 @@ footer a{color:var(--c)}
 .cs-ctl label{display:flex;align-items:center;gap:8px;font-weight:700}
 .cs-ctl input[type=color]{width:56px;height:44px;padding:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer}
 .cs-ctl input[type=color]:focus-visible{outline:3px solid var(--c);outline-offset:2px}
-@media print{.es-sec,.cs-sec{display:none}}
+.tc-svg{display:block;width:100%;height:auto;border:2px solid var(--line);border-radius:12px;margin-top:12px;background:#000}
+.tc-rg{margin-top:12px}.tc-rg label{display:block;font-weight:700}
+.tc-rg input[type=range]{width:100%;min-height:44px;accent-color:var(--c)}
+.tc-rg input[type=range]:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.tc-lab{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem}
+.tc-ctl{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+@media print{.es-sec,.cs-sec,.tc-sec{display:none}}
 .tr-sec .gr-stage{margin-top:4px}
 .tr-sec .ct-rg{margin-top:8px}
 .tr-sec canvas{background:#fff}
@@ -299,6 +305,7 @@ footer a{color:var(--c)}
     <a href="#volumenes">Volúmenes básicos</a>
     <a href="#escala-color">Escala de un color</a>
     <a href="#contraste">Contraste simultáneo</a>
+    <a href="#temperatura">Cálidos y fríos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -880,6 +887,35 @@ footer a{color:var(--c)}
     </div>
     <p class="gr-info" id="cs-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: mirá un rato los dos centros y decidí cuál parece más claro; después tocá "Unir los centros con una franja" y vas a ver que son el mismo color. Con un fondo claro el centro parece más oscuro, y con uno oscuro, más claro. Con fondos de color pasa algo parecido con el tono: un gris sobre rojo se ve algo verdoso y sobre verde, algo rojizo. Para practicarlo en papel, pintá un mismo cuadrito de témpera sobre dos fondos distintos y compará. Es una explicación simplificada; el efecto cambia un poco con el brillo y la calidad de cada pantalla. Para profundizar, buscá "contraste simultáneo del color" o "Josef Albers, la interacción del color" y compará varias fuentes.</div>
+  </div>
+</section>
+
+<section id="temperatura" class="es-sec tc-sec">
+  <h2>Cálidos y fríos</h2>
+  <p style="color:var(--muted)">Los colores se sienten cálidos (rojos, naranjas, amarillos) o fríos (azules, verdes azulados, violetas), y la misma escena cambia de clima según cuál predomine. Mové el control de frío a cálido y mirá cómo el mismo paisaje pasa de una mañana helada a una tarde de sol. Con el botón de luces y sombras se ve un recurso clásico: las zonas iluminadas en cálido y las sombras en frío.</p>
+  <div class="card">
+    <svg class="tc-svg" id="tc-svg" viewBox="0 0 320 200" role="img" aria-label="Paisaje simple con cielo, sol, dos colinas, un árbol y un lago, que cambia de colores fríos a cálidos">
+      <rect id="tc-sky" width="320" height="200" fill="#9cc3e6"/>
+      <circle id="tc-sun" cx="240" cy="48" r="20" fill="#fff3b0"/>
+      <path id="tc-h1" d="M0 120 Q80 60 170 110 T320 100 V150 H0Z" fill="#6fa86f"/>
+      <path id="tc-h2" d="M0 140 Q100 95 200 135 T320 125 V200 H0Z" fill="#4f8a55"/>
+      <rect id="tc-lake" x="30" y="165" width="150" height="24" rx="12" fill="#6aa5c8"/>
+      <rect id="tc-trunk" x="252" y="120" width="10" height="44" fill="#7a5a3a"/>
+      <circle id="tc-leaf" cx="257" cy="108" r="26" fill="#3f7d46"/>
+      <path id="tc-sh1" d="M262 164 L310 172 L262 172Z" fill="#2f4a3a" opacity="0"/>
+      <path id="tc-sh2" d="M252 164 L215 176 L252 172Z" fill="#2f4a3a" opacity="0"/>
+    </svg>
+    <div class="tc-rg">
+      <label for="tc-t">Temperatura general: <span id="tc-val">neutra</span></label>
+      <input type="range" id="tc-t" min="-100" max="100" step="5" value="0">
+      <div class="tc-lab"><span>Fría</span><span>Cálida</span></div>
+    </div>
+    <div class="tc-ctl">
+      <button type="button" class="gr-opt" id="tc-ls" aria-pressed="false">Luces cálidas y sombras frías</button>
+      <button type="button" class="gr-opt" id="tc-reset">Volver al centro</button>
+    </div>
+    <p class="gr-info" id="tc-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: pintá el mismo paisaje dos veces en media hoja cada uno, el primero solo con azules, verdes y violetas y el segundo solo con amarillos, naranjas y rojos, y compará el clima. Después probá lo contrario de lo que se espera: un cielo cálido con sombras frías, o al revés. Cálido y frío es relativo: un verde amarillento es cálido al lado de un verde azulado, y un rojo con tendencia al violeta es frío al lado de un rojo naranja. En esta pantalla el efecto es una mezcla con naranja o con azul; en la pintura real las mezclas dan resultados algo distintos. Para profundizar, buscá "temperatura del color" o "colores cálidos y fríos" en la guía de alguna escuela de arte y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -2583,6 +2619,36 @@ footer a{color:var(--c)}
   $("cs-p1").addEventListener("click",function(){set("#f2f2f2","#202020","#808080")});
   $("cs-p2").addEventListener("click",function(){set("#c62828","#2e8b57","#808080")});
   $("cs-p3").addEventListener("click",function(){set("#1f4fb4","#f08a24","#f2d230")});
+  render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var base={"tc-sky":"#9cc3e6","tc-sun":"#fff3b0","tc-h1":"#6fa86f","tc-h2":"#4f8a55","tc-lake":"#6aa5c8","tc-trunk":"#7a5a3a","tc-leaf":"#3f7d46"};
+  var lights={"tc-sky":1,"tc-sun":1,"tc-h1":1,"tc-lake":1};
+  var t=$("tc-t"),val=$("tc-val"),ls=$("tc-ls"),info=$("tc-info"),mode=false;
+  function rgb(h){var n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255]}
+  function mix(h,to,k){var a=rgb(h),b=rgb(to),r=[0,1,2].map(function(i){return Math.round(a[i]+(b[i]-a[i])*k)});return "rgb("+r.join(",")+")"}
+  var WARM="#e8832a",COLD="#2b5fa8";
+  function render(){
+    var v=+t.value,k=Math.abs(v)/100*0.55,id;
+    for(id in base){
+      var to,kk;
+      if(mode){to=lights[id]?WARM:COLD;kk=0.4+(v/100)*0.15*(lights[id]?1:-1)}
+      else{to=v>=0?WARM:COLD;kk=k}
+      if(!mode&&v===0)kk=0;
+      $(id).setAttribute("fill",mix(base[id],to,Math.max(0,Math.min(0.7,kk))));
+    }
+    ["tc-sh1","tc-sh2"].forEach(function(s){$(s).setAttribute("opacity",mode?"0.7":"0");$(s).setAttribute("fill",mix("#2f4a3a",COLD,0.5))});
+    val.textContent=mode?"luces cálidas y sombras frías":(v===0?"neutra":(v<0?"fría ("+(-v)+" %)":"cálida ("+v+" %)"));
+    ls.setAttribute("aria-pressed",mode?"true":"false");
+    info.textContent=mode?"Cielo, sol, colinas y lago en cálido; árbol y sombras en frío. Las sombras alargadas se agregaron para que se vea el recurso.":(v<0?"Predominan los azules: la escena se siente más calma, húmeda o lejana.":(v>0?"Predominan los naranjas: la escena se siente más soleada, cercana o activa.":"Colores de partida, sin inclinar hacia ningún lado."));
+  }
+  t.addEventListener("input",render);
+  ls.addEventListener("click",function(){mode=!mode;render()});
+  $("tc-reset").addEventListener("click",function(){t.value=0;mode=false;render()});
   render();
 })();
 </script>
