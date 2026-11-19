@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<title>Meteorología a bordo · Ignacio Porrini</title>
+<meta name="description" content="Repaso de meteorología, climatología y oceanografía para navegar en el Río de la Plata y la costa uruguaya, con quiz, escala de Beaufort y datos en vivo de viento, presión y olas.">
+<link rel="canonical" href="https://ignacioporrini.github.io/meteorologia-a-bordo.html">
+<meta property="og:title" content="Meteorología a bordo">
+<meta property="og:description" content="Viento, presión, olas y marea para navegar en Uruguay: repaso, quiz y lectura del día con datos en vivo.">
+<meta property="og:url" content="https://ignacioporrini.github.io/meteorologia-a-bordo.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: guía de consulta en una columna, como un derrotero: secciones por necesidad, fichas con su fuente al pie; acento verde de boya de babor */
+:root{
+  --bg:#EEF3F2; --grid:#DDE6E4; --surface:#FFFFFF; --ink:#10262B; --muted:#4D6469; --line:#C7D5D3;
+  --sea:#0E4F73; --sea-ink:#FFFFFF; --buoy:#1F7A4D; --buoy-bg:#E2F2E8; --flag:#B45309;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.8rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance}
+h2{font:700 1.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+h3{font:700 1.2rem/1.2 var(--display);margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--sea)}
+.lede{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-weight:600}
+.quick a small{font-weight:400;color:var(--muted);font-size:13px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{border-color:var(--buoy);background:var(--buoy-bg)}
+.cards{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.contacts{display:flex;flex-wrap:wrap;gap:6px}
+.contacts a,.contacts span{font-size:14px;border:1px solid var(--line);border-radius:6px;padding:4px 8px;text-decoration:none;color:var(--ink);word-break:break-all}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--muted)}
+.tag{display:inline-block;white-space:nowrap;vertical-align:middle;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 6px;background:var(--buoy-bg);color:var(--buoy)}
+.tag.warn{background:transparent;border:1px solid var(--flag);color:var(--flag)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;text-align:right}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 10px}
+.note{font-size:14px;color:var(--muted)}
+input{font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+footer{font-size:13px;color:var(--muted);text-align:center}
+</style>
+<style>
+.tabs{display:flex;gap:6px;overflow-x:auto;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:2}
+.tabs button{flex:0 0 auto}
+.big{font:700 2.4rem/1 var(--display);color:var(--sea)}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi small{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.kpi .v{font:700 1.7rem/1.1 var(--display)}
+.kpi .s{font-size:13px;color:var(--muted)}
+.read li{margin-bottom:6px}
+.alert{border-left:4px solid var(--flag)}
+.ok{border-left:4px solid var(--buoy)}
+.arrow{display:inline-block;transition:transform .3s}
+details.card summary{cursor:pointer;font-weight:700;list-style:none}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:" +";color:var(--sea)}
+details.card[open] summary::after{content:" −"}
+.flip{background:var(--buoy-bg);border-radius:8px;padding:10px;margin-top:6px}
+.opt{display:block;width:100%;text-align:left;font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:8px;cursor:pointer;min-height:44px}
+.opt.right{border-color:var(--buoy);background:var(--buoy-bg)}
+.opt.wrong{border-color:var(--flag)}
+.btn{font:700 16px var(--body);background:var(--sea);color:var(--sea-ink);border:0;border-radius:8px;padding:12px 16px;cursor:pointer;min-height:44px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select{font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:64px;gap:6px;overflow-x:auto;padding-bottom:4px}
+.strip div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px;text-align:center;font-size:13px}
+.strip b{display:block;font:700 1.1rem var(--display)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow">Navegante Escuela Itinerante · Centro de Estudios Náuticos</p>
+    <h1>Meteorología a bordo</h1>
+    <p class="lede">Viento, presión, olas y marea para navegar en el Río de la Plata y la costa uruguaya. Repase, póngase a prueba y lea el día con datos reales.</p>
+  </header>
+
+  <nav class="tabs chips" role="tablist">
+    <button class="chip" data-tab="hoy" aria-pressed="true">Hoy en el agua</button>
+    <button class="chip" data-tab="repaso" aria-pressed="false">Repaso</button>
+    <button class="chip" data-tab="quiz" aria-pressed="false">Quiz</button>
+    <button class="chip" data-tab="beaufort" aria-pressed="false">Beaufort</button>
+  </nav>
+
+  <!-- HOY -->
+  <section id="hoy" data-panel>
+    <div class="row">
+      <label for="lugar" class="note">Lugar</label>
+      <select id="lugar">
+        <option value="mvd">Montevideo (Punta Carretas)</option>
+        <option value="buceo">Montevideo (Puerto del Buceo)</option>
+        <option value="colonia">Colonia del Sacramento</option>
+        <option value="pde">Punta del Este</option>
+        <option value="paloma">La Paloma</option>
+      </select>
+    </div>
+    <div class="kpis" id="kpis"><p class="note">Cargando datos…</p></div>
+    <div class="card"><h3>Próximas 24 horas</h3><div class="strip" id="strip"></div><p class="note">Viento medio en nudos, dirección de donde sopla y ráfaga.</p></div>
+    <div class="card" id="lectura"><h3>Lectura del día</h3><p class="note">Esperando datos…</p></div>
+    <p class="note" id="fuenteDatos">Datos de modelo: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (viento y presión) y <a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open-Meteo Marine</a> (olas, agua y nivel). Son pronósticos de modelo para practicar la interpretación: <b>antes de salir, consulte el pronóstico marítimo oficial de <a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">INUMET</a></b> y los avisos de la Prefectura.</p>
+  </section>
+
+  <!-- REPASO -->
+  <section id="repaso" data-panel hidden>
+    <p class="note">Toque cada tema para abrirlo. Al final de cada uno hay una pregunta para autoevaluarse.</p>
+    <div class="chips" id="areas"></div>
+    <div class="cards" id="temas"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" data-panel hidden>
+    <div class="card"><div class="meta"><span id="qnum"></span><span id="qarea"></span><span id="qscore"></span></div><h3 id="qtext"></h3><div id="qopts"></div><p id="qexp" class="flip" hidden></p><div class="row" style="margin-top:10px"><button class="btn" id="qnext" hidden>Siguiente</button></div></div>
+    <p class="note">Las preguntas salen en orden distinto cada vez. Su mejor puntaje queda guardado en este celular.</p>
+  </section>
+
+  <!-- BEAUFORT -->
+  <section id="beaufort" data-panel hidden>
+    <div class="card">
+      <h3>Conversor</h3>
+      <div class="row"><input id="kn" type="number" inputmode="decimal" min="0" step="1" value="15" aria-label="Nudos" style="max-width:120px"><span>nudos</span></div>
+      <p id="conv" class="big"></p><p id="convs" class="note"></p>
+    </div>
+    <div class="tbl"><table><thead><tr><th>F</th><th>Nudos</th><th>Nombre</th><th>El mar</th></tr></thead><tbody id="btab"></tbody></table></div>
+    <p class="note">Los avisos de INUMET usan esta escala: viento fuerte es fuerza 7 (28 a 33 nudos) y temporal es fuerza 8 (34 a 40 nudos). Fuente: <a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">pronóstico marítimo de INUMET</a>.</p>
+  </section>
+
+  <section>
+    <h2>Fuentes oficiales</h2>
+    <div class="cards">
+      <div class="card"><h3>INUMET · Pronóstico marítimo</h3><p>Pronóstico oficial para el Río Uruguay, el Río de la Plata y el Mar Territorial Uruguayo, con avisos de viento fuerte, temporal y visibilidad reducida.</p><div class="contacts"><a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">inumet.gub.uy</a></div></div>
+      <div class="card"><h3>SOHMA · Armada Nacional</h3><p>Tabla de mareas anual, cartas náuticas y estadísticas de nivel en los puertos uruguayos.</p><div class="contacts"><a href="https://sohma.armada.mil.uy/" target="_blank" rel="noopener">sohma.armada.mil.uy</a></div></div>
+    </div>
+  </section>
+
+  <footer>Hecha por Ignacio Porrini, instructor de vela. Material de estudio: no reemplaza el pronóstico oficial ni el criterio del patrón. <a href="apps/">Más apps náuticas</a></footer>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}};
+
+// ---------- Pestañas ----------
+document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;
+ document.querySelectorAll('.tabs .chip').forEach(x=>x.setAttribute('aria-pressed',x===b));
+ document.querySelectorAll('[data-panel]').forEach(p=>p.hidden=p.id!==b.dataset.tab);
+ if(location.hash!=='#'+b.dataset.tab)history.replaceState(null,'','#'+b.dataset.tab)});
+if(['repaso','quiz','beaufort'].includes(location.hash.slice(1)))document.querySelector(`[data-tab="${location.hash.slice(1)}"]`).click();
+
+// ---------- Beaufort ----------
+const BF=[[0,0,1,'Calma','Espejo'],[1,1,3,'Ventolina','Rizos sin espuma'],[2,4,6,'Flojito','Olitas cortas, crestas que no rompen'],[3,7,10,'Flojo','Crestas que empiezan a romper, algún borrego'],[4,11,16,'Bonancible','Olas más largas, borregos frecuentes'],[5,17,21,'Fresquito','Olas moderadas, muchos borregos, algo de rocío'],[6,22,27,'Fresco','Olas grandes, crestas de espuma blanca por todos lados'],[7,28,33,'Frescachón','El mar se amontona, la espuma se alinea con el viento'],[8,34,40,'Temporal','Olas altas, rompientes con torbellinos de espuma'],[9,41,47,'Temporal fuerte','Densas franjas de espuma, el rocío reduce la visibilidad'],[10,48,55,'Temporal duro','Mar blanco, olas muy altas con crestas largas'],[11,56,63,'Temporal muy duro','Olas excepcionalmente altas'],[12,64,999,'Huracán','Aire lleno de espuma, mar completamente blanco']];
+const bft=kn=>{for(const b of BF)if(kn<b[2]+0.5)return b;return BF[12]};
+$('#btab').innerHTML=BF.map(b=>`<tr><td class="n"><b>${b[0]}</b></td><td>${b[0]===12?'64 o más':b[1]+'–'+b[2]}</td><td>${b[3]}</td><td>${b[4]}</td></tr>`).join('');
+function conv(){const k=Math.max(0,parseFloat($('#kn').value)||0);const b=bft(k);$('#conv').textContent=`Fuerza ${b[0]} · ${b[3]}`;$('#convs').textContent=`${k} nudos = ${(k*1.852).toFixed(0)} km/h = ${(k*0.5144).toFixed(1)} m/s. ${b[4]}.`}
+$('#kn').addEventListener('input',conv);conv();
+
+// ---------- Datos en vivo ----------
+const LUG={mvd:['Montevideo (Punta Carretas)',-34.92,-56.16,-34.95,-56.16],buceo:['Montevideo (Puerto del Buceo)',-34.91,-56.13,-34.94,-56.12],colonia:['Colonia del Sacramento',-34.47,-57.85,-34.50,-57.85],pde:['Punta del Este',-34.96,-54.95,-34.99,-54.95],paloma:['La Paloma',-34.66,-54.16,-34.70,-54.16]};
+const PTS=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+const card=d=>PTS[Math.round(((d%360)+360)%360/22.5)%16];
+const arrow=d=>`<span class="arrow" style="transform:rotate(${(d+180)%360}deg)" aria-hidden="true">↑</span>`;
+const sector=d=>{d=((d%360)+360)%360;if(d>=337.5||d<22.5)return'N';if(d<67.5)return'NE';if(d<112.5)return'E';if(d<157.5)return'SE';if(d<202.5)return'S';if(d<247.5)return'SO';if(d<292.5)return'O';return'NO'};
+const angDiff=(a,b)=>{let x=((b-a)%360+540)%360-180;return x};
+function interpretar(w,m){const L=[];const H=w.hourly,i=w.idx;
+ const kn=w.current.wind_speed_10m,g=w.current.wind_gusts_10m,dir=w.current.wind_direction_10m,b=bft(kn),bg=bft(g);
+ L.push({t:`Viento ${sector(dir)} (${card(dir)}) de ${Math.round(kn)} nudos: fuerza ${b[0]}, ${b[3].toLowerCase()}. ${b[4]}.`});
+ if(g>=kn*1.5&&g-kn>=8)L.push({t:`Viento racheado: las ráfagas llegan a ${Math.round(g)} nudos, ${Math.round(g-kn)} más que el medio. Tome rizos pensando en la ráfaga, no en el promedio.`,w:1});
+ if(bg[0]>=8)L.push({t:`Ráfagas de fuerza ${bg[0]}: nivel de aviso de temporal (34 a 40 nudos) en la escala que usa INUMET.`,w:1});
+ else if(bg[0]>=7)L.push({t:`Ráfagas de fuerza 7: nivel de aviso de viento fuerte (28 a 33 nudos) en la escala que usa INUMET.`,w:1});
+ const p=H.pressure_msl[i],p3=H.pressure_msl[i-3];
+ if(p!=null&&p3!=null){const dp=p-p3;
+  let tx=`Presión ${p.toFixed(0)} hPa, ${dp>=0?'subió':'bajó'} ${Math.abs(dp).toFixed(1)} hPa en las últimas 3 horas`;
+  if(dp<=-6)L.push({t:tx+': caída fuerte. Es señal de un sistema que se acerca rápido; espere aumento y cambio del viento.',w:1});
+  else if(dp<=-3)L.push({t:tx+': caída marcada. Atención a la evolución del tiempo en las próximas horas.',w:1});
+  else if(dp>=3)L.push({t:tx+': subida marcada. Suele seguir al pasaje de un frente; el viento puede estar rotando y refrescando.'});
+  else L.push({t:tx+(Math.abs(dp)<1?': estable.':'.')});
+  const s=sector(dir);
+  if(['N','NO','NE'].includes(s)&&dp<=-1.5)L.push({t:'Viento del norte con presión en baja: es el patrón típico antes de un frente frío. Vigile el cielo al suroeste por si el viento rota de golpe al SO (pampero).',w:1});
+ }
+ // rotación prevista
+ const dir6=H.wind_direction_10m[i+6],kn6=H.wind_speed_10m[i+6];
+ if(dir6!=null){const r=angDiff(dir,dir6);if(Math.abs(r)>=90&&kn6>=8)L.push({t:`En 6 horas el viento pasa a ${sector(dir6)} con ${Math.round(kn6)} nudos: rota ${Math.abs(Math.round(r))}° ${r>0?'en sentido horario':'en sentido antihorario'}. Planifique la vuelta pensando en ese cambio.`,w:1})}
+ // sudestada
+ let se=0;for(let k=i;k<i+12&&k<H.wind_direction_10m.length;k++){const s=sector(H.wind_direction_10m[k]);if(['SE','E','S'].includes(s)&&H.wind_speed_10m[k]>=17)se++}
+ if(se>=8)L.push({t:'Viento del sector este al sur, de 17 nudos o más, sostenido durante horas: condiciones de sudestada. En el Río de la Plata sube el nivel del agua y la ola se hace corta y empinada.',w:1});
+ if(m&&m.current){const c=m.current;
+  if(c.wave_height!=null){let t=`Ola significativa de ${c.wave_height.toFixed(1)} m`+(c.wave_period?` con período de ${c.wave_period.toFixed(0)} s`:'')+'.';
+   if(c.wave_period&&c.wave_period<6)t+=' Período corto: es mar de viento, corto y empinado, típico del Río de la Plata.';else if(c.wave_period>=9)t+=' Período largo: hay mar de fondo que viene de lejos.';
+   t+=` Las olas más grandes pueden acercarse al doble (${(c.wave_height*1.8).toFixed(1)} m).`;L.push({t})}
+  if(c.sea_surface_temperature!=null)L.push({t:`Agua a ${c.sea_surface_temperature.toFixed(0)} °C. ${c.sea_surface_temperature<15?'Agua fría: con una caída al agua el tiempo útil se acorta. Use el chaleco y abríguese en capas.':'Igual use el chaleco: el chaleco se lleva puesto, no guardado.'}`});
+ }
+ return L}
+async function cargar(){const [nom,la,lo,mla,mlo]=LUG[$('#lugar').value];store.set('meteo-lugar',$('#lugar').value);
+ $('#kpis').innerHTML='<p class="note">Cargando datos…</p>';$('#strip').innerHTML='';$('#lectura').innerHTML='<h3>Lectura del día</h3><p class="note">Esperando datos…</p>';
+ const wu=`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,pressure_msl,cloud_cover&hourly=pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m&wind_speed_unit=kn&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
+ const mu=`https://marine-api.open-meteo.com/v1/marine?latitude=${mla}&longitude=${mlo}&current=wave_height,wave_direction,wave_period,sea_surface_temperature,sea_level_height_msl&hourly=sea_level_height_msl&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
+ try{const [w,m]=await Promise.all([fetch(wu).then(r=>{if(!r.ok)throw 0;return r.json()}),fetch(mu).then(r=>r.ok?r.json():null).catch(()=>null)]);
+  const now=w.current.time.slice(0,13);w.idx=Math.max(3,w.hourly.time.findIndex(t=>t.slice(0,13)===now));
+  pintar(w,m,nom)}catch(e){$('#kpis').innerHTML='<p class="note">No se pudieron cargar los datos. Revise la conexión e intente de nuevo. Mientras tanto, el repaso y el quiz funcionan igual.</p>'}}
+function pintar(w,m,nom){const c=w.current,b=bft(c.wind_speed_10m),H=w.hourly,i=w.idx;
+ const dp=(H.pressure_msl[i]!=null&&H.pressure_msl[i-3]!=null)?H.pressure_msl[i]-H.pressure_msl[i-3]:null;
+ const k=[];
+ k.push(`<div class="kpi"><small>Viento</small><span class="v">${arrow(c.wind_direction_10m)} ${Math.round(c.wind_speed_10m)} kn</span><span class="s">${card(c.wind_direction_10m)} · fuerza ${b[0]} · ráfaga ${Math.round(c.wind_gusts_10m)} kn</span></div>`);
+ k.push(`<div class="kpi"><small>Presión</small><span class="v">${c.pressure_msl.toFixed(0)} hPa</span><span class="s">${dp==null?'':(dp>=0?'▲ ':'▼ ')+Math.abs(dp).toFixed(1)+' hPa en 3 h'}</span></div>`);
+ if(m&&m.current){const mc=m.current;
+  k.push(`<div class="kpi"><small>Olas</small><span class="v">${mc.wave_height!=null?mc.wave_height.toFixed(1)+' m':'—'}</span><span class="s">${mc.wave_period?mc.wave_period.toFixed(0)+' s':''}${mc.wave_direction!=null?' · de '+card(mc.wave_direction):''}</span></div>`);
+  let niv='';const sl=m.hourly&&m.hourly.sea_level_height_msl;if(sl){const j=m.hourly.time.findIndex(t=>t.slice(0,13)===c.time.slice(0,13));if(j>2&&sl[j]!=null&&sl[j-3]!=null)niv=(sl[j]-sl[j-3]>=0?'subiendo':'bajando')}
+  k.push(`<div class="kpi"><small>Agua</small><span class="v">${mc.sea_surface_temperature!=null?mc.sea_surface_temperature.toFixed(0)+' °C':'—'}</span><span class="s">${niv?'Nivel (modelo) '+niv:''}</span></div>`)}
+ else k.push(`<div class="kpi"><small>Aire</small><span class="v">${c.temperature_2m.toFixed(0)} °C</span><span class="s">Nubosidad ${c.cloud_cover}%</span></div>`);
+ $('#kpis').innerHTML=k.join('');
+ let s='';for(let h=i;h<=i+24&&h<H.time.length;h+=3){const d=H.wind_direction_10m[h];s+=`<div><span class="note">${H.time[h].slice(11,16)}</span><b>${Math.round(H.wind_speed_10m[h])}</b>${arrow(d)} ${card(d)}<br><span class="note">r ${Math.round(H.wind_gusts_10m[h])}</span></div>`}
+ $('#strip').innerHTML=s;
+ const L=interpretar(w,m);
+ $('#lectura').innerHTML=`<h3>Lectura del día · ${esc(nom)}</h3><ul class="read" style="margin:0;padding-left:18px">${L.map(x=>`<li${x.w?' style="color:var(--flag)"':''}>${esc(x.t)}</li>`).join('')}</ul><p class="note">Hora de los datos: ${esc(c.time.slice(11,16))}. Lectura automática con reglas de práctica: compárela con el pronóstico de INUMET y con lo que ve en el cielo.</p>`}
+$('#lugar').value=store.get('meteo-lugar','mvd');$('#lugar').addEventListener('change',cargar);cargar();
+
+// ---------- Repaso ----------
+const TEMAS=[
+ ['Meteorología','Presión y viento','El viento va de la alta a la baja presión, desviado por la rotación de la Tierra. En el hemisferio sur gira en sentido horario alrededor de las bajas y antihorario alrededor de las altas. Cuanto más juntas las isobaras, más fuerte el viento. La presión media al nivel del mar es de unos 1013 hPa.','Con la espalda al viento, ¿de qué lado queda la baja presión en el hemisferio sur?','A la derecha (ley de Buys Ballot para el hemisferio sur).'],
+ ['Meteorología','La tendencia barométrica','Más que el valor, importa cómo cambia. Una caída de 3 hPa o más en 3 horas anuncia que algo se acerca; una caída mayor a 6 hPa en 3 horas indica un sistema intenso y cercano. Anote la presión en la bitácora cada hora.','¿Qué le dice una presión que baja 4 hPa en 3 horas con viento del norte?','Que probablemente se acerca un frente frío: espere refuerzo del viento y una rotación al sur o suroeste.'],
+ ['Meteorología','Frente frío y pampero','En nuestra zona los frentes fríos avanzan del suroeste al noreste. Antes: calor húmedo, viento del norte o noroeste y presión en baja. Al pasar: el viento rota bruscamente al SO, a veces con nubes en rollo, tormentas y ráfagas fuertes, sube la presión y baja la temperatura. Ese viento del SO frío y seco es el pampero.','¿Hacia dónde rota el viento cuando pasa un frente frío en el Río de la Plata?','Del norte o noroeste al suroeste, en sentido antihorario.'],
+ ['Meteorología','Sudestada','Viento del sudeste persistente, a veces durante días, con cielo cubierto y lluvias. Suele darse con una alta presión al sur y una baja sobre el litoral o el océano frente a Uruguay. Empuja agua hacia el Río de la Plata y hace subir su nivel.','¿Qué efecto tiene una sudestada sobre el nivel del Río de la Plata?','Lo eleva: es una marea meteorológica que puede inundar zonas costeras.'],
+ ['Meteorología','Brisas y terral','Con sol y gradiente débil, la tierra se calienta más que el agua: de tarde entra la brisa del mar hacia tierra. De noche se invierte y sopla el terral, de tierra hacia el agua. En la costa de Montevideo la brisa entra del sector sur.','¿Por qué la brisa marina es más fuerte en la tarde de verano?','Porque es cuando más diferencia de temperatura hay entre la tierra caliente y el agua.'],
+ ['Meteorología','Nubes que avisan','Cirros que aumentan y se espesan anuncian un sistema que se acerca. Los cumulonimbos traen ráfagas, rayos y cambios bruscos de viento. Una nube en rollo baja y oscura al suroeste puede marcar la llegada del pampero.','¿Qué hace si ve crecer un cumulonimbo a barlovento?','Reducir vela con tiempo, preparar el barco para ráfagas fuertes y buscar refugio si hay rayos.'],
+ ['Meteorología','Niebla de advección','Se forma cuando aire cálido y húmedo pasa sobre agua más fría y se enfría hasta saturarse. Es frecuente en el Río de la Plata y puede durar todo el día aunque haya viento.','¿Por qué la niebla de advección no se va con algo de viento, como la de radiación?','Porque el propio viento trae el aire húmedo que se sigue enfriando sobre el agua fría.'],
+ ['Climatología','El clima de Uruguay','Clima templado húmedo, con lluvias repartidas en todo el año y sin estación seca. En verano dominan las brisas y las tormentas de tarde. En otoño e invierno pasan más frentes y se forman ciclones frente a la costa (ciclogénesis), con temporales.','¿En qué estaciones son más frecuentes los temporales por ciclogénesis frente a Uruguay?','En otoño e invierno, aunque pueden darse en cualquier época.'],
+ ['Climatología','La temporada de navegación','La primavera trae vientos variables y frentes seguidos. El verano tiene días largos y brisas, pero también tormentas fuertes de tarde. Planifique las salidas largas mirando la tendencia de varios días, no solo el día de hoy.','¿Por qué conviene no confiarse en una tarde de verano calma?','Porque el calor y la humedad pueden formar tormentas fuertes en pocas horas.'],
+ ['Climatología','Temperatura del agua','El agua frente a Montevideo va de unos 10 °C en invierno a más de 20 °C en verano. Con agua fría el tiempo antes de perder fuerza en las manos es corto: el chaleco y la ropa adecuada no son opcionales.','¿Qué cambia en su equipo cuando el agua está por debajo de 15 °C?','Ropa térmica o traje, chaleco siempre puesto y un plan claro de hombre al agua.'],
+ ['Oceanografía','Mareas en el Río de la Plata','La marea astronómica en Montevideo es pequeña, de unos pocos decímetros. Lo que más cambia el nivel es el viento: la sudestada lo sube y los vientos del norte y oeste lo bajan. La tabla oficial de mareas la publica el SOHMA de la Armada.','¿Qué pesa más en el nivel del agua de Montevideo: la Luna o el viento?','Casi siempre el viento (marea meteorológica). La marea astronómica es chica.'],
+ ['Oceanografía','Olas: altura y período','La altura significativa es el promedio del tercio de olas más altas; algunas olas sueltas pueden acercarse al doble. El período corto (menos de 6 s) es mar de viento; el período largo es mar de fondo que viene de lejos. La ola crece con la fuerza del viento, el tiempo que sopla y el fetch, la distancia de agua sobre la que sopla.','Un pronóstico dice 1 m de ola significativa. ¿Qué altura puede tener la ola más grande?','Cerca de 2 m. Por eso se navega pensando en las olas mayores, no en el promedio.'],
+ ['Oceanografía','El estuario poco profundo','El Río de la Plata es un estuario ancho y poco profundo. Con poco fondo la ola se hace corta y empinada, y con viento contra la corriente empeora. Frente a Montevideo el agua es salobre: es la zona donde se mezcla el agua dulce con la del mar.','¿Por qué el Río de la Plata puede ser incómodo con solo 20 nudos?','Porque la poca profundidad hace olas cortas y empinadas, que golpean más que olas largas de la misma altura.'],
+ ['Oceanografía','Corrientes del Atlántico Sur','Frente a Uruguay se encuentran la corriente de Brasil, cálida, que baja hacia el sur, y la de Malvinas, fría, que sube hacia el norte. Esa confluencia marca la temperatura del agua y la pesca en la costa atlántica.','¿Cuál de las dos corrientes trae agua cálida?','La corriente de Brasil, que viene del norte.'],
+];
+const AREAS=['Todos','Meteorología','Climatología','Oceanografía'];let area='Todos';
+function temas(){$('#areas').innerHTML=AREAS.map(a=>`<button class="chip" data-a="${a}" aria-pressed="${a===area}">${a}</button>`).join('');
+ $('#temas').innerHTML=TEMAS.filter(t=>area==='Todos'||t[0]===area).map(t=>`<details class="card"><summary>${esc(t[1])} <span class="tag">${esc(t[0])}</span></summary><p style="margin-top:8px">${esc(t[2])}</p><details class="flip"><summary>${esc(t[3])}</summary><p style="margin-top:6px">${esc(t[4])}</p></details></details>`).join('')}
+$('#areas').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;area=b.dataset.a;temas()});temas();
+
+// ---------- Quiz ----------
+const Q=[
+ ['Meteorología','En el hemisferio sur, el viento alrededor de una baja presión gira…',['En sentido horario','En sentido antihorario','Hacia afuera, sin girar'],0,'En el hemisferio sur la circulación alrededor de las bajas es horaria; en el norte es al revés.'],
+ ['Meteorología','Con la espalda al viento en el hemisferio sur, la baja presión queda…',['A la izquierda','A la derecha','Adelante'],1,'Es la ley de Buys Ballot adaptada al hemisferio sur.'],
+ ['Meteorología','Isobaras muy juntas en la carta indican…',['Viento flojo','Viento fuerte','Niebla'],1,'Un gradiente de presión grande produce viento fuerte.'],
+ ['Meteorología','La presión baja 5 hPa en 3 horas. ¿Qué indica?',['Buen tiempo estable','Un sistema que se acerca','Nada: es variación diaria normal'],1,'Una caída de 3 hPa o más en 3 horas es señal de cambio.'],
+ ['Meteorología','Antes de un frente frío en el Río de la Plata suele soplar viento del…',['Sur','Norte o noroeste','Sudeste'],1,'Antes del frente sopla del norte, cálido y húmedo; después rota al SO.'],
+ ['Meteorología','El pampero es un viento…',['Del SO, frío y seco','Del NE, cálido y húmedo','Del SE, con lluvia de varios días'],0,'Llega tras el frente frío, a menudo de golpe y con ráfagas.'],
+ ['Meteorología','La sudestada se caracteriza por…',['Viento del SE persistente, lluvias y crecida del río','Viento del N con calor','Calma y niebla'],0,'Es un temporal del sudeste que eleva el nivel del Río de la Plata.'],
+ ['Meteorología','La brisa marina sopla…',['De noche, de tierra al mar','De día, del mar hacia tierra','Solo en invierno'],1,'De día la tierra se calienta más que el agua y el aire fluye del mar a la tierra.'],
+ ['Meteorología','Un cumulonimbo a barlovento anuncia…',['Viento estable','Ráfagas fuertes, rayos y cambios bruscos','Niebla'],1,'Es la nube de tormenta: reduzca vela con tiempo.'],
+ ['Meteorología','La niebla de advección se forma cuando…',['El suelo se enfría de noche sin viento','Aire cálido y húmedo pasa sobre agua fría','Llueve mucho'],1,'Por eso puede persistir aunque haya viento.'],
+ ['Meteorología','En los avisos de INUMET, «temporal» corresponde a…',['Fuerza 6','Fuerza 8 (34 a 40 nudos)','Fuerza 10'],1,'Viento fuerte es fuerza 7 (28 a 33 kn) y temporal es fuerza 8 (34 a 40 kn).'],
+ ['Meteorología','18 nudos en la escala de Beaufort son fuerza…',['4','5','6'],1,'Fuerza 5 va de 17 a 21 nudos.'],
+ ['Climatología','El clima de Uruguay es…',['Templado húmedo, sin estación seca','Árido','Tropical con estación seca'],0,'Las lluvias se reparten en todo el año.'],
+ ['Climatología','Los temporales por ciclogénesis frente a Uruguay son más frecuentes en…',['Verano','Otoño e invierno','Nunca se dan'],1,'En la estación fría pasan más frentes y se forman más ciclones frente a la costa.'],
+ ['Climatología','En una tarde de verano calurosa y húmeda, el riesgo principal es…',['Niebla de advección','Tormentas fuertes de evolución rápida','Hielo en cubierta'],1,'El calor y la humedad alimentan la convección de la tarde.'],
+ ['Oceanografía','En Montevideo, ¿qué cambia más el nivel del agua?',['La marea astronómica','El viento (marea meteorológica)','La temperatura del agua'],1,'La marea astronómica es de pocos decímetros; el viento puede mover el nivel mucho más.'],
+ ['Oceanografía','Los vientos del norte y oeste en el Río de la Plata suelen…',['Subir el nivel del agua','Bajar el nivel del agua','No cambiar nada'],1,'Empujan el agua hacia afuera; la sudestada hace lo contrario.'],
+ ['Oceanografía','¿Quién publica la tabla oficial de mareas de Uruguay?',['INUMET','SOHMA, de la Armada','La Intendencia'],1,'El Servicio de Oceanografía, Hidrografía y Meteorología de la Armada publica la Tabla de Mareas anual.'],
+ ['Oceanografía','La altura significativa de ola es…',['La ola más alta','El promedio del tercio de olas más altas','El promedio de todas las olas'],1,'Algunas olas sueltas pueden acercarse al doble de ese valor.'],
+ ['Oceanografía','Un período de ola de 4 segundos indica…',['Mar de fondo','Mar de viento local','Tsunami'],1,'Período corto es mar de viento; el mar de fondo tiene períodos largos.'],
+ ['Oceanografía','El fetch es…',['La velocidad del viento','La distancia de agua sobre la que sopla el viento','La profundidad'],1,'A más fetch, tiempo y viento, más grande la ola.'],
+ ['Oceanografía','La corriente de Malvinas es…',['Cálida y va al sur','Fría y va al norte','Una corriente del Río Uruguay'],1,'Se encuentra con la corriente de Brasil, cálida, frente a Uruguay y Argentina.'],
+];
+let orden=[],qi=0,pts=0;
+function nuevo(){orden=Q.map((_,i)=>i).sort(()=>Math.random()-.5);qi=0;pts=0;preg()}
+function preg(){if(qi>=orden.length){const best=Math.max(store.get('meteo-best',0),pts);store.set('meteo-best',best);
+  $('#qnum').textContent='Fin';$('#qarea').textContent='';$('#qscore').textContent='';$('#qtext').textContent=`Resultado: ${pts} de ${Q.length}. Mejor puntaje: ${best}.`;$('#qopts').innerHTML='';$('#qexp').hidden=true;$('#qnext').hidden=false;$('#qnext').textContent='Empezar de nuevo';return}
+ const q=Q[orden[qi]];$('#qnum').textContent=`Pregunta ${qi+1} de ${Q.length}`;$('#qarea').textContent=q[0];$('#qscore').textContent=`${pts} aciertos`;$('#qtext').textContent=q[1];
+ const mez=q[2].map((o,j)=>[o,j]).sort(()=>Math.random()-.5);$('#qopts').innerHTML=mez.map(([o,j])=>`<button class="opt" data-j="${j}">${esc(o)}</button>`).join('');$('#qexp').hidden=true;$('#qnext').hidden=true}
+$('#qopts').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b||!$('#qnext').hidden)return;const q=Q[orden[qi]];const j=+b.dataset.j;
+ document.querySelectorAll('#qopts .opt').forEach(x=>{if(+x.dataset.j===q[3])x.classList.add('right')});if(j!==q[3])b.classList.add('wrong');else pts++;
+ $('#qexp').textContent=(j===q[3]?'Correcto. ':'No es esa. ')+q[4];$('#qexp').hidden=false;$('#qnext').hidden=false;$('#qnext').textContent=qi+1<Q.length?'Siguiente':'Ver resultado';$('#qscore').textContent=`${pts} aciertos`});
+$('#qnext').addEventListener('click',()=>{if(qi>=orden.length){nuevo();return}qi++;preg()});
+nuevo();
+</script>
+</body>
+</html>
