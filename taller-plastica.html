@@ -266,6 +266,9 @@ footer a{color:var(--c)}
 @media print{.es-sec,.cs-sec,.tc-sec{display:none}}
 .pt-sec .gr-stage{margin-top:4px}
 @media print{.pt-sec{display:none}}
+.sl-sec .gr-stage{margin-top:4px}
+.sl-sec .ct-rg{margin-top:8px}
+@media print{.sl-sec{display:none}}
 .tr-sec .gr-stage{margin-top:4px}
 .tr-sec .ct-rg,.pt-sec .ct-rg{margin-top:8px}
 .tr-sec canvas{background:#fff}
@@ -309,6 +312,7 @@ footer a{color:var(--c)}
     <a href="#contraste">Contraste simultáneo</a>
     <a href="#temperatura">Cálidos y fríos</a>
     <a href="#puntos">Puntos de trama</a>
+    <a href="#silueta">Silueta</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -944,6 +948,29 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="pt-cv" width="600" height="450" role="img" aria-label="Foto convertida en puntos negros de tamaño variable sobre fondo blanco"></canvas></div>
     <p class="gr-info" id="pt-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: mirá la pantalla de cerca y de lejos; de cerca ves puntos, de lejos tu ojo los mezcla y aparece la imagen. Para hacerlo en papel, marcá una cuadrícula suave con lápiz (con la separación de la pantalla pasada a milímetros, por ejemplo 5 mm) y poné un punto en cada cruce: grande donde la zona es oscura, diminuto o nada donde es clara. Con una trama inclinada a 45 grados la cuadrícula se nota menos que con una recta, por eso se usa tanto. Cuanto más separados los puntos, menos detalle pero más fácil de hacer a mano; empezá con una imagen sencilla de pocos valores (un fruto, una taza) antes de intentar un retrato. Es una simulación simple: la impresión real usa tramas de color y puntos más finos. Para profundizar, buscá "medios tonos" o "halftone" y "puntillismo" y compará varias fuentes.</div>
+  </div>
+</section>
+
+<section id="silueta" class="sl-sec">
+  <h2>Silueta: blanco y negro</h2>
+  <p style="color:var(--muted)">Si reducís una imagen a solo dos valores, negro y blanco, queda la silueta: lo esencial de la forma y cómo se reparten los llenos y los vacíos. Elegí una foto del celular (se queda en tu equipo) y movés el umbral: todo lo más oscuro que ese punto se vuelve negro y lo demás, blanco. Con "Invertir" mirás el espacio negativo, es decir, el vacío que rodea a los objetos.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="sl-file" accept="image/*">
+        <label for="sl-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="sl-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="ct-rg"><label for="sl-u">Umbral: <span id="sl-u-v"></span></label>
+        <input type="range" id="sl-u" min="10" max="90" step="1" value="50" aria-describedby="sl-info"></div>
+      <div class="gr-opts" role="group" aria-label="Opciones">
+        <button type="button" class="gr-opt" id="sl-inv" aria-pressed="false">Invertir</button>
+        <button type="button" class="gr-opt" id="sl-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="sl-cv" width="600" height="450" role="img" aria-label="Foto reducida a negro y blanco"></canvas></div>
+    <p class="gr-info" id="sl-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: buscá el umbral donde todavía se reconoce el objeto con la menor cantidad de negro posible; esa es su silueta esencial. Para practicar en papel, mirá un objeto con luz fuerte de un costado (una taza, una planta, una silla) y rellená con tinta o marcador solo lo oscuro, sin líneas ni grises. Después probá lo inverso: pintá el fondo y dejá el objeto en blanco; si la forma se sigue leyendo, el espacio negativo está bien resuelto. Es una simulación simple: la luz de la foto decide qué queda en negro, y en una foto con poca luz casi todo se ve oscuro. Para profundizar, buscá "espacio negativo" y "estudio de siluetas" en la guía de alguna escuela de arte y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -2746,6 +2773,74 @@ footer a{color:var(--c)}
       o.toBlob(function(b){
         if(!b){info.textContent="No se pudo guardar la imagen.";return}
         var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="puntos-de-trama.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var cv=$("sl-cv"),ctx=cv.getContext("2d"),info=$("sl-info");
+  var ru=$("sl-u"),bi=$("sl-inv");
+  var img=null,url=null,inv=false,lum=null,LW=0,LH=0,out=null;
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    var bg=g.createLinearGradient(0,0,800,0);bg.addColorStop(0,"#f2f2f2");bg.addColorStop(1,"#9a9a9a");
+    g.fillStyle=bg;g.fillRect(0,0,800,600);
+    var sp=g.createRadialGradient(300,230,20,340,290,200);sp.addColorStop(0,"#ffffff");sp.addColorStop(0.5,"#808080");sp.addColorStop(1,"#101010");
+    g.fillStyle=sp;g.beginPath();g.arc(340,290,200,0,7);g.fill();
+    g.fillStyle="rgba(0,0,0,.45)";g.beginPath();g.ellipse(430,500,220,38,0,0,7);g.fill();
+    g.fillStyle="#222";g.fillRect(600,380,90,190);
+    return c;
+  }
+  function prep(){
+    var src=img||sample(),w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,700/w);LW=Math.max(8,Math.round(w*sc));LH=Math.max(8,Math.round(h*sc));
+    var t=document.createElement("canvas");t.width=LW;t.height=LH;var g=t.getContext("2d",{willReadFrequently:true});
+    g.drawImage(src,0,0,LW,LH);
+    var px=g.getImageData(0,0,LW,LH).data;lum=new Float32Array(LW*LH);
+    for(var i=0;i<LW*LH;i++)lum[i]=(0.299*px[4*i]+0.587*px[4*i+1]+0.114*px[4*i+2])/255;
+  }
+  function dr(g){
+    var th=+ru.value/100,id=g.createImageData(LW,LH),d=id.data,k=0,n=LW*LH,dark=0;
+    for(var i=0;i<n;i++){
+      var black=lum[i]<th;if(black)dark++;
+      var v=(black!==inv)?17:255;
+      d[k++]=v;d[k++]=v;d[k++]=v;d[k++]=255;
+    }
+    g.putImageData(id,0,0);
+    return Math.round(100*dark/n);
+  }
+  function render(){
+    if(!lum)prep();
+    cv.width=LW;cv.height=LH;
+    var p=dr(ctx);
+    $("sl-u-v").textContent=ru.value+" %";
+    bi.setAttribute("aria-pressed",String(inv));
+    info.textContent="Con este umbral, "+p+" % de la imagen es oscuro"+(inv?" (se muestra invertido: lo oscuro queda en blanco)":"")+". "+(p<8?"Casi no queda negro: probá subir el umbral.":p>70?"Casi todo es negro: probá bajar el umbral.":"Buen rango para ver la silueta.");
+    cv.setAttribute("aria-label","Foto reducida a negro y blanco, umbral "+ru.value+" por ciento"+(inv?", invertida":""));
+  }
+  ru.addEventListener("input",render);
+  bi.addEventListener("click",function(){inv=!inv;render()});
+  $("sl-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;lum=null;render()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  $("sl-sample").addEventListener("click",function(){img=null;lum=null;render()});
+  $("sl-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");o.width=LW;o.height=LH;dr(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="silueta-blanco-y-negro.png";
         document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
         info.textContent="Imagen guardada.";
       },"image/png");
