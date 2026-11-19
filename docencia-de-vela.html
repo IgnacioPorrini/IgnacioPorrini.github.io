@@ -84,7 +84,7 @@ footer{font-size:13px;color:var(--muted);text-align:center}
     <a href="#formacion">Formación<small>Brevet, cursos, apps</small></a>
     <a href="#campeonatos">Campeonatos<small>calendario y resultados</small></a>
     <a href="#referentes">Referentes<small>clases y asociaciones</small></a>
-    <a href="#agenda">Agenda<small>cursos, clínicas, salidas</small></a>
+    <a href="#agenda">Agenda<small>fechas y suscripción</small></a>
   </nav>
 
   <section id="aniversarios">
@@ -147,11 +147,29 @@ footer{font-size:13px;color:var(--muted);text-align:center}
 
   <section id="agenda">
     <h2>Agenda náutica</h2>
-    <p>Cursos, clínicas, escuelas de verano y salidas, más allá de los campeonatos. <span class="tag warn">en armado</span></p>
-    <p class="note">¿Su club o escuela tiene actividades? Pronto habrá un formulario para cargarlas. Cada evento se publica con el enlace a su fuente.</p>
+    <p>Regatas de club, escuelas de verano, aniversarios y los campeonatos principales en un solo calendario. Suscríbase una vez y las fechas nuevas le aparecen solas en el celular.</p>
+    <div class="card" style="border:2px solid var(--sea)">
+      <h3>Suscribirse a la agenda</h3>
+      <div class="contacts">
+        <a id="sub-google" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fignacioporrini.github.io%2Fagenda-nautica.ics" target="_blank" rel="noopener">📅 Google Calendar (Android)</a>
+        <a id="sub-webcal" href="webcal://ignacioporrini.github.io/agenda-nautica.ics">🍎 iPhone, Mac y Outlook</a>
+        <a href="agenda-nautica.ics" download>⬇ Descargar .ics</a>
+        <button class="chip" id="copiar-ics" type="button">Copiar enlace</button>
+      </div>
+      <p class="note">Si no abre en la computadora: en Google Calendar elija «Otros calendarios», luego «Desde URL», y pegue <span style="font-family:var(--mono);word-break:break-all">https://ignacioporrini.github.io/agenda-nautica.ics</span></p>
+    </div>
+    <div class="chips" id="tipos" role="group" aria-label="Tipo de actividad"></div>
+    <div class="cards" id="eventos"><p class="note">Cargando la agenda…</p></div>
+    <div id="aconfirmar"></div>
+    <div class="card" style="border-style:dashed">
+      <h3>¿Su club o escuela tiene una actividad?</h3>
+      <p>Cursos, clínicas, bautismos, salidas o regatas de club. Mande la fecha, el lugar y el enlace a la fuente (web, Instagram, aviso de regata) y se publica con su crédito.</p>
+      <div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20sumar%20una%20actividad%20a%20la%20Agenda%20N%C3%A1utica.%0AActividad%3A%20%0AFecha%20y%20hora%3A%20%0ALugar%3A%20%0AOrganiza%3A%20%0AFuente%20(enlace)%3A%20" target="_blank" rel="noopener">Enviar por WhatsApp</a></div>
+    </div>
+    <p class="note">Los campeonatos completos están en <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">Viramos</a> y en <a href="https://mateovidal.com/" target="_blank" rel="noopener">Cabo</a>. Esta agenda cubre todo lo demás y enlaza a esas fuentes.</p>
   </section>
 
-  <footer>Mantiene Ignacio Porrini, instructor de vela. Datos revisados el 16/11/2026. ¿Algo cambió o falta? La fuente original siempre tiene la última palabra.</footer>
+  <footer>Mantiene Ignacio Porrini, instructor de vela. Datos revisados el 19/11/2026. ¿Algo cambió o falta? La fuente original siempre tiene la última palabra.</footer>
 </div>
 
 <script>
@@ -192,6 +210,30 @@ $('#deptos').addEventListener('click',e=>{const b=e.target.closest('[data-d]');i
 $('#q').addEventListener('input',render);
 $('#refs').innerHTML=REFS.map(r=>`<div class="card"><h3>${esc(r.n)}</h3><p>${esc(r.t)}</p>${r.l.length?`<div class="contacts">${r.l.map(x=>x[1]?`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`:`<span>${esc(x[0])}</span>`).join('')}</div>`:''}<p class="src">${src(r.s)}</p></div>`).join('');
 render();
+
+// Agenda náutica: datos en agenda/eventos.json (el mismo archivo genera agenda-nautica.ics)
+(function(){
+ const MES=['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
+ const f=iso=>{const [y,m,d]=iso.split('-').map(Number);return {y,m,d,t:Date.UTC(y,m-1,d)}};
+ const fecha=e=>{const a=f(e.inicio),b=f(e.fin||e.inicio);if(a.t===b.t)return `${a.d} ${MES[a.m-1]} ${a.y}${e.hora?' · '+e.hora:''}`;return a.m===b.m&&a.y===b.y?`${a.d} al ${b.d} ${MES[a.m-1]} ${a.y}`:`${a.d} ${MES[a.m-1]} al ${b.d} ${MES[b.m-1]} ${b.y}`};
+ const gcal=e=>{const z=n=>String(n).padStart(2,'0');let dates;
+  if(e.hora){const [h,mi]=e.hora.split(':').map(Number);const a=f(e.inicio);const ini=new Date(Date.UTC(a.y,a.m-1,a.d,h+3,mi));const fin=new Date(ini.getTime()+(e.duracionHoras||2)*36e5);const g=x=>`${x.getUTCFullYear()}${z(x.getUTCMonth()+1)}${z(x.getUTCDate())}T${z(x.getUTCHours())}${z(x.getUTCMinutes())}00Z`;dates=g(ini)+'/'+g(fin)}
+  else{const b=f(e.fin||e.inicio);const nx=new Date(b.t+864e5);dates=e.inicio.replace(/-/g,'')+'/'+`${nx.getUTCFullYear()}${z(nx.getUTCMonth()+1)}${z(nx.getUTCDate())}`}
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.titulo)+'&dates='+dates+'&location='+encodeURIComponent(e.lugar)+'&details='+encodeURIComponent(e.detalle+'\nFuente: '+e.fuente.url)};
+ let EV=[],tipo='Todas';
+ const hoy=(()=>{const n=new Date();return Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())})();
+ function pintar(){const list=EV.filter(e=>tipo==='Todas'||e.tipo===tipo);
+  $('#eventos').innerHTML=list.length?list.map(e=>{const enCurso=f(e.inicio).t<=hoy;return `<div class="card"${e.tipo==='Aniversario'?' style="border:2px solid var(--buoy)"':''}><div class="meta"><span>${esc(fecha(e))}</span><span>${esc(e.tipo)}</span>${enCurso?'<span class="tag">en curso</span>':''}</div><h3>${esc(e.titulo)}</h3><p>${esc(e.detalle)}</p><p class="note">📍 ${esc(e.lugar)} · Organiza: ${esc(e.organiza)}</p><div class="contacts"><a href="${esc(gcal(e))}" target="_blank" rel="noopener">+ Agregar a mi calendario</a></div><p class="src">Fuente: <a href="${esc(e.fuente.url)}" target="_blank" rel="noopener">${esc(e.fuente.nombre)}</a></p></div>`}).join(''):'<p class="note">No hay actividades de ese tipo por ahora.</p>';
+  document.querySelectorAll('#tipos .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===tipo))}
+ fetch('agenda/eventos.json',{cache:'no-cache'}).then(r=>r.json()).then(d=>{
+  EV=d.eventos.filter(e=>f(e.fin||e.inicio).t>=hoy).sort((a,b)=>a.inicio.localeCompare(b.inicio));
+  const tipos=['Todas',...new Set(EV.map(e=>e.tipo))];
+  $('#tipos').innerHTML=tipos.map(t=>`<button class="chip" data-t="${esc(t)}" aria-pressed="${t===tipo}">${esc(t)}</button>`).join('');
+  $('#aconfirmar').innerHTML=(d.aConfirmar||[]).map(a=>`<div class="card"><div class="meta"><span>fecha a confirmar</span></div><h3>${esc(a.titulo)}</h3><p>${esc(a.nota)}</p><p class="src">Fuente: <a href="${esc(a.fuente.url)}" target="_blank" rel="noopener">${esc(a.fuente.nombre)}</a></p></div>`).join('');
+  pintar()}).catch(()=>{$('#eventos').innerHTML='<p class="note">No se pudo cargar la agenda. Pruebe recargar la página o suscríbase con el botón de arriba.</p>'});
+ $('#tipos').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;tipo=b.dataset.t;pintar()});
+ $('#copiar-ics').addEventListener('click',async e=>{const u='https://ignacioporrini.github.io/agenda-nautica.ics';try{await navigator.clipboard.writeText(u);e.target.textContent='¡Copiado!'}catch(_){prompt('Copie este enlace:',u)}});
+})();
 </script>
 
 </body>
