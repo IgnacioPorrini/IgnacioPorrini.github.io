@@ -284,6 +284,11 @@ footer a{color:var(--c)}
 .mo-sw{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
 .mo-sw span.mo-chip{display:inline-block;width:56px;height:44px;border:2px solid var(--line);border-radius:12px}
 @media print{.mo-sec{display:none}}
+.ir-sec .cs-ctl{margin-bottom:8px}
+.ir-stage{position:relative;width:100%;max-width:600px;aspect-ratio:4/3;margin:10px auto 0;border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#808080}
+.ir-stage canvas{display:block;width:100%;height:100%}
+.ir-cnt{font-weight:700;margin-top:8px;min-height:1.4em}
+@media print{.ir-sec{display:none}}
 </style>
 </head>
 <body>
@@ -323,6 +328,7 @@ footer a{color:var(--c)}
     <a href="#silueta">Silueta</a>
     <a href="#entrecerrar">Ojos entrecerrados</a>
     <a href="#mezcla-optica">Mezcla óptica</a>
+    <a href="#residual">Imagen residual</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1032,6 +1038,32 @@ footer a{color:var(--c)}
     <div class="mo-sw"><span class="mo-chip" id="mo-chip" aria-hidden="true"></span><span id="mo-hex" style="font-weight:700"></span></div>
     <p class="gr-info" id="mo-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: en el lienzo, a la izquierda están tus dos colores en motivos y a la derecha el color liso que resulta del promedio. Bajá el tamaño hasta que los dos lados se parezcan, o alejá el celular. Después probalo en papel: con un lápiz o marcador de cada color, hacé una tira de rayitas alternadas, primero grandes y después cada vez más finas, y fijate a qué distancia se funden. Los puntos grandes se ven como puntos; los chicos, como un color nuevo.</div>
+  </div>
+</section>
+
+<section id="residual" class="ir-sec">
+  <h2>Imagen residual</h2>
+  <p style="color:var(--muted)">Si mirás un color fijo durante unos segundos y después mirás una superficie neutra, el ojo "inventa" una imagen en el color opuesto. Es una forma de ver por qué los complementarios se realzan entre sí. Elegí un color, tocá "Empezar", mirá la cruz sin mover los ojos y, cuando cambie el fondo, seguí mirando la cruz.</p>
+  <div class="card">
+    <div class="cs-ctl">
+      <label for="ir-c">Color <input type="color" id="ir-c" value="#e03c31"></label>
+    </div>
+    <div class="gr-ctl">
+      <div class="gr-opts" id="ir-t" role="group" aria-label="Duración de la mirada"><b>Mirar:</b>
+        <button type="button" class="gr-opt" data-t="10" aria-pressed="false">10 s</button>
+        <button type="button" class="gr-opt" data-t="20" aria-pressed="true">20 s</button>
+        <button type="button" class="gr-opt" data-t="30" aria-pressed="false">30 s</button>
+      </div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="ir-go">Empezar</button>
+        <button type="button" class="gr-opt" id="ir-stop">Detener</button>
+      </div>
+    </div>
+    <div class="ir-stage"><canvas id="ir-cv" width="600" height="450" role="img" aria-label="Campo de color con una cruz en el centro"></canvas></div>
+    <p class="ir-cnt" id="ir-cnt" aria-live="polite"></p>
+    <div class="mo-sw"><span class="mo-chip" id="ir-chip" aria-hidden="true"></span><span id="ir-hex" style="font-weight:700"></span></div>
+    <p class="gr-info" id="ir-info"></p>
+    <div class="tip">Cómo usarlo: mirá la cruz fijo, sin recorrer el color con la vista. Al pasar al fondo gris, seguí mirando la cruz: tendría que aparecer un campo tenue del color opuesto, que se va en unos segundos; si parpadeás, vuelve a aparecer. El cuadrito de abajo muestra el complementario simple (inverso en RGB), pero el que ves depende de tus ojos y de la pantalla: en un círculo cromático de pintores, el opuesto del rojo es verde azulado, y el del azul, anaranjado. Para probarlo en papel, pintá un cuadrado grande de color, mirá la cruz 20 segundos y luego una hoja blanca. Si sentís molestia en la vista, parate y descansá; es un efecto normal pero no hace falta forzarlo. Para ampliar, buscá "imagen residual" o "afterimage" en alguna guía de teoría del color y compará fuentes.</div>
   </div>
 </section>
 
@@ -3055,6 +3087,62 @@ footer a{color:var(--c)}
     }catch(_){info.textContent="No se pudo guardar la imagen."}
   });
   render();
+})();
+</script>
+<script>
+(function(){
+  function $(i){return document.getElementById(i)}
+  var cv=$("ir-cv"),ctx=cv.getContext("2d"),W=cv.width,H=cv.height,tm=null,dur=20;
+  function rgb(h){var n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+  function hx(a){return"#"+a.map(function(v){return("0"+Math.round(v).toString(16)).slice(-2)}).join("")}
+  function comp(){return hx(rgb($("ir-c").value).map(function(v){return 255-v}))}
+  function cross(dark){
+    ctx.strokeStyle=dark?"#000":"#fff";ctx.lineWidth=4;ctx.beginPath();
+    ctx.moveTo(W/2-18,H/2);ctx.lineTo(W/2+18,H/2);ctx.moveTo(W/2,H/2-18);ctx.lineTo(W/2,H/2+18);ctx.stroke();
+  }
+  function paint(mode){
+    if(mode==="color"){ctx.fillStyle=$("ir-c").value;ctx.fillRect(0,0,W,H);cross(false)}
+    else{ctx.fillStyle="#808080";ctx.fillRect(0,0,W,H);cross(true)}
+  }
+  function stop(msg){
+    if(tm){clearInterval(tm);tm=null}
+    paint("gray");$("ir-go").disabled=false;
+    $("ir-cnt").textContent=msg||"";
+  }
+  function start(){
+    if(tm)return;
+    var left=dur,phase=1;
+    $("ir-go").disabled=true;paint("color");
+    $("ir-cnt").textContent="Mirá la cruz sin mover los ojos: "+left+" s";
+    tm=setInterval(function(){
+      left--;
+      if(phase===1){
+        if(left>0){$("ir-cnt").textContent="Mirá la cruz sin mover los ojos: "+left+" s"}
+        else{phase=2;left=12;paint("gray");$("ir-cnt").textContent="Ahora seguí mirando la cruz sobre el gris: "+left+" s"}
+      }else{
+        if(left>0){$("ir-cnt").textContent="Ahora seguí mirando la cruz sobre el gris: "+left+" s"}
+        else stop("Listo. Si viste un tono opuesto, ese es el complementario que produce tu ojo. Podés cambiar de color y repetir.");
+      }
+    },1000);
+  }
+  function render(){
+    var c=comp();$("ir-chip").style.background=c;
+    $("ir-hex").textContent="Complementario simple: "+c;
+    $("ir-info").textContent="Color elegido: "+$("ir-c").value+". Mirada de "+dur+" segundos.";
+  }
+  $("ir-c").addEventListener("input",function(){if(!tm)paint("gray");render()});
+  $("ir-go").addEventListener("click",start);
+  $("ir-stop").addEventListener("click",function(){stop(tm?"Detenido.":"")});
+  var btns=$("ir-t").querySelectorAll("button");
+  Array.prototype.forEach.call(btns,function(bt){
+    bt.addEventListener("click",function(){
+      if(tm)return;
+      dur=+bt.getAttribute("data-t");
+      Array.prototype.forEach.call(btns,function(o){o.setAttribute("aria-pressed",o===bt?"true":"false")});
+      render();
+    });
+  });
+  paint("gray");render();
 })();
 </script>
 </body>
