@@ -233,6 +233,10 @@ footer a{color:var(--c)}
 .fc-sec .gr-stage{margin-top:4px}
 .fc-sec .ct-rg{margin-top:8px}
 @media print{.fc-sec{display:none}}
+.vo-sec .gr-stage{margin-top:4px}
+.vo-sec .ct-rg{margin-top:8px}
+.vo-sec canvas{background:#fff}
+@media print{.vo-sec{display:none}}
 .tr-sec .gr-stage{margin-top:4px}
 .tr-sec .ct-rg{margin-top:8px}
 .tr-sec canvas{background:#fff}
@@ -271,6 +275,7 @@ footer a{color:var(--c)}
     <a href="#tramas">Tramas y rayados</a>
     <a href="#miniaturas">Bocetos en miniatura</a>
     <a href="#figura">Figura en cabezas</a>
+    <a href="#volumenes">Volúmenes básicos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -780,6 +785,35 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="fc-cv" width="600" height="450" role="img" aria-label="Imagen con una escala de cabezas de la coronilla a los pies"></canvas></div>
     <p class="gr-info" id="fc-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: subí la línea de la coronilla hasta el punto más alto de la cabeza (sin el pelo parado) y bajá la de los pies hasta el piso; la herramienta reparte la altura en cabezas iguales. Mirá dónde caen el mentón, el pecho, la cintura, la ingle y las rodillas respecto de las marcas: la ingle queda cerca de la mitad del cuerpo y las rodillas, a unas dos cabezas del piso. Si la foto es de frente y la persona está erguida, la comparación sirve; si hay escorzo, piernas cruzadas o una cámara muy cerca, la escala miente. En niños la cabeza es proporcionalmente más grande (cinco o seis cabezas según la edad), así que probá con menos cabezas en el dibujo propio, no con la foto. Las marcas son referencias tradicionales y aproximadas. Para profundizar, buscá "proporciones de la figura humana en cabezas" o "canon de ocho cabezas" y compará varias fuentes.</div>
+  </div>
+</section>
+
+<section id="volumenes" class="vo-sec">
+  <h2>Volúmenes básicos</h2>
+  <p style="color:var(--muted)">Casi todo lo que vemos se puede armar con cuatro volúmenes: cubo, cilindro, esfera y cono. Girá el volumen, subí o bajá el punto de vista y mirá cómo cambian las elipses y qué líneas quedan ocultas. Es un modelo de líneas dibujado en el momento, sin fotos ni descargas: sirve para copiarlo a mano y entender cómo se construye cada forma.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-opts" id="vo-f" role="group" aria-label="Volumen">
+        <button type="button" class="gr-opt" data-f="cubo" aria-pressed="true">Cubo</button>
+        <button type="button" class="gr-opt" data-f="cilindro" aria-pressed="false">Cilindro</button>
+        <button type="button" class="gr-opt" data-f="esfera" aria-pressed="false">Esfera</button>
+        <button type="button" class="gr-opt" data-f="cono" aria-pressed="false">Cono</button>
+      </div>
+      <div class="gr-opts" id="vo-opts" role="group" aria-label="Qué mostrar"></div>
+      <div class="ct-rg"><label for="vo-y">Giro: <span id="vo-y-v"></span></label>
+        <input type="range" id="vo-y" min="0" max="359" step="1" value="35"></div>
+      <div class="ct-rg"><label for="vo-p">Altura del ojo: <span id="vo-p-v"></span></label>
+        <input type="range" id="vo-p" min="-70" max="80" step="1" value="25"></div>
+      <div class="ct-rg"><label for="vo-d">Distancia (perspectiva): <span id="vo-d-v"></span></label>
+        <input type="range" id="vo-d" min="1" max="10" step="1" value="5"></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="vo-reset">Volver a la vista inicial</button>
+        <button type="button" class="gr-opt" id="vo-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="vo-cv" width="600" height="450" role="img" aria-label="Modelo de líneas de un volumen básico, con las líneas ocultas punteadas"></canvas></div>
+    <p class="gr-info" id="vo-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: empezá con el cubo y copiá lo que ves en una hoja, primero las líneas de construcción (en verde) y después el contorno. Con la opción de caja envolvente, el cilindro, la esfera y el cono se dibujan dentro de una caja: primero la caja, después la forma curva tocando el centro de cada cara. Mirá la elipse de la base: con el ojo a la altura del objeto (0 grados) se aplana hasta ser una línea y, cuanto más desde arriba lo mirás, más se abre; su eje largo siempre queda perpendicular al eje del volumen. Con la distancia corta las líneas se juntan en el horizonte (más perspectiva); con la distancia larga se acercan a paralelas. Un ejercicio simple: dibujá cada volumen desde tres alturas del ojo y compará con la pantalla. Para profundizar, buscá "dibujo de formas básicas" o "construcción con cajas" y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -2248,6 +2282,181 @@ footer a{color:var(--c)}
         say("Imagen guardada.");
       },"image/png");
     }catch(_){say("No se pudo guardar la imagen.")}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("vo-cv"),ctx=cv.getContext("2d"),info=document.getElementById("vo-info"),box=document.getElementById("vo-opts");
+  var F="cubo";
+  var OPT=[
+    {k:"o",n:"Líneas ocultas",on:true},
+    {k:"e",n:"Ejes",on:true},
+    {k:"b",n:"Caja envolvente",on:false}
+  ];
+  var st={};OPT.forEach(function(x){st[x.k]=x.on});
+  var DESC={
+    cubo:"Cubo: seis caras cuadradas y doce aristas. Las aristas ocultas son las que no pertenecen a ninguna cara que mires de frente.",
+    cilindro:"Cilindro: dos elipses paralelas unidas por dos líneas tangentes a ellas. De la elipse de abajo se ve solo la mitad cercana; la otra mitad queda oculta.",
+    esfera:"Esfera: el contorno siempre es un círculo, sin importar desde dónde la mires. Las elipses del ecuador y del meridiano dan la sensación de volumen.",
+    cono:"Cono: una elipse de base y dos líneas desde la punta que la tocan de costado. La punta queda sobre el centro de la base."
+  };
+  function rd(id){return +document.getElementById("vo-"+id).value}
+  function V(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]}
+  function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
+  function cross(a,b){return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]}
+  function nrm(a){var l=Math.sqrt(dot(a,a))||1;return [a[0]/l,a[1]/l,a[2]/l]}
+  function cam(){
+    var y=rd("y")*Math.PI/180,p=rd("p")*Math.PI/180,D=rd("d")*2+2;
+    var c=[D*Math.cos(p)*Math.sin(y),D*Math.sin(p),D*Math.cos(p)*Math.cos(y)];
+    var f=nrm([-c[0],-c[1],-c[2]]),r=nrm(cross(f,[0,1,0])),u=cross(r,f);
+    return {c:c,f:f,r:r,u:u,D:D,p:p,y:y};
+  }
+  function draw(t){
+    var g=t||ctx,W=600,H=450;
+    if(g.canvas.width!==W||g.canvas.height!==H){g.canvas.width=W;g.canvas.height=H}
+    g.fillStyle="#fff";g.fillRect(0,0,W,H);
+    var k=cam(),S=H*0.30*k.D;
+    function P(p){
+      var d=V(p,k.c),z=dot(d,k.f);
+      return [W/2+dot(d,k.r)/z*S, H/2-dot(d,k.u)/z*S];
+    }
+    function vis(p,n){return dot(n,V(k.c,p))>0}
+    g.lineCap="round";g.lineJoin="round";
+    var lw=Math.max(2,W/230);
+    function line(a,b,col,dash,w){
+      var A=P(a),B=P(b);g.beginPath();g.moveTo(A[0],A[1]);g.lineTo(B[0],B[1]);
+      g.strokeStyle=col;g.lineWidth=w||lw;g.setLineDash(dash?[lw*2.5,lw*2.5]:[]);g.stroke();g.setLineDash([]);
+    }
+    // curva paramétrica con visibilidad: pts = [[p,n],...], se parte en tramos visibles y ocultos
+    function curve(pts,closed){
+      var n=pts.length,vs=pts.map(function(q){return vis(q[0],q[1])});
+      var N=closed?n:n-1;
+      var run=null;
+      function flush(){
+        if(!run)return;
+        g.beginPath();run.p.forEach(function(q,m){var A=P(q);if(m)g.lineTo(A[0],A[1]);else g.moveTo(A[0],A[1])});
+        g.strokeStyle=run.v?"#1b1b1b":"#8a8a8a";g.lineWidth=lw;g.setLineDash(run.v?[]:[lw*2.5,lw*2.5]);g.stroke();g.setLineDash([]);run=null;
+      }
+      for(var i=0;i<N;i++){
+        var a=pts[i],b=pts[(i+1)%n],v=vs[i]&&vs[(i+1)%n];
+        if(!v&&!st.o){flush();continue}
+        if(run&&run.v!==v)flush();
+        if(!run)run={v:v,p:[a[0]]};
+        run.p.push(b[0]);
+      }
+      flush();
+    }
+    function ring(cx,cy,cz,r,ax,capUp){ // círculo horizontal (ax="y") a altura cy
+      var pts=[];
+      for(var i=0;i<72;i++){
+        var a=i/72*Math.PI*2,c=Math.cos(a),s=Math.sin(a);
+        pts.push([[cx+r*c,cy,cz+r*s],[c,0,s]]);
+      }
+      return pts;
+    }
+    // capVis: si el casquete mira al ojo, todo el círculo es visible
+    function ringCap(y,r,up,h){
+      var capFront=up?(k.c[1]>y):(k.c[1]<y);
+      var pts=[];
+      for(var i=0;i<72;i++){
+        var a=i/72*Math.PI*2,c=Math.cos(a),s=Math.sin(a),p=[r*c,y,r*s];
+        pts.push([p,capFront?[0,up?1:-1,0]:[c,0,s]]);
+      }
+      return pts;
+    }
+    function axes(h){
+      if(!st.e)return;
+      var gc="#2e9e5b";
+      line([0,-h,0],[0,h,0],gc,true,Math.max(1.5,lw*0.6));
+      if(F==="cubo"){line([-h,0,0],[h,0,0],gc,true,Math.max(1.5,lw*0.6));line([0,0,-h],[0,0,h],gc,true,Math.max(1.5,lw*0.6))}
+    }
+    function bbox(h,hy){
+      var c=[[-h,-hy,-h],[h,-hy,-h],[h,-hy,h],[-h,-hy,h],[-h,hy,-h],[h,hy,-h],[h,hy,h],[-h,hy,h]];
+      var E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+      E.forEach(function(e){line(c[e[0]],c[e[1]],"#5b8bd6",false,Math.max(1.5,lw*0.55))});
+    }
+    var h,info2="";
+    if(F==="cubo"){
+      h=0.8;
+      var C=[[-h,-h,-h],[h,-h,-h],[h,-h,h],[-h,-h,h],[-h,h,-h],[h,h,-h],[h,h,h],[-h,h,h]];
+      var FA=[[[0,1,2,3],[0,-1,0]],[[4,5,6,7],[0,1,0]],[[0,1,5,4],[0,0,-1]],[[3,2,6,7],[0,0,1]],[[0,3,7,4],[-1,0,0]],[[1,2,6,5],[1,0,0]]];
+      var fv=FA.map(function(f){var c=[0,0,0];f[0].forEach(function(i){for(var j=0;j<3;j++)c[j]+=C[i][j]/4});return vis(c,f[1])});
+      var E=[],seen={};
+      FA.forEach(function(f,fi){var q=f[0];for(var i=0;i<4;i++){var a=q[i],b=q[(i+1)%4],key=Math.min(a,b)+"-"+Math.max(a,b);if(!seen[key]){seen[key]={a:a,b:b,v:false};E.push(seen[key])}if(fv[fi])seen[key].v=true}});
+      axes(h*1.25);
+      E.forEach(function(e){if(!e.v&&!st.o)return;line(C[e.a],C[e.b],e.v?"#1b1b1b":"#8a8a8a",!e.v)});
+    }else if(F==="cilindro"){
+      var r=0.7;h=0.9;
+      if(st.b)bbox(r,h);axes(h*1.3);
+      curve(ringCap(-h,r,false),true);curve(ringCap(h,r,true),true);
+      var phi=Math.atan2(k.c[2],k.c[0]);
+      [phi+Math.PI/2,phi-Math.PI/2].forEach(function(a){var c=Math.cos(a),s=Math.sin(a);line([r*c,-h,r*s],[r*c,h,r*s],"#1b1b1b",false)});
+    }else if(F==="esfera"){
+      var R=1;h=R;
+      if(st.b)bbox(R,R);axes(R*1.3);
+      // contorno: círculo de pantalla
+      var c0=P([0,0,0]),dd=Math.sqrt(dot(k.c,k.c)),rad=R/Math.sqrt(dd*dd-R*R)*S;
+      g.beginPath();g.arc(c0[0],c0[1],rad,0,Math.PI*2);g.strokeStyle="#1b1b1b";g.lineWidth=lw;g.setLineDash([]);g.stroke();
+      function sph(fn){var pts=[];for(var i=0;i<72;i++){var a=i/72*Math.PI*2,p=fn(a);pts.push([p,p])}return pts}
+      curve(sph(function(a){return [R*Math.cos(a),0,R*Math.sin(a)]}),true);
+      curve(sph(function(a){return [R*Math.cos(a),R*Math.sin(a),0]}),true);
+      curve(sph(function(a){return [0,R*Math.sin(a),R*Math.cos(a)]}),true);
+    }else{
+      var rc=0.8;h=0.9;
+      if(st.b)bbox(rc,h);axes(h*1.3);
+      curve(ringCap(-h,rc,false),true);
+      var ap=[0,h,0],hh=2*h,ph=Math.atan2(k.c[2],k.c[0]);
+      var hor=Math.sqrt(k.c[0]*k.c[0]+k.c[2]*k.c[2]);
+      var cv2=-rc*k.c[1]/(hh*Math.max(0.0001,hor));
+      if(Math.abs(cv2)<=1){
+        var da=Math.acos(cv2);
+        [ph+da,ph-da].forEach(function(a){var c=Math.cos(a),s=Math.sin(a);line([rc*c,-h,rc*s],ap,"#1b1b1b",false)});
+      }
+      // si se mira desde arriba más allá de la pendiente, el contorno es la base: sin tangentes
+    }
+    // marca de punto de vista
+    g.font="600 "+Math.round(W/38)+"px sans-serif";g.fillStyle="#555";g.textAlign="left";g.textBaseline="top";
+    g.fillText("ojo: "+rd("p")+"°  giro: "+rd("y")+"°",12,10);
+    return g.canvas;
+  }
+  function render(){
+    document.getElementById("vo-y-v").textContent=rd("y")+"°";
+    var p=rd("p");document.getElementById("vo-p-v").textContent=p+"° ("+(p>0?"desde arriba":p<0?"desde abajo":"a la altura del objeto")+")";
+    var d=rd("d");document.getElementById("vo-d-v").textContent=d+" ("+(d<=3?"cerca, mucha perspectiva":d>=8?"lejos, casi paralelas":"intermedia")+")";
+    draw();
+    var ap=Math.round(Math.abs(Math.sin(p*Math.PI/180))*100);
+    info.textContent=DESC[F]+(F==="cubo"?"":" Abertura aproximada de las elipses horizontales: "+ap+" % (0 % es una línea, 100 % es un círculo).");
+  }
+  OPT.forEach(function(x){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=x.n;
+    b.setAttribute("aria-pressed",String(!!st[x.k]));
+    b.addEventListener("click",function(){st[x.k]=!st[x.k];b.setAttribute("aria-pressed",String(st[x.k]));render()});
+    box.appendChild(b);
+  });
+  var fb=document.querySelectorAll("#vo-f button");
+  Array.prototype.forEach.call(fb,function(b){
+    b.addEventListener("click",function(){
+      F=b.getAttribute("data-f");
+      Array.prototype.forEach.call(fb,function(o){o.setAttribute("aria-pressed",String(o===b))});
+      render();
+    });
+  });
+  ["y","p","d"].forEach(function(i){document.getElementById("vo-"+i).addEventListener("input",render)});
+  document.getElementById("vo-reset").addEventListener("click",function(){
+    document.getElementById("vo-y").value=35;document.getElementById("vo-p").value=25;document.getElementById("vo-d").value=5;render();
+  });
+  document.getElementById("vo-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");draw(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="volumen-"+F+".png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
   });
   render();
 })();
