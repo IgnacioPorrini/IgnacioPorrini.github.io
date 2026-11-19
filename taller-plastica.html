@@ -279,6 +279,11 @@ footer a{color:var(--c)}
 .mn-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
 .mn-sec .gr-stage{margin-top:4px}
 @media print{.mn-sec{display:none}}
+.mo-sec .gr-stage{margin-top:4px}
+.mo-sec .ct-rg{margin-top:8px}
+.mo-sw{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.mo-sw span.mo-chip{display:inline-block;width:56px;height:44px;border:2px solid var(--line);border-radius:12px}
+@media print{.mo-sec{display:none}}
 </style>
 </head>
 <body>
@@ -317,6 +322,7 @@ footer a{color:var(--c)}
     <a href="#puntos">Puntos de trama</a>
     <a href="#silueta">Silueta</a>
     <a href="#entrecerrar">Ojos entrecerrados</a>
+    <a href="#mezcla-optica">Mezcla óptica</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -999,6 +1005,33 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="ee-cv" width="600" height="450" role="img" aria-label="Foto desenfocada para ver las masas"></canvas></div>
     <p class="gr-info" id="ee-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: dejá el desenfoque donde ya no leés los detalles pero sí las formas grandes, y fijate cuántas masas distintas quedan; si son más de cuatro o cinco, simplificá. Con "En grises" comprobás si las masas se separan por valor y no solo por color. Para practicar en papel, entrecerrá los ojos frente al modelo y pintá primero esas manchas, con un pincel ancho, antes de dibujar ningún detalle. Es una simulación: el ojo no desenfoca exactamente igual que el programa, y en pantalla chica conviene mirar la imagen a brazo extendido. Para profundizar, buscá "entrecerrar los ojos" y "masas de valor" en la guía de alguna escuela de arte y compará varias fuentes.</div>
+  </div>
+</section>
+
+<section id="mezcla-optica" class="mo-sec">
+  <h2>Mezcla óptica</h2>
+  <p style="color:var(--muted)">Si ponés dos colores en puntos o rayas muy chicos y te alejás, el ojo los mezcla solo. Es la idea del puntillismo. Elegí dos colores, un diseño y el tamaño: cuando el tamaño es chico (o el celular está lejos), aparece un tercer color que en realidad no está pintado en ningún lado. Abajo se calcula el promedio simple de los dos colores en pantalla. Con pintura real el resultado cambia según los pigmentos, así que sirve como idea para probar en una hoja.</p>
+  <div class="card">
+    <div class="cs-ctl">
+      <label for="mo-a">Color A <input type="color" id="mo-a" value="#e03c31"></label>
+      <label for="mo-b">Color B <input type="color" id="mo-b" value="#1f5fbf"></label>
+    </div>
+    <div class="gr-ctl">
+      <div class="gr-opts" id="mo-p" role="group" aria-label="Diseño"><b>Diseño:</b>
+        <button type="button" class="gr-opt" data-p="puntos" aria-pressed="true">Puntos</button>
+        <button type="button" class="gr-opt" data-p="rayas" aria-pressed="false">Rayas</button>
+        <button type="button" class="gr-opt" data-p="cuadros" aria-pressed="false">Cuadritos</button>
+      </div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="mo-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="ct-rg"><label for="mo-s">Tamaño del motivo: <span id="mo-s-v"></span></label>
+      <input type="range" id="mo-s" min="1" max="40" step="1" value="12" aria-describedby="mo-info"></div>
+    <div class="gr-stage"><canvas id="mo-cv" width="600" height="300" role="img" aria-label="Mitad izquierda con los dos colores en motivos; mitad derecha con el color mezclado liso"></canvas></div>
+    <div class="mo-sw"><span class="mo-chip" id="mo-chip" aria-hidden="true"></span><span id="mo-hex" style="font-weight:700"></span></div>
+    <p class="gr-info" id="mo-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: en el lienzo, a la izquierda están tus dos colores en motivos y a la derecha el color liso que resulta del promedio. Bajá el tamaño hasta que los dos lados se parezcan, o alejá el celular. Después probalo en papel: con un lápiz o marcador de cada color, hacé una tira de rayitas alternadas, primero grandes y después cada vez más finas, y fijate a qué distancia se funden. Los puntos grandes se ven como puntos; los chicos, como un color nuevo.</div>
   </div>
 </section>
 
@@ -2953,6 +2986,69 @@ footer a{color:var(--c)}
       o.toBlob(function(b){
         if(!b){info.textContent="No se pudo guardar la imagen.";return}
         var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="ojos-entrecerrados.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var cv=$("mo-cv"),ctx=cv.getContext("2d"),info=$("mo-info");
+  var W=cv.width,H=cv.height,pat="puntos";
+  function rgb(h){var n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+  function hx(a){return"#"+a.map(function(v){return("0"+Math.round(v).toString(16)).slice(-2)}).join("")}
+  function dr(c){
+    var a=$("mo-a").value,b=$("mo-b").value,s=+$("mo-s").value;
+    var m=hx(rgb(a).map(function(v,i){return(v+rgb(b)[i])/2}));
+    var half=W/2;
+    c.fillStyle=b;c.fillRect(0,0,half,H);
+    c.save();c.beginPath();c.rect(0,0,half,H);c.clip();
+    c.fillStyle=a;
+    if(pat==="rayas"){
+      for(var x=0;x<half;x+=2*s)c.fillRect(x,0,s,H);
+    }else if(pat==="cuadros"){
+      for(var y=0,r=0;y<H;y+=s,r++)for(var x2=(r%2)*s;x2<half;x2+=2*s)c.fillRect(x2,y,s,s);
+    }else{
+      c.fillStyle=b;c.fillRect(0,0,half,H);
+      var st=2*s;
+      for(var yy=0,rr=0;yy<H+st;yy+=s,rr++)for(var xx=(rr%2)*s;xx<half+st;xx+=st){
+        c.fillStyle=a;c.beginPath();c.arc(xx+s/2,yy+s/2,s*0.5,0,6.2832);c.fill();
+      }
+    }
+    c.restore();
+    c.fillStyle=m;c.fillRect(half,0,W-half,H);
+    c.fillStyle="rgba(0,0,0,.6)";c.fillRect(half-1,0,2,H);
+    return m;
+  }
+  function render(){
+    var m=dr(ctx);
+    $("mo-s-v").textContent=$("mo-s").value+" px";
+    $("mo-chip").style.background=m;
+    $("mo-hex").textContent="Promedio: "+m;
+    info.textContent="Izquierda: motivos de A y B. Derecha: el color liso que ve el ojo desde lejos ("+m+").";
+  }
+  $("mo-a").addEventListener("input",render);
+  $("mo-b").addEventListener("input",render);
+  $("mo-s").addEventListener("input",render);
+  var btns=$("mo-p").querySelectorAll("button");
+  Array.prototype.forEach.call(btns,function(bt){
+    bt.addEventListener("click",function(){
+      pat=bt.getAttribute("data-p");
+      Array.prototype.forEach.call(btns,function(o){o.setAttribute("aria-pressed",o===bt?"true":"false")});
+      render();
+    });
+  });
+  $("mo-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");o.width=W;o.height=H;dr(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="mezcla-optica.png";
         document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
         info.textContent="Imagen guardada.";
       },"image/png");
