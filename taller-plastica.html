@@ -294,6 +294,10 @@ footer a{color:var(--c)}
 @media print{.gz-sec{display:none}}
 .ar-sec .gr-stage{margin-top:4px}
 @media print{.ar-sec{display:none}}
+.lc-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
+.lc-sec .gr-stage{margin-top:4px}
+.lc-sec .lc-sub{font-family:Fredoka,sans-serif;font-size:1.15rem;margin:8px 0 0}
+@media print{.lc-sec{display:none}}
 </style>
 </head>
 <body>
@@ -336,6 +340,7 @@ footer a{color:var(--c)}
     <a href="#residual">Imagen residual</a>
     <a href="#garabato">Garabato al azar</a>
     <a href="#al-reves">Dibujo al revés</a>
+    <a href="#linea-continua">Línea continua</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1118,6 +1123,27 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="ar-cv" width="600" height="450" role="img" aria-label="Imagen dada vuelta, cabeza abajo, para copiar"></canvas></div>
     <p class="gr-info" id="ar-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: apoyá el celular y dibujá en una hoja lo que ves, empezando por un borde y avanzando de a poco, sin darlo vuelta ni adivinar qué es. Fijate en los espacios entre las formas y en cuánto mide cada línea respecto de la anterior. Con la cuadrícula podés ubicar dónde cruza cada línea. Usá "Medir mi tiempo" si querés registrar cuánto te llevó (tocá para empezar y de nuevo para frenar). Al terminar, tocá "Enderezar para comparar" y poné tu dibujo al lado. Elegí imágenes simples de líneas claras (un objeto, un retrato de contornos marcados); con una foto muy detallada cuesta más. Es un ejercicio de observación: no se juzga el resultado. Para profundizar, buscá "dibujo invertido" o "upside-down drawing" en la guía de alguna escuela de arte y compará varias fuentes.</div>
+  </div>
+</section>
+
+<section id="linea-continua" class="lc-sec">
+  <h2>Línea continua</h2>
+  <p style="color:var(--muted)">Dibujá un objeto con una sola línea, sin levantar el dedo. Al soltar, la hoja se cierra: no se puede corregir ni agregar nada. Esa restricción te obliga a decidir antes de trazar, a mirar el objeto en lugar de la hoja y a aceptar el error como parte del dibujo. La herramienta te sugiere un tema al azar, mide el tiempo si querés y guarda el resultado. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <p class="lc-sub" id="lc-sub" aria-live="polite">Tema: elegí "Otro tema"</p>
+      <div class="gr-opts" id="lc-t" role="group" aria-label="Tiempo"><b>Tiempo:</b></div>
+      <div class="gr-opts" id="lc-c" role="group" aria-label="Color de la línea"><b>Línea:</b></div>
+      <div class="gr-opts" id="lc-g" role="group" aria-label="Grosor de la línea"><b>Grosor:</b></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="lc-new">Otro tema</button>
+        <button type="button" class="gr-opt" id="lc-clear">Hoja nueva</button>
+        <button type="button" class="gr-opt" id="lc-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="lc-cv" width="600" height="450" role="img" aria-label="Hoja en blanco para dibujar con una sola línea continua usando el dedo"></canvas></div>
+    <p class="gr-info" id="lc-info" aria-live="polite">Apoyá el dedo en la hoja para empezar.</p>
+    <div class="tip">Cómo usarlo: elegí un tema y mirá el objeto real (o una foto) antes de empezar. Apoyá el dedo y dibujá todo el contorno y los detalles sin levantarlo; podés cruzar y repetir líneas. Con tiempo elegido, la línea se corta sola al llegar a cero. Al terminar, tocá "Hoja nueva" para otro intento. Para hacerlo en papel: lapicera o fibra, hoja suelta y la punta pegada al papel todo el tiempo; si te cuesta, probá antes con 1 minuto. Variantes: mirar el objeto sin mirar la hoja (como en el dibujo a ciegas), dibujar con la mano no dominante, o hacer un retrato de un compañero. No se juzga el parecido: lo que se gana es una línea viva y decidida.</div>
   </div>
 </section>
 
@@ -3372,6 +3398,93 @@ footer a{color:var(--c)}
         info.textContent="Imagen guardada.";
       },"image/png");
     }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var cv=$("lc-cv"),ctx=cv.getContext("2d"),info=$("lc-info"),sub=$("lc-sub");
+  var W=600,H=450;
+  var TS=[["Sin límite",0],["30 s",30],["1 min",60],["2 min",120]];
+  var CS=[["Negro","#2b2a33"],["Rojo","#d6342a"],["Azul","#1f5fbf"],["Verde","#2e8b4f"]];
+  var GS=[["Fina",2],["Media",4],["Gruesa",9]];
+  var TEMAS=["una taza","tu mano apoyada","un zapato","una planta de interior","una silla","una llave","una botella","un mate","un par de anteojos","un árbol de la calle","una bicicleta","tu cara frente al espejo","un pájaro","una fruta cortada","un barco","un paraguas","el celular de al lado","una casa del barrio"];
+  var tmax=0,col=CS[0][1],lw=GS[1][1],stroke=null,closed=false,down=false,left=0,timer=null,last=-1,tema="";
+  function say(m){info.textContent=m||""}
+  function render(){
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
+    if(!stroke)return;
+    ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle=stroke.c;ctx.lineWidth=stroke.w;ctx.beginPath();
+    stroke.p.forEach(function(q,k){if(k)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1])});
+    if(stroke.p.length===1)ctx.lineTo(stroke.p[0][0]+.1,stroke.p[0][1]);
+    ctx.stroke();
+  }
+  function group(box,arr,idx,set){
+    var bs=[];
+    arr.forEach(function(t,i){
+      var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=t[0];
+      b.setAttribute("aria-pressed",String(i===idx));
+      b.addEventListener("click",function(){set(t[1]);bs.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))})});
+      box.appendChild(b);bs.push(b);
+    });
+  }
+  group($("lc-t"),TS,0,function(v){if(!down)tmax=v});
+  group($("lc-c"),CS,0,function(v){col=v});
+  group($("lc-g"),GS,1,function(v){lw=v});
+  function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+  function finish(why){
+    if(closed)return;closed=true;down=false;stopTimer();render();
+    say(why+" Tocá \"Hoja nueva\" para otro intento.");
+  }
+  function pos(e){
+    var b=cv.getBoundingClientRect();
+    return [Math.min(W,Math.max(0,(e.clientX-b.left)/b.width*W)),Math.min(H,Math.max(0,(e.clientY-b.top)/b.height*H))];
+  }
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();
+    if(closed){say("La línea ya está cerrada. Tocá \"Hoja nueva\".");return}
+    try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    down=true;stroke={c:col,w:lw,p:[pos(e)]};render();
+    if(tmax){
+      left=tmax;say("Quedan "+left+" s.");
+      timer=setInterval(function(){
+        left--;
+        if(left>0)say("Quedan "+left+" s.");
+        else finish("Se acabó el tiempo.");
+      },1000);
+    }else say("Dibujando sin levantar el dedo.");
+  });
+  cv.addEventListener("pointermove",function(e){
+    if(!down||!stroke||closed)return;e.preventDefault();stroke.p.push(pos(e));render();
+  });
+  function end(){
+    if(!down)return;
+    finish("Levantaste el dedo: la línea quedó cerrada.");
+  }
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  $("lc-new").addEventListener("click",function(){
+    var i;do{i=Math.floor(Math.random()*TEMAS.length)}while(i===last);
+    last=i;tema=TEMAS[i];sub.textContent="Tema: "+tema;
+    say("Nuevo tema: "+tema+". Apoyá el dedo para empezar.");
+  });
+  $("lc-clear").addEventListener("click",function(){
+    stopTimer();stroke=null;closed=false;down=false;render();say("Hoja nueva. Apoyá el dedo para empezar.");
+  });
+  $("lc-save").addEventListener("click",function(){
+    try{
+      if(!stroke){say("Todavía no hay nada para guardar.");return}
+      var o=document.createElement("canvas");o.width=W;o.height=H;var c=o.getContext("2d");
+      c.drawImage(cv,0,0);
+      o.toBlob(function(b){
+        if(!b){say("No se pudo guardar la imagen.");return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="linea-continua.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        say("Imagen guardada.");
+      },"image/png");
+    }catch(_){say("No se pudo guardar la imagen.")}
   });
   render();
 })();
