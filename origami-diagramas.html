@@ -57,6 +57,10 @@
         .frog.hop svg{animation:hop .3s ease-out}
         @keyframes hop{0%{transform:translateY(0)}45%{transform:translateY(-26px) rotate(-8deg)}100%{transform:translateY(0)}}
         @media (prefers-reduced-motion:reduce){.frog{transition:none}.frog.hop svg{animation:none}}
+        .sq-in{background:#15201c;color:#e8eeeb;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:.5rem .6rem;font:400 1rem 'Open Sans',sans-serif;width:100%;box-sizing:border-box}
+        .sq-in:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
+        .sq-res{font-size:1.05rem;line-height:1.5}
+        .sq-svg{max-width:300px;margin:0 auto;display:block}
         .container a:not(.btn):not(.ori-btn){color:var(--accent)}
         .ori-btn{color:#e8eeeb!important}
     </style>
@@ -168,6 +172,31 @@
         </section>
 
         <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title mb-2" id="cuadrado">Cuadrado desde una hoja</h2>
+                <p class="text-muted-light mb-3">La mayoría de los modelos pide papel cuadrado. Elija su hoja (o escriba las medidas) y vea de qué lado queda el cuadrado y qué sobra.</p>
+                <div class="row g-4 align-items-start">
+                    <div class="col-12 col-md-6">
+                        <div id="sqPre" role="group" aria-label="Tamaño de hoja"></div>
+                        <div class="mb-3" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:20rem">
+                            <label class="d-block">Ancho (cm)<br><input class="sq-in" type="number" id="sqW" min="1" max="200" step="0.1" inputmode="decimal" value="21"></label>
+                            <label class="d-block">Alto (cm)<br><input class="sq-in" type="number" id="sqH" min="1" max="200" step="0.1" inputmode="decimal" value="29.7"></label>
+                        </div>
+                        <p class="sq-res" id="sqRes" aria-live="polite"></p>
+                        <ol class="mb-2" id="sqPasos"></ol>
+                        <p class="small text-muted-light mb-0">Es un método clásico de plegado: se lleva una esquina hasta el lado opuesto y el doblez marca dónde cortar o plegar el sobrante. El dibujo y el texto son propios; en <a target="_blank" rel="noopener" href="https://www.google.com/search?q=como+hacer+un+cuadrado+de+una+hoja+A4+origami">esta búsqueda</a> hay videos del mismo método.</p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <figure class="ori-fig m-0">
+                            <svg class="legend-svg sq-svg" id="sqSvg" viewBox="0 0 260 260" role="img" aria-labelledby="sqCap"></svg>
+                            <figcaption id="sqCap" class="text-muted-light"></figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker">
             <div class="container text-center">
                 <a href="origami.html" class="btn btn-whatsapp shadow-sm"><i class="fas fa-arrow-left me-2"></i> Volver a Origami</a>
             </div>
@@ -241,6 +270,49 @@
     txt();
   });
   txt();
+})();
+</script>
+<script>
+(function(){
+  var P=[['A4',21,29.7],['A5',14.8,21],['A3',29.7,42],['Carta',21.59,27.94],['Oficio',21.59,33],['Nota adhesiva',7.6,7.6]];
+  var W=document.getElementById('sqW'),H=document.getElementById('sqH'),res=document.getElementById('sqRes'),
+      pasos=document.getElementById('sqPasos'),svg=document.getElementById('sqSvg'),cap=document.getElementById('sqCap'),pre=document.getElementById('sqPre');
+  if(!W||!svg)return;
+  function f(n){return (Math.round(n*10)/10).toString().replace('.',',')}
+  var btns=[];
+  P.forEach(function(p,i){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=p[0];b.setAttribute('aria-pressed',i===0?'true':'false');
+    b.addEventListener('click',function(){W.value=p[1];H.value=p[2];draw()});
+    pre.appendChild(b);btns.push(b);
+  });
+  function draw(){
+    var a=parseFloat(String(W.value).replace(',','.')),b=parseFloat(String(H.value).replace(',','.'));
+    btns.forEach(function(x,i){var p=P[i];x.setAttribute('aria-pressed',(Math.abs(a-p[1])<.001&&Math.abs(b-p[2])<.001)?'true':'false')});
+    if(!(a>0&&b>0&&a<=200&&b<=200)){res.textContent='Escriba medidas entre 1 y 200 cm.';pasos.innerHTML='';svg.innerHTML='';cap.textContent='';return}
+    var w=Math.min(a,b),h=Math.max(a,b),sob=h-w,k=220/h,x0=(260-w*k)/2,y0=(260-h*k)/2,sw=w*k;
+    var out='<rect class="p-w" x="'+x0+'" y="'+y0+'" width="'+sw+'" height="'+(h*k)+'"/>';
+    if(sob<0.05){
+      res.textContent='La hoja ya es cuadrada: lado de '+f(w)+' cm. No hace falta cortar nada.';
+      pasos.innerHTML='';
+      out='<rect class="p-c" x="'+x0+'" y="'+y0+'" width="'+sw+'" height="'+(h*k)+'"/>';
+      cap.textContent='Hoja cuadrada de '+f(w)+' por '+f(w)+' cm.';
+    }else{
+      var n=Math.floor(w/sob+1e-9);
+      out='<rect class="p-c" x="'+x0+'" y="'+y0+'" width="'+sw+'" height="'+sw+'"/>'+
+          '<rect class="p-w" x="'+x0+'" y="'+(y0+sw)+'" width="'+sw+'" height="'+(sob*k)+'"/>'+
+          '<line class="vl" x1="'+x0+'" y1="'+(y0+sw)+'" x2="'+(x0+sw)+'" y2="'+y0+'"/>'+
+          '<line class="ml" x1="'+x0+'" y1="'+(y0+sw)+'" x2="'+(x0+sw)+'" y2="'+(y0+sw)+'"/>'+
+          '<text x="'+(x0+sw/2)+'" y="'+(y0+sw/2+4)+'" text-anchor="middle" style="fill:#08140f;font-weight:600">'+f(w)+' cm</text>'+
+          '<text x="'+(x0+sw/2)+'" y="'+(y0+sw+Math.min(sob*k/2+3,14))+'" text-anchor="middle" style="fill:#08140f">sobra '+f(sob)+' cm</text>';
+      res.innerHTML='Con una hoja de '+f(a)+' por '+f(b)+' cm el cuadrado queda de <strong>'+f(w)+' cm</strong> de lado. Sobra una tira de '+f(w)+' por '+f(sob)+' cm'+(n>=1?', de la que salen '+n+' cuadrado'+(n>1?'s':'')+' chico'+(n>1?'s':'')+' de '+f(sob)+' cm.':'.');
+      var li=['Apoye la hoja con el lado corto arriba.','Lleve la esquina de arriba a la izquierda hasta el borde derecho, de modo que el borde de arriba quede pegado al borde derecho. Marque el doblez en diagonal (línea azul).','Donde el doblez diagonal llega al costado izquierdo, haga un doblez horizontal hacia el otro lado, o un corte (línea roja): lo que queda debajo es el sobrante.','Corte o desprenda la tira de abajo y desdoble: queda un cuadrado de '+f(w)+' cm, con una diagonal ya marcada.'];
+      pasos.innerHTML=li.map(function(t){return '<li>'+t+'</li>'}).join('');
+      cap.textContent='Hoja de '+f(w)+' por '+f(h)+' cm: el cuadrado verde de arriba y la tira que sobra abajo; línea azul, doblez diagonal; línea roja, corte.';
+    }
+    svg.innerHTML=out;
+  }
+  W.addEventListener('input',draw);H.addEventListener('input',draw);
+  draw();
 })();
 </script>
 </body>
