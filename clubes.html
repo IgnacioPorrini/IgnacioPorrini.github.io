@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<title>Para clubes y escuelas · Agenda Náutica Uruguay</title>
+<meta name="description" content="Kit gratuito para clubes y escuelas de vela de Uruguay: publicar actividades en la Agenda Náutica, calendario para socios y apps para la escuela.">
+<link rel="canonical" href="https://ignacioporrini.github.io/clubes.html">
+<meta property="og:title" content="Para clubes y escuelas de vela">
+<meta property="og:description" content="Publiquen sus actividades en la Agenda Náutica Uruguay y usen gratis las apps para su escuela.">
+<meta property="og:url" content="https://ignacioporrini.github.io/clubes.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: guía de consulta en una columna, como un derrotero: secciones por necesidad, fichas con su fuente al pie; acento verde de boya de babor */
+:root{
+  --bg:#EEF3F2; --grid:#DDE6E4; --surface:#FFFFFF; --ink:#10262B; --muted:#4D6469; --line:#C7D5D3;
+  --sea:#0E4F73; --sea-ink:#FFFFFF; --buoy:#1F7A4D; --buoy-bg:#E2F2E8; --flag:#B45309;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.8rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance}
+h2{font:700 1.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+h3{font:700 1.2rem/1.2 var(--display);margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--sea)}
+.lede{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-weight:600}
+.quick a small{font-weight:400;color:var(--muted);font-size:13px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{border-color:var(--buoy);background:var(--buoy-bg)}
+.cards{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.contacts{display:flex;flex-wrap:wrap;gap:6px}
+.contacts a,.contacts span{font-size:14px;border:1px solid var(--line);border-radius:6px;padding:4px 8px;text-decoration:none;color:var(--ink);word-break:break-all}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--muted)}
+.tag{display:inline-block;white-space:nowrap;vertical-align:middle;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 6px;background:var(--buoy-bg);color:var(--buoy)}
+.tag.warn{background:transparent;border:1px solid var(--flag);color:var(--flag)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;text-align:right}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 10px}
+.note{font-size:14px;color:var(--muted)}
+input{font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+footer{font-size:13px;color:var(--muted);text-align:center}
+</style>
+<style>.num{font:700 2rem/1 var(--display);color:var(--buoy)}.copy{font:15px var(--body);background:var(--buoy-bg);border-radius:8px;padding:12px}</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow">Agenda Náutica Uruguay · Kit para clubes</p>
+    <h1>Para clubes y escuelas de vela</h1>
+    <p class="lede">Herramientas gratis para que sus actividades lleguen a más gente y su escuela tenga material digital. Sin registro, sin costo, siempre con el crédito y la fuente de cada club.</p>
+  </header>
+
+  <section>
+    <h2>Lo que ofrecemos sin costo</h2>
+    <div class="cards">
+      <div class="card"><span class="num">1</span><h3>Sus actividades en la Agenda Náutica</h3><p>Cursos, clínicas, bautismos, escuelas de verano y regatas de club. Cada evento se publica con el enlace a su fuente y le aparece solo a quien está suscripto.</p><div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20sumar%20una%20actividad%20de%20mi%20club%20a%20la%20Agenda%20N%C3%A1utica.%0AClub%3A%0AActividad%3A%0AFecha%20y%20hora%3A%0ALugar%3A%0AFuente%20%28enlace%29%3A" target="_blank" rel="noopener">Mandar una actividad por WhatsApp</a><a href="docencia-de-vela.html#agenda">Ver la agenda</a></div></div>
+      <div class="card"><span class="num">2</span><h3>Un calendario para sus socios</h3><p>Compartan el enlace de suscripción en su web, su boletín o su grupo de WhatsApp. Los socios lo agregan a Google Calendar o al iPhone en un toque.</p><div class="contacts"><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fignacioporrini.github.io%2Fagenda-nautica.ics" target="_blank" rel="noopener">Google Calendar</a><a href="webcal://ignacioporrini.github.io/agenda-nautica.ics">iPhone</a></div><p class="note">Texto listo para compartir con sus socios:</p><p class="copy" id="txt">⛵ ¿Querés tener todas las fechas de la vela en el celular? Suscribite gratis a la Agenda Náutica Uruguay: regatas de club, escuelas de verano, aniversarios y campeonatos, cada fecha con su fuente. 👉 ignacioporrini.github.io/agenda</p><button class="chip" id="copiar" type="button">Copiar texto</button></div>
+      <div class="card"><span class="num">3</span><h3>Su escuela en la guía</h3><p>La guía Docencia de Vela Uruguay reúne escuelas por departamento, con contactos públicos y su fuente. Si falta su escuela o hay un dato para corregir, avísennos.</p><div class="contacts"><a href="docencia-de-vela.html#escuelas">Ver escuelas</a></div></div>
+      <div class="card"><span class="num">4</span><h3>Apps para la escuela</h3><p>Se usan desde el celular, sin instalar nada: <a href="cuestionario-brevet.html">Cuestionario Brevet</a>, <a href="meteorologia-a-bordo.html">Meteorología a bordo</a>, <a href="tactica-a-bordo.html">Táctica a bordo</a>, <a href="revision-seguridad.html">Revisión de seguridad</a> y <a href="entrenamiento-a-bordo.html">Entrenamiento a bordo</a> (puesta a punto, ejercicios con cronómetro, largada y bitácora para Optimist, Laser, Snipe y tabla).</p><div class="contacts"><a href="apps/">Todas las apps</a><a href="imprimibles.html">Imprimibles A4</a></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A demanda</h2>
+    <p>Clínicas de puesta a punto por clase, suplencias o apoyo en escuelas de verano, y apoyo a la comisión de regata (cronómetro de largada, inscripciones y resultados). Escríbanos y lo conversamos.</p>
+    <div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20soy%20de%20un%20club%20o%20escuela%20y%20quiero%20consultar%20por%3A%0A%28%20%29%20cl%C3%ADnica%0A%28%20%29%20suplencia%20o%20apoyo%20en%20escuela%20de%20verano%0A%28%20%29%20apoyo%20a%20la%20comisi%C3%B3n%20de%20regata%0AClub%3A%0AFechas%3A" target="_blank" rel="noopener">Consultar por WhatsApp</a></div>
+  </section>
+
+  <section>
+    <h2>Cómo trabajamos</h2>
+    <ul style="margin:0;padding-left:20px">
+      <li>Cada dato lleva el enlace a la fuente del club. Ante la duda, manda la fuente.</li>
+      <li>Los campeonatos se enlazan a <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">Viramos</a> y a <a href="https://mateovidal.com/" target="_blank" rel="noopener">Cabo</a>, la plataforma uruguaya, en vez de copiarlos.</li>
+      <li>Solo nombramos personas cuando su asociación las publica como referentes.</li>
+    </ul>
+  </section>
+
+  <footer>Mantiene Ignacio Porrini, instructor de vela · Navegante Escuela Itinerante. <a href="docencia-de-vela.html">Docencia de Vela Uruguay</a></footer>
+</div>
+<script>
+document.getElementById('copiar').addEventListener('click',async e=>{const t=document.getElementById('txt').textContent;try{await navigator.clipboard.writeText(t);e.target.textContent='¡Copiado!'}catch(_){const r=document.createRange();r.selectNodeContents(document.getElementById('txt'));const s=getSelection();s.removeAllRanges();s.addRange(r);e.target.textContent='Texto seleccionado: cópielo'}});
+</script>
+</body>
+</html>
