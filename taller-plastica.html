@@ -292,6 +292,8 @@ footer a{color:var(--c)}
 .gz-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
 .gz-sec .gr-stage{margin-top:4px}
 @media print{.gz-sec{display:none}}
+.ar-sec .gr-stage{margin-top:4px}
+@media print{.ar-sec{display:none}}
 </style>
 </head>
 <body>
@@ -333,6 +335,7 @@ footer a{color:var(--c)}
     <a href="#mezcla-optica">Mezcla óptica</a>
     <a href="#residual">Imagen residual</a>
     <a href="#garabato">Garabato al azar</a>
+    <a href="#al-reves">Dibujo al revés</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1089,6 +1092,32 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="gz-cv" width="600" height="450" role="img" aria-label="Hoja con un garabato gris al azar para dibujar encima con el dedo"></canvas></div>
     <p class="gr-info" id="gz-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: mirá el garabato un rato, sin apuro, y girá el celular o inclinate: la figura aparece cuando dejás de buscarla. Seguí un tramo de la línea gris con tu color y completá lo que falte (ojos, patas, hojas, montañas). Podés ocultar el garabato para ver solo tu dibujo, o tocar "Otro garabato" las veces que quieras; tu dibujo se conserva hasta que lo borres. Para hacerlo en papel: con los ojos cerrados, trazá un garabato enredado durante unos 10 segundos, abrí los ojos y buscá una forma que reconozcas. Es un ejercicio de imaginación, no de dibujar bien; en la clase se puede hacer en parejas, intercambiando garabatos.</div>
+  </div>
+</section>
+
+<section id="al-reves" class="ar-sec">
+  <h2>Dibujo al revés</h2>
+  <p style="color:var(--muted)">Cuando copiamos una imagen dada vuelta, el cerebro deja de nombrar lo que ve ("una cara", "una mano") y se pone a mirar líneas, ángulos y espacios tal como son. Por eso es un ejercicio clásico para dibujar con más fidelidad. Elegí una foto o un dibujo del celular (se queda en tu equipo), lo ves cabeza abajo y lo copiás en papel sin darlo vuelta. Al final lo enderezás para comparar.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="ar-file" accept="image/*">
+        <label for="ar-file" class="tm-go">Elegir una imagen</label>
+        <button type="button" id="ar-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-opts" role="group" aria-label="Opciones">
+        <button type="button" class="gr-opt" id="ar-up" aria-pressed="false">Enderezar para comparar</button>
+        <button type="button" class="gr-opt" id="ar-gr" aria-pressed="false">En grises</button>
+        <button type="button" class="gr-opt" id="ar-grid" aria-pressed="false">Cuadrícula de 3 x 3</button>
+        <button type="button" class="gr-opt" id="ar-save">Guardar imagen</button>
+      </div>
+      <div class="gr-opts" role="group" aria-label="Cronómetro de la copia">
+        <button type="button" class="gr-opt" id="ar-t">Medir mi tiempo: 0:00</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="ar-cv" width="600" height="450" role="img" aria-label="Imagen dada vuelta, cabeza abajo, para copiar"></canvas></div>
+    <p class="gr-info" id="ar-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: apoyá el celular y dibujá en una hoja lo que ves, empezando por un borde y avanzando de a poco, sin darlo vuelta ni adivinar qué es. Fijate en los espacios entre las formas y en cuánto mide cada línea respecto de la anterior. Con la cuadrícula podés ubicar dónde cruza cada línea. Usá "Medir mi tiempo" si querés registrar cuánto te llevó (tocá para empezar y de nuevo para frenar). Al terminar, tocá "Enderezar para comparar" y poné tu dibujo al lado. Elegí imágenes simples de líneas claras (un objeto, un retrato de contornos marcados); con una foto muy detallada cuesta más. Es un ejercicio de observación: no se juzga el resultado. Para profundizar, buscá "dibujo invertido" o "upside-down drawing" en la guía de alguna escuela de arte y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -3254,6 +3283,97 @@ footer a{color:var(--c)}
     }catch(_){say("No se pudo guardar la imagen.")}
   });
   newScribble();render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var cv=$("ar-cv"),ctx=cv.getContext("2d"),info=$("ar-info");
+  var bu=$("ar-up"),bg=$("ar-gr"),bd=$("ar-grid"),bt=$("ar-t");
+  var img=null,url=null,up=false,gray=false,grid=false,W=0,H=0,base=null;
+  var t0=0,tm=null,secs=0;
+  function sample(){
+    var c=document.createElement("canvas");c.width=800;c.height=600;var g=c.getContext("2d");
+    g.fillStyle="#f4efe2";g.fillRect(0,0,800,600);
+    g.strokeStyle="#222";g.lineWidth=7;g.lineJoin="round";g.lineCap="round";
+    g.beginPath();g.moveTo(300,470);g.lineTo(330,250);g.quadraticCurveTo(400,200,470,250);g.lineTo(500,470);g.closePath();g.stroke();
+    g.beginPath();g.ellipse(400,205,95,32,0,0,7);g.stroke();
+    g.beginPath();g.moveTo(500,300);g.quadraticCurveTo(590,300,585,380);g.quadraticCurveTo(580,440,495,430);g.stroke();
+    g.beginPath();g.moveTo(240,490);g.lineTo(580,490);g.stroke();
+    g.beginPath();g.moveTo(370,95);g.quadraticCurveTo(350,40,400,20);g.moveTo(405,95);g.quadraticCurveTo(400,50,440,40);g.stroke();
+    return c;
+  }
+  function prep(){
+    var src=img||sample(),w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,700/w);W=Math.max(8,Math.round(w*sc));H=Math.max(8,Math.round(h*sc));
+    base=document.createElement("canvas");base.width=W;base.height=H;
+    base.getContext("2d").drawImage(src,0,0,W,H);
+  }
+  function dr(g){
+    g.save();
+    if(!up){g.translate(W,H);g.rotate(Math.PI)}
+    g.drawImage(base,0,0);
+    g.restore();
+    if(gray){
+      var id=g.getImageData(0,0,W,H),d=id.data;
+      for(var i=0;i<d.length;i+=4){var v=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=v}
+      g.putImageData(id,0,0);
+    }
+    if(grid){
+      g.lineWidth=Math.max(2,W/300);
+      for(var k=0;k<2;k++){
+        var pass=k===0?"rgba(255,255,255,.9)":"rgba(0,0,0,.7)";
+        g.strokeStyle=pass;g.beginPath();
+        for(var j=1;j<3;j++){g.moveTo(W*j/3,0);g.lineTo(W*j/3,H);g.moveTo(0,H*j/3);g.lineTo(W,H*j/3)}
+        g.stroke();g.lineWidth=g.lineWidth/2;
+      }
+    }
+  }
+  function fmt(s){return Math.floor(s/60)+":"+("0"+(s%60)).slice(-2)}
+  function render(){
+    if(!base)prep();
+    cv.width=W;cv.height=H;
+    dr(ctx);
+    bu.setAttribute("aria-pressed",String(up));
+    bg.setAttribute("aria-pressed",String(gray));
+    bd.setAttribute("aria-pressed",String(grid));
+    info.textContent=up?"Imagen derecha. Poné tu copia al lado y compará proporciones y ángulos.":"Imagen al revés: copiala sin darla vuelta.";
+    cv.setAttribute("aria-label",up?"Imagen derecha, para comparar":"Imagen dada vuelta, cabeza abajo, para copiar");
+  }
+  bu.addEventListener("click",function(){up=!up;render()});
+  bg.addEventListener("click",function(){gray=!gray;render()});
+  bd.addEventListener("click",function(){grid=!grid;render()});
+  bt.addEventListener("click",function(){
+    if(tm){
+      clearInterval(tm);tm=null;
+      bt.textContent="Medir mi tiempo: "+fmt(secs);
+      info.textContent="Tu copia llevó "+fmt(secs)+". Tocá de nuevo para empezar otra medición.";
+    }else{
+      secs=0;t0=Date.now();bt.textContent="Midiendo: 0:00 (tocá para frenar)";
+      tm=setInterval(function(){secs=Math.floor((Date.now()-t0)/1000);bt.textContent="Midiendo: "+fmt(secs)+" (tocá para frenar)"},500);
+    }
+  });
+  $("ar-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;base=null;up=false;render()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra (JPG o PNG)."};
+    im.src=u;
+  });
+  $("ar-sample").addEventListener("click",function(){img=null;base=null;up=false;render()});
+  $("ar-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");o.width=W;o.height=H;dr(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="dibujo-al-reves.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
 })();
 </script>
 </body>
