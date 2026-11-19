@@ -230,6 +230,9 @@ footer a{color:var(--c)}
 .rs-sec .gr-stage{margin-top:4px}
 .rs-sec .ct-rg{margin-top:8px}
 @media print{.rs-sec{display:none}}
+.fc-sec .gr-stage{margin-top:4px}
+.fc-sec .ct-rg{margin-top:8px}
+@media print{.fc-sec{display:none}}
 .tr-sec .gr-stage{margin-top:4px}
 .tr-sec .ct-rg{margin-top:8px}
 .tr-sec canvas{background:#fff}
@@ -267,6 +270,7 @@ footer a{color:var(--c)}
     <a href="#rostro">Proporciones del rostro</a>
     <a href="#tramas">Tramas y rayados</a>
     <a href="#miniaturas">Bocetos en miniatura</a>
+    <a href="#figura">Figura en cabezas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -744,6 +748,38 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="mn-cv" width="600" height="450" role="img" aria-label="Seis marcos numerados para dibujar bocetos pequeños con el dedo"></canvas></div>
     <p class="gr-info" id="mn-info" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: no busques que quede lindo; dedicale menos de un minuto a cada marco. Probá poner el tema principal grande o chico, centrado o corrido hacia un lado, y alto o bajo. Con un par de manchas gruesas alcanza para ver dónde queda el peso. Cambiar el formato no borra lo dibujado: se adapta al nuevo marco, así podés ver cómo cambia la idea en otra proporción. Es un ejercicio de planificación; después pasás la mejor opción a la hoja grande. Si querés ver más ejemplos, buscá "thumbnails dibujo" o "bocetos en miniatura composición".</div>
+  </div>
+</section>
+
+<section id="figura" class="fc-sec">
+  <h2>Figura en cabezas</h2>
+  <p style="color:var(--muted)">Una manera clásica de medir un cuerpo de pie es tomar la altura de la cabeza como unidad: un adulto de proporciones "ideales" de dibujo suele medir entre siete y ocho cabezas (el canon más repetido es de siete y media u ocho). Elegí una foto de cuerpo entero (se queda en tu equipo), ajustá la altura de la figura de la coronilla a los pies y mirá dónde caen las divisiones. Es una guía de dibujo, no una medida de nadie: cada persona, y más aún cada niño, se aparta de ella.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-file">
+        <input type="file" id="fc-file" accept="image/*">
+        <label for="fc-file" class="tm-go">Elegir una foto</label>
+        <button type="button" id="fc-sample" class="tm-rs">Usar dibujo de prueba</button>
+      </div>
+      <div class="gr-opts" id="fc-n" role="group" aria-label="Cantidad de cabezas">
+        <button type="button" class="gr-opt" data-n="7" aria-pressed="false">7 cabezas</button>
+        <button type="button" class="gr-opt" data-n="7.5" aria-pressed="false">7 y media</button>
+        <button type="button" class="gr-opt" data-n="8" aria-pressed="true">8 cabezas</button>
+      </div>
+      <div class="gr-opts" id="fc-opts" role="group" aria-label="Qué mostrar"></div>
+      <div class="ct-rg"><label for="fc-x">Izquierda a derecha: <span id="fc-x-v"></span></label>
+        <input type="range" id="fc-x" min="0" max="100" step="1" value="50"></div>
+      <div class="ct-rg"><label for="fc-t">Coronilla (arriba): <span id="fc-t-v"></span></label>
+        <input type="range" id="fc-t" min="0" max="90" step="1" value="6"></div>
+      <div class="ct-rg"><label for="fc-b">Pies (abajo): <span id="fc-b-v"></span></label>
+        <input type="range" id="fc-b" min="10" max="100" step="1" value="96"></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="fc-save">Guardar imagen</button>
+      </div>
+    </div>
+    <div class="gr-stage"><canvas id="fc-cv" width="600" height="450" role="img" aria-label="Imagen con una escala de cabezas de la coronilla a los pies"></canvas></div>
+    <p class="gr-info" id="fc-info" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: subí la línea de la coronilla hasta el punto más alto de la cabeza (sin el pelo parado) y bajá la de los pies hasta el piso; la herramienta reparte la altura en cabezas iguales. Mirá dónde caen el mentón, el pecho, la cintura, la ingle y las rodillas respecto de las marcas: la ingle queda cerca de la mitad del cuerpo y las rodillas, a unas dos cabezas del piso. Si la foto es de frente y la persona está erguida, la comparación sirve; si hay escorzo, piernas cruzadas o una cámara muy cerca, la escala miente. En niños la cabeza es proporcionalmente más grande (cinco o seis cabezas según la edad), así que probá con menos cabezas en el dibujo propio, no con la foto. Las marcas son referencias tradicionales y aproximadas. Para profundizar, buscá "proporciones de la figura humana en cabezas" o "canon de ocho cabezas" y compará varias fuentes.</div>
   </div>
 </section>
 
@@ -1915,6 +1951,106 @@ footer a{color:var(--c)}
       o.toBlob(function(b){
         if(!b){info.textContent="No se pudo guardar la imagen.";return}
         var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="proporciones-del-rostro.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        info.textContent="Imagen guardada.";
+      },"image/png");
+    }catch(_){info.textContent="No se pudo guardar la imagen."}
+  });
+  render();
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById("fc-cv"),ctx=cv.getContext("2d"),info=document.getElementById("fc-info"),box=document.getElementById("fc-opts");
+  var img=null,url=null,N=8;
+  var OPT=[
+    {k:"l",n:"Cabezas",on:true,d:"Cada franja mide una cabeza, de la coronilla al mentón; la figura se reparte en esa cantidad de franjas."},
+    {k:"m",n:"Puntos de referencia",on:true,d:"Marcas orientativas: mentón, pecho, cintura, ingle (cerca de la mitad del cuerpo) y rodillas. Varían de una persona a otra."},
+    {k:"h",n:"Mitad del cuerpo",on:false,d:"Línea en la mitad exacta de la altura: en el canon de ocho cabezas cae casi en la ingle."}
+  ];
+  var st={};
+  OPT.forEach(function(x){st[x.k]=x.on});
+  function sample(){
+    var c=document.createElement("canvas");c.width=450;c.height=800;var g=c.getContext("2d");
+    g.fillStyle="#dfe9d9";g.fillRect(0,0,450,800);
+    var u=(760-30)/8,cx=225,top=30;
+    g.fillStyle="#e8b894";g.beginPath();g.ellipse(cx,top+u*0.5,u*0.36,u*0.5,0,0,7);g.fill();
+    g.fillStyle="#35557a";g.fillRect(cx-85,top+u*1.1,170,u*1.9);
+    g.fillStyle="#e8b894";g.fillRect(cx-115,top+u*1.2,28,u*2.2);g.fillRect(cx+87,top+u*1.2,28,u*2.2);
+    g.fillStyle="#2f3a4a";g.fillRect(cx-70,top+u*3.0,68,u*4.8);g.fillRect(cx+2,top+u*3.0,68,u*4.8);
+    g.fillStyle="#222";g.fillRect(cx-78,top+u*7.8,80,u*0.2);g.fillRect(cx-2,top+u*7.8,80,u*0.2);
+    return c;
+  }
+  function rd(id){return +document.getElementById("fc-"+id).value}
+  function draw(t){
+    var g=t||ctx,src=img||sample();
+    var w=src.naturalWidth||src.width,h=src.naturalHeight||src.height;
+    var sc=Math.min(1,900/Math.max(w,h)),W=Math.round(w*sc),H=Math.round(h*sc);
+    if(g.canvas.width!==W||g.canvas.height!==H){g.canvas.width=W;g.canvas.height=H}
+    g.drawImage(src,0,0,W,H);
+    var y0=H*rd("t")/100,y1=H*rd("b")/100,cx=W*rd("x")/100;
+    if(y1-y0<20)y1=y0+20;
+    var hh=(y1-y0)/N,lw=Math.max(2,Math.min(W,H)/200),fs=Math.max(12,Math.round(Math.min(W,H)/32));
+    var half=Math.min(W*0.42,Math.max(W*0.18,hh*1.1));
+    function L(y,x1,x2){g.beginPath();g.moveTo(x1,y);g.lineTo(x2,y);g.stroke()}
+    g.lineCap="round";g.font="700 "+fs+"px sans-serif";g.textBaseline="middle";
+    function label(txt,x,y,al){
+      g.textAlign=al;g.lineWidth=fs/4;g.lineJoin="round";g.strokeStyle="rgba(0,0,0,.7)";g.strokeText(txt,x,y);g.fillStyle="#ffd34d";g.fillText(txt,x,y);
+    }
+    [["rgba(0,0,0,.55)",lw*2],["#ffd34d",lw]].forEach(function(p){
+      g.strokeStyle=p[0];g.lineWidth=p[1];
+      L(y0,cx-half,cx+half);L(y1,cx-half,cx+half);
+      if(st.l){for(var i=1;i<N;i++)L(y0+i*hh,cx-half,cx+half)}
+      if(st.h){g.setLineDash([lw*4,lw*3]);L((y0+y1)/2,cx-half*1.25,cx+half*1.25);g.setLineDash([])}
+    });
+    if(st.l){
+      for(var i=1;i<=Math.floor(N);i++)label(String(i),cx,y0+(i-0.5)*hh,"center");
+      if(N%1)label("½",cx,y1-hh*0.25,"center");
+    }
+    if(st.m){
+      var lm=[[1,"mentón"],[2,"pecho"],[3,"cintura"],[N/2,"ingle"],[N-2,"rodillas"]];
+      var right=cx+half+fs*5.5<W;
+      lm.forEach(function(q){label(q[1],right?cx+half*1.28:cx-half*1.28,y0+q[0]*hh,right?"left":"right")});
+    }
+    return g.canvas;
+  }
+  function render(){
+    document.getElementById("fc-x-v").textContent=rd("x")+" %";
+    document.getElementById("fc-t-v").textContent=rd("t")+" %";
+    document.getElementById("fc-b-v").textContent=rd("b")+" %";
+    draw();
+    var on=OPT.filter(function(x){return st[x.k]});
+    info.textContent=(N+" cabezas de alto. ")+(on.length?on.map(function(x){return x.d}).join(" "):"Solo la coronilla y los pies, para comparar.");
+  }
+  OPT.forEach(function(x){
+    var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=x.n;
+    b.setAttribute("aria-pressed",String(!!st[x.k]));
+    b.addEventListener("click",function(){st[x.k]=!st[x.k];b.setAttribute("aria-pressed",String(st[x.k]));render()});
+    box.appendChild(b);
+  });
+  var nb=document.querySelectorAll("#fc-n button");
+  Array.prototype.forEach.call(nb,function(b){
+    b.addEventListener("click",function(){
+      N=parseFloat(b.getAttribute("data-n"));
+      Array.prototype.forEach.call(nb,function(o){o.setAttribute("aria-pressed",String(o===b))});
+      render();
+    });
+  });
+  ["x","t","b"].forEach(function(i){document.getElementById("fc-"+i).addEventListener("input",render)});
+  document.getElementById("fc-file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+    var u=URL.createObjectURL(f),im=new Image();
+    im.onload=function(){if(url)URL.revokeObjectURL(url);url=u;img=im;render()};
+    im.onerror=function(){URL.revokeObjectURL(u);info.textContent="No se pudo abrir esa imagen. Probá con otra foto (JPG o PNG)."};
+    im.src=u;
+  });
+  document.getElementById("fc-sample").addEventListener("click",function(){img=null;render()});
+  document.getElementById("fc-save").addEventListener("click",function(){
+    try{
+      var o=document.createElement("canvas");draw(o.getContext("2d"));
+      o.toBlob(function(b){
+        if(!b){info.textContent="No se pudo guardar la imagen.";return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="figura-en-cabezas.png";
         document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
         info.textContent="Imagen guardada.";
       },"image/png");
