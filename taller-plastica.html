@@ -312,6 +312,16 @@ footer a{color:var(--c)}
 .gs-sec .gs-dots li.on{border-color:var(--c);background:var(--soft-c);color:var(--ink);font-weight:700}
 .gs-sec .gs-dots li.done{opacity:.55;text-decoration:line-through}
 @media print{.gs-sec{display:none}}
+.me-sec .tm-row{flex-wrap:wrap}
+.me-sec .tm-go{flex:1 1 100%}
+.me-sec .tm-rs{flex:1}
+.me-sec .me-plans{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.me-sec .me-sub{font-family:Fredoka,sans-serif;font-size:1.15rem;margin:8px 0 0;text-align:center;min-height:2.6em}
+.me-sec .me-steps{display:flex;gap:6px;justify-content:center;margin:10px 0 0;padding:0;list-style:none}
+.me-sec .me-steps li{padding:2px 12px;border-radius:99px;border:2px solid var(--line);font-size:.85rem;color:var(--muted)}
+.me-sec .me-steps li.on{border-color:var(--c);background:var(--soft-c);color:var(--ink);font-weight:700}
+.me-sec .me-steps li.done{opacity:.55;text-decoration:line-through}
+@media print{.me-sec{display:none}}
 </style>
 </head>
 <body>
@@ -358,6 +368,7 @@ footer a{color:var(--c)}
     <a href="#calentamiento">Calentamiento de trazo</a>
     <a href="#texturas">Caza de texturas</a>
     <a href="#gestos">Sesión de gestos</a>
+    <a href="#memoria">Dibujo de memoria</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1224,6 +1235,24 @@ footer a{color:var(--c)}
       <button type="button" id="gs-rs" class="tm-rs">Reiniciar</button>
     </div>
     <div class="tip">Cómo usarlo: una hoja por ronda o una hoja dividida en cuadros, lápiz blando o crayón y nada de goma. Con los 30 s buscá una sola línea larga que resuma el movimiento; con los 2 min recién sumá volumen. Al terminar, ponelas lado a lado: muchas veces las rápidas tienen más vida que las lentas.</div>
+  </div>
+</section>
+
+<section id="memoria" class="me-sec">
+  <h2>Dibujo de memoria</h2>
+  <p style="color:var(--muted)">Mirá un objeto con mucha atención durante un rato, tapalo o dalo vuelta y dibujalo de memoria. Después destapá y compará: lo que olvidaste muestra qué no habías mirado de verdad. Elegí una tanda, tocá Empezar y seguí los tres pasos; el aviso sonoro marca cada cambio. Sirve con un objeto real que tengas a mano.</p>
+  <div class="card">
+    <div class="me-plans" role="group" aria-label="Tanda" id="me-plans"></div>
+    <p class="me-sub" id="me-sub" aria-live="polite">Elegí una tanda y tocá Empezar.</p>
+    <div id="me-clock" class="tm-clock" role="timer" aria-live="off">1:00</div>
+    <div class="tm-bar" aria-hidden="true"><span id="me-fill"></span></div>
+    <ol class="me-steps" id="me-steps" aria-label="Pasos"><li>Mirar</li><li>Dibujar</li><li>Comparar</li></ol>
+    <div class="tm-row">
+      <button type="button" id="me-go" class="tm-go">Empezar</button>
+      <button type="button" id="me-skip" class="tm-rs">Saltar paso</button>
+      <button type="button" id="me-new" class="tm-rs">Otro objeto</button>
+    </div>
+    <div class="tip">Cómo usarlo: poné el objeto a un costado y, cuando termine el tiempo de mirar, tapalo con un trapo o dalo vuelta. Al mirar, no dibujes: recorré los bordes, contá las partes y fijate en las proporciones y en dónde cae la sombra. Al comparar, marcá con otro color lo que cambió o faltó, sin borrar.</div>
   </div>
 </section>
 
@@ -3781,6 +3810,79 @@ footer a{color:var(--c)}
     pl.appendChild(b);
   });
   build();
+})();
+</script>
+<script>
+(function(){
+  var PLANS=[
+    {n:"Rápida (30 s + 2 min)",o:30,d:120},
+    {n:"Clásica (1 + 5 min)",o:60,d:300},
+    {n:"Detallada (2 + 10 min)",o:120,d:600}
+  ];
+  var T=["Una taza","Un zapato","Una llave","Un limón o una naranja","Una planta chica","Un jarro de mate","Un cepillo","Unos lentes","Un cuaderno abierto","Un reloj","Una tijera","Una botella","Una lámpara","Un auricular con su cable","Una cuchara y un tenedor"];
+  var plan=1,step=0,left=0,dur=0,timer=null,endAt=0,run=false,fin=false,subj="";
+  var clock=document.getElementById("me-clock"),fill=document.getElementById("me-fill"),sub=document.getElementById("me-sub"),steps=document.getElementById("me-steps").children,go=document.getElementById("me-go"),pl=document.getElementById("me-plans");
+  function fmt(n){var m=Math.floor(n/60),s=n%60;return m+":"+("0"+s).slice(-2)}
+  function beep(final){
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+      var ctx=new AC(),t=ctx.currentTime,ds=final?[0,0.28,0.56]:[0];
+      ds.forEach(function(d){
+        var o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=final?880:660;
+        g.gain.setValueAtTime(0.0001,t+d);g.gain.exponentialRampToValueAtTime(0.3,t+d+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d+0.2);
+        o.connect(g);g.connect(ctx.destination);o.start(t+d);o.stop(t+d+0.22);
+      });
+      setTimeout(function(){try{ctx.close()}catch(e){}},1500);
+    }catch(e){}
+    try{if(navigator.vibrate)navigator.vibrate(final?[200,100,200,100,200]:[150])}catch(e){}
+  }
+  function pick(){var n;do{n=T[Math.floor(Math.random()*T.length)]}while(n===subj&&T.length>1);subj=n}
+  function paint(){
+    clock.textContent=fmt(Math.max(0,Math.ceil(left)));
+    clock.className="tm-clock"+(fin?" end":"");
+    fill.style.width=(dur?Math.max(0,left/dur)*100:0)+"%";
+    for(var i=0;i<steps.length;i++){steps[i].className=(fin||i<step)?"done":(i===step?"on":"")}
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null}run=false}
+  function setStep(){
+    var P=PLANS[plan];
+    if(step===0){dur=P.o;left=dur;sub.textContent="Mirá con atención: "+subj+". No dibujes todavía."}
+    else if(step===1){dur=P.d;left=dur;sub.textContent="Tapalo o dalo vuelta y dibujalo de memoria: "+subj+"."}
+    else{dur=0;left=0;sub.textContent="Destapá y compará. Marcá con otro color lo que cambió o faltó."}
+    paint();
+  }
+  function build(newSubj){
+    stop();fin=false;step=0;if(newSubj||!subj)pick();setStep();go.textContent="Empezar";
+  }
+  function next(auto){
+    if(step>=1){
+      stop();step=2;fin=true;setStep();go.textContent="Otra vez";beep(true);return;
+    }
+    step++;setStep();
+    if(auto)beep(false);
+    if(run)endAt=Date.now()+left*1000;
+  }
+  function tick(){
+    left=(endAt-Date.now())/1000;
+    if(left<=0){next(true);return}
+    paint();
+  }
+  function start(){endAt=Date.now()+left*1000;stop();run=true;timer=setInterval(tick,250);go.textContent="Pausar";tick()}
+  go.addEventListener("click",function(){
+    if(fin){build(true);return}
+    if(run){stop();go.textContent="Seguir"}else start();
+  });
+  document.getElementById("me-skip").addEventListener("click",function(){if(!fin)next(false)});
+  document.getElementById("me-new").addEventListener("click",function(){build(true)});
+  PLANS.forEach(function(p,i){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=p.n;
+    b.setAttribute("aria-pressed",i===plan?"true":"false");
+    b.addEventListener("click",function(){
+      plan=i;[].forEach.call(pl.children,function(x,j){x.setAttribute("aria-pressed",j===i?"true":"false")});build(false);
+    });
+    pl.appendChild(b);
+  });
+  build(true);
 })();
 </script>
 </body>
