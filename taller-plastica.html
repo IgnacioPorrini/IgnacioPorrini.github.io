@@ -346,6 +346,7 @@ footer a{color:var(--c)}
     <a href="#al-reves">Dibujo al revés</a>
     <a href="#linea-continua">Línea continua</a>
     <a href="#calentamiento">Calentamiento de trazo</a>
+    <a href="#texturas">Caza de texturas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1170,6 +1171,30 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="cl-cv" width="600" height="450" role="img" aria-label="Hoja con una guía punteada para practicar trazos con el dedo"></canvas></div>
     <p class="gr-info" id="cl-info" aria-live="polite">Seguí la guía con el dedo.</p>
     <div class="tip">Cómo usarlo: dibujá cada trazo de un solo movimiento, sin retocar. Si una línea sale torcida no la borres: probá la siguiente más rápido, porque la velocidad ayuda a que salga recta. En papel, apoyá el codo en el aire y mové todo el brazo; dos o tres minutos por ejercicio alcanzan para entrar en calor. Ideas para después: repetir con la mano no dominante, con lápiz blando y con fibra, o llenar una hoja entera con un solo ejercicio.</div>
+  </div>
+</section>
+
+<section id="texturas" class="cl-sec">
+  <h2>Caza de texturas</h2>
+  <p style="color:var(--muted)">Salí a buscar superficies para frotar: poné una hoja fina encima, acostá un crayón y pasalo suave hasta que aparezca la textura. Tildá cada una que ya tengas en la hoja. Si no sabés por dónde empezar, pedí un desafío al azar. Queda guardado en este celular y no se envía a ningún lado.</p>
+  <div class="card">
+    <p class="lc-sub" id="tx-desafio" aria-live="polite">Desafío: tocá "Desafío al azar".</p>
+    <ul class="mat-list" id="tx-list">
+        <li><label><input type="checkbox" data-k="0"><span>Corteza de un árbol</span></label></li>
+        <li><label><input type="checkbox" data-k="1"><span>Baldosa o vereda</span></label></li>
+        <li><label><input type="checkbox" data-k="2"><span>Tela con trama (jean, lona, arpillera)</span></label></li>
+        <li><label><input type="checkbox" data-k="3"><span>Hoja con nervaduras</span></label></li>
+        <li><label><input type="checkbox" data-k="4"><span>Una moneda</span></label></li>
+        <li><label><input type="checkbox" data-k="5"><span>Rejilla o alambrado</span></label></li>
+        <li><label><input type="checkbox" data-k="6"><span>Madera con vetas</span></label></li>
+        <li><label><input type="checkbox" data-k="7"><span>Piedra o muro rugoso</span></label></li>
+        <li><label><input type="checkbox" data-k="8"><span>Suela de zapatilla</span></label></li>
+        <li><label><input type="checkbox" data-k="9"><span>Tapa de alcantarilla o chapa grabada</span></label></li>
+        <li><label><input type="checkbox" data-k="10"><span>Cuero o cartón corrugado</span></label></li>
+        <li><label><input type="checkbox" data-k="11"><span>Algo que elijas vos</span></label></li>
+    </ul>
+    <div class="mat-foot"><span id="tx-count" aria-live="polite">0 de 12 cazadas</span><span><button type="button" id="tx-rnd" class="tm-rs">Desafío al azar</button> <button type="button" id="tx-reset" class="tm-rs">Destildar todo</button></span></div>
+    <div class="tip">Cómo usarlo: llevá hojas finas (de calcar o de cuaderno), crayones sin papel y cinta para sujetar. Frotá siempre en el mismo sentido y con la misma presión. Después podés recortar o rasgar las texturas para el collage, o adivinar de dónde salió cada una. Para mirar con más atención: ordenalas de más fina a más gruesa, o de más suave a más áspera.</div>
   </div>
 </section>
 
@@ -3608,6 +3633,38 @@ footer a{color:var(--c)}
     }catch(_){say("No se pudo guardar la imagen.")}
   });
   draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="plastica-texturas",boxes=document.querySelectorAll("#tx-list input"),st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){st={}}
+  function upd(){
+    var n=0;boxes.forEach(function(b){if(b.checked)n++});
+    document.getElementById("tx-count").textContent=n===boxes.length?"Cacería completa: "+n+" de "+boxes.length:n+" de "+boxes.length+" cazadas";
+  }
+  boxes.forEach(function(b){
+    b.checked=!!st[b.getAttribute("data-k")];
+    b.addEventListener("change",function(){
+      st[b.getAttribute("data-k")]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+      upd();
+    });
+  });
+  document.getElementById("tx-reset").addEventListener("click",function(){
+    boxes.forEach(function(b){b.checked=false});st={};
+    try{localStorage.removeItem(KEY)}catch(e){}
+    document.getElementById("tx-desafio").textContent="Desafío: tocá \"Desafío al azar\".";
+    upd();
+  });
+  document.getElementById("tx-rnd").addEventListener("click",function(){
+    var f=[];boxes.forEach(function(b){if(!b.checked)f.push(b)});
+    var o=document.getElementById("tx-desafio");
+    if(!f.length){o.textContent="No queda ninguna sin cazar.";return}
+    var b=f[Math.floor(Math.random()*f.length)];
+    o.textContent="Desafío: "+b.nextElementSibling.textContent;
+  });
+  upd();
 })();
 </script>
 </body>
