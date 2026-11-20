@@ -322,6 +322,14 @@ footer a{color:var(--c)}
 .me-sec .me-steps li.on{border-color:var(--c);background:var(--soft-c);color:var(--ink);font-weight:700}
 .me-sec .me-steps li.done{opacity:.55;text-decoration:line-through}
 @media print{.me-sec{display:none}}
+.an-sec .an-svg{display:block;width:100%;max-width:360px;margin:8px auto;background:var(--card);border:2px solid var(--line);border-radius:12px;touch-action:none}
+.an-sec .an-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.an-sec .an-row .tm-go,.an-sec .an-row .tm-rs{flex:1 1 140px}
+.an-sec .an-msg{font-family:Fredoka,sans-serif;font-size:1.15rem;text-align:center;margin:8px 0;min-height:2.6em}
+.an-sec .an-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.an-sec .an-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+.an-sec input[type=range]{width:100%;min-height:44px}
+@media print{.an-sec{display:none}}
 </style>
 </head>
 <body>
@@ -369,6 +377,7 @@ footer a{color:var(--c)}
     <a href="#texturas">Caza de texturas</a>
     <a href="#gestos">Sesión de gestos</a>
     <a href="#memoria">Dibujo de memoria</a>
+    <a href="#angulos">Ojo para los ángulos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1253,6 +1262,31 @@ footer a{color:var(--c)}
       <button type="button" id="me-new" class="tm-rs">Otro objeto</button>
     </div>
     <div class="tip">Cómo usarlo: poné el objeto a un costado y, cuando termine el tiempo de mirar, tapalo con un trapo o dalo vuelta. Al mirar, no dibujes: recorré los bordes, contá las partes y fijate en las proporciones y en dónde cae la sombra. Al comparar, marcá con otro color lo que cambió o faltó, sin borrar.</div>
+  </div>
+</section>
+
+<section id="angulos" class="an-sec">
+  <h2>Ojo para los ángulos</h2>
+  <p style="color:var(--muted)">Al dibujar, casi todo error de forma viene de un ángulo mal visto: una pendiente, la inclinación de un hombro, el borde de una mesa. Acá se entrena la mirada. Aparece una línea gris con una inclinación al azar; con el control de abajo girá la línea verde hasta que quede igual y tocá Comparar. Se muestra cuántos grados se corrió y se guardan en este celular su promedio y su mejor ronda.</p>
+  <div class="card">
+    <svg id="an-svg" class="an-svg" viewBox="0 0 300 300" role="img" aria-label="Línea de referencia y línea para girar">
+      <circle cx="150" cy="150" r="130" fill="none" stroke="currentColor" stroke-opacity=".15"/>
+      <line id="an-ref" x1="150" y1="150" x2="150" y2="150" stroke="#8a8f98" stroke-width="6" stroke-linecap="round"/>
+      <line id="an-me" x1="150" y1="150" x2="150" y2="150" stroke="#2fbf71" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="150" cy="150" r="6" fill="currentColor"/>
+    </svg>
+    <label for="an-rng" class="visually-hidden" style="position:absolute;left:-9999px">Girar la línea verde</label>
+    <input type="range" id="an-rng" min="0" max="359" value="0" step="1" aria-label="Girar la línea verde">
+    <p class="an-msg" id="an-msg" aria-live="polite">Girá la línea verde hasta que coincida con la gris.</p>
+    <ul class="an-stats" aria-label="Resultados guardados">
+      <li id="an-n">Rondas: 0</li><li id="an-avg">Promedio: -</li><li id="an-best">Mejor: -</li>
+    </ul>
+    <div class="an-row">
+      <button type="button" id="an-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="an-next" class="tm-rs">Otra línea</button>
+      <button type="button" id="an-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: antes de girar, mirá la línea gris y decí en voz alta si se parece más a un reloj de las 3, de las 2 o de las 1. Las horizontales y verticales se ven fácil; las diagonales cuestan más, y ahí aparece el error. Como técnica de dibujo, usá un lápiz estirado a la altura del ojo para medir un ángulo del modelo y llevarlo a la hoja. Un error menor a 5 grados ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -3883,6 +3917,40 @@ footer a{color:var(--c)}
     pl.appendChild(b);
   });
   build(true);
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-angulos-v1",ref=document.getElementById("an-ref"),me=document.getElementById("an-me"),rng=document.getElementById("an-rng"),msg=document.getElementById("an-msg"),cmp=document.getElementById("an-cmp"),svg=document.getElementById("an-svg");
+  var st={errs:[]},target=0,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function draw(l,a){var r=a*Math.PI/180;l.setAttribute("x2",150+120*Math.sin(r));l.setAttribute("y2",150-120*Math.cos(r))}
+  function stats(){
+    var e=st.errs,n=e.length;
+    document.getElementById("an-n").textContent="Rondas: "+n;
+    document.getElementById("an-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+"°":"-");
+    document.getElementById("an-best").textContent="Mejor: "+(n?Math.min.apply(null,e)+"°":"-");
+  }
+  function newRound(){
+    do{target=Math.floor(Math.random()*360)}while(target%90===0);
+    rng.value=Math.floor(Math.random()*360);done=false;
+    draw(ref,target);draw(me,+rng.value);
+    ref.style.display="";cmp.textContent="Comparar";
+    msg.textContent="Girá la línea verde hasta que coincida con la gris.";
+  }
+  rng.addEventListener("input",function(){if(!done)draw(me,+rng.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var d=Math.abs(+rng.value-target)%360;if(d>180)d=360-d;
+    st.errs.push(d);save();stats();done=true;
+    var q=d<=3?"Excelente.":d<=8?"Muy bien.":d<=15?"Cerca; probá de nuevo.":"Hay margen: compará con el reloj imaginario.";
+    msg.textContent="Te corriste "+d+"°. "+q;
+    cmp.textContent="Siguiente";
+  });
+  document.getElementById("an-next").addEventListener("click",newRound);
+  document.getElementById("an-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
 })();
 </script>
 </body>
