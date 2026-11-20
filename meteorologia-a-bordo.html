@@ -104,6 +104,7 @@ select{font:16px var(--body);color:var(--ink);background:var(--surface);border:1
 
   <nav class="tabs chips" role="tablist">
     <button class="chip" data-tab="hoy" aria-pressed="true">Hoy en el agua</button>
+    <button class="chip" data-tab="cielo" aria-pressed="false">Radar y satélite</button>
     <button class="chip" data-tab="repaso" aria-pressed="false">Repaso</button>
     <button class="chip" data-tab="quiz" aria-pressed="false">Quiz</button>
     <button class="chip" data-tab="beaufort" aria-pressed="false">Beaufort</button>
@@ -124,7 +125,29 @@ select{font:16px var(--body);color:var(--ink);background:var(--surface);border:1
     <div class="kpis" id="kpis"><p class="note">Cargando datos…</p></div>
     <div class="card"><h3>Próximas 24 horas</h3><div class="strip" id="strip"></div><p class="note">Viento medio en nudos, dirección de donde sopla y ráfaga.</p></div>
     <div class="card" id="lectura"><h3>Lectura del día</h3><p class="note">Esperando datos…</p></div>
-    <p class="note" id="fuenteDatos">Datos de modelo: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (viento y presión) y <a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open-Meteo Marine</a> (olas, agua y nivel). Son pronósticos de modelo para practicar la interpretación: <b>antes de salir, consulte el pronóstico marítimo oficial de <a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">INUMET</a></b> y los avisos de la Prefectura.</p>
+    <p class="note" id="fuenteDatos">Datos de modelo vía <a href="https://open-meteo.com/en/docs/gfs-api" target="_blank" rel="noopener">Open-Meteo</a>: viento, ráfagas y presión del <b>GFS</b> de NOAA; olas de <b>GFS Wave</b> (NOAA); temperatura y nivel del agua de MeteoFrance (el nivel es poco preciso en la costa). Son pronósticos de modelo para practicar la interpretación: <b>antes de salir, consulte el pronóstico marítimo oficial de <a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">INUMET</a></b> y los avisos de la Prefectura.</p>
+  </section>
+
+  <!-- RADAR Y SATÉLITE -->
+  <section id="cielo" data-panel hidden>
+    <div class="card">
+      <h3>Satélite GOES-19</h3>
+      <div class="chips" id="satband" role="group" aria-label="Producto satelital">
+        <button class="chip" data-b="GEOCOLOR" aria-pressed="true">Color (GeoColor)</button>
+        <button class="chip" data-b="13" aria-pressed="false">Infrarrojo</button>
+        <button class="chip" data-b="08" aria-pressed="false">Vapor de agua</button>
+      </div>
+      <a id="satlink" href="https://www.star.nesdis.noaa.gov/goes/sector.php?sat=G19&sector=ssa" target="_blank" rel="noopener"><img id="satimg" alt="Imagen satelital GOES-19 del sur de Sudamérica" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#0b1d2a;min-height:200px" loading="lazy"></a>
+      <p class="note" id="satnote">Sector sur de Sudamérica; Uruguay queda al centro a la derecha. Se actualiza cada 10 minutos. Toque la imagen para ampliarla o ver la animación. Imagen: NOAA/NESDIS STAR; GeoColor de CIRA/NOAA.</p>
+      <details class="flip"><summary>¿Qué mirar?</summary><p style="margin-top:6px"><b>Color:</b> de día muestra nubes como se ven; de noche, nubes bajas en celeste. <b>Infrarrojo:</b> cuanto más fría (más alta) la nube, más color; los núcleos de tormenta se ven como manchas intensas. <b>Vapor de agua:</b> muestra la humedad en altura y las vaguadas que traen los frentes.</p></details>
+    </div>
+    <div class="card">
+      <h3>Radar de lluvia</h3>
+      <div style="position:relative;width:100%;padding-top:110%;border-radius:8px;overflow:hidden;border:1px solid var(--line)">
+        <iframe id="radar" title="Radar de precipitación del Río de la Plata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen></iframe>
+      </div>
+      <p class="note">Mosaico de radares de la región de <a href="https://www.rainviewer.com/" target="_blank" rel="noopener">RainViewer</a>, con animación de las últimas 2 horas. Uruguay anunció en 2024 sus primeros radares (Ismael Cortinas y Pirarajá); mientras no estén en el mosaico, la cobertura sobre el Río de la Plata viene de radares de Argentina y Brasil. Radar oficial argentino: <a href="https://www.smn.gob.ar/radar" target="_blank" rel="noopener">SMN</a>. Avisos oficiales: <a href="https://www.inumet.gub.uy/" target="_blank" rel="noopener">INUMET</a>.</p>
+    </div>
   </section>
 
   <!-- REPASO -->
@@ -172,7 +195,7 @@ document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.cl
  document.querySelectorAll('.tabs .chip').forEach(x=>x.setAttribute('aria-pressed',x===b));
  document.querySelectorAll('[data-panel]').forEach(p=>p.hidden=p.id!==b.dataset.tab);
  if(location.hash!=='#'+b.dataset.tab)history.replaceState(null,'','#'+b.dataset.tab)});
-if(['repaso','quiz','beaufort'].includes(location.hash.slice(1)))document.querySelector(`[data-tab="${location.hash.slice(1)}"]`).click();
+if(['cielo','repaso','quiz','beaufort'].includes(location.hash.slice(1)))document.querySelector(`[data-tab="${location.hash.slice(1)}"]`).click();
 
 // ---------- Beaufort ----------
 const BF=[[0,0,1,'Calma','Espejo'],[1,1,3,'Ventolina','Rizos sin espuma'],[2,4,6,'Flojito','Olitas cortas, crestas que no rompen'],[3,7,10,'Flojo','Crestas que empiezan a romper, algún borrego'],[4,11,16,'Bonancible','Olas más largas, borregos frecuentes'],[5,17,21,'Fresquito','Olas moderadas, muchos borregos, algo de rocío'],[6,22,27,'Fresco','Olas grandes, crestas de espuma blanca por todos lados'],[7,28,33,'Frescachón','El mar se amontona, la espuma se alinea con el viento'],[8,34,40,'Temporal','Olas altas, rompientes con torbellinos de espuma'],[9,41,47,'Temporal fuerte','Densas franjas de espuma, el rocío reduce la visibilidad'],[10,48,55,'Temporal duro','Mar blanco, olas muy altas con crestas largas'],[11,56,63,'Temporal muy duro','Olas excepcionalmente altas'],[12,64,999,'Huracán','Aire lleno de espuma, mar completamente blanco']];
@@ -219,9 +242,15 @@ function interpretar(w,m){const L=[];const H=w.hourly,i=w.idx;
  return L}
 async function cargar(){const [nom,la,lo,mla,mlo]=LUG[$('#lugar').value];store.set('meteo-lugar',$('#lugar').value);
  $('#kpis').innerHTML='<p class="note">Cargando datos…</p>';$('#strip').innerHTML='';$('#lectura').innerHTML='<h3>Lectura del día</h3><p class="note">Esperando datos…</p>';
- const wu=`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,pressure_msl,cloud_cover&hourly=pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m&wind_speed_unit=kn&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
- const mu=`https://marine-api.open-meteo.com/v1/marine?latitude=${mla}&longitude=${mlo}&current=wave_height,wave_direction,wave_period,sea_surface_temperature,sea_level_height_msl&hourly=sea_level_height_msl&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
- try{const [w,m]=await Promise.all([fetch(wu).then(r=>{if(!r.ok)throw 0;return r.json()}),fetch(mu).then(r=>r.ok?r.json():null).catch(()=>null)]);
+ const wu=`https://api.open-meteo.com/v1/gfs?latitude=${la}&longitude=${lo}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,pressure_msl,cloud_cover&hourly=pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m&wind_speed_unit=kn&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
+ const mu=`https://marine-api.open-meteo.com/v1/marine?latitude=${mla}&longitude=${mlo}&current=sea_surface_temperature,sea_level_height_msl&hourly=sea_level_height_msl&timezone=America%2FMontevideo&past_days=1&forecast_days=2`;
+ const gu=`https://marine-api.open-meteo.com/v1/marine?latitude=${mla}&longitude=${mlo}&models=ncep_gfswave025&current=wave_height,wave_direction,wave_period&timezone=America%2FMontevideo&forecast_days=1`;
+ try{const J=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
+  const [w,m,g]=await Promise.all([fetch(wu).then(r=>{if(!r.ok)throw 0;return r.json()}),J(mu),J(gu)]);
+  OLAS='GFS Wave (NOAA)';
+  if(m&&m.current){m.current.wave_height=null;m.current.wave_period=null;m.current.wave_direction=null;
+   if(g&&g.current&&g.current.wave_height!=null){Object.assign(m.current,{wave_height:g.current.wave_height,wave_period:g.current.wave_period,wave_direction:g.current.wave_direction})}
+   else{const b=await J(`https://marine-api.open-meteo.com/v1/marine?latitude=${mla}&longitude=${mlo}&current=wave_height,wave_direction,wave_period&timezone=America%2FMontevideo&forecast_days=1`);if(b&&b.current){Object.assign(m.current,{wave_height:b.current.wave_height,wave_period:b.current.wave_period,wave_direction:b.current.wave_direction});OLAS='combinación automática de Open-Meteo (GFS Wave sin dato en este punto)'}}}
   const now=w.current.time.slice(0,13);w.idx=Math.max(3,w.hourly.time.findIndex(t=>t.slice(0,13)===now));
   pintar(w,m,nom)}catch(e){$('#kpis').innerHTML='<p class="note">No se pudieron cargar los datos. Revise la conexión e intente de nuevo. Mientras tanto, el repaso y el quiz funcionan igual.</p>'}}
 function pintar(w,m,nom){const c=w.current,b=bft(c.wind_speed_10m),H=w.hourly,i=w.idx;
@@ -238,7 +267,8 @@ function pintar(w,m,nom){const c=w.current,b=bft(c.wind_speed_10m),H=w.hourly,i=
  let s='';for(let h=i;h<=i+24&&h<H.time.length;h+=3){const d=H.wind_direction_10m[h];s+=`<div><span class="note">${H.time[h].slice(11,16)}</span><b>${Math.round(H.wind_speed_10m[h])}</b>${arrow(d)} ${card(d)}<br><span class="note">r ${Math.round(H.wind_gusts_10m[h])}</span></div>`}
  $('#strip').innerHTML=s;
  const L=interpretar(w,m);
- $('#lectura').innerHTML=`<h3>Lectura del día · ${esc(nom)}</h3><ul class="read" style="margin:0;padding-left:18px">${L.map(x=>`<li${x.w?' style="color:var(--flag)"':''}>${esc(x.t)}</li>`).join('')}</ul><p class="note">Hora de los datos: ${esc(c.time.slice(11,16))}. Lectura automática con reglas de práctica: compárela con el pronóstico de INUMET y con lo que ve en el cielo.</p>`}
+ $('#lectura').innerHTML=`<h3>Lectura del día · ${esc(nom)}</h3><ul class="read" style="margin:0;padding-left:18px">${L.map(x=>`<li${x.w?' style="color:var(--flag)"':''}>${esc(x.t)}</li>`).join('')}</ul><p class="note"><b>Modelos:</b> viento y presión GFS de NOAA (0,11° a 0,25°, se actualiza cada 6 h); olas ${esc(OLAS)}; agua y nivel MeteoFrance.</p><p class="note">Hora de los datos: ${esc(c.time.slice(11,16))}. Lectura automática con reglas de práctica: compárela con el pronóstico de INUMET y con lo que ve en el cielo.</p>`}
+let OLAS='GFS Wave (NOAA)';
 $('#lugar').value=store.get('meteo-lugar','mvd');$('#lugar').addEventListener('change',cargar);cargar();
 
 // ---------- Repaso ----------
@@ -299,6 +329,16 @@ $('#qopts').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if
  $('#qexp').textContent=(j===q[3]?'Correcto. ':'No es esa. ')+q[4];$('#qexp').hidden=false;$('#qnext').hidden=false;$('#qnext').textContent=qi+1<Q.length?'Siguiente':'Ver resultado';$('#qscore').textContent=`${pts} aciertos`});
 $('#qnext').addEventListener('click',()=>{if(qi>=orden.length){nuevo();return}qi++;preg()});
 nuevo();
+
+// ---------- Radar y satélite ----------
+let satB='GEOCOLOR';
+function sat(){const u=`https://cdn.star.nesdis.noaa.gov/GOES19/ABI/SECTOR/ssa/${satB}/latest.jpg?t=${Math.floor(Date.now()/6e5)}`;const im=$('#satimg');im.onerror=()=>{$('#satnote').innerHTML='No se pudo cargar la imagen. <a href="https://www.star.nesdis.noaa.gov/goes/sector.php?sat=G19&sector=ssa" target="_blank" rel="noopener">Verla en la web de NOAA</a>.'};im.src=u;
+ document.querySelectorAll('#satband .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.b===satB))}
+$('#satband').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;satB=b.dataset.b;sat()});
+let cieloOk=false;
+function cielo(){if(cieloOk)return;cieloOk=true;sat();$('#radar').src='https://www.rainviewer.com/map.html?loc=-34.8,-56.0,6&oFa=0&oC=1&oU=0&oCS=1&oF=0&oAP=1&c=3&o=83&lm=1&layer=radar&sm=1&sn=1'}
+document.querySelector('[data-tab="cielo"]').addEventListener('click',cielo);
+if(location.hash==='#cielo')cielo();
 </script>
 </body>
 </html>
