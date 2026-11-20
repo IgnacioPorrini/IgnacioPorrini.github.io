@@ -61,6 +61,13 @@
         .sq-in:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
         .sq-res{font-size:1.05rem;line-height:1.5}
         .sq-svg{max-width:300px;margin:0 auto;display:block}
+        .cr-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.25rem;margin-top:.4rem}
+        .cr-clock{font:700 3.2rem/1.1 'Roboto',sans-serif;color:var(--accent);font-variant-numeric:tabular-nums;margin-bottom:1rem}
+        .cr-tabla{margin-top:1rem;font-size:.98rem;line-height:1.5}
+        .cr-tabla .cr-row{display:flex;justify-content:space-between;gap:.75rem;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
+        .cr-tabla .cr-row span:last-child{text-align:right;color:#e8eeeb}
+        .ori-act:disabled{opacity:.5;cursor:default}
+        .ori-act:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
         .container a:not(.btn):not(.ori-btn){color:var(--accent)}
         .ori-btn{color:#e8eeeb!important}
     </style>
@@ -152,6 +159,24 @@
                     <span id="saltos" class="text-muted-light"></span>
                     <span id="mejor" class="text-muted-light"></span>
                 </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="cronometro">
+            <div class="container">
+                <h2 class="section-title mb-2">Cronómetro de plegado</h2>
+                <p class="text-muted-light mb-3">Elija el modelo, toque Empezar al hacer el primer pliegue y Terminar cuando lo tenga listo. Se guardan cuántas veces lo hizo y su mejor tiempo, solo en este dispositivo. Sirve para ver cómo mejora con la práctica.</p>
+                <div id="cr-tabs" role="group" aria-label="Elegir modelo para cronometrar"></div>
+                <div class="cr-box">
+                    <div class="cr-clock" id="cr-clock" role="timer" aria-label="Tiempo de plegado">00:00</div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button class="ori-act" type="button" id="cr-go">Empezar</button>
+                        <button class="ori-act alt" type="button" id="cr-rs">Poner en cero</button>
+                    </div>
+                    <p class="sq-res mb-0" id="cr-msg" aria-live="polite">Todavía no hay tiempos de este modelo.</p>
+                </div>
+                <div class="cr-tabla" id="cr-tabla"></div>
+                <button class="ori-act alt mt-3" type="button" id="cr-clear">Borrar mis tiempos</button>
             </div>
         </section>
 
@@ -270,6 +295,55 @@
     txt();
   });
   txt();
+})();
+</script>
+<script>
+(function(){
+  var M=[['rana','Rana saltarina'],['mariposa','Mariposa'],['barco','Barco'],['grulla','Grulla'],['otro','Otro modelo']];
+  var KEY='origami-tiempos-v1',cur='rana',data={},t0=0,run=false,iv=null;
+  var tabs=document.getElementById('cr-tabs'),clock=document.getElementById('cr-clock'),go=document.getElementById('cr-go'),
+      rs=document.getElementById('cr-rs'),msg=document.getElementById('cr-msg'),tabla=document.getElementById('cr-tabla'),clr=document.getElementById('cr-clear');
+  if(!tabs||!clock)return;
+  try{data=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){data={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+  function fmt(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);s=s%60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s}
+  function name(k){for(var i=0;i<M.length;i++)if(M[i][0]===k)return M[i][1];return k}
+  function stat(k){var d=data[k];return d&&d.n>0?d:null}
+  function showTabs(){
+    tabs.textContent='';
+    M.forEach(function(m){
+      var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=m[1];
+      b.setAttribute('aria-pressed',m[0]===cur?'true':'false');
+      b.addEventListener('click',function(){if(run)return;cur=m[0];showTabs();info()});
+      b.disabled=run&&m[0]!==cur;
+      tabs.appendChild(b);
+    });
+  }
+  function info(){
+    var d=stat(cur);
+    msg.textContent=d?name(cur)+': '+d.n+(d.n===1?' vez':' veces')+', mejor tiempo '+fmt(d.best)+', último '+fmt(d.last)+'.':'Todavía no hay tiempos de '+name(cur)+'.';
+    tabla.textContent='';
+    M.forEach(function(m){
+      var x=stat(m[0]);if(!x)return;
+      var r=document.createElement('div');r.className='cr-row';
+      var a=document.createElement('span');a.textContent=m[1];
+      var b=document.createElement('span');b.textContent=x.n+(x.n===1?' vez':' veces')+' · mejor '+fmt(x.best);
+      r.appendChild(a);r.appendChild(b);tabla.appendChild(r);
+    });
+  }
+  function tick(){clock.textContent=fmt(Date.now()-t0)}
+  go.addEventListener('click',function(){
+    if(!run){run=true;t0=Date.now();go.textContent='Terminar';iv=setInterval(tick,250);tick();showTabs();msg.textContent='Plegando '+name(cur)+'… toque Terminar al finalizar.'}
+    else{
+      run=false;clearInterval(iv);var ms=Date.now()-t0;clock.textContent=fmt(ms);go.textContent='Empezar';
+      var d=data[cur]||{n:0,best:0,last:0};var mejor=d.n===0||ms<d.best;
+      d.n++;d.last=ms;if(mejor)d.best=ms;data[cur]=d;save();showTabs();info();
+      if(mejor&&d.n>1)msg.textContent='¡Nuevo mejor tiempo de '+name(cur)+': '+fmt(ms)+'! Lleva '+d.n+' veces.';
+    }
+  });
+  rs.addEventListener('click',function(){if(run){run=false;clearInterval(iv);go.textContent='Empezar'}clock.textContent='00:00';showTabs();info()});
+  clr.addEventListener('click',function(){if(confirm('¿Borrar todos los tiempos guardados en este dispositivo?')){data={};save();info()}});
+  showTabs();info();
 })();
 </script>
 <script>
