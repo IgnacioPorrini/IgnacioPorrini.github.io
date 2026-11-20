@@ -366,6 +366,15 @@ footer a{color:var(--c)}
 .ov-sec .ov-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .ov-sec .ov-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.ov-sec{display:none}}
+.oa-sec .oa-sw{display:flex;gap:8px;max-width:420px;margin:8px auto}
+.oa-sec .oa-sw svg{flex:1;min-width:0;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.oa-sec input[type=range]{width:100%;min-height:44px}
+.oa-sec .oa-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.oa-sec .oa-row .tm-go,.oa-sec .oa-row .tm-rs{flex:1 1 140px}
+.oa-sec .oa-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.oa-sec .oa-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.oa-sec .oa-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.oa-sec{display:none}}
 .oe-sec .oe-sw{display:flex;gap:8px;max-width:420px;margin:8px auto}
 .oe-sec .oe-sw svg{flex:1;min-width:0;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .oe-sec input[type=range]{width:100%;min-height:44px}
@@ -457,6 +466,7 @@ footer a{color:var(--c)}
     <a href="#ojo-recta">Ojo para la recta</a>
     <a href="#circulo-mano">Círculo a mano alzada</a>
     <a href="#ojo-centro">Ojo para el centro</a>
+    <a href="#ojo-area">Ojo para el área</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1557,6 +1567,29 @@ footer a{color:var(--c)}
       <button type="button" id="cg-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: entrecerrá los ojos para ver la figura como una mancha y pensá dónde se equilibraría sobre la punta de un lápiz. Es un punto más cercano a la parte más ancha o más pesada, no al punto medio de los extremos. Tras comparar, la marca blanca es el centro verdadero (el centroide del área) y la línea punteada muestra de qué lado tendés a irte. Menos de 3 % es un ojo muy afinado. En papel, recortá una forma irregular de cartón, marcá donde creés que está el centro y comprobalo equilibrándola sobre un lápiz.</div>
+  </div>
+</section>
+
+<section id="ojo-area" class="oa-sec">
+  <h2>Ojo para el área</h2>
+  <p style="color:var(--muted)">Al dibujar o armar un collage cuesta decidir cuánto lugar ocupa cada forma: dos figuras distintas pueden parecer iguales y no serlo. Acá se entrena con un círculo gris y un cuadrado verde. Con el control, agrandá o achicá el cuadrado hasta que ocupe la misma superficie que el círculo y tocá Comparar. Se muestra cuánto te corriste en porcentaje del área y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="oa-sw" role="img" aria-label="Círculo gris objetivo a la izquierda y tu cuadrado verde a la derecha">
+      <svg viewBox="0 0 200 200" aria-hidden="true"><circle id="oa-ref" cx="100" cy="100" r="50" fill="#9aa0a6"/></svg>
+      <svg viewBox="0 0 200 200" aria-hidden="true"><rect id="oa-me" x="60" y="60" width="80" height="80" fill="#4cc26a"/></svg>
+    </div>
+    <label for="oa-rng" style="position:absolute;left:-9999px">Lado de tu cuadrado</label>
+    <input type="range" id="oa-rng" min="20" max="190" value="80" step="1" aria-label="Lado de tu cuadrado, de chico a grande">
+    <p class="oa-msg" id="oa-msg" aria-live="polite">Igualá la superficie de tu cuadrado con la del círculo.</p>
+    <ul class="oa-stats" aria-label="Resultados guardados">
+      <li id="oa-n">Rondas: 0</li><li id="oa-avg">Promedio: -</li><li id="oa-best">Mejor: -</li>
+    </ul>
+    <div class="oa-row">
+      <button type="button" id="oa-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="oa-next" class="tm-rs">Otro círculo</button>
+      <button type="button" id="oa-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: no compares los anchos, comparás superficies. Un círculo ocupa algo menos que el cuadrado que lo contiene (cerca del 79 %), así que el cuadrado que lo iguala es un poco más chico que el diámetro del círculo. Después de comparar, probá en papel dibujar un cuadrado y un círculo de igual área, o repartir un collage en partes iguales. Menos de 5 % ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -4638,6 +4671,40 @@ footer a{color:var(--c)}
   });
   $("cg-next").addEventListener("click",newRound);
   $("cg-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-area-v1",$=function(i){return document.getElementById(i)};
+  var ref=$("oa-ref"),me=$("oa-me"),R=$("oa-rng"),msg=$("oa-msg"),cmp=$("oa-cmp");
+  var st={errs:[]},A=0,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function sq(v){v=+v;me.setAttribute("width",v);me.setAttribute("height",v);me.setAttribute("x",(200-v)/2);me.setAttribute("y",(200-v)/2)}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("oa-n").textContent="Rondas: "+n;
+    $("oa-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    $("oa-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function newRound(){
+    var r=28+Math.floor(Math.random()*45);A=Math.PI*r*r;
+    ref.setAttribute("r",r);
+    var s;do{s=25+Math.floor(Math.random()*160)}while(Math.abs(s*s-A)/A<0.3);
+    R.value=s;sq(s);done=false;cmp.textContent="Comparar";
+    msg.textContent="Igualá la superficie de tu cuadrado con la del círculo.";
+  }
+  R.addEventListener("input",function(){if(!done)sq(R.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var v=+R.value,d=Math.round(Math.abs(v*v-A)/A*1000)/10;st.errs.push(d);save();stats();done=true;
+    var q=d<=5?"Excelente.":d<=10?"Muy bien.":d<=20?"Cerca; probá de nuevo.":"Hay margen: probá comparar cuánto sobra y cuánto falta en cada esquina.";
+    msg.textContent="Te corriste "+d+" % del área ("+(v*v>A?"tu cuadrado quedó más grande":v*v<A?"tu cuadrado quedó más chico":"justo")+"). "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("oa-next").addEventListener("click",newRound);
+  $("oa-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
