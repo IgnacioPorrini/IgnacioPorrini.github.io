@@ -348,6 +348,15 @@ footer a{color:var(--c)}
 .oc-sec .oc-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .oc-sec .oc-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.oc-sec{display:none}}
+.pm-sec .pm-svg{display:block;width:100%;max-width:360px;margin:8px auto;touch-action:none}
+.pm-sec input[type=range]{width:100%;min-height:44px}
+.pm-sec .pm-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pm-sec .pm-row .tm-go,.pm-sec .pm-row .tm-rs{flex:1 1 140px}
+.pm-sec .pm-ask{font-family:Fredoka,sans-serif;font-size:1.2rem;text-align:center;margin:6px 0}
+.pm-sec .pm-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.pm-sec .pm-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.pm-sec .pm-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.pm-sec{display:none}}
 </style>
 </head>
 <body>
@@ -398,6 +407,7 @@ footer a{color:var(--c)}
     <a href="#angulos">Ojo para los ángulos</a>
     <a href="#proporciones">Ojo para las proporciones</a>
     <a href="#ojo-color">Ojo para el color</a>
+    <a href="#punto-medio">Ojo para el punto medio</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1357,6 +1367,31 @@ footer a{color:var(--c)}
       <button type="button" id="oc-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: primero ajustá la luminosidad (es lo que más se nota a ojo), después el matiz y por último la saturación. Entrecerrá los ojos para comparar las dos muestras como masas. Al comparar se revela el valor del objetivo. El error se calcula como distancia entre los dos colores en RGB, sobre el máximo posible; menos de 5 % ya es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="punto-medio" class="pm-sec">
+  <h2>Ojo para el punto medio</h2>
+  <p style="color:var(--muted)">Dividir una distancia en partes iguales es lo que se hace todo el tiempo al dibujar: la mitad de una cabeza, un tercio de una pared, el centro de una hoja. Acá se entrena. Aparece una línea gris de largo al azar y se pide una fracción (la mitad, un tercio, dos tercios, un cuarto o tres cuartos). Con el control de abajo corré la marca verde hasta ese punto y tocá Comparar. Se muestra cuánto te corriste, en porcentaje del largo de la línea, y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <p class="pm-ask" id="pm-ask" aria-live="polite">Ubicá la mitad.</p>
+    <svg id="pm-svg" class="pm-svg" viewBox="0 0 300 100" role="img" aria-label="Línea gris con una marca verde que se puede correr">
+      <line id="pm-line" x1="20" y1="50" x2="280" y2="50" stroke="#8a8f98" stroke-width="6" stroke-linecap="round"/>
+      <line id="pm-tgt" x1="0" y1="30" x2="0" y2="70" stroke="currentColor" stroke-opacity=".6" stroke-width="2" stroke-dasharray="4 3" style="display:none"/>
+      <line id="pm-me" x1="0" y1="25" x2="0" y2="75" stroke="#2fbf71" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <label for="pm-rng" style="position:absolute;left:-9999px">Posición de la marca verde</label>
+    <input type="range" id="pm-rng" min="0" max="1000" value="500" step="1" aria-label="Posición de la marca verde sobre la línea">
+    <p class="pm-msg" id="pm-msg" aria-live="polite">Corré la marca verde hasta la fracción pedida.</p>
+    <ul class="pm-stats" aria-label="Resultados guardados">
+      <li id="pm-n">Rondas: 0</li><li id="pm-avg">Promedio: -</li><li id="pm-best">Mejor: -</li>
+    </ul>
+    <div class="pm-row">
+      <button type="button" id="pm-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="pm-next" class="tm-rs">Otra línea</button>
+      <button type="button" id="pm-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: la mitad se encuentra con más facilidad que un tercio; para un tercio, primero imaginá la mitad y después corré un poco hacia el lado corto. Al comparar, una línea punteada marca el punto exacto. Como técnica de dibujo, antes de ubicar un rasgo marcá con un trazo suave la mitad y los cuartos del espacio disponible, y después medí contra esas marcas. Un error menor al 3 % ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -4093,6 +4128,46 @@ footer a{color:var(--c)}
   });
   $("oc-next").addEventListener("click",newRound);
   $("oc-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-punto-medio-v1",$=function(i){return document.getElementById(i)};
+  var line=$("pm-line"),me=$("pm-me"),tgt=$("pm-tgt"),R=$("pm-rng"),msg=$("pm-msg"),cmp=$("pm-cmp"),ask=$("pm-ask");
+  var st={errs:[]},X1=20,X2=280,F=[[1,2,"la mitad"],[1,3,"un tercio"],[2,3,"dos tercios"],[1,4,"un cuarto"],[3,4,"tres cuartos"]],cur=F[0],done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("pm-n").textContent="Rondas: "+n;
+    $("pm-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    $("pm-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function xAt(f){return X1+(X2-X1)*f}
+  function paint(){var x=xAt(R.value/1000);me.setAttribute("x1",x);me.setAttribute("x2",x)}
+  function newRound(){
+    var len=110+Math.random()*150,off=(300-len)*Math.random();
+    X1=off;X2=off+len;
+    line.setAttribute("x1",X1);line.setAttribute("x2",X2);
+    var c;do{c=F[Math.floor(Math.random()*F.length)]}while(c===cur&&F.length>1&&Math.random()<.7);
+    cur=c;R.value=Math.floor(Math.random()*1001);paint();done=false;
+    tgt.style.display="none";cmp.textContent="Comparar";
+    ask.textContent="Ubicá "+cur[2]+".";
+    msg.textContent="Corré la marca verde hasta la fracción pedida.";
+  }
+  R.addEventListener("input",function(){if(!done)paint()});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var f=cur[0]/cur[1],d=Math.abs(R.value/1000-f)*100;
+    d=Math.round(d*10)/10;st.errs.push(d);save();stats();done=true;
+    var x=xAt(f);tgt.setAttribute("x1",x);tgt.setAttribute("x2",x);tgt.style.display="";
+    var q=d<=3?"Excelente.":d<=7?"Muy bien.":d<=15?"Cerca; probá de nuevo.":"Hay margen: buscá primero la mitad.";
+    msg.textContent="Te corriste "+d+" % del largo. "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("pm-next").addEventListener("click",newRound);
+  $("pm-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
