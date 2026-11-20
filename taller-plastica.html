@@ -302,6 +302,16 @@ footer a{color:var(--c)}
 .cl-sec .gr-stage{margin-top:4px}
 .cl-sec .lc-sub{font-family:Fredoka,sans-serif;font-size:1.05rem;margin:8px 0 0}
 @media print{.cl-sec{display:none}}
+.gs-sec .tm-row{flex-wrap:wrap}
+.gs-sec .tm-go{flex:1 1 100%}
+.gs-sec .tm-rs{flex:1}
+.gs-sec .gs-plans{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.gs-sec .gs-sub{font-family:Fredoka,sans-serif;font-size:1.15rem;margin:8px 0 0;text-align:center;min-height:2.6em}
+.gs-sec .gs-dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 0;padding:0;list-style:none}
+.gs-sec .gs-dots li{min-width:34px;padding:2px 8px;border-radius:99px;border:2px solid var(--line);font-size:.8rem;text-align:center;color:var(--muted)}
+.gs-sec .gs-dots li.on{border-color:var(--c);background:var(--soft-c);color:var(--ink);font-weight:700}
+.gs-sec .gs-dots li.done{opacity:.55;text-decoration:line-through}
+@media print{.gs-sec{display:none}}
 </style>
 </head>
 <body>
@@ -347,6 +357,7 @@ footer a{color:var(--c)}
     <a href="#linea-continua">Línea continua</a>
     <a href="#calentamiento">Calentamiento de trazo</a>
     <a href="#texturas">Caza de texturas</a>
+    <a href="#gestos">Sesión de gestos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1195,6 +1206,24 @@ footer a{color:var(--c)}
     </ul>
     <div class="mat-foot"><span id="tx-count" aria-live="polite">0 de 12 cazadas</span><span><button type="button" id="tx-rnd" class="tm-rs">Desafío al azar</button> <button type="button" id="tx-reset" class="tm-rs">Destildar todo</button></span></div>
     <div class="tip">Cómo usarlo: llevá hojas finas (de calcar o de cuaderno), crayones sin papel y cinta para sujetar. Frotá siempre en el mismo sentido y con la misma presión. Después podés recortar o rasgar las texturas para el collage, o adivinar de dónde salió cada una. Para mirar con más atención: ordenalas de más fina a más gruesa, o de más suave a más áspera.</div>
+  </div>
+</section>
+
+<section id="gestos" class="gs-sec">
+  <h2>Sesión de gestos</h2>
+  <p style="color:var(--muted)">Una tanda de dibujos rápidos, uno atrás de otro, con tiempos cada vez más largos. Elegí una tanda, tocá Empezar y dibujá lo que te toque en cada ronda: la forma general y la dirección de los trazos, sin detalles ni borrar. Al final de cada ronda suena un aviso corto y pasa solo a la siguiente. Sirve con cualquier objeto o con una persona posando.</p>
+  <div class="card">
+    <div class="gs-plans" role="group" aria-label="Tanda" id="gs-plans"></div>
+    <div id="gs-clock" class="tm-clock" role="timer" aria-live="off">0:30</div>
+    <div class="tm-bar" aria-hidden="true"><span id="gs-fill"></span></div>
+    <p class="gs-sub" id="gs-sub" aria-live="polite">Elegí una tanda y tocá Empezar.</p>
+    <ol class="gs-dots" id="gs-dots" aria-label="Rondas"></ol>
+    <div class="tm-row">
+      <button type="button" id="gs-go" class="tm-go">Empezar</button>
+      <button type="button" id="gs-next" class="tm-rs">Saltar</button>
+      <button type="button" id="gs-rs" class="tm-rs">Reiniciar</button>
+    </div>
+    <div class="tip">Cómo usarlo: una hoja por ronda o una hoja dividida en cuadros, lápiz blando o crayón y nada de goma. Con los 30 s buscá una sola línea larga que resuma el movimiento; con los 2 min recién sumá volumen. Al terminar, ponelas lado a lado: muchas veces las rápidas tienen más vida que las lentas.</div>
   </div>
 </section>
 
@@ -3665,6 +3694,93 @@ footer a{color:var(--c)}
     o.textContent="Desafío: "+b.nextElementSibling.textContent;
   });
   upd();
+})();
+</script>
+<script>
+(function(){
+  var PLANS=[
+    {n:"Corta (3 min)",r:[30,30,30,30,30,30]},
+    {n:"Clásica (6 min)",r:[30,30,30,30,60,60,120]},
+    {n:"Larga (11 min)",r:[30,30,30,30,60,60,120,120,300]}
+  ];
+  var T=["Tu mano abierta","Una taza o un vaso","Un zapato","Una planta o una rama","La mochila","Una silla","Una botella","Tus lentes o tu reloj","Una fruta","Alguien sentado, de lejos","Una persona caminando","Un árbol de la vista","Un pájaro o una nube","Una prenda colgada","Tus pies"];
+  var plan=1,idx=0,left=0,dur=0,timer=null,endAt=0,run=false,fin=false,order=[];
+  var clock=document.getElementById("gs-clock"),fill=document.getElementById("gs-fill"),sub=document.getElementById("gs-sub"),dots=document.getElementById("gs-dots"),go=document.getElementById("gs-go"),pl=document.getElementById("gs-plans");
+  function fmt(n){var m=Math.floor(n/60),s=n%60;return m+":"+("0"+s).slice(-2)}
+  function lab(d){return d<60?d+" s":(d/60)+" min"}
+  function beep(final){
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+      var ctx=new AC(),t=ctx.currentTime,ds=final?[0,0.28,0.56]:[0];
+      ds.forEach(function(d){
+        var o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=final?880:660;
+        g.gain.setValueAtTime(0.0001,t+d);g.gain.exponentialRampToValueAtTime(0.3,t+d+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d+0.2);
+        o.connect(g);g.connect(ctx.destination);o.start(t+d);o.stop(t+d+0.22);
+      });
+      setTimeout(function(){try{ctx.close()}catch(e){}},1500);
+    }catch(e){}
+    try{if(navigator.vibrate)navigator.vibrate(final?[200,100,200,100,200]:[150])}catch(e){}
+  }
+  function themes(n){
+    var a=T.slice(),o=[];
+    while(o.length<n){if(!a.length)a=T.slice();o.push(a.splice(Math.floor(Math.random()*a.length),1)[0])}
+    return o;
+  }
+  function paint(){
+    var r=PLANS[plan].r;
+    clock.textContent=fmt(Math.max(0,Math.ceil(left)));
+    clock.className="tm-clock"+(fin?" end":"");
+    fill.style.width=(dur?Math.max(0,left/dur)*100:0)+"%";
+    var li=dots.children;
+    for(var i=0;i<li.length;i++){li[i].className=fin||i<idx?"done":(i===idx?"on":"")}
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null}run=false}
+  function setRound(){
+    var r=PLANS[plan].r;dur=r[idx];left=dur;
+    sub.textContent="Ronda "+(idx+1)+" de "+r.length+" ("+lab(dur)+"): "+order[idx];
+    paint();
+  }
+  function build(){
+    stop();fin=false;idx=0;
+    var r=PLANS[plan].r;order=themes(r.length);
+    dots.innerHTML="";
+    r.forEach(function(d,i){var li=document.createElement("li");li.textContent=lab(d);dots.appendChild(li)});
+    setRound();go.textContent="Empezar";
+  }
+  function next(auto){
+    var r=PLANS[plan].r;
+    if(idx>=r.length-1){
+      stop();fin=true;left=0;dur=0;paint();go.textContent="Otra tanda";
+      sub.textContent="Tanda completa: "+r.length+" rondas. Poné los dibujos lado a lado y mirá cuál tiene más vida.";
+      beep(true);return;
+    }
+    idx++;setRound();
+    if(auto)beep(false);
+    if(run){endAt=Date.now()+left*1000}
+  }
+  function tick(){
+    left=(endAt-Date.now())/1000;
+    if(left<=0){next(true);return}
+    paint();
+  }
+  function start(){
+    endAt=Date.now()+left*1000;stop();run=true;timer=setInterval(tick,250);go.textContent="Pausar";tick();
+  }
+  go.addEventListener("click",function(){
+    if(fin){build();return}
+    if(run){stop();go.textContent="Seguir"}else start();
+  });
+  document.getElementById("gs-next").addEventListener("click",function(){if(!fin)next(false)});
+  document.getElementById("gs-rs").addEventListener("click",build);
+  PLANS.forEach(function(p,i){
+    var b=document.createElement("button");b.type="button";b.className="tm-p";b.textContent=p.n;
+    b.setAttribute("aria-pressed",i===plan?"true":"false");
+    b.addEventListener("click",function(){
+      plan=i;[].forEach.call(pl.children,function(x,j){x.setAttribute("aria-pressed",j===i?"true":"false")});build();
+    });
+    pl.appendChild(b);
+  });
+  build();
 })();
 </script>
 </body>
