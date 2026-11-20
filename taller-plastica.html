@@ -384,6 +384,14 @@ footer a{color:var(--c)}
 .rc-sec .rc-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .rc-sec .rc-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.rc-sec{display:none}}
+.fh-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
+.fh-sec .gr-stage{margin-top:4px}
+.fh-sec .fh-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.fh-sec .fh-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.fh-sec .fh-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+.fh-sec .fh-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.fh-sec .fh-row .tm-rs{flex:1 1 140px}
+@media print{.fh-sec{display:none}}
 </style>
 </head>
 <body>
@@ -438,6 +446,7 @@ footer a{color:var(--c)}
     <a href="#ojo-valor">Ojo para el valor</a>
     <a href="#ojo-elipse">Ojo para la elipse</a>
     <a href="#ojo-recta">Ojo para la recta</a>
+    <a href="#circulo-mano">Círculo a mano alzada</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1496,6 +1505,23 @@ footer a{color:var(--c)}
       <button type="button" id="rc-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: mirá cuánto sube o baja la recta entre los dos puntos grises y repetí esa misma caída las veces que entre hasta llegar a la derecha; cuanto más separados estén los puntos, menos se amplía el error. En papel, una regla o un lápiz apoyado sobre los dos puntos ayuda a comprobar. Tras comparar se dibuja la recta exacta, para ver de qué lado tendés a irte. Menos de 2 % es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="circulo-mano" class="fh-sec">
+  <h2>Círculo a mano alzada</h2>
+  <p style="color:var(--muted)">Dibujar un círculo de un solo trazo, sin compás, es un clásico de calentamiento: exige soltura del hombro y buen ojo. Trazá uno en la hoja con el dedo. Al soltar, la herramienta calcula el círculo que mejor se ajusta a tu trazo y mide cuánto te alejaste de él, en porcentaje del radio. También avisa si quedó abierto. Se guardan en este celular la cantidad de intentos, el promedio y el mejor; nada se envía a ningún lado.</p>
+  <div class="card">
+    <div class="gr-stage"><canvas id="fh-cv" width="600" height="450" role="img" aria-label="Hoja en blanco para dibujar un círculo de un solo trazo con el dedo"></canvas></div>
+    <p class="fh-msg" id="fh-msg" aria-live="polite">Apoyá el dedo y dibujá un círculo completo de un solo trazo.</p>
+    <ul class="fh-stats" aria-label="Resultados guardados">
+      <li id="fh-n">Intentos: 0</li><li id="fh-avg">Promedio: -</li><li id="fh-best">Mejor: -</li>
+    </ul>
+    <div class="fh-row">
+      <button type="button" id="fh-clear" class="tm-rs">Hoja nueva</button>
+      <button type="button" id="fh-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: mové todo el brazo desde el hombro y no solo la muñeca; si querés, hacé dos o tres vueltas en el aire antes de apoyar el dedo. Trazá de un solo movimiento y sin retocar. Menos de 3 % es muy redondo; entre 3 y 6 % ya se lee como círculo; si pasa de 10 %, suele ser porque el trazo se aplasta hacia un lado. La línea verde punteada muestra el círculo ideal, para ver de qué lado tendés a salirte. En papel, probá con lápiz suave, repetí cinco veces y compará; después hacelo con la mano no dominante o con los ojos cerrados. Es una medida aproximada, pensada para entrenar la mano y no para calificarla.</div>
   </div>
 </section>
 
@@ -4382,6 +4408,114 @@ footer a{color:var(--c)}
   $("rc-next").addEventListener("click",newRound);
   $("rc-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-circulo-mano-v1",$=function(i){return document.getElementById(i)};
+  var cv=$("fh-cv"),ctx=cv.getContext("2d"),msg=$("fh-msg");
+  var st={errs:[]},pts=[],drawing=false,locked=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("fh-n").textContent="Intentos: "+n;
+    $("fh-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    $("fh-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function blank(){
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height);
+    pts=[];drawing=false;locked=false;
+  }
+  function pos(ev){
+    var r=cv.getBoundingClientRect();
+    return {x:(ev.clientX-r.left)*cv.width/r.width,y:(ev.clientY-r.top)*cv.height/r.height};
+  }
+  function seg(a,b){
+    ctx.strokeStyle="#1d2127";ctx.lineWidth=4;ctx.lineCap="round";ctx.lineJoin="round";
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  }
+  function resample(p,n){
+    var L=[0],i;
+    for(i=1;i<p.length;i++){L.push(L[i-1]+Math.hypot(p[i].x-p[i-1].x,p[i].y-p[i-1].y))}
+    var tot=L[L.length-1],out=[],j=1;
+    if(tot<=0)return p.slice();
+    for(i=0;i<n;i++){
+      var s=tot*i/(n-1);
+      while(j<L.length-1&&L[j]<s)j++;
+      var sl=L[j]-L[j-1]||1,f=(s-L[j-1])/sl;
+      out.push({x:p[j-1].x+(p[j].x-p[j-1].x)*f,y:p[j-1].y+(p[j].y-p[j-1].y)*f});
+    }
+    return out;
+  }
+  function fit(q){
+    var n=q.length,mx=0,my=0,i;
+    for(i=0;i<n;i++){mx+=q[i].x;my+=q[i].y}
+    mx/=n;my/=n;
+    var suu=0,suv=0,svv=0,suuu=0,svvv=0,suvv=0,svuu=0;
+    for(i=0;i<n;i++){
+      var u=q[i].x-mx,v=q[i].y-my;
+      suu+=u*u;suv+=u*v;svv+=v*v;suuu+=u*u*u;svvv+=v*v*v;suvv+=u*v*v;svuu+=v*u*u;
+    }
+    var det=suu*svv-suv*suv;
+    if(Math.abs(det)<1e-6)return null;
+    var b1=(suuu+suvv)/2,b2=(svvv+svuu)/2;
+    var uc=(b1*svv-b2*suv)/det,vc=(b2*suu-b1*suv)/det;
+    var cx=uc+mx,cy=vc+my,r=0;
+    for(i=0;i<n;i++)r+=Math.hypot(q[i].x-cx,q[i].y-cy);
+    r/=n;
+    return {cx:cx,cy:cy,r:r};
+  }
+  function evaluate(){
+    if(pts.length<8){blank();msg.textContent="Trazo muy corto. Dibujá un círculo completo de un solo trazo.";return}
+    var q=resample(pts,120),f=fit(q);
+    if(!f||!isFinite(f.r)||f.r<25){msg.textContent="Trazo muy chico. Probá con un círculo más grande.";return}
+    var a=0,i,prev=Math.atan2(q[0].y-f.cy,q[0].x-f.cx),cur,da;
+    for(i=1;i<q.length;i++){
+      cur=Math.atan2(q[i].y-f.cy,q[i].x-f.cx);da=cur-prev;
+      while(da>Math.PI)da-=2*Math.PI;
+      while(da<-Math.PI)da+=2*Math.PI;
+      a+=da;prev=cur;
+    }
+    var turn=Math.abs(a)*180/Math.PI;
+    if(turn<300){msg.textContent="Quedó un arco de unos "+Math.round(turn)+" grados. Dibujá la vuelta completa y volvé al punto de partida.";return}
+    var ss=0;
+    for(i=0;i<q.length;i++){var d=Math.hypot(q[i].x-f.cx,q[i].y-f.cy)-f.r;ss+=d*d}
+    var err=Math.sqrt(ss/q.length)/f.r*100;err=Math.round(err*10)/10;
+    var gap=Math.round(Math.hypot(q[0].x-q[q.length-1].x,q[0].y-q[q.length-1].y)/(2*f.r)*100);
+    ctx.save();ctx.strokeStyle="#2f9e55";ctx.lineWidth=3;ctx.setLineDash([8,8]);
+    ctx.beginPath();ctx.arc(f.cx,f.cy,f.r,0,2*Math.PI);ctx.stroke();ctx.restore();
+    st.errs.push(err);save();stats();locked=true;
+    var q2=err<=3?"Muy redondo.":err<=6?"Se lee como un círculo.":err<=10?"Cerca; probá más rápido y desde el hombro.":"Salió ovalado o irregular: probá de nuevo cuidando que no se aplaste hacia un lado.";
+    var cierre=gap>=15?" El trazo quedó abierto un "+gap+" % del diámetro.":gap<=5?" Cerró muy bien.":"";
+    msg.textContent="Desvío: "+err+" % del radio. "+q2+cierre;
+  }
+  function down(ev){
+    if(locked)return;
+    ev.preventDefault();
+    try{cv.setPointerCapture(ev.pointerId)}catch(e){}
+    if(pts.length)blank();
+    drawing=true;pts=[pos(ev)];
+    msg.textContent="Dibujando...";
+  }
+  function move(ev){
+    if(!drawing)return;
+    ev.preventDefault();
+    var p=pos(ev),l=pts[pts.length-1];
+    if(Math.hypot(p.x-l.x,p.y-l.y)<2)return;
+    seg(l,p);pts.push(p);
+  }
+  function up(){
+    if(!drawing)return;
+    drawing=false;evaluate();
+  }
+  cv.addEventListener("pointerdown",down);
+  cv.addEventListener("pointermove",move);
+  cv.addEventListener("pointerup",up);
+  cv.addEventListener("pointercancel",up);
+  $("fh-clear").addEventListener("click",function(){blank();msg.textContent="Apoyá el dedo y dibujá un círculo completo de un solo trazo."});
+  $("fh-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  blank();stats();
 })();
 </script>
 </body>
