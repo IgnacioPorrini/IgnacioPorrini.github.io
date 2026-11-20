@@ -392,6 +392,15 @@ footer a{color:var(--c)}
 .fh-sec .fh-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
 .fh-sec .fh-row .tm-rs{flex:1 1 140px}
 @media print{.fh-sec{display:none}}
+.cg-sec .cg-sw{max-width:420px;margin:8px auto}
+.cg-sec .cg-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a;touch-action:none;cursor:crosshair}
+.cg-sec .cg-sw svg:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
+.cg-sec .cg-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.cg-sec .cg-row .tm-go,.cg-sec .cg-row .tm-rs{flex:1 1 140px}
+.cg-sec .cg-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.cg-sec .cg-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.cg-sec .cg-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.cg-sec{display:none}}
 </style>
 </head>
 <body>
@@ -447,6 +456,7 @@ footer a{color:var(--c)}
     <a href="#ojo-elipse">Ojo para la elipse</a>
     <a href="#ojo-recta">Ojo para la recta</a>
     <a href="#circulo-mano">Círculo a mano alzada</a>
+    <a href="#ojo-centro">Ojo para el centro</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1522,6 +1532,31 @@ footer a{color:var(--c)}
       <button type="button" id="fh-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: mové todo el brazo desde el hombro y no solo la muñeca; si querés, hacé dos o tres vueltas en el aire antes de apoyar el dedo. Trazá de un solo movimiento y sin retocar. Menos de 3 % es muy redondo; entre 3 y 6 % ya se lee como círculo; si pasa de 10 %, suele ser porque el trazo se aplasta hacia un lado. La línea verde punteada muestra el círculo ideal, para ver de qué lado tendés a salirte. En papel, probá con lápiz suave, repetí cinco veces y compará; después hacelo con la mano no dominante o con los ojos cerrados. Es una medida aproximada, pensada para entrenar la mano y no para calificarla.</div>
+  </div>
+</section>
+
+<section id="ojo-centro" class="cg-sec">
+  <h2>Ojo para el centro</h2>
+  <p style="color:var(--muted)">Al encajar un dibujo, conviene sentir dónde está el centro de una forma: el punto donde se equilibraría si fuera de cartón. Acá aparece una figura gris irregular. Tocá el cuadro donde creés que está ese punto de equilibrio (con teclado, las flechas lo mueven) y después Comparar. Se muestra el centro verdadero, calculado con la geometría de la figura, y cuánto te alejaste, en porcentaje del ancho del cuadro. Se guardan en este celular el promedio y la mejor ronda; nada se envía a ningún lado.</p>
+  <div class="card">
+    <div class="cg-sw">
+      <svg id="cg-svg" viewBox="0 0 200 200" tabindex="0" role="img" aria-label="Figura gris irregular. Tocá donde creés que está su centro de equilibrio; con teclado, las flechas mueven el punto verde.">
+        <polygon id="cg-poly" points="" fill="#5b6068" stroke="#9aa0a6" stroke-width="2" stroke-linejoin="round"/>
+        <line id="cg-link" x1="0" y1="0" x2="0" y2="0" stroke="#e8eaed" stroke-width="1.5" stroke-dasharray="4 4" visibility="hidden"/>
+        <circle id="cg-t" cx="100" cy="100" r="6" fill="none" stroke="#e8eaed" stroke-width="2" visibility="hidden"/>
+        <circle id="cg-me" cx="100" cy="100" r="6" fill="#4cc26a" visibility="hidden"/>
+      </svg>
+    </div>
+    <p class="cg-msg" id="cg-msg" aria-live="polite">Tocá el cuadro donde creés que está el centro de la figura.</p>
+    <ul class="cg-stats" aria-label="Resultados guardados">
+      <li id="cg-n">Rondas: 0</li><li id="cg-avg">Promedio: -</li><li id="cg-best">Mejor: -</li>
+    </ul>
+    <div class="cg-row">
+      <button type="button" id="cg-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="cg-next" class="tm-rs">Otra figura</button>
+      <button type="button" id="cg-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: entrecerrá los ojos para ver la figura como una mancha y pensá dónde se equilibraría sobre la punta de un lápiz. Es un punto más cercano a la parte más ancha o más pesada, no al punto medio de los extremos. Tras comparar, la marca blanca es el centro verdadero (el centroide del área) y la línea punteada muestra de qué lado tendés a irte. Menos de 3 % es un ojo muy afinado. En papel, recortá una forma irregular de cartón, marcá donde creés que está el centro y comprobalo equilibrándola sobre un lápiz.</div>
   </div>
 </section>
 
@@ -4516,6 +4551,94 @@ footer a{color:var(--c)}
   $("fh-clear").addEventListener("click",function(){blank();msg.textContent="Apoyá el dedo y dibujá un círculo completo de un solo trazo."});
   $("fh-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   blank();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-centro-v1",$=function(i){return document.getElementById(i)};
+  var svg=$("cg-svg"),poly=$("cg-poly"),me=$("cg-me"),tg=$("cg-t"),lk=$("cg-link"),msg=$("cg-msg"),cmp=$("cg-cmp");
+  var st={errs:[]},C=[100,100],P=[],pos=null,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("cg-n").textContent="Rondas: "+n;
+    $("cg-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    $("cg-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function centroid(p){
+    var A=0,cx=0,cy=0,i,j,f;
+    for(i=0;i<p.length;i++){j=(i+1)%p.length;f=p[i][0]*p[j][1]-p[j][0]*p[i][1];A+=f;cx+=(p[i][0]+p[j][0])*f;cy+=(p[i][1]+p[j][1])*f}
+    A/=2;return [cx/(6*A),cy/(6*A)];
+  }
+  function simple(p){
+    function ccw(a,b,c){return (c[1]-a[1])*(b[0]-a[0])>(b[1]-a[1])*(c[0]-a[0])}
+    function cross(a,b,c,d){return ccw(a,c,d)!==ccw(b,c,d)&&ccw(a,b,c)!==ccw(a,b,d)}
+    var n=p.length,i,j;
+    for(i=0;i<n;i++)for(j=i+1;j<n;j++){
+      if(j===i+1||(i===0&&j===n-1))continue;
+      if(cross(p[i],p[(i+1)%n],p[j],p[(j+1)%n]))return false;
+    }
+    return true;
+  }
+  function newRound(){
+    var n,k=0,pts,i,a,r,ok=false;
+    while(k<300&&!ok){
+      k++;n=3+Math.floor(Math.random()*4);pts=[];
+      var a0=Math.random()*6.283;
+      for(i=0;i<n;i++){
+        a=a0+i*6.283/n+(Math.random()-0.5)*(6.283/n)*0.7;
+        r=28+Math.random()*62;
+        pts.push([100+r*Math.cos(a),100+r*Math.sin(a)]);
+      }
+      ok=simple(pts);
+      if(ok){var c=centroid(pts);
+        for(i=0;i<n;i++){if(pts[i][0]<8||pts[i][0]>192||pts[i][1]<8||pts[i][1]>192)ok=false}
+        if(Math.abs(c[0]-100)<3&&Math.abs(c[1]-100)<3)ok=false}
+    }
+    if(!ok){pts=[[40,150],[165,120],[90,35]]}
+    P=pts;C=centroid(P);
+    poly.setAttribute("points",P.map(function(q){return q[0].toFixed(1)+","+q[1].toFixed(1)}).join(" "));
+    pos=null;done=false;
+    me.setAttribute("visibility","hidden");tg.setAttribute("visibility","hidden");lk.setAttribute("visibility","hidden");
+    cmp.textContent="Comparar";
+    msg.textContent="Tocá el cuadro donde creés que está el centro de la figura.";
+  }
+  function put(x,y){
+    x=Math.max(2,Math.min(198,x));y=Math.max(2,Math.min(198,y));
+    pos=[x,y];me.setAttribute("cx",x.toFixed(1));me.setAttribute("cy",y.toFixed(1));me.setAttribute("visibility","visible");
+  }
+  svg.addEventListener("pointerdown",function(ev){
+    if(done)return;
+    var b=svg.getBoundingClientRect();
+    put((ev.clientX-b.left)/b.width*200,(ev.clientY-b.top)/b.height*200);
+    msg.textContent="Punto puesto. Tocá de nuevo para corregirlo o apretá Comparar.";
+  });
+  svg.addEventListener("keydown",function(ev){
+    var d={ArrowLeft:[-3,0],ArrowRight:[3,0],ArrowUp:[0,-3],ArrowDown:[0,3]}[ev.key];
+    if(!d||done)return;
+    ev.preventDefault();
+    if(!pos)pos=[100,100];
+    put(pos[0]+d[0],pos[1]+d[1]);
+    msg.textContent="Punto puesto. Movelo con las flechas o apretá Comparar.";
+  });
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    if(!pos){msg.textContent="Primero tocá el cuadro para poner el punto verde.";return}
+    var d=Math.sqrt(Math.pow(pos[0]-C[0],2)+Math.pow(pos[1]-C[1],2))/2;d=Math.round(d*10)/10;
+    st.errs.push(d);save();stats();done=true;
+    tg.setAttribute("cx",C[0].toFixed(1));tg.setAttribute("cy",C[1].toFixed(1));tg.setAttribute("visibility","visible");
+    lk.setAttribute("x1",pos[0].toFixed(1));lk.setAttribute("y1",pos[1].toFixed(1));lk.setAttribute("x2",C[0].toFixed(1));lk.setAttribute("y2",C[1].toFixed(1));lk.setAttribute("visibility","visible");
+    var q=d<=3?"Excelente.":d<=6?"Muy bien.":d<=12?"Cerca; probá de nuevo.":"Hay margen: buscá la parte más ancha de la figura.";
+    var dx=pos[0]-C[0],dy=pos[1]-C[1],lado="";
+    if(Math.abs(dx)>=Math.abs(dy))lado=dx>0?"te fuiste hacia la derecha":"te fuiste hacia la izquierda";
+    else lado=dy>0?"te fuiste hacia abajo":"te fuiste hacia arriba";
+    msg.textContent="Quedaste a "+d+" % del ancho del centro verdadero ("+lado+"). "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("cg-next").addEventListener("click",newRound);
+  $("cg-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
 })();
 </script>
 </body>
