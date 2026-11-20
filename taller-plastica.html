@@ -298,6 +298,10 @@ footer a{color:var(--c)}
 .lc-sec .gr-stage{margin-top:4px}
 .lc-sec .lc-sub{font-family:Fredoka,sans-serif;font-size:1.15rem;margin:8px 0 0}
 @media print{.lc-sec{display:none}}
+.cl-sec canvas{touch-action:none;cursor:crosshair;background:#fff}
+.cl-sec .gr-stage{margin-top:4px}
+.cl-sec .lc-sub{font-family:Fredoka,sans-serif;font-size:1.05rem;margin:8px 0 0}
+@media print{.cl-sec{display:none}}
 </style>
 </head>
 <body>
@@ -341,6 +345,7 @@ footer a{color:var(--c)}
     <a href="#garabato">Garabato al azar</a>
     <a href="#al-reves">Dibujo al revés</a>
     <a href="#linea-continua">Línea continua</a>
+    <a href="#calentamiento">Calentamiento de trazo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1144,6 +1149,27 @@ footer a{color:var(--c)}
     <div class="gr-stage"><canvas id="lc-cv" width="600" height="450" role="img" aria-label="Hoja en blanco para dibujar con una sola línea continua usando el dedo"></canvas></div>
     <p class="gr-info" id="lc-info" aria-live="polite">Apoyá el dedo en la hoja para empezar.</p>
     <div class="tip">Cómo usarlo: elegí un tema y mirá el objeto real (o una foto) antes de empezar. Apoyá el dedo y dibujá todo el contorno y los detalles sin levantarlo; podés cruzar y repetir líneas. Con tiempo elegido, la línea se corta sola al llegar a cero. Al terminar, tocá "Hoja nueva" para otro intento. Para hacerlo en papel: lapicera o fibra, hoja suelta y la punta pegada al papel todo el tiempo; si te cuesta, probá antes con 1 minuto. Variantes: mirar el objeto sin mirar la hoja (como en el dibujo a ciegas), dibujar con la mano no dominante, o hacer un retrato de un compañero. No se juzga el parecido: lo que se gana es una línea viva y decidida.</div>
+  </div>
+</section>
+
+<section id="calentamiento" class="cl-sec">
+  <h2>Calentamiento de trazo</h2>
+  <p style="color:var(--muted)">Antes de dibujar conviene soltar la mano: trazar líneas, círculos, elipses y ondas con soltura, desde el hombro y no desde la muñeca. Elegí un ejercicio, seguí la guía punteada con el dedo y repetí sin apuro. Importa más la línea decidida que la exactitud. Nada se sube a internet.</p>
+  <div class="card">
+    <div class="gr-ctl">
+      <div class="gr-opts" id="cl-e" role="group" aria-label="Ejercicio"><b>Ejercicio:</b></div>
+      <div class="gr-opts" id="cl-c" role="group" aria-label="Color del trazo"><b>Trazo:</b></div>
+      <div class="gr-opts" role="group" aria-label="Acciones">
+        <button type="button" class="gr-opt" id="cl-guia" aria-pressed="true">Guía visible</button>
+        <button type="button" class="gr-opt" id="cl-undo">Deshacer</button>
+        <button type="button" class="gr-opt" id="cl-clear">Borrar trazos</button>
+        <button type="button" class="gr-opt" id="cl-save">Guardar imagen</button>
+      </div>
+    </div>
+    <p class="lc-sub" id="cl-sub" aria-live="polite"></p>
+    <div class="gr-stage"><canvas id="cl-cv" width="600" height="450" role="img" aria-label="Hoja con una guía punteada para practicar trazos con el dedo"></canvas></div>
+    <p class="gr-info" id="cl-info" aria-live="polite">Seguí la guía con el dedo.</p>
+    <div class="tip">Cómo usarlo: dibujá cada trazo de un solo movimiento, sin retocar. Si una línea sale torcida no la borres: probá la siguiente más rápido, porque la velocidad ayuda a que salga recta. En papel, apoyá el codo en el aire y mové todo el brazo; dos o tres minutos por ejercicio alcanzan para entrar en calor. Ideas para después: repetir con la mano no dominante, con lápiz blando y con fibra, o llenar una hoja entera con un solo ejercicio.</div>
   </div>
 </section>
 
@@ -3487,6 +3513,101 @@ footer a{color:var(--c)}
     }catch(_){say("No se pudo guardar la imagen.")}
   });
   render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  function $(i){return document.getElementById(i)}
+  var cv=$("cl-cv"),ctx=cv.getContext("2d"),info=$("cl-info"),sub=$("cl-sub");
+  var W=600,H=450,PI=Math.PI;
+  var CS=[["Negro","#2b2a33"],["Rojo","#d6342a"],["Azul","#1f5fbf"],["Verde","#2e8b4f"]];
+  function range(n,a,b){var r=[],i;for(i=0;i<n;i++)r.push(a+(b-a)*(n===1?.5:i/(n-1)));return r}
+  var EX=[
+    {n:"Horizontales",t:"Unir cada par de puntos con una línea recta, de izquierda a derecha.",g:function(c){
+      range(8,45,H-45).forEach(function(y){dot(c,50,y);dot(c,W-50,y);faint(c,50,y,W-50,y)})}},
+    {n:"Verticales",t:"Unir cada par de puntos, de arriba hacia abajo.",g:function(c){
+      range(10,50,W-50).forEach(function(x){dot(c,x,40);dot(c,x,H-40);faint(c,x,40,x,H-40)})}},
+    {n:"Diagonales",t:"Seguir las diagonales de punta a punta, todas con la misma inclinación.",g:function(c){
+      range(9,-120,W-60).forEach(function(x){var a=x,b=x+300;dot(c,a,H-30);dot(c,b,30);faint(c,a,H-30,b,30)})}},
+    {n:"Círculos",t:"Trazar cada círculo de una vuelta, sin cortar. Probá en los dos sentidos.",g:function(c){
+      [[110,110,70],[300,110,70],[490,110,70],[110,300,70],[300,300,70],[490,300,70]].forEach(function(o){ell(c,o[0],o[1],o[2],o[2],0)})}},
+    {n:"Elipses horizontales",t:"Elipses achatadas, con el eje largo horizontal.",g:function(c){
+      [[150,80],[450,80],[150,225],[450,225],[150,370],[450,370]].forEach(function(o){ell(c,o[0],o[1],115,38,0)})}},
+    {n:"Elipses inclinadas",t:"Elipses a 45 grados: sirven para el cuerpo de un objeto visto en perspectiva.",g:function(c){
+      [[120,120],[300,120],[480,120],[120,320],[300,320],[480,320]].forEach(function(o){ell(c,o[0],o[1],85,30,-PI/4)})}},
+    {n:"Ondas",t:"Seguir la onda de lado a lado con un movimiento parejo.",g:function(c){
+      [90,225,360].forEach(function(y){c.beginPath();var x;for(x=30;x<=W-30;x+=4){var yy=y+Math.sin((x-30)/ (W-60)*PI*6)*38;if(x===30)c.moveTo(x,yy);else c.lineTo(x,yy)}c.stroke()})}},
+    {n:"Espiral",t:"Seguir la espiral desde el centro hacia afuera, y después al revés.",g:function(c){
+      c.beginPath();var t;for(t=0;t<=PI*10;t+=.05){var r=4+t*6.5,x=W/2+Math.cos(t)*r*1.3,y=H/2+Math.sin(t)*r*.88;if(t===0)c.moveTo(x,y);else c.lineTo(x,y)}c.stroke()}},
+    {n:"Hoja libre",t:"Sin guía: inventá tus propios trazos, rayados y formas.",g:function(){}}
+  ];
+  function dot(c,x,y){c.save();c.setLineDash([]);c.fillStyle="#9aa3ad";c.beginPath();c.arc(x,y,4,0,PI*2);c.fill();c.restore()}
+  function faint(c,x1,y1,x2,y2){c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke()}
+  function ell(c,x,y,rx,ry,a){c.beginPath();c.ellipse(x,y,rx,ry,a,0,PI*2);c.stroke()}
+  var ex=0,col=CS[0][1],guia=true,strokes=[],cur=null,down=false;
+  function say(m){info.textContent=m||""}
+  function render(withGuide){
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
+    if(withGuide){
+      ctx.save();ctx.strokeStyle="#aab2bb";ctx.lineWidth=1.5;ctx.setLineDash([6,6]);EX[ex].g(ctx);ctx.restore();
+    }
+    ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=3;
+    strokes.concat(cur?[cur]:[]).forEach(function(s){
+      ctx.strokeStyle=s.c;ctx.beginPath();
+      s.p.forEach(function(q,k){if(k)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1])});
+      if(s.p.length===1)ctx.lineTo(s.p[0][0]+.1,s.p[0][1]);
+      ctx.stroke();
+    });
+  }
+  function draw(){render(guia)}
+  function group(box,arr,idx,set){
+    var bs=[];
+    arr.forEach(function(t,i){
+      var b=document.createElement("button");b.type="button";b.className="gr-opt";b.textContent=t[0];
+      b.setAttribute("aria-pressed",String(i===idx));
+      b.addEventListener("click",function(){set(i,t[1]);bs.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))})});
+      box.appendChild(b);bs.push(b);
+    });
+  }
+  group($("cl-e"),EX.map(function(e,i){return [e.n,i]}),0,function(i){ex=i;strokes=[];cur=null;sub.textContent=EX[i].t;say("Ejercicio: "+EX[i].n+".");draw()});
+  group($("cl-c"),CS,0,function(i,v){col=v});
+  sub.textContent=EX[0].t;
+  function pos(e){
+    var b=cv.getBoundingClientRect();
+    return [Math.min(W,Math.max(0,(e.clientX-b.left)/b.width*W)),Math.min(H,Math.max(0,(e.clientY-b.top)/b.height*H))];
+  }
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    down=true;cur={c:col,p:[pos(e)]};draw();
+  });
+  cv.addEventListener("pointermove",function(e){if(!down)return;e.preventDefault();cur.p.push(pos(e));draw()});
+  function end(){
+    if(!down)return;down=false;strokes.push(cur);cur=null;draw();
+    say(strokes.length+(strokes.length===1?" trazo.":" trazos.")+" Seguí con el próximo.");
+  }
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  $("cl-guia").addEventListener("click",function(){
+    guia=!guia;this.setAttribute("aria-pressed",String(guia));draw();say(guia?"Guía visible.":"Guía oculta: probá repetir de memoria.");
+  });
+  $("cl-undo").addEventListener("click",function(){
+    if(!strokes.length){say("No hay trazos para deshacer.");return}
+    strokes.pop();draw();say("Último trazo deshecho.");
+  });
+  $("cl-clear").addEventListener("click",function(){strokes=[];cur=null;down=false;draw();say("Hoja limpia. Seguí la guía con el dedo.")});
+  $("cl-save").addEventListener("click",function(){
+    try{
+      if(!strokes.length){say("Todavía no hay trazos para guardar.");return}
+      render(guia);
+      cv.toBlob(function(b){
+        if(!b){say("No se pudo guardar la imagen.");return}
+        var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="calentamiento-de-trazo.png";
+        document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
+        say("Imagen guardada.");
+      },"image/png");
+    }catch(_){say("No se pudo guardar la imagen.")}
+  });
+  draw();
 })();
 </script>
 </body>
