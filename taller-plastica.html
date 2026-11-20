@@ -366,6 +366,15 @@ footer a{color:var(--c)}
 .ov-sec .ov-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .ov-sec .ov-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.ov-sec{display:none}}
+.oe-sec .oe-sw{display:flex;gap:8px;max-width:420px;margin:8px auto}
+.oe-sec .oe-sw svg{flex:1;min-width:0;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.oe-sec input[type=range]{width:100%;min-height:44px}
+.oe-sec .oe-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.oe-sec .oe-row .tm-go,.oe-sec .oe-row .tm-rs{flex:1 1 140px}
+.oe-sec .oe-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.oe-sec .oe-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.oe-sec .oe-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.oe-sec{display:none}}
 </style>
 </head>
 <body>
@@ -418,6 +427,7 @@ footer a{color:var(--c)}
     <a href="#ojo-color">Ojo para el color</a>
     <a href="#punto-medio">Ojo para el punto medio</a>
     <a href="#ojo-valor">Ojo para el valor</a>
+    <a href="#ojo-elipse">Ojo para la elipse</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1424,6 +1434,29 @@ footer a{color:var(--c)}
       <button type="button" id="ov-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: entrecerrá los ojos y alejá un poco el celular; las dos muestras se vuelven masas y es más fácil ver cuál es más clara. Una escala de valores de lápiz suele usar entre 5 y 9 pasos, y distinguirlos bien es la base del claroscuro. La claridad se mide acá en la escala de 0 a 100 de un gris neutro; con el brillo del celular muy bajo o con reflejos, el resultado cambia, así que conviene usarlo siempre en condiciones parecidas. Menos de 3 puntos ya es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="ojo-elipse" class="oe-sec">
+  <h2>Ojo para la elipse</h2>
+  <p style="color:var(--muted)">Un círculo visto en perspectiva se vuelve elipse: es lo que cuesta en tazas, ruedas, tapas y cilindros. Lo que cambia es la apertura, o sea cuánto se achata respecto de su largo. A la izquierda hay una elipse objetivo; a la derecha, la tuya, con el mismo largo y la misma inclinación. Con el control, igualá la apertura y tocá Comparar. Se muestra la diferencia en puntos de apertura (100 es un círculo, 0 es una línea) y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="oe-sw" role="img" aria-label="Elipse objetivo a la izquierda y tu elipse a la derecha">
+      <svg viewBox="0 0 200 200" aria-hidden="true"><ellipse id="oe-ref" cx="100" cy="100" rx="80" ry="40" fill="none" stroke="#9aa0a6" stroke-width="5"/></svg>
+      <svg viewBox="0 0 200 200" aria-hidden="true"><ellipse id="oe-me" cx="100" cy="100" rx="80" ry="40" fill="none" stroke="#4cc26a" stroke-width="5"/></svg>
+    </div>
+    <label for="oe-rng" style="position:absolute;left:-9999px">Apertura de tu elipse</label>
+    <input type="range" id="oe-rng" min="5" max="100" value="50" step="1" aria-label="Apertura de tu elipse, de una línea a un círculo">
+    <p class="oe-msg" id="oe-msg" aria-live="polite">Igualá la apertura de tu elipse con la de la izquierda.</p>
+    <ul class="oe-stats" aria-label="Resultados guardados">
+      <li id="oe-n">Rondas: 0</li><li id="oe-avg">Promedio: -</li><li id="oe-best">Mejor: -</li>
+    </ul>
+    <div class="oe-row">
+      <button type="button" id="oe-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="oe-next" class="tm-rs">Otra elipse</button>
+      <button type="button" id="oe-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: mirá primero el eje corto y preguntate cuántas veces entra en el largo; una elipse al 50 % es el doble de larga que de ancha. Después de comparar, probá dibujar en papel un círculo en perspectiva con esa apertura. Cuanto más alto se mira un objeto redondo, más abierta es su elipse; al nivel del ojo, se cierra hasta ser una línea. Menos de 5 puntos ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -4234,6 +4267,40 @@ footer a{color:var(--c)}
   });
   $("ov-next").addEventListener("click",newRound);
   $("ov-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-elipse-v1",$=function(i){return document.getElementById(i)};
+  var ref=$("oe-ref"),me=$("oe-me"),R=$("oe-rng"),msg=$("oe-msg"),cmp=$("oe-cmp");
+  var st={errs:[]},T=50,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  var ang=0;
+  function draw(el,v){el.setAttribute("ry",(80*v/100).toFixed(2));el.setAttribute("transform","rotate("+ang+" 100 100)")}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("oe-n").textContent="Rondas: "+n;
+    $("oe-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" pts":"-");
+    $("oe-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" pts":"-");
+  }
+  function newRound(){
+    T=10+Math.floor(Math.random()*76);ang=Math.floor(Math.random()*180);
+    var s;do{s=5+Math.floor(Math.random()*96)}while(Math.abs(s-T)<15);
+    R.value=s;draw(ref,T);draw(me,s);done=false;cmp.textContent="Comparar";
+    msg.textContent="Igualá la apertura de tu elipse con la de la izquierda.";
+  }
+  R.addEventListener("input",function(){if(!done)draw(me,+R.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var d=Math.abs(+R.value-T);st.errs.push(d);save();stats();done=true;
+    var q=d<=5?"Excelente.":d<=10?"Muy bien.":d<=20?"Cerca; probá de nuevo.":"Hay margen: compará el eje corto con el largo.";
+    msg.textContent="Te corriste "+d+" puntos. La apertura objetivo era "+T+" de 100 ("+(R.value>T?"tu elipse quedó más abierta":R.value<T?"tu elipse quedó más cerrada":"justo")+"). "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("oe-next").addEventListener("click",newRound);
+  $("oe-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
