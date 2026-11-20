@@ -338,6 +338,16 @@ footer a{color:var(--c)}
 .pr-sec .pr-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 .pr-sec input[type=range]{width:100%;min-height:44px}
 @media print{.pr-sec{display:none}}
+.oc-sec .oc-sw{display:flex;gap:8px;max-width:360px;margin:8px auto}
+.oc-sec .oc-sw div{flex:1;height:110px;border-radius:12px;border:2px solid var(--line)}
+.oc-sec .oc-lab{display:block;font-size:.9rem;color:var(--muted);margin-top:6px}
+.oc-sec input[type=range]{width:100%;min-height:44px}
+.oc-sec .oc-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.oc-sec .oc-row .tm-go,.oc-sec .oc-row .tm-rs{flex:1 1 140px}
+.oc-sec .oc-msg{font-family:Fredoka,sans-serif;font-size:1.15rem;text-align:center;margin:8px 0;min-height:2.6em}
+.oc-sec .oc-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.oc-sec .oc-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.oc-sec{display:none}}
 </style>
 </head>
 <body>
@@ -387,6 +397,7 @@ footer a{color:var(--c)}
     <a href="#memoria">Dibujo de memoria</a>
     <a href="#angulos">Ojo para los ángulos</a>
     <a href="#proporciones">Ojo para las proporciones</a>
+    <a href="#ojo-color">Ojo para el color</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1320,6 +1331,32 @@ footer a{color:var(--c)}
       <button type="button" id="pr-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: antes de mover el control, decí cuántas veces entra el ancho en el alto (una vez y media, el doble, la mitad). Al comparar se marca con una línea punteada dónde terminaba el gris. Como técnica de dibujo, tomá una medida del modelo con el lápiz estirado, usala como unidad y fijate cuántas veces entra en las demás: así se controlan las proporciones antes de dibujar los detalles. Un error menor al 5 % ya es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="ojo-color" class="oc-sec">
+  <h2>Ojo para el color</h2>
+  <p style="color:var(--muted)">Mezclar un color a ojo es la base de la paleta. A la izquierda hay un color objetivo; a la derecha, el tuyo. Con los tres controles (matiz, saturación y luminosidad) acercá el tuyo al objetivo y tocá Comparar. Se muestra cuánto te corriste en porcentaje y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="oc-sw" role="img" aria-label="Color objetivo a la izquierda y tu color a la derecha">
+      <div id="oc-ref"></div><div id="oc-me"></div>
+    </div>
+    <label class="oc-lab" for="oc-h">Matiz (el color en sí)</label>
+    <input type="range" id="oc-h" min="0" max="360" value="180" step="1">
+    <label class="oc-lab" for="oc-s">Saturación (de gris a puro)</label>
+    <input type="range" id="oc-s" min="0" max="100" value="50" step="1">
+    <label class="oc-lab" for="oc-l">Luminosidad (de oscuro a claro)</label>
+    <input type="range" id="oc-l" min="5" max="95" value="50" step="1">
+    <p class="oc-msg" id="oc-msg" aria-live="polite">Igualá tu color con el de la izquierda.</p>
+    <ul class="oc-stats" aria-label="Resultados guardados">
+      <li id="oc-n">Rondas: 0</li><li id="oc-avg">Promedio: -</li><li id="oc-best">Mejor: -</li>
+    </ul>
+    <div class="oc-row">
+      <button type="button" id="oc-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="oc-next" class="tm-rs">Otro color</button>
+      <button type="button" id="oc-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: primero ajustá la luminosidad (es lo que más se nota a ojo), después el matiz y por último la saturación. Entrecerrá los ojos para comparar las dos muestras como masas. Al comparar se revela el valor del objetivo. El error se calcula como distancia entre los dos colores en RGB, sobre el máximo posible; menos de 5 % ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -4018,6 +4055,44 @@ footer a{color:var(--c)}
   });
   document.getElementById("pr-next").addEventListener("click",newRound);
   document.getElementById("pr-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-color-v1",$=function(i){return document.getElementById(i)};
+  var ref=$("oc-ref"),me=$("oc-me"),H=$("oc-h"),S=$("oc-s"),L=$("oc-l"),msg=$("oc-msg"),cmp=$("oc-cmp");
+  var st={errs:[]},T=[0,50,50],done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function rgb(h,s,l){s/=100;l/=100;var k=function(n){return(n+h/30)%12},a=s*Math.min(l,1-l);
+    var f=function(n){return Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,9-k(n),1))))};return[f(0),f(8),f(4)]}
+  function css(c){return"rgb("+c.join(",")+")"}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("oc-n").textContent="Rondas: "+n;
+    $("oc-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    $("oc-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function paint(){me.style.background=css(rgb(+H.value,+S.value,+L.value))}
+  function newRound(){
+    T=[Math.floor(Math.random()*360),20+Math.floor(Math.random()*76),20+Math.floor(Math.random()*61)];
+    ref.style.background=css(rgb(T[0],T[1],T[2]));
+    H.value=Math.floor(Math.random()*360);S.value=50;L.value=50;paint();done=false;
+    cmp.textContent="Comparar";msg.textContent="Igualá tu color con el de la izquierda.";
+  }
+  [H,S,L].forEach(function(r){r.addEventListener("input",function(){if(!done)paint()})});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var a=rgb(+H.value,+S.value,+L.value),b=rgb(T[0],T[1],T[2]);
+    var d=Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[1]-b[1],2)+Math.pow(a[2]-b[2],2))/441.67*100;
+    d=Math.round(d*10)/10;st.errs.push(d);save();stats();done=true;
+    var q=d<=3?"Excelente.":d<=8?"Muy bien.":d<=15?"Cerca; probá de nuevo.":"Hay margen: empezá por la luminosidad.";
+    msg.textContent="Te corriste "+d+" %. El objetivo era matiz "+T[0]+", saturación "+T[1]+", luminosidad "+T[2]+". "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("oc-next").addEventListener("click",newRound);
+  $("oc-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
