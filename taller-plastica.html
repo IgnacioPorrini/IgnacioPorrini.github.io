@@ -330,6 +330,14 @@ footer a{color:var(--c)}
 .an-sec .an-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 .an-sec input[type=range]{width:100%;min-height:44px}
 @media print{.an-sec{display:none}}
+.pr-sec .pr-svg{display:block;width:100%;max-width:360px;margin:8px auto;background:var(--card);border:2px solid var(--line);border-radius:12px;touch-action:none}
+.pr-sec .pr-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pr-sec .pr-row .tm-go,.pr-sec .pr-row .tm-rs{flex:1 1 140px}
+.pr-sec .pr-msg{font-family:Fredoka,sans-serif;font-size:1.15rem;text-align:center;margin:8px 0;min-height:2.6em}
+.pr-sec .pr-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.pr-sec .pr-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+.pr-sec input[type=range]{width:100%;min-height:44px}
+@media print{.pr-sec{display:none}}
 </style>
 </head>
 <body>
@@ -378,6 +386,7 @@ footer a{color:var(--c)}
     <a href="#gestos">Sesión de gestos</a>
     <a href="#memoria">Dibujo de memoria</a>
     <a href="#angulos">Ojo para los ángulos</a>
+    <a href="#proporciones">Ojo para las proporciones</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1287,6 +1296,30 @@ footer a{color:var(--c)}
       <button type="button" id="an-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: antes de girar, mirá la línea gris y decí en voz alta si se parece más a un reloj de las 3, de las 2 o de las 1. Las horizontales y verticales se ven fácil; las diagonales cuestan más, y ahí aparece el error. Como técnica de dibujo, usá un lápiz estirado a la altura del ojo para medir un ángulo del modelo y llevarlo a la hoja. Un error menor a 5 grados ya es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="proporciones" class="pr-sec">
+  <h2>Ojo para las proporciones</h2>
+  <p style="color:var(--muted)">Después del ángulo, el segundo error más común al dibujar es la proporción: un objeto queda más alto o más ancho de lo que es. Acá se entrena. A la izquierda hay un rectángulo gris; el verde tiene el mismo ancho. Con el control de abajo cambiá la altura del verde hasta que tenga la misma forma que el gris y tocá Comparar. Se muestra cuánto te corriste en porcentaje y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <svg id="pr-svg" class="pr-svg" viewBox="0 0 300 300" role="img" aria-label="Rectángulo gris de referencia y rectángulo verde de altura regulable">
+      <rect id="pr-ref" x="20" y="20" width="110" height="110" fill="#8a8f98" rx="2"/>
+      <rect id="pr-me" x="170" y="20" width="110" height="110" fill="#2fbf71" rx="2"/>
+      <line id="pr-lim" x1="160" y1="20" x2="290" y2="20" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="4 4" style="display:none"/>
+    </svg>
+    <label for="pr-rng" style="position:absolute;left:-9999px">Altura del rectángulo verde</label>
+    <input type="range" id="pr-rng" min="40" max="270" value="110" step="1" aria-label="Altura del rectángulo verde">
+    <p class="pr-msg" id="pr-msg" aria-live="polite">Igualá la forma del rectángulo verde con la del gris.</p>
+    <ul class="pr-stats" aria-label="Resultados guardados">
+      <li id="pr-n">Rondas: 0</li><li id="pr-avg">Promedio: -</li><li id="pr-best">Mejor: -</li>
+    </ul>
+    <div class="pr-row">
+      <button type="button" id="pr-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="pr-next" class="tm-rs">Otro rectángulo</button>
+      <button type="button" id="pr-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: antes de mover el control, decí cuántas veces entra el ancho en el alto (una vez y media, el doble, la mitad). Al comparar se marca con una línea punteada dónde terminaba el gris. Como técnica de dibujo, tomá una medida del modelo con el lápiz estirado, usala como unidad y fijate cuántas veces entra en las demás: así se controlan las proporciones antes de dibujar los detalles. Un error menor al 5 % ya es un ojo muy afinado.</div>
   </div>
 </section>
 
@@ -3950,6 +3983,41 @@ footer a{color:var(--c)}
   });
   document.getElementById("an-next").addEventListener("click",newRound);
   document.getElementById("an-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-proporciones-v1",ref=document.getElementById("pr-ref"),me=document.getElementById("pr-me"),lim=document.getElementById("pr-lim"),rng=document.getElementById("pr-rng"),msg=document.getElementById("pr-msg"),cmp=document.getElementById("pr-cmp");
+  var st={errs:[]},H=110,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function stats(){
+    var e=st.errs,n=e.length;
+    document.getElementById("pr-n").textContent="Rondas: "+n;
+    document.getElementById("pr-avg").textContent="Promedio: "+(n?(e.reduce(function(a,b){return a+b},0)/n).toFixed(1)+" %":"-");
+    document.getElementById("pr-best").textContent="Mejor: "+(n?Math.min.apply(null,e).toFixed(1)+" %":"-");
+  }
+  function setMe(h){me.setAttribute("height",h)}
+  function newRound(){
+    var r;do{r=0.4+Math.random()*2.0}while(r>0.88&&r<1.12);
+    H=Math.round(110*r);ref.setAttribute("height",H);
+    rng.value=Math.round(60+Math.random()*180);setMe(+rng.value);done=false;
+    lim.style.display="none";cmp.textContent="Comparar";
+    msg.textContent="Igualá la forma del rectángulo verde con la del gris.";
+  }
+  rng.addEventListener("input",function(){if(!done)setMe(+rng.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var h=+rng.value,d=Math.abs(h-H)/H*100;d=Math.round(d*10)/10;
+    st.errs.push(d);save();stats();done=true;
+    lim.setAttribute("y1",20+H);lim.setAttribute("y2",20+H);lim.style.display="";
+    var q=d<=3?"Excelente.":d<=8?"Muy bien.":d<=15?"Cerca; probá de nuevo.":"Hay margen: contá cuántas veces entra el ancho en el alto.";
+    msg.textContent="Te corriste "+d+" % ("+(h>H?"quedó más alto":h<H?"quedó más bajo":"justo")+"). "+q;
+    cmp.textContent="Siguiente";
+  });
+  document.getElementById("pr-next").addEventListener("click",newRound);
+  document.getElementById("pr-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
