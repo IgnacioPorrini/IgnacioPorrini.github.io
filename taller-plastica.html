@@ -395,6 +395,15 @@ footer a{color:var(--c)}
 .pp-sec .pp-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none}
 .pp-sec .pp-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.pp-sec{display:none}}
+.lg-sec .lg-sw{max-width:320px;margin:8px auto}
+.lg-sec .lg-sw svg{width:100%;height:auto;display:block;border-radius:12px;border:2px solid var(--line);background:#0d0f12}
+.lg-sec input[type=range]{width:100%;min-height:44px}
+.lg-sec .lg-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.lg-sec .lg-row .tm-go,.lg-sec .lg-row .tm-rs{flex:1 1 140px}
+.lg-sec .lg-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:3em}
+.lg-sec .lg-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none}
+.lg-sec .lg-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.lg-sec{display:none}}
 .oe-sec .oe-sw{display:flex;gap:8px;max-width:420px;margin:8px auto}
 .oe-sec .oe-sw svg{flex:1;min-width:0;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .oe-sec input[type=range]{width:100%;min-height:44px}
@@ -489,6 +498,7 @@ footer a{color:var(--c)}
     <a href="#ojo-area">Ojo para el área</a>
     <a href="#ojo-vertical">Ojo para la vertical</a>
     <a href="#ojo-perpendicular">Ojo para la perpendicular</a>
+    <a href="#ojo-longitud">Ojo para la longitud</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1666,6 +1676,32 @@ footer a{color:var(--c)}
       <button type="button" id="pp-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: mirá la gris como si fuera un lado del marco de un cuadro y buscá el otro lado. Tras comparar, la línea blanca punteada es la perpendicular exacta. Menos de 1,5 grados es un ojo muy afinado. En papel, comprobalo con la esquina de una hoja o de una escuadra apoyada sobre una de las líneas: la otra tiene que correr pegada al otro borde.</div>
+  </div>
+</section>
+
+<section id="ojo-longitud" class="lg-sec">
+  <h2>Ojo para la longitud</h2>
+  <p style="color:var(--muted)">Calcular cuánto mide una línea sin regla es lo que hacés al encajar un dibujo: el largo de un brazo contra el del torso, el alto de una ventana contra su ancho. Acá hay una línea gris arriba, con un largo y una inclinación al azar, y una línea verde abajo, inclinada distinto. Con el control, estirá o acortá la verde hasta que mida lo mismo que la gris y tocá Comparar. Se muestra cuánto te corriste en porcentaje del largo de la gris y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="lg-sw" role="img" aria-label="Una línea gris arriba y una línea verde abajo, que alargás o acortás con el control hasta que midan lo mismo">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <line id="lg-gray" x1="60" y1="55" x2="140" y2="55" stroke="#8b9099" stroke-width="4" stroke-linecap="round"/>
+        <line id="lg-true" x1="60" y1="145" x2="140" y2="145" stroke="#e8eaed" stroke-width="1.5" stroke-dasharray="4 4" visibility="hidden"/>
+        <line id="lg-me" x1="60" y1="145" x2="140" y2="145" stroke="#4cc26a" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <label for="lg-rng" style="position:absolute;left:-9999px">Largo de tu línea</label>
+    <input type="range" id="lg-rng" min="20" max="150" value="80" step="0.5" aria-label="Largo de tu línea verde, de más corta a más larga">
+    <p class="lg-msg" id="lg-msg" aria-live="polite">Igualá el largo de la línea verde con el de la gris.</p>
+    <ul class="lg-stats" aria-label="Resultados guardados">
+      <li id="lg-n">Rondas: 0</li><li id="lg-avg">Promedio: -</li><li id="lg-best">Mejor: -</li>
+    </ul>
+    <div class="lg-row">
+      <button type="button" id="lg-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="lg-next" class="tm-rs">Otra línea</button>
+      <button type="button" id="lg-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: no mires los extremos de a uno; llevá la vista de punta a punta de la gris, guardá esa distancia y buscala en la verde. Tras comparar, la línea blanca punteada muestra el largo exacto. Menos de 3 por ciento es un ojo muy afinado. Para practicar en papel, medí con el lápiz a brazo extendido: apoyá la punta en un extremo, el pulgar en el otro, y llevá esa medida a la otra línea sin mover el pulgar.</div>
   </div>
 </section>
 
@@ -4863,6 +4899,49 @@ footer a{color:var(--c)}
   });
   $("pp-next").addEventListener("click",newRound);
   $("pp-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-longitud-v1",$=function(i){return document.getElementById(i)};
+  var gr=$("lg-gray"),me=$("lg-me"),tr=$("lg-true"),R=$("lg-rng"),msg=$("lg-msg"),cmp=$("lg-cmp");
+  var st={errs:[]},L=80,ga=0,ma=0,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function fmt(x){return String(x).replace(".",",")}
+  function seg(el,cx,cy,len,ang){
+    var r=ang*Math.PI/180,dx=Math.cos(r)*len/2,dy=Math.sin(r)*len/2;
+    el.setAttribute("x1",(cx-dx).toFixed(2));el.setAttribute("y1",(cy-dy).toFixed(2));
+    el.setAttribute("x2",(cx+dx).toFixed(2));el.setAttribute("y2",(cy+dy).toFixed(2));
+  }
+  function draw(){seg(me,100,145,+R.value,ma)}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("lg-n").textContent="Rondas: "+n;
+    $("lg-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" %":"-");
+    $("lg-best").textContent="Mejor: "+(n?fmt(Math.min.apply(null,e).toFixed(1))+" %":"-");
+  }
+  function newRound(){
+    L=Math.round((40+Math.random()*70)*2)/2;
+    ga=Math.round((Math.random()*60-30)*2)/2;
+    do{ma=Math.round((Math.random()*60-30)*2)/2}while(Math.abs(ma-ga)<15);
+    var s;do{s=Math.round((25+Math.random()*120)*2)/2}while(Math.abs(s-L)<15);
+    R.value=s;seg(gr,100,55,L,ga);seg(tr,100,145,L,ma);
+    tr.setAttribute("visibility","hidden");draw();done=false;cmp.textContent="Comparar";
+    msg.textContent="Igual\u00e1 el largo de la l\u00ednea verde con el de la gris.";
+  }
+  R.addEventListener("input",function(){if(!done)draw()});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var v=+R.value,d=Math.round(Math.abs(v-L)/L*1000)/10;st.errs.push(d);save();stats();done=true;
+    tr.setAttribute("visibility","visible");
+    var q=d<=3?"Excelente.":d<=6?"Muy bien.":d<=12?"Cerca; prob\u00e1 de nuevo.":"Hay margen: prob\u00e1 medir con el l\u00e1piz a brazo extendido.";
+    msg.textContent=(d===0?"Exacto.":"Te corriste "+fmt(d)+" por ciento: la verde qued\u00f3 m\u00e1s "+(v>L?"larga":"corta")+".")+" "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("lg-next").addEventListener("click",newRound);
+  $("lg-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
