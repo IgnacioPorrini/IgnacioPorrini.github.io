@@ -322,6 +322,18 @@
             </div>
         </section>
 
+        <section class="section-padding" id="hojas-a">
+            <div class="container">
+                <h2 class="section-title mb-2">Hojas A: doblar por la mitad da la hoja siguiente</h2>
+                <p class="text-muted-light mb-3">Las hojas del formato A (A4, A5...) tienen una propiedad poco común: si dobla una por la mitad, el lado largo, queda otra hoja de la misma forma, la serie siguiente. Eso pasa porque el lado largo mide la raíz de 2 (1,414...) veces el corto. Elija una hoja y dóblela en la pantalla.</p>
+                <div id="ha-tabs" role="group" aria-label="Tamaño de hoja"></div>
+                <svg id="ha-svg" class="gr-cv" viewBox="0 0 340 190" role="img" aria-label="Hoja con el doblez por la mitad del lado largo y una de las mitades, que es la hoja siguiente"></svg>
+                <p class="sq-res mt-3 mb-1" id="ha-msg" aria-live="polite"></p>
+                <p class="sq-res mb-1" id="ha-rat" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">Medidas nominales de la norma ISO 216, redondeadas al milímetro; por eso la proporción real da 1,41 y no exactamente la raíz de 2. Para repetirlo en papel: tome una A4, dóblela por la mitad llevando un lado corto sobre el otro y compare la forma con una A5. Para ampliar, busque <a target="_blank" rel="noopener" href="https://es.wikipedia.org/w/index.php?search=ISO+216+formato+A">&laquo;ISO 216&raquo; en Wikipedia</a>. Dibujo y texto propios.</p>
+            </div>
+        </section>
+
         <section class="section-padding bg-darker">
             <div class="container text-center">
                 <a href="origami.html" class="btn btn-whatsapp shadow-sm"><i class="fas fa-arrow-left me-2"></i> Volver a Origami</a>
@@ -803,6 +815,42 @@
   nr.addEventListener('input',paint);
   tr.addEventListener('input',function(){Array.prototype.forEach.call(tabs.children,function(x){x.setAttribute('aria-pressed','false')});paint()});
   tr.value=2;tabs.children[0].setAttribute('aria-pressed','true');
+  paint();
+})();
+</script>
+<script>
+(function(){
+  var svg=document.getElementById('ha-svg'),tabs=document.getElementById('ha-tabs'),msg=document.getElementById('ha-msg'),rat=document.getElementById('ha-rat');
+  var NS='http://www.w3.org/2000/svg';
+  var A=[[841,1189],[594,841],[420,594],[297,420],[210,297],[148,210],[105,148],[74,105],[52,74],[37,52]];
+  var k=4,folded=false;
+  function el(t,a){var e=document.createElementNS(NS,t);for(var n in a)e.setAttribute(n,a[n]);return e}
+  function num(x,d){return x.toLocaleString('es-UY',{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function txt(x,y,t,c,anchor){var e=el('text',{x:x,y:y,fill:c||'#e8eeeb','font-size':12,'text-anchor':anchor||'middle'});e.textContent=t;svg.appendChild(e)}
+  function paint(){
+    var w=A[k][0],h=A[k][1],nw=A[k+1][0],nh=A[k+1][1],sc=130/h;
+    svg.textContent='';
+    var x0=30,y0=20,W=w*sc,H=h*sc;
+    svg.appendChild(el('rect',{x:x0,y:y0,width:W,height:H,rx:2,fill:'#f1efe4','fill-opacity':.18,stroke:'#e8eeeb','stroke-width':1.5}));
+    svg.appendChild(el('line',{x1:x0,y1:y0+H/2,x2:x0+W,y2:y0+H/2,stroke:'#5db0ff','stroke-width':1.8,'stroke-dasharray':'5 4'}));
+    svg.appendChild(el('rect',{x:x0,y:y0+H/2,width:W,height:H/2,fill:'#25d399','fill-opacity':.35,stroke:'none'}));
+    txt(x0+W/2,y0+H+16,'A'+k+': '+w+' x '+h+' mm');
+    var gx=190,nW=nw*sc,nH=nh*sc;
+    svg.appendChild(el('rect',{x:gx,y:y0+H-nH,width:nW,height:nH,rx:2,fill:'#25d399','fill-opacity':.35,stroke:'#25d399','stroke-width':1.5}));
+    txt(gx+nW/2,y0+H+16,'A'+(k+1)+': '+nw+' x '+nh+' mm','#25d399');
+    svg.appendChild(el('path',{d:'M'+(x0+W+8)+' '+(y0+H*0.75)+' L'+(gx-8)+' '+(y0+H*0.75),stroke:'#ffd34d','stroke-width':1.6,fill:'none'}));
+    txt((x0+W+gx)/2,y0+H*0.75-6,'mitad','#ffd34d');
+    var n=Math.pow(2,Math.abs(4-k));
+    var rel=k<4?'Una A'+k+' equivale a '+n+' hojas A4.':k>4?'Hacen falta '+n+' hojas A'+k+' para cubrir una A4.':'Esta es la hoja A4 de oficina.';
+    msg.textContent='Una A'+k+' doblada por la mitad da una A'+(k+1)+'. '+rel;
+    rat.textContent='Proporción de la A'+k+': '+num(h/w,3)+'. Proporción de la A'+(k+1)+': '+num(nh/nw,3)+'. La raíz de 2 vale 1,414.';
+  }
+  A.slice(0,9).forEach(function(a,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent='A'+j;
+    b.setAttribute('aria-pressed',j===k?'true':'false');
+    b.addEventListener('click',function(){k=j;Array.prototype.forEach.call(tabs.children,function(x,q){x.setAttribute('aria-pressed',q===j?'true':'false')});paint()});
+    tabs.appendChild(b);
+  });
   paint();
 })();
 </script>
