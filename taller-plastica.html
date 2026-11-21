@@ -457,6 +457,21 @@ footer a{color:var(--c)}
 .rf-sec .rf-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .rf-sec .rf-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.rf-sec{display:none}}
+.gr5-sec .gr5-row{display:flex;gap:6px;max-width:460px;margin:10px auto}
+.gr5-sec .gr5-b{flex:1 1 0;min-width:0;height:112px;border-radius:10px;border:2px solid var(--line);cursor:pointer;position:relative;padding:0;font-family:Fredoka,sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
+.gr5-sec .gr5-b:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
+.gr5-sec .gr5-b[aria-pressed=true]{border-color:#4cc26a}
+.gr5-sec .gr5-b[data-ok="0"]{border-color:#d9534f;border-style:dashed}
+.gr5-sec .gr5-b small{position:absolute;bottom:4px;left:0;right:0;font-size:.7rem;line-height:1.15;font-family:inherit}
+.gr5-sec .gr5-opt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:6px 0}
+.gr5-sec .gr5-opt select{min-height:44px;border-radius:8px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:0 10px}
+.gr5-sec .gr5-end{display:flex;justify-content:space-between;max-width:460px;margin:0 auto;font-size:.85rem;color:var(--muted)}
+.gr5-sec .gr5-act{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.gr5-sec .gr5-act .tm-go,.gr5-sec .gr5-act .tm-rs{flex:1 1 140px}
+.gr5-sec .gr5-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.gr5-sec .gr5-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.gr5-sec .gr5-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.gr5-sec{display:none}}
 </style>
 </head>
 <body>
@@ -522,6 +537,7 @@ footer a{color:var(--c)}
     <a href="#ojo-perpendicular">Ojo para la perpendicular</a>
     <a href="#ojo-longitud">Ojo para la longitud</a>
     <a href="#ojo-reflejo">Ojo para el reflejo</a>
+    <a href="#ojo-grises">Ordenar los grises</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1752,6 +1768,33 @@ footer a{color:var(--c)}
       <button type="button" id="rf-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: el reflejo queda a la misma distancia del eje que el punto original, medida en perpendicular, y sobre una línea que cruza el eje en ángulo recto. Con un eje vertical u horizontal alcanza con copiar la distancia; con un eje inclinado conviene imaginar el punto "dando vuelta" como una hoja que se dobla por el eje. En papel, doblar la hoja por el eje y calcar o pinchar con un lápiz permite comprobar. Tras comparar se muestra el reflejo exacto y la línea que lo une con el punto gris. Menos de 3 % es un ojo muy afinado. Para practicar el dibujo simétrico en sí, probá la herramienta "Dibujo con simetría" más arriba.</div>
+  </div>
+</section>
+
+<section id="ojo-grises" class="gr5-sec">
+  <h2>Ordenar los grises</h2>
+  <p style="color:var(--muted)">Distinguir valores, es decir qué tan claro u oscuro es un tono, es la base del claroscuro y del sombreado a lápiz. Acá hay cinco cuadrados grises mezclados. Tocalos en orden, del más oscuro al más claro: cada toque les pone un número. Si te equivocás, tocá uno ya numerado para quitarle el número a él y a los que siguen. Al comparar se muestra el orden correcto y el porcentaje de claridad de cada uno, y se guardan en este celular el promedio de aciertos y la mejor ronda.</p>
+  <div class="card">
+    <div class="gr5-opt">
+      <label for="gr5-lv">Dificultad</label>
+      <select id="gr5-lv">
+        <option value="14">Fácil: saltos grandes</option>
+        <option value="8" selected>Media</option>
+        <option value="4">Difícil: tonos muy parecidos</option>
+      </select>
+    </div>
+    <div class="gr5-row" id="gr5-row" role="group" aria-label="Cinco cuadrados grises para ordenar de más oscuro a más claro"></div>
+    <div class="gr5-end" aria-hidden="true"><span>1.º = el más oscuro</span><span>5.º = el más claro</span></div>
+    <p class="gr5-msg" id="gr5-msg" aria-live="polite">Tocá primero el cuadrado más oscuro.</p>
+    <ul class="gr5-stats" aria-label="Resultados guardados">
+      <li id="gr5-n">Rondas: 0</li><li id="gr5-avg">Promedio: -</li><li id="gr5-best">Mejor: -</li>
+    </ul>
+    <div class="gr5-act">
+      <button type="button" id="gr5-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="gr5-next" class="tm-rs">Otros grises</button>
+      <button type="button" id="gr5-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: entrecerrá los ojos o alejá el celular para que se borren los detalles y quede solo la claridad. Conviene bajar el brillo de la pantalla a un nivel medio y evitar reflejos, porque cambian cómo se ve cada gris. Si dudás entre dos, comparalos de a pares. Para llevarlo al papel, hacé con un lápiz blando una escala de cinco tonos presionando cada vez más y probá ordenarla con los ojos entrecerrados: es el mismo ejercicio. Para ver los valores de una foto tuya, probá la herramienta "Estudio de valores" más arriba.</div>
   </div>
 </section>
 
@@ -5063,6 +5106,86 @@ footer a{color:var(--c)}
   });
   $("rf-next").addEventListener("click",newRound);
   $("rf-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-grises-v1",$=function(i){return document.getElementById(i)};
+  var row=$("gr5-row"),msg=$("gr5-msg"),cmp=$("gr5-cmp"),lv=$("gr5-lv");
+  var st={sc:[],lv:"8"},L=[],ord=[],done=false,btns=[];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.sc))st.sc=t.sc.filter(function(x){return typeof x==="number"});if(t&&t.lv)st.lv=String(t.lv)}catch(e){}
+  if(["14","8","4"].indexOf(st.lv)>-1)lv.value=st.lv;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({sc:st.sc.slice(-200),lv:lv.value}))}catch(e){}}
+  function fmt(x){return String(x).replace(".",",")}
+  function stats(){
+    var e=st.sc,n=e.length;
+    $("gr5-n").textContent="Rondas: "+n;
+    $("gr5-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" de 5":"-");
+    $("gr5-best").textContent="Mejor: "+(n?Math.max.apply(null,e)+" de 5":"-");
+  }
+  function gen(){
+    var gap=parseInt(lv.value,10),k=0,v;
+    do{
+      v=[];for(var i=0;i<5;i++)v.push(Math.round(8+Math.random()*84));
+      v.sort(function(a,b){return a-b});
+      var ok=true;for(var j=1;j<5;j++)if(v[j]-v[j-1]<gap)ok=false;
+      k++;
+    }while(!ok&&k<2000);
+    if(!ok){v=[10,28,46,64,82]}
+    for(var m=4;m>0;m--){var r=Math.floor(Math.random()*(m+1)),x=v[m];v[m]=v[r];v[r]=x}
+    return v;
+  }
+  function paint(){
+    btns.forEach(function(b,i){
+      var l=L[i],k=ord.indexOf(i),txt=l>55?"#111":"#f3f4f6";
+      b.style.background="hsl(0,0%,"+l+"%)";b.style.color=txt;
+      b.setAttribute("aria-pressed",k>-1?"true":"false");
+      var main=k>-1?String(k+1):"";
+      var lab="Cuadrado gris "+(i+1)+" de 5, "+(k>-1?"puesto "+(k+1)+" en tu orden":"sin numerar");
+      if(done)lab+=", claridad "+l+" por ciento";
+      b.setAttribute("aria-label",lab);
+      b.innerHTML=main+(done?"<small>"+l+" %</small>":"");
+    });
+  }
+  function newRound(){
+    L=gen();ord=[];done=false;cmp.textContent="Comparar";
+    row.innerHTML="";btns=[];
+    for(var i=0;i<5;i++){
+      var b=document.createElement("button");b.type="button";b.className="gr5-b";b.dataset.i=i;
+      row.appendChild(b);btns.push(b);
+    }
+    paint();
+    msg.textContent="Tocá primero el cuadrado más oscuro.";
+  }
+  row.addEventListener("click",function(ev){
+    var b=ev.target.closest&&ev.target.closest(".gr5-b");if(!b||done)return;
+    var i=parseInt(b.dataset.i,10),k=ord.indexOf(i);
+    if(k>-1)ord=ord.slice(0,k);else ord.push(i);
+    paint();
+    msg.textContent=ord.length<5?(ord.length?"Van "+ord.length+" de 5. Seguí con el siguiente más oscuro.":"Tocá primero el cuadrado más oscuro."):"Listo: tocá Comparar.";
+  });
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    if(ord.length<5){msg.textContent="Numerá los cinco cuadrados antes de comparar.";return}
+    var right=L.map(function(v,i){return i}).sort(function(a,b){return L[a]-L[b]});
+    var ok=0;for(var k=0;k<5;k++)if(ord[k]===right[k])ok++;
+    st.sc.push(ok);save();stats();done=true;
+    // mostrar el orden correcto en los números
+    btns.forEach(function(b,i){
+      var p=right.indexOf(i),mine=ord.indexOf(i),good=mine===p;
+      b.setAttribute("aria-pressed",good?"true":"false");b.setAttribute("data-ok",good?"1":"0");
+      b.style.background="hsl(0,0%,"+L[i]+"%)";
+      b.innerHTML=(p+1)+"<small>"+L[i]+" %"+(good?"":"<br>vos: "+(mine+1))+"</small>";
+      b.setAttribute("aria-label","Cuadrado gris "+(i+1)+" de 5, puesto correcto "+(p+1)+", claridad "+L[i]+" por ciento, "+(good?"acertaste":"vos le pusiste "+(mine+1)));
+    });
+    var q=ok===5?"Perfecto.":ok>=3?"Bien; fijate dónde se cruzaron.":"Hay margen: probá entrecerrar los ojos.";
+    msg.textContent="Acertaste "+ok+" de 5 puestos. "+q;
+    cmp.textContent="Siguiente";
+  });
+  lv.addEventListener("change",function(){save();newRound()});
+  $("gr5-next").addEventListener("click",newRound);
+  $("gr5-reset").addEventListener("click",function(){st.sc=[];save();stats()});
   newRound();stats();
 })();
 </script>
