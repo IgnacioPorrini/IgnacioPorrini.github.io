@@ -78,6 +78,8 @@
         .kg-cv{width:100%;max-width:300px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);cursor:crosshair}
         .kw-cv{width:100%;max-width:320px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0d1512;touch-action:none}
         .kw-cv .kw-h{cursor:grab}
+        .hg-cv{width:100%;max-width:360px;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0d1512}
+        .hg-range{width:100%;max-width:360px;accent-color:#25d399;display:block;min-height:32px}
         .kw-cv .kw-h:focus-visible{stroke:#ffd34d;stroke-width:3;outline:none}
     </style>
 </head>
@@ -287,6 +289,19 @@
                 </div>
                 <p class="sq-res mt-3 mb-1" id="kw-msg" aria-live="polite"></p>
                 <p class="small text-muted-light mb-0">Es una condición para un solo punto en un papel plano: no garantiza que un patrón completo, con muchos puntos, se pueda plegar. Más información sobre el teorema en <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kawasaki%27s_theorem">Wikipedia (en inglés)</a>. Explicación y dibujo propios.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" id="haga">
+            <div class="container">
+                <h2 class="section-title mb-2">Tercios y quintos sin regla: el pliegue de Haga</h2>
+                <p class="text-muted-light mb-3">Tome un cuadrado, lleve la esquina inferior izquierda hasta un punto del borde de arriba y marque el pliegue. El borde de abajo, ya doblado, cruza el lado derecho en un punto que no es cualquiera: si el punto de arriba está a una fracción <b>t</b> desde la izquierda, el cruce queda a <b>(1 &minus; t) / (1 + t)</b> de la altura. Con t = 1/2 aparece el tercio; con t = 2/3, el quinto. Mueva el control y compruebe la cuenta.</p>
+                <div id="hg-tabs" role="group" aria-label="Posición del punto de arriba"></div>
+                <svg id="hg-svg" class="hg-cv" viewBox="0 0 340 300" role="img" aria-label="Cuadrado con la esquina inferior izquierda doblada hasta un punto del borde superior"></svg>
+                <label for="hg-r" class="mt-2 d-block"><b>Punto de arriba:</b> <span id="hg-t"></span> desde la izquierda</label>
+                <input id="hg-r" class="hg-range" type="range" min="5" max="95" value="50" step="1">
+                <p class="sq-res mt-3 mb-1" id="hg-msg" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">Para repetir en papel: doble la esquina hasta el punto elegido, marque el pliegue, y vea dónde el borde doblado cruza el lado derecho. Las cuentas están verificadas con geometría de coordenadas; el dibujo y la explicación son propios. Para ampliar, busque &laquo;Haga's theorem&raquo; en <a target="_blank" rel="noopener" href="https://en.wikipedia.org/w/index.php?search=Haga%27s+theorem">Wikipedia (en inglés)</a>.</p>
             </div>
         </section>
 
@@ -688,6 +703,48 @@
   document.getElementById('kw-rs').addEventListener('click',function(){reset();paint()});
   document.getElementById('kw-ok').addEventListener('click',function(){cierra();paint()});
   reset();paint();
+})();
+</script>
+<script>
+(function(){
+  var svg=document.getElementById('hg-svg'),msg=document.getElementById('hg-msg'),tabs=document.getElementById('hg-tabs'),rg=document.getElementById('hg-r'),lt=document.getElementById('hg-t');
+  var NS='http://www.w3.org/2000/svg',X0=24,Y0=270,S=240;
+  var PRE=[[1,5],[1,4],[1,3],[1,2],[2,3],[3,4]];
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function X(x){return X0+S*x}function Y(y){return Y0-S*y}
+  function mk(pts){return pts.map(function(p){return X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)}).join(' ')}
+  function gcd(a,b){return b?gcd(b,a%b):a}
+  function fr(p,q){var g=gcd(p,q);return p/g+'/'+q/g}
+  function paint(t,pq){
+    svg.textContent='';
+    var L=(1+t*t)/2,M=(1-t)*(1-t)/2;
+    var dx=t,dy=1,n=Math.hypot(dx,dy),ux=dx/n,uy=dy/n,mx=t/2,my=.5;
+    function rf(p){var d=(p[0]-mx)*ux+(p[1]-my)*uy;return [p[0]-2*d*ux,p[1]-2*d*uy]}
+    var Bp=rf([1,0]),Q=[t,1],R=(1-t)/(1+t);
+    svg.appendChild(el('polygon',{points:mk([[0,0],[1,0],[1,1],[0,1]]),fill:'#f1efe4','fill-opacity':.12,stroke:'#e8eeeb','stroke-width':1.5}));
+    svg.appendChild(el('polygon',{points:mk([[0,0],[1,0],[1,M],[0,L]]),fill:'#0d1512',stroke:'none'}));
+    svg.appendChild(el('polygon',{points:mk([Q,Bp,[1,M],[0,L]]),fill:'#25d399','fill-opacity':.55,stroke:'#0b2a20','stroke-width':1.5,'stroke-linejoin':'round'}));
+    svg.appendChild(el('line',{x1:X(0),y1:Y(L),x2:X(1),y2:Y(M),stroke:'#5db0ff','stroke-width':1.6,'stroke-dasharray':'4 3'}));
+    svg.appendChild(el('circle',{cx:X(Q[0]),cy:Y(1),r:5,fill:'#ffd34d'}));
+    svg.appendChild(el('circle',{cx:X(1),cy:Y(R),r:6,fill:'#ff9a5c',stroke:'#0d1512','stroke-width':1.5}));
+    var tx=el('text',{x:X(1)+10,y:Y(R)+4,fill:'#ff9a5c','font-size':12,'font-weight':700});
+    tx.textContent=pq?fr(pq[1]-pq[0],pq[1]+pq[0]):Math.round(R*100)+'%';svg.appendChild(tx);
+    var t2=el('text',{x:X(Q[0]),y:Y(1)-9,fill:'#ffd34d','font-size':12,'font-weight':700,'text-anchor':'middle'});
+    t2.textContent=pq?fr(pq[0],pq[1]):Math.round(t*100)+'%';svg.appendChild(t2);
+    var r=pq?fr(pq[1]-pq[0],pq[1]+pq[0]):(Math.round(R*1000)/10).toString().replace('.',',')+'%';
+    var tt=pq?fr(pq[0],pq[1]):Math.round(t*100)+'%';
+    lt.textContent=tt;
+    msg.textContent='Punto de arriba a '+tt+' desde la izquierda: el borde doblado cruza el lado derecho a '+r+' de la altura, medida desde abajo.';
+  }
+  function setT(v,pq){rg.value=Math.round(v*100);paint(v,pq)}
+  PRE.forEach(function(p,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=p[0]+'/'+p[1];
+    b.addEventListener('click',function(){setT(p[0]/p[1],p);Array.prototype.forEach.call(tabs.children,function(x,q){x.setAttribute('aria-pressed',q===j?'true':'false')})});
+    b.setAttribute('aria-pressed',j===3?'true':'false');
+    tabs.appendChild(b);
+  });
+  rg.addEventListener('input',function(){Array.prototype.forEach.call(tabs.children,function(x){x.setAttribute('aria-pressed','false')});paint(rg.value/100,null)});
+  paint(.5,[1,2]);
 })();
 </script>
 </body>
