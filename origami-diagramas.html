@@ -76,6 +76,9 @@
         .mk-key{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:.6rem 0 0;font-size:.95rem}
         .mk-key svg{vertical-align:middle;margin-right:.4rem}
         .kg-cv{width:100%;max-width:300px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);cursor:crosshair}
+        .kw-cv{width:100%;max-width:320px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0d1512;touch-action:none}
+        .kw-cv .kw-h{cursor:grab}
+        .kw-cv .kw-h:focus-visible{stroke:#ffd34d;stroke-width:3;outline:none}
     </style>
 </head>
 <body>
@@ -269,6 +272,21 @@
                 </div>
                 <p class="sq-res mt-3 mb-1" id="mk-msg" aria-live="polite"></p>
                 <p class="small text-muted-light mb-0">Con papel de verdad: use un cuadrado, marque la cruz de los dos ejes y las dos diagonales (8 pliegues en el centro) y pliéguelos alternando valles y montes según la cuenta. Más información sobre el teorema en <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Maekawa%27s_theorem">Wikipedia (en inglés)</a>. Explicación y dibujo propios.</p>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker" id="kawasaki">
+            <div class="container">
+                <h2 class="section-title mb-2">Ángulos de un punto: teorema de Kawasaki</h2>
+                <p class="text-muted-light mb-3">Cuando varios pliegues se juntan en un punto del papel, los ángulos entre ellos se pueden numerar alrededor. Para que el papel se pliegue plano, los ángulos 1.º, 3.º, 5.º... tienen que sumar 180 grados, y los 2.º, 4.º, 6.º... también. Arrastre los puntos de los pliegues para cambiar los ángulos y mire cuándo las dos sumas llegan a 180. Junto con la regla de Maekawa (valles y montes) forma el par de condiciones básicas de un punto plegable.</p>
+                <div id="kw-tabs" role="group" aria-label="Cantidad de pliegues en el punto"></div>
+                <svg id="kw-svg" class="kw-cv" viewBox="0 0 300 300" role="group" aria-label="Pliegues que se juntan en un punto; arrastre cada punto o use las flechas del teclado para cambiar los ángulos"></svg>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button class="ori-act alt" type="button" id="kw-ok">Al azar, que cierre</button>
+                    <button class="ori-act alt" type="button" id="kw-rs">Ángulos iguales</button>
+                </div>
+                <p class="sq-res mt-3 mb-1" id="kw-msg" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">Es una condición para un solo punto en un papel plano: no garantiza que un patrón completo, con muchos puntos, se pueda plegar. Más información sobre el teorema en <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kawasaki%27s_theorem">Wikipedia (en inglés)</a>. Explicación y dibujo propios.</p>
             </div>
         </section>
 
@@ -599,6 +617,77 @@
   document.getElementById('mk-rs').addEventListener('click',function(){reset();paint()});
   document.getElementById('mk-rnd').addEventListener('click',function(){for(var i=0;i<n;i++)asg[i]=Math.random()<.5?'V':'M';paint()});
   reset();build();paint();
+})();
+</script>
+<script>
+(function(){
+  var svg=document.getElementById('kw-svg'),msg=document.getElementById('kw-msg'),tabs=document.getElementById('kw-tabs');
+  var NS='http://www.w3.org/2000/svg',N=[4,6],n=4,th=[],G=5,C=150,R=125,drag=-1;
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function pt(a,r){var q=a*Math.PI/180;return [C+r*Math.cos(q),C+r*Math.sin(q)]}
+  function reset(){th=[];for(var i=0;i<n;i++)th.push(-90+i*360/n)}
+  function sec(i){return (i===n-1?th[0]+360:th[i+1])-th[i]}
+  function wrap(d){while(d>180)d-=360;while(d<=-180)d+=360;return d}
+  function paint(){
+    svg.textContent='';
+    var odd=0,even=0,txt=[];
+    for(var i=0;i<n;i++){
+      var a=sec(i),a0=th[i],a1=a0+a,p0=pt(a0,R),p1=pt(a1,R);
+      var col=i%2===0?'#6fe3a0':'#ff9a5c';
+      svg.appendChild(el('path',{d:'M'+C+' '+C+'L'+p0[0]+' '+p0[1]+'A'+R+' '+R+' 0 '+(a>180?1:0)+' 1 '+p1[0]+' '+p1[1]+'Z',fill:col,'fill-opacity':.16,stroke:'none'}));
+      if(i%2===0)odd+=a;else even+=a;
+    }
+    for(var i=0;i<n;i++){
+      var p=pt(th[i],R);
+      svg.appendChild(el('line',{x1:C,y1:C,x2:p[0],y2:p[1],stroke:'#e8eeeb','stroke-width':2.5,'stroke-linecap':'round'}));
+    }
+    for(var i=0;i<n;i++){
+      var a=sec(i),m=pt(th[i]+a/2,Math.min(70,R*.6)),t=el('text',{x:m[0],y:m[1],'text-anchor':'middle','dominant-baseline':'middle','font-size':a<28?10:14,'font-weight':700,fill:i%2===0?'#6fe3a0':'#ff9a5c'});
+      t.textContent=Math.round(a)+'°';svg.appendChild(t);
+    }
+    svg.appendChild(el('circle',{cx:C,cy:C,r:5,fill:'#e8eeeb'}));
+    for(var i=0;i<n;i++)(function(i){
+      var p=pt(th[i],R);
+      var h=el('circle',{cx:p[0],cy:p[1],r:11,fill:'#0d1512',stroke:'#e8eeeb','stroke-width':2.5,'class':'kw-h',tabindex:0,role:'slider','aria-label':'Pliegue '+(i+1)+' de '+n,'aria-valuemin':0,'aria-valuemax':360,'aria-valuenow':Math.round(((th[i]+90)%360+360)%360),'aria-valuetext':'Ángulo siguiente '+Math.round(sec(i))+' grados'});
+      h.addEventListener('pointerdown',function(e){drag=i;e.preventDefault();try{svg.setPointerCapture(e.pointerId)}catch(_){}});
+      h.addEventListener('keydown',function(e){
+        var d=e.key==='ArrowRight'||e.key==='ArrowUp'?1:e.key==='ArrowLeft'||e.key==='ArrowDown'?-1:0;
+        if(!d)return;e.preventDefault();set(i,th[i]+d*(e.shiftKey?5:1));paint();var q=svg.querySelectorAll('.kw-h')[i];if(q)q.focus();
+      });
+      svg.appendChild(h);
+    })(i);
+    odd=Math.round(odd);even=Math.round(even);
+    var ok=odd===180&&even===180;
+    msg.textContent='Ángulos 1.º, 3.º'+(n===6?', 5.º':'')+': '+(n===4?Math.round(sec(0))+' + '+Math.round(sec(2)):Math.round(sec(0))+' + '+Math.round(sec(2))+' + '+Math.round(sec(4)))+' = '+odd+'°. Ángulos 2.º, 4.º'+(n===6?', 6.º':'')+': '+(n===4?Math.round(sec(1))+' + '+Math.round(sec(3)):Math.round(sec(1))+' + '+Math.round(sec(3))+' + '+Math.round(sec(5)))+' = '+even+'°. '+(ok?'Cumple el teorema de Kawasaki: este punto puede plegarse plano.':'No cumple: las dos sumas tienen que dar 180°. Mueva algún pliegue.');
+    msg.style.color=ok?'':'#ffb38a';
+  }
+  function set(i,v){
+    var prev=i===0?th[n-1]-360:th[i-1],next=i===n-1?th[0]+360:th[i+1];
+    v=th[i]+wrap(v-th[i]);
+    v=Math.round(Math.max(prev+G,Math.min(next-G,v)));
+    th[i]=v;
+  }
+  function ang(e){var r=svg.getBoundingClientRect(),k=300/r.width;return Math.atan2((e.clientY-r.top)*k-C,(e.clientX-r.left)*k-C)*180/Math.PI}
+  svg.addEventListener('pointermove',function(e){if(drag<0)return;e.preventDefault();set(drag,ang(e));paint()});
+  function fin(){drag=-1}
+  svg.addEventListener('pointerup',fin);svg.addEventListener('pointercancel',fin);
+  function cierra(){
+    var k=n/2,A=[],B=[];
+    function parte(){var w=[],t=0,i;for(i=0;i<k;i++){var x=.4+Math.random();w.push(x);t+=x}
+      var r=w.map(function(x){return Math.max(10,Math.round(x/t*180))});
+      var d=180-r.reduce(function(a,b){return a+b},0);r[0]+=d;return r}
+    A=parte();B=parte();
+    th=[-90];for(var i=0;i<n-1;i++){th.push(th[i]+(i%2===0?A[i/2]:B[(i-1)/2]))}
+  }
+  N.forEach(function(k,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=k+' pliegues';
+    b.setAttribute('aria-pressed',j===0?'true':'false');
+    b.addEventListener('click',function(){n=k;Array.prototype.forEach.call(tabs.children,function(x,q){x.setAttribute('aria-pressed',q===j?'true':'false')});reset();paint()});
+    tabs.appendChild(b);
+  });
+  document.getElementById('kw-rs').addEventListener('click',function(){reset();paint()});
+  document.getElementById('kw-ok').addEventListener('click',function(){cierra();paint()});
+  reset();paint();
 })();
 </script>
 </body>
