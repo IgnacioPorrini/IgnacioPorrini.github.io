@@ -480,6 +480,15 @@ footer a{color:var(--c)}
 .ds-sec .ds-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .ds-sec .ds-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.ds-sec{display:none}}
+.pa-sec .pa-sw{max-width:320px;margin:8px auto}
+.pa-sec .pa-sw svg{width:100%;height:auto;display:block;border-radius:12px;border:2px solid var(--line);background:#0d0f12}
+.pa-sec input[type=range]{width:100%;min-height:44px}
+.pa-sec .pa-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pa-sec .pa-row .tm-go,.pa-sec .pa-row .tm-rs{flex:1 1 140px}
+.pa-sec .pa-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:3em}
+.pa-sec .pa-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none}
+.pa-sec .pa-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.pa-sec{display:none}}
 </style>
 </head>
 <body>
@@ -547,6 +556,7 @@ footer a{color:var(--c)}
     <a href="#ojo-reflejo">Ojo para el reflejo</a>
     <a href="#ojo-grises">Ordenar los grises</a>
     <a href="#ojo-distancia">Ojo para la distancia</a>
+    <a href="#ojo-paralelo">Ojo para el paralelo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1830,6 +1840,33 @@ footer a{color:var(--c)}
       <button type="button" id="ds-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: no hace falta medir con números; conviene "cargar" el largo del segmento con la vista y después compararlo con la línea de abajo. Cuando el segmento está inclinado cuesta más, porque hay que trasladar la medida en otra dirección: es lo mismo que hacemos al medir con el lápiz a brazo extendido. En el papel, apoyá el borde de otra hoja sobre el segmento, marcá el largo con dos rayitas y llevalo a otro lugar del dibujo para comprobar. Al comparar, una línea punteada marca la distancia exacta. Menos de 3 % es un ojo muy afinado. Para entrenar la longitud sin traslado, probá "Ojo para la longitud" más arriba.</div>
+  </div>
+</section>
+
+<section id="ojo-paralelo" class="pa-sec">
+  <h2>Ojo para el paralelo</h2>
+  <p style="color:var(--muted)">Las líneas paralelas están en los rieles, en las rayas de una hoja, en los bordes de una calle que se aleja. Dibujarlas a ojo, una al lado de otra, es una de las primeras dificultades de la perspectiva y del dibujo de objetos. Acá hay una línea gris en una dirección al azar y, a su derecha, una línea verde. Con el control, girá la verde hasta que quede paralela a la gris y tocá Comparar. Se muestra cuántos grados te corriste y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="pa-sw" role="img" aria-label="Una línea gris inclinada a la izquierda y una línea verde a la derecha que girás con el control hasta que sean paralelas">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <line id="pa-gray" x1="55" y1="35" x2="55" y2="165" stroke="#8b9099" stroke-width="4" stroke-linecap="round"/>
+        <line id="pa-true" x1="145" y1="25" x2="145" y2="175" stroke="#e8eaed" stroke-width="1.5" stroke-dasharray="4 4" visibility="hidden"/>
+        <line id="pa-me" x1="145" y1="35" x2="145" y2="165" stroke="#4cc26a" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="145" cy="100" r="3" fill="#e8eaed"/>
+      </svg>
+    </div>
+    <label for="pa-rng" style="position:absolute;left:-9999px">Giro de tu línea</label>
+    <input type="range" id="pa-rng" min="-40" max="40" value="15" step="0.5" aria-label="Giro de tu línea verde, a la izquierda o a la derecha">
+    <p class="pa-msg" id="pa-msg" aria-live="polite">Dejá la línea verde paralela a la gris.</p>
+    <ul class="pa-stats" aria-label="Resultados guardados">
+      <li id="pa-n">Rondas: 0</li><li id="pa-avg">Promedio: -</li><li id="pa-best">Mejor: -</li>
+    </ul>
+    <div class="pa-row">
+      <button type="button" id="pa-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="pa-next" class="tm-rs">Otra línea</button>
+      <button type="button" id="pa-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: no mires cada línea por separado; mirá el espacio que queda entre las dos y fijate si se ensancha o se angosta de arriba hacia abajo. Tras comparar, la línea blanca punteada es la paralela exacta. Menos de 1,5 grados es un ojo muy afinado. En papel, comprobalo apoyando una regla sobre una de las líneas y deslizándola de costado sin girarla: la otra tiene que quedar a la misma distancia en todo el recorrido.</div>
   </div>
 </section>
 
@@ -5221,6 +5258,44 @@ footer a{color:var(--c)}
   lv.addEventListener("change",function(){save();newRound()});
   $("gr5-next").addEventListener("click",newRound);
   $("gr5-reset").addEventListener("click",function(){st.sc=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-paralelo-v1",$=function(i){return document.getElementById(i)};
+  var gr=$("pa-gray"),me=$("pa-me"),tr=$("pa-true"),R=$("pa-rng"),msg=$("pa-msg"),cmp=$("pa-cmp");
+  var st={errs:[]},base=0,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function rot(v){me.setAttribute("transform","rotate("+(base+(+v))+" 145 100)")}
+  function fmt(x){return String(x).replace(".",",")}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("pa-n").textContent="Rondas: "+n;
+    $("pa-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" \u00b0":"-");
+    $("pa-best").textContent="Mejor: "+(n?fmt(Math.min.apply(null,e).toFixed(1))+" \u00b0":"-");
+  }
+  function newRound(){
+    base=Math.round((Math.random()*160-80)*2)/2;
+    var s=(6+Math.random()*28)*(Math.random()<.5?-1:1);
+    s=Math.round(s*2)/2;
+    R.value=s;gr.setAttribute("transform","rotate("+base+" 55 100)");
+    tr.setAttribute("visibility","hidden");tr.setAttribute("transform","rotate("+base+" 145 100)");
+    rot(s);done=false;cmp.textContent="Comparar";
+    msg.textContent="Dej\u00e1 la l\u00ednea verde paralela a la gris.";
+  }
+  R.addEventListener("input",function(){if(!done)rot(R.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var v=+R.value,d=Math.round(Math.abs(v)*10)/10;st.errs.push(d);save();stats();done=true;
+    tr.setAttribute("visibility","visible");
+    var q=d<=1.5?"Excelente.":d<=3?"Muy bien.":d<=6?"Cerca; prob\u00e1 de nuevo.":"Hay margen: compar\u00e1 deslizando una regla de costado.";
+    msg.textContent="Te corriste "+fmt(d)+" grados"+(d>0?" hacia "+(v>0?"la derecha (sentido del reloj)":"la izquierda"):"")+". "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("pa-next").addEventListener("click",newRound);
+  $("pa-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
