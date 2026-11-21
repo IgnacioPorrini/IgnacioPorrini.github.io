@@ -70,6 +70,11 @@
         .ori-act:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
         .container a:not(.btn):not(.ori-btn){color:var(--accent)}
         .ori-btn{color:#e8eeeb!important}
+        .mk-cv{width:100%;max-width:320px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0d1512}
+        .mk-cv .mk-hit{cursor:pointer;stroke:transparent;stroke-width:30;fill:none}
+        .mk-cv .mk-hit:focus-visible{stroke:rgba(255,211,77,.45);outline:none}
+        .mk-key{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:.6rem 0 0;font-size:.95rem}
+        .mk-key svg{vertical-align:middle;margin-right:.4rem}
         .kg-cv{width:100%;max-width:300px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);cursor:crosshair}
     </style>
 </head>
@@ -245,6 +250,25 @@
                 </div>
                 <p class="sq-res mt-3 mb-1" id="kg-msg" aria-live="polite"></p>
                 <p class="small text-muted-light mb-0">Consejo para hacerlo con papel de verdad: los cortes que llegan a un borde doblado quedan unidos al abrir; los que quedan en el medio dejan huecos sueltos. Para que la figura no se desarme, deje siempre algo de papel entre un corte y otro. Los niños deben usar tijera de punta redonda y con un adulto cerca. La actividad y el dibujo son propios.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" id="maekawa">
+            <div class="container">
+                <h2 class="section-title mb-2">Patrón de pliegues: regla de Maekawa</h2>
+                <p class="text-muted-light mb-3">En un papel plegado plano, cuando varios pliegues se juntan en un mismo punto, siempre hay dos valles más que montes, o dos montes más que valles. Toque cada pliegue para cambiarlo entre valle y monte y vea si la cuenta cierra. Es una condición necesaria para que el punto se pliegue plano; no alcanza por sí sola para un patrón completo con muchos puntos.</p>
+                <div id="mk-tabs" role="group" aria-label="Cantidad de pliegues en el punto"></div>
+                <svg id="mk-svg" class="mk-cv" viewBox="0 0 300 300" role="group" aria-label="Pliegues que se juntan en un punto, tóquelos para cambiarlos"></svg>
+                <div class="mk-key" aria-hidden="true">
+                    <span><svg width="44" height="10"><line x1="2" y1="5" x2="42" y2="5" stroke="#5fd0ff" stroke-width="3" stroke-dasharray="7 5"/></svg>Valle (línea de rayas)</span>
+                    <span><svg width="44" height="10"><line x1="2" y1="5" x2="42" y2="5" stroke="#ff9a5c" stroke-width="3" stroke-dasharray="12 4 2 4"/></svg>Monte (raya y punto)</span>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button class="ori-act alt" type="button" id="mk-rnd">Al azar</button>
+                    <button class="ori-act alt" type="button" id="mk-rs">Todos valle</button>
+                </div>
+                <p class="sq-res mt-3 mb-1" id="mk-msg" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">Con papel de verdad: use un cuadrado, marque la cruz de los dos ejes y las dos diagonales (8 pliegues en el centro) y pliéguelos alternando valles y montes según la cuenta. Más información sobre el teorema en <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Maekawa%27s_theorem">Wikipedia (en inglés)</a>. Explicación y dibujo propios.</p>
             </div>
         </section>
 
@@ -527,6 +551,54 @@
     });
   });
   dibujar();
+})();
+</script>
+<script>
+(function(){
+  var svg=document.getElementById('mk-svg'),msg=document.getElementById('mk-msg'),tabs=document.getElementById('mk-tabs');
+  var NS='http://www.w3.org/2000/svg',N=[4,6,8],n=4,asg=[],lines=[];
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function ends(i){
+    var ang=(-90+i*360/n)*Math.PI/180,dx=Math.cos(ang),dy=Math.sin(ang);
+    var t=140/Math.max(Math.abs(dx),Math.abs(dy));
+    return [150+dx*t,150+dy*t];
+  }
+  function build(){
+    svg.textContent='';lines=[];
+    svg.appendChild(el('rect',{x:10,y:10,width:280,height:280,fill:'none',stroke:'rgba(255,255,255,.25)','stroke-width':1}));
+    for(var i=0;i<n;i++)(function(i){
+      var p=ends(i),g=el('g',{});
+      var ln=el('line',{x1:150,y1:150,x2:Math.max(10,Math.min(290,p[0])),y2:Math.max(10,Math.min(290,p[1])),'stroke-width':4,'stroke-linecap':'round'});
+      var hit=el('line',{x1:150,y1:150,x2:Math.max(10,Math.min(290,p[0])),y2:Math.max(10,Math.min(290,p[1])),'class':'mk-hit',tabindex:0,role:'button'});
+      function tog(){asg[i]=asg[i]==='V'?'M':'V';paint()}
+      hit.addEventListener('click',tog);
+      hit.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tog()}});
+      g.appendChild(ln);g.appendChild(hit);svg.appendChild(g);lines.push([ln,hit]);
+    })(i);
+    svg.appendChild(el('circle',{cx:150,cy:150,r:5,fill:'#e8eeeb'}));
+  }
+  function paint(){
+    var v=0,m=0;
+    for(var i=0;i<n;i++){
+      var val=asg[i]==='V';if(val)v++;else m++;
+      lines[i][0].setAttribute('stroke',val?'#5fd0ff':'#ff9a5c');
+      lines[i][0].setAttribute('stroke-dasharray',val?'9 7':'16 5 3 5');
+      lines[i][1].setAttribute('aria-label','Pliegue '+(i+1)+' de '+n+': '+(val?'valle':'monte')+'. Toque para cambiar.');
+    }
+    var d=Math.abs(v-m);
+    msg.textContent=(v+' valles y '+m+' montes: diferencia '+d+'. ')+(d===2?'Cumple la regla de Maekawa: este punto puede plegarse plano.':'No cumple: la diferencia tiene que ser 2. Cambie algún pliegue.');
+    msg.style.color=d===2?'':'#ffb38a';
+  }
+  function reset(){asg=[];for(var i=0;i<n;i++)asg.push('V')}
+  N.forEach(function(k,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=k+' pliegues';
+    b.setAttribute('aria-pressed',j===0?'true':'false');
+    b.addEventListener('click',function(){n=k;Array.prototype.forEach.call(tabs.children,function(x,q){x.setAttribute('aria-pressed',q===j?'true':'false')});reset();build();paint()});
+    tabs.appendChild(b);
+  });
+  document.getElementById('mk-rs').addEventListener('click',function(){reset();paint()});
+  document.getElementById('mk-rnd').addEventListener('click',function(){for(var i=0;i<n;i++)asg[i]=Math.random()<.5?'V':'M';paint()});
+  reset();build();paint();
 })();
 </script>
 </body>
