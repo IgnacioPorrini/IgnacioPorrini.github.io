@@ -47,6 +47,15 @@ header.hero{padding:48px 0 28px;text-align:center}
 .hero h1{font-size:clamp(2rem,7vw,3rem)}
 .hero p{color:var(--muted);max-width:560px;margin:.4em auto 0}
 .pill{display:inline-block;background:var(--soft-c);color:var(--c);font-weight:700;padding:4px 12px;border-radius:99px;font-size:.85rem;margin-bottom:12px}
+nav.toc a[hidden]{display:none}
+details.toc-box{margin:18px auto 6px;max-width:760px;text-align:left}
+details.toc-box>summary{cursor:pointer;list-style:none;text-align:center;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:10px 16px;min-height:44px}
+details.toc-box>summary::-webkit-details-marker{display:none}
+details.toc-box>summary:focus-visible,.toc-find input:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.toc-find{display:block;margin:12px 0 0}
+.toc-find input{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px}
+.sr-toc{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.toc-none{text-align:center;color:var(--muted);margin:10px 0 0}
 nav.toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 8px}
 nav.toc a{text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:99px;font-size:.9rem}
 section{margin-top:40px}
@@ -88,7 +97,7 @@ footer a{color:var(--c)}
 @media (max-width:480px){.step{grid-template-columns:52px 1fr}.time{font-size:.95rem}}
 @media print{
   body{background:#fff;color:#000;font-size:13px}
-  nav.toc,.noprint{display:none}
+  nav.toc,details.toc-box,.noprint{display:none}
   .card,.rc{break-inside:avoid}
   section{margin-top:20px}
 }
@@ -449,7 +458,11 @@ footer a{color:var(--c)}
   <span class="pill">Guía del taller · Clase 0</span>
   <h1>Taller de Expresión Plástica</h1>
   <p>Un taller nómade: los materiales entran en una mochila y el espacio se arma donde haga falta. Dibujo, color, texturas y collage para explorar sin miedo a equivocarse. No hace falta saber dibujar.</p>
-  <nav class="toc">
+  <details class="toc-box" id="toc-box">
+  <summary>Ir a una herramienta (<span id="toc-n"></span>)</summary>
+  <label class="toc-find"><span class="sr-toc">Buscar en el índice</span><input type="search" id="toc-q" placeholder="Buscar: color, ojo, perspectiva..." autocomplete="off"></label>
+  <p class="toc-none" id="toc-none" hidden>No hay coincidencias.</p>
+  <nav class="toc" aria-label="Índice de herramientas">
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
     <a href="#tarjetas">Tarjetas de color</a>
@@ -503,6 +516,7 @@ footer a{color:var(--c)}
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
   </nav>
+  </details>
 </header>
 
 <section id="taller">
@@ -4943,6 +4957,22 @@ footer a{color:var(--c)}
   $("lg-next").addEventListener("click",newRound);
   $("lg-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var box=document.getElementById('toc-box'),q=document.getElementById('toc-q'),none=document.getElementById('toc-none');
+  if(!box||!q)return;
+  var links=[].slice.call(box.querySelectorAll('nav.toc a'));
+  document.getElementById('toc-n').textContent=links.length;
+  if(window.matchMedia&&window.matchMedia('(min-width:700px)').matches)box.open=true;
+  function norm(t){return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+  q.addEventListener('input',function(){
+    var v=norm(q.value.trim()),n=0;
+    links.forEach(function(a){var ok=!v||norm(a.textContent).indexOf(v)>-1;a.hidden=!ok;if(ok)n++});
+    none.hidden=n>0;
+  });
+  links.forEach(function(a){a.addEventListener('click',function(){if(window.matchMedia&&window.matchMedia('(max-width:699px)').matches)box.open=false})});
 })();
 </script>
 </body>
