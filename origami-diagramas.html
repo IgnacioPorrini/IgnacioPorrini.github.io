@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://ignacioporrini.github.io/origami-diagramas.html">
     <title>Origami: bases, modelos y diagramas | Ignacio Porrini</title>
-    <meta name="description" content="Taller de origami: cómo leer un diagrama, bases tradicionales con su trazado de pliegues, barco paso a paso y guías de grulla, dragón, sapo, caja y mariposa.">
+    <meta name="description" content="Taller de origami: cómo leer un diagrama, doblar y cortar con simetría, bases tradicionales con su trazado de pliegues, barco paso a paso y guías de grulla, dragón, sapo, caja y mariposa.">
     <link rel="icon" href="favicon.ico" />
     <meta property="og:title" content="Origami: bases, modelos y diagramas">
     <meta property="og:description" content="Bases tradicionales, barco paso a paso y guías de grulla, dragón, sapo, caja y mariposa.">
@@ -70,6 +70,7 @@
         .ori-act:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
         .container a:not(.btn):not(.ori-btn){color:var(--accent)}
         .ori-btn{color:#e8eeeb!important}
+        .kg-cv{width:100%;max-width:300px;height:auto;aspect-ratio:1;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);cursor:crosshair}
     </style>
 </head>
 <body>
@@ -218,6 +219,32 @@
                         </figure>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker" id="kirigami">
+            <div class="container">
+                <h2 class="section-title mb-2">Doblar y cortar</h2>
+                <p class="text-muted-light mb-3">Un clásico de papel: se dobla la hoja, se corta una forma en el papel doblado y al abrirla aparece un dibujo simétrico. Elija cuántas veces doblar y dibuje con el dedo lo que cortaría con tijera sobre el papel doblado; abajo se ve cómo queda al abrirlo.</p>
+                <div id="kg-tabs" role="group" aria-label="Cantidad de dobleces"></div>
+                <div class="row g-3 align-items-start">
+                    <div class="col-12 col-md-6">
+                        <p class="fw-bold mb-1" id="kg-l1">Papel doblado: dibuje el corte acá</p>
+                        <canvas id="kg-fold" class="kg-cv" width="300" height="300" role="img" aria-labelledby="kg-l1"></canvas>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <p class="fw-bold mb-1" id="kg-l2">Papel abierto</p>
+                        <canvas id="kg-open" class="kg-cv" width="300" height="300" role="img" aria-labelledby="kg-l2"></canvas>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-3 align-items-center">
+                    <span id="kg-sz" role="group" aria-label="Grosor del corte"></span>
+                    <button class="ori-act alt" type="button" id="kg-undo">Deshacer</button>
+                    <button class="ori-act alt" type="button" id="kg-clear">Borrar</button>
+                    <button class="ori-act" type="button" id="kg-save">Guardar imagen</button>
+                </div>
+                <p class="sq-res mt-3 mb-1" id="kg-msg" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">Consejo para hacerlo con papel de verdad: los cortes que llegan a un borde doblado quedan unidos al abrir; los que quedan en el medio dejan huecos sueltos. Para que la figura no se desarme, deje siempre algo de papel entre un corte y otro. Los niños deben usar tijera de punta redonda y con un adulto cerca. La actividad y el dibujo son propios.</p>
             </div>
         </section>
 
@@ -387,6 +414,119 @@
   }
   W.addEventListener('input',draw);H.addEventListener('input',draw);
   draw();
+})();
+</script>
+<script>
+(function(){
+  var S=300,C=150;
+  var MODOS=[
+    {k:'m',n:'1 doblez (mitad)',txt:'Doblado a la mitad: lo que corte se repite en espejo a izquierda y derecha.'},
+    {k:'c',n:'2 dobleces (cuarto)',txt:'Doblado en cuatro: el corte se repite en las cuatro esquinas del papel.'},
+    {k:'o',n:'3 dobleces (triángulo)',txt:'Doblado en triángulo: el corte se repite ocho veces, como una estrella o un copo de nieve.'}];
+  var modo=0,trazos=[],ancho=14,dibujando=null;
+  var fold=document.getElementById('kg-fold'),open=document.getElementById('kg-open'),msg=document.getElementById('kg-msg');
+  var fc=fold.getContext('2d'),oc=open.getContext('2d');
+  function plegar(x,y){
+    var X=x-C,Y=y-C,k=MODOS[modo].k;
+    X=Math.abs(X);
+    if(k!=='m'){Y=Math.abs(Y)}
+    if(k==='o'&&Y>X){var t=X;X=Y;Y=t}
+    return [X,Y];
+  }
+  function transf(){
+    var k=MODOS[modo].k;
+    if(k==='m')return [[1,1,0],[-1,1,0]];
+    var t=[[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0]];
+    if(k==='o')t=t.concat([[1,1,1],[-1,1,1],[1,-1,1],[-1,-1,1]]);
+    return t;
+  }
+  function region(c){
+    var k=MODOS[modo].k;c.beginPath();
+    if(k==='m')c.rect(C,0,C,S);
+    else if(k==='c')c.rect(C,C,C,C);
+    else{c.moveTo(C,C);c.lineTo(S,C);c.lineTo(S,S);c.closePath()}
+  }
+  function pintar(c,tr){
+    c.lineCap='round';c.lineJoin='round';
+    trazos.forEach(function(t){
+      tr.forEach(function(m){
+        c.beginPath();c.lineWidth=t.w;
+        t.p.forEach(function(p,i){
+          var X=p[0],Y=p[1];
+          if(m[2]){var q=X;X=Y;Y=q}
+          X*=m[0];Y*=m[1];
+          if(i===0)c.moveTo(C+X,C+Y);else c.lineTo(C+X,C+Y);
+        });
+        if(t.p.length===1){var p0=t.p[0],X0=p0[0],Y0=p0[1];if(m[2]){var q2=X0;X0=Y0;Y0=q2}c.lineTo(C+X0*m[0]+.01,C+Y0*m[1])}
+        c.stroke();
+      });
+    });
+  }
+  function dibujar(){
+    var tr=transf();
+    fc.globalCompositeOperation='source-over';fc.clearRect(0,0,S,S);
+    fc.fillStyle='#15201c';fc.fillRect(0,0,S,S);
+    fc.save();region(fc);fc.clip();
+    fc.fillStyle='#25d399';fc.fillRect(0,0,S,S);
+    fc.strokeStyle='#15201c';pintar(fc,[[1,1,0]]);
+    fc.restore();
+    fc.save();region(fc);fc.strokeStyle='#5db0ff';fc.lineWidth=2;fc.setLineDash([6,4]);fc.stroke();fc.restore();
+    // abierto
+    oc.globalCompositeOperation='source-over';oc.clearRect(0,0,S,S);
+    oc.fillStyle='#15201c';oc.fillRect(0,0,S,S);
+    oc.fillStyle='#25d399';oc.fillRect(6,6,S-12,S-12);
+    oc.strokeStyle='#15201c';pintar(oc,tr);
+    oc.save();oc.strokeStyle='rgba(93,176,255,.9)';oc.lineWidth=1.5;oc.setLineDash([6,4]);
+    oc.beginPath();oc.moveTo(C,6);oc.lineTo(C,S-6);
+    if(MODOS[modo].k!=='m'){oc.moveTo(6,C);oc.lineTo(S-6,C)}
+    if(MODOS[modo].k==='o'){oc.moveTo(6,6);oc.lineTo(S-6,S-6);oc.moveTo(S-6,6);oc.lineTo(6,S-6)}
+    oc.stroke();oc.restore();
+    var alt=trazos.length?'Papel abierto con '+trazos.length+' corte'+(trazos.length>1?'s':'')+' repetidos en simetría.':'Papel abierto, todavía sin cortes.';
+    open.setAttribute('aria-label',alt);fold.setAttribute('aria-label',MODOS[modo].n);
+    msg.textContent=trazos.length?MODOS[modo].txt:MODOS[modo].txt+' Pase el dedo sobre el papel doblado para cortar.';
+  }
+  function pos(e){
+    var r=fold.getBoundingClientRect();
+    return plegar((e.clientX-r.left)*S/r.width,(e.clientY-r.top)*S/r.height);
+  }
+  fold.addEventListener('pointerdown',function(e){
+    e.preventDefault();
+    try{fold.setPointerCapture(e.pointerId)}catch(_){}
+    dibujando={w:ancho,p:[pos(e)]};trazos.push(dibujando);dibujar();
+  });
+  fold.addEventListener('pointermove',function(e){
+    if(!dibujando)return;e.preventDefault();
+    dibujando.p.push(pos(e));dibujar();
+  });
+  function fin(){dibujando=null}
+  fold.addEventListener('pointerup',fin);fold.addEventListener('pointercancel',fin);
+  fold.style.touchAction='none';
+  // botones
+  var tabs=document.getElementById('kg-tabs');
+  MODOS.forEach(function(m,i){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=m.n;
+    b.setAttribute('aria-pressed',i===0?'true':'false');
+    b.addEventListener('click',function(){
+      modo=i;trazos=[];Array.prototype.forEach.call(tabs.children,function(x,j){x.setAttribute('aria-pressed',j===i?'true':'false')});dibujar();
+    });
+    tabs.appendChild(b);
+  });
+  var sz=document.getElementById('kg-sz');
+  [['Fino',6],['Medio',14],['Grueso',26]].forEach(function(s){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=s[0];
+    b.setAttribute('aria-pressed',s[1]===ancho?'true':'false');
+    b.addEventListener('click',function(){ancho=s[1];Array.prototype.forEach.call(sz.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})});
+    sz.appendChild(b);
+  });
+  document.getElementById('kg-undo').addEventListener('click',function(){trazos.pop();dibujar()});
+  document.getElementById('kg-clear').addEventListener('click',function(){trazos=[];dibujar()});
+  document.getElementById('kg-save').addEventListener('click',function(){
+    open.toBlob(function(b){
+      if(!b)return;var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='papel-cortado.png';
+      document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+    });
+  });
+  dibujar();
 })();
 </script>
 </body>
