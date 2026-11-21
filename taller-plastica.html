@@ -375,6 +375,17 @@ footer a{color:var(--c)}
 .oa-sec .oa-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .oa-sec .oa-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.oa-sec{display:none}}
+.vt-sec .vt-sw{max-width:320px;margin:8px auto}
+.vt-sec .vt-sw svg{width:100%;height:auto;display:block;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.vt-sec input[type=range]{width:100%;min-height:44px}
+.vt-sec .vt-opt{display:flex;align-items:center;gap:8px;min-height:44px;color:var(--muted)}
+.vt-sec .vt-opt input{width:22px;height:22px}
+.vt-sec .vt-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.vt-sec .vt-row .tm-go,.vt-sec .vt-row .tm-rs{flex:1 1 140px}
+.vt-sec .vt-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.vt-sec .vt-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.vt-sec .vt-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.vt-sec{display:none}}
 .oe-sec .oe-sw{display:flex;gap:8px;max-width:420px;margin:8px auto}
 .oe-sec .oe-sw svg{flex:1;min-width:0;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .oe-sec input[type=range]{width:100%;min-height:44px}
@@ -467,6 +478,7 @@ footer a{color:var(--c)}
     <a href="#circulo-mano">Círculo a mano alzada</a>
     <a href="#ojo-centro">Ojo para el centro</a>
     <a href="#ojo-area">Ojo para el área</a>
+    <a href="#ojo-vertical">Ojo para la vertical</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1590,6 +1602,33 @@ footer a{color:var(--c)}
       <button type="button" id="oa-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: no compares los anchos, comparás superficies. Un círculo ocupa algo menos que el cuadrado que lo contiene (cerca del 79 %), así que el cuadrado que lo iguala es un poco más chico que el diámetro del círculo. Después de comparar, probá en papel dibujar un cuadrado y un círculo de igual área, o repartir un collage en partes iguales. Menos de 5 % ya es un ojo muy afinado.</div>
+  </div>
+</section>
+
+<section id="ojo-vertical" class="vt-sec">
+  <h2>Ojo para la vertical</h2>
+  <p style="color:var(--muted)">Al dibujar una casa, un mástil o el horizonte, las verticales y horizontales se te van torciendo sin que lo notes. Acá aparece una línea verde inclinada. Con el control, girala hasta que quede perfectamente vertical (o perfectamente horizontal, según la ronda) y tocá Comparar. Se muestra cuántos grados te corriste y se guardan en este celular el promedio y la mejor ronda. Con la opción del marco torcido el cuadro engaña al ojo, como pasa en un papel que no está derecho.</p>
+  <div class="card">
+    <div class="vt-sw" role="img" aria-label="Cuadro con una línea verde que girás con el control hasta dejarla vertical u horizontal">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <g id="vt-frame"><rect x="20" y="20" width="160" height="160" fill="none" stroke="#5b6068" stroke-width="3"/></g>
+        <line id="vt-true" x1="100" y1="10" x2="100" y2="190" stroke="#e8eaed" stroke-width="1.5" stroke-dasharray="4 4" visibility="hidden"/>
+        <line id="vt-me" x1="100" y1="25" x2="100" y2="175" stroke="#4cc26a" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <label for="vt-rng" style="position:absolute;left:-9999px">Giro de tu línea</label>
+    <input type="range" id="vt-rng" min="-60" max="60" value="20" step="0.5" aria-label="Giro de tu línea, a la izquierda o a la derecha">
+    <label class="vt-opt"><input type="checkbox" id="vt-tilt"> Con marco torcido (más difícil)</label>
+    <p class="vt-msg" id="vt-msg" aria-live="polite">Dejá la línea vertical.</p>
+    <ul class="vt-stats" aria-label="Resultados guardados">
+      <li id="vt-n">Rondas: 0</li><li id="vt-avg">Promedio: -</li><li id="vt-best">Mejor: -</li>
+    </ul>
+    <div class="vt-row">
+      <button type="button" id="vt-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="vt-next" class="tm-rs">Otra línea</button>
+      <button type="button" id="vt-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: no te guíes por el marco, buscá la dirección en que cae una plomada. Tras comparar, la línea blanca punteada es la vertical u horizontal exacta. Menos de 1,5 grados es un ojo muy afinado. En papel, colgá un hilo con una tuerca como plomada, ponelo delante del dibujo y comprobá tus verticales; para las horizontales, usá una regla apoyada en el borde de la mesa.</div>
   </div>
 </section>
 
@@ -4705,6 +4744,50 @@ footer a{color:var(--c)}
   });
   $("oa-next").addEventListener("click",newRound);
   $("oa-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-vertical-v1",$=function(i){return document.getElementById(i)};
+  var me=$("vt-me"),tr=$("vt-true"),fr=$("vt-frame"),R=$("vt-rng"),msg=$("vt-msg"),cmp=$("vt-cmp"),tilt=$("vt-tilt");
+  var st={errs:[]},horiz=false,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function rot(v){me.setAttribute("transform","rotate("+(+v+(horiz?90:0))+" 100 100)")}
+  function fmt(x){return String(x).replace(".",",")}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("vt-n").textContent="Rondas: "+n;
+    $("vt-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" °":"-");
+    $("vt-best").textContent="Mejor: "+(n?fmt(Math.min.apply(null,e).toFixed(1))+" °":"-");
+  }
+  function frame(){
+    var a=0;
+    if(tilt.checked){a=(8+Math.random()*17)*(Math.random()<.5?-1:1)}
+    fr.setAttribute("transform","rotate("+a.toFixed(1)+" 100 100)");
+  }
+  function newRound(){
+    horiz=Math.random()<.5;
+    var s=(10+Math.random()*45)*(Math.random()<.5?-1:1);
+    s=Math.round(s*2)/2;
+    R.value=s;frame();tr.setAttribute("visibility","hidden");
+    tr.setAttribute("transform","rotate("+(horiz?90:0)+" 100 100)");
+    rot(s);done=false;cmp.textContent="Comparar";
+    msg.textContent=horiz?"Dejá la línea horizontal.":"Dejá la línea vertical.";
+  }
+  R.addEventListener("input",function(){if(!done)rot(R.value)});
+  tilt.addEventListener("change",function(){if(!done)frame()});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var v=+R.value,d=Math.round(Math.abs(v)*10)/10;st.errs.push(d);save();stats();done=true;
+    tr.setAttribute("visibility","visible");
+    var q=d<=1.5?"Excelente.":d<=3?"Muy bien.":d<=6?"Cerca; probá de nuevo.":"Hay margen: mirá cómo cae una plomada o el borde de una puerta.";
+    msg.textContent="Te corriste "+fmt(d)+" grados"+(d>0?" hacia "+(v>0?"la derecha (sentido del reloj)":"la izquierda"):"")+". "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("vt-next").addEventListener("click",newRound);
+  $("vt-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
