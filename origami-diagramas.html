@@ -121,7 +121,7 @@
         <nav class="ori-toc" aria-label="Índice de la página">
             <div class="container">
                 <details>
-                    <summary>Ir a una sección (15)</summary>
+                    <summary>Ir a una sección (16)</summary>
                     <ul>
                         <li><a href="#leer">Cómo leer un diagrama</a></li>
                         <li><a href="#bases">Bases tradicionales</a></li>
@@ -138,6 +138,7 @@
                         <li><a href="#haga">Pliegue de Haga</a></li>
                         <li><a href="#grosor">Dobleces y grosor</a></li>
                         <li><a href="#hojas-a">Hojas A</a></li>
+                        <li><a href="#cortar-cuadrados">Cuántos cuadrados salen de una hoja</a></li>
                     </ul>
                 </details>
             </div>
@@ -371,6 +372,35 @@
                 <p class="sq-res mt-3 mb-1" id="ha-msg" aria-live="polite"></p>
                 <p class="sq-res mb-1" id="ha-rat" aria-live="polite"></p>
                 <p class="small text-muted-light mb-0">Medidas nominales de la norma ISO 216, redondeadas al milímetro; por eso la proporción real da 1,41 y no exactamente la raíz de 2. Para repetirlo en papel: tome una A4, dóblela por la mitad llevando un lado corto sobre el otro y compare la forma con una A5. Para ampliar, busque <a target="_blank" rel="noopener" href="https://es.wikipedia.org/w/index.php?search=ISO+216+formato+A">&laquo;ISO 216&raquo; en Wikipedia</a>. Dibujo y texto propios.</p>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker" id="cortar-cuadrados">
+            <div class="container">
+                <h2 class="section-title mb-2">Cuántos cuadrados salen de una hoja</h2>
+                <p class="text-muted-light mb-3">Para una tarde de origami con varias personas conviene cortar muchos cuadrados de una sola hoja grande. Elija la hoja y el lado del cuadrado: la herramienta cuenta cuántos salen en filas y columnas, cuánto sobra y, al revés, qué lado conviene si necesita una cantidad exacta.</p>
+                <div class="row g-4 align-items-start">
+                    <div class="col-12 col-md-6">
+                        <div id="cc-hoja" role="group" aria-label="Tamaño de hoja"></div>
+                        <div class="mb-3" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:20rem">
+                            <label class="d-block">Ancho (cm)<br><input class="sq-in" type="number" id="cc-w" min="1" max="200" step="0.1" inputmode="decimal" value="21"></label>
+                            <label class="d-block">Alto (cm)<br><input class="sq-in" type="number" id="cc-h" min="1" max="200" step="0.1" inputmode="decimal" value="29.7"></label>
+                        </div>
+                        <div id="cc-lado-t" role="group" aria-label="Lado del cuadrado"></div>
+                        <label class="d-block mb-3" style="max-width:10rem">Lado del cuadrado (cm)<br><input class="sq-in" type="number" id="cc-s" min="0.5" max="100" step="0.1" inputmode="decimal" value="7.5"></label>
+                        <p class="sq-res mb-1" id="cc-msg" aria-live="polite"></p>
+                        <p class="sq-res mb-3" id="cc-sob" aria-live="polite"></p>
+                        <label class="d-block mb-2" style="max-width:10rem">Necesito (cuadrados)<br><input class="sq-in" type="number" id="cc-n" min="1" max="400" step="1" inputmode="numeric" value="8"></label>
+                        <p class="sq-res mb-2" id="cc-inv" aria-live="polite"></p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <figure class="ori-fig m-0">
+                            <svg class="legend-svg" id="cc-svg" viewBox="0 0 260 260" role="img" aria-labelledby="cc-cap"></svg>
+                            <figcaption id="cc-cap" class="text-muted-light">Dibujo a escala: en verde los cuadrados que salen; en gris, lo que sobra.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <p class="small text-muted-light mt-3 mb-0">Es una cuenta de cortes rectos en cuadrícula, sin contar lo que se pierde con la guillotina o la tijera. Para repetirlo en papel: marque con lápiz y regla las filas y las columnas antes de cortar. Para el papel de origami ya cortado, busque &laquo;papel kami&raquo; en <a target="_blank" rel="noopener" href="https://es.wikipedia.org/w/index.php?search=papel+kami+origami">Wikipedia</a>. Cuentas, dibujo y texto propios.</p>
             </div>
         </section>
 
@@ -891,6 +921,59 @@
     b.addEventListener('click',function(){k=j;Array.prototype.forEach.call(tabs.children,function(x,q){x.setAttribute('aria-pressed',q===j?'true':'false')});paint()});
     tabs.appendChild(b);
   });
+  paint();
+})();
+</script>
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  var W=document.getElementById('cc-w'),H=document.getElementById('cc-h'),S=document.getElementById('cc-s'),N=document.getElementById('cc-n');
+  var svg=document.getElementById('cc-svg'),msg=document.getElementById('cc-msg'),sob=document.getElementById('cc-sob'),inv=document.getElementById('cc-inv');
+  var hoja=document.getElementById('cc-hoja'),lados=document.getElementById('cc-lado-t');
+  var HOJAS=[['A3',29.7,42],['A4',21,29.7],['A5',14.8,21],['Carta',21.6,27.9]];
+  var LADOS=[5,7.5,10,15];
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(x,d){return x.toLocaleString('es-UY',{maximumFractionDigits:d==null?1:d})}
+  function plural(n,a,b){return n+' '+(n===1?a:b)}
+  function chips(box,items,label,fn){
+    items.forEach(function(it,j){
+      var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=label(it);
+      b.addEventListener('click',function(){fn(it)});box.appendChild(b);
+    });
+  }
+  function pressed(){
+    var w=+W.value,h=+H.value,s=+S.value;
+    Array.prototype.forEach.call(hoja.children,function(b,j){b.setAttribute('aria-pressed',(w===HOJAS[j][1]&&h===HOJAS[j][2])?'true':'false')});
+    Array.prototype.forEach.call(lados.children,function(b,j){b.setAttribute('aria-pressed',s===LADOS[j]?'true':'false')});
+  }
+  function paint(){
+    var w=+W.value,h=+H.value,s=+S.value;
+    svg.textContent='';pressed();
+    if(!(w>0&&h>0&&s>0)){msg.textContent='Escriba medidas mayores que cero.';sob.textContent='';inv.textContent='';return}
+    var c=Math.floor(w/s+1e-9),f=Math.floor(h/s+1e-9),tot=c*f;
+    var sc=Math.min(240/w,240/h),ox=(260-w*sc)/2,oy=(260-h*sc)/2;
+    svg.appendChild(el('rect',{x:ox,y:oy,width:w*sc,height:h*sc,fill:'#f1efe4','fill-opacity':.14,stroke:'#e8eeeb','stroke-width':1.5}));
+    if(tot<=400){
+      for(var i=0;i<c;i++)for(var j=0;j<f;j++)
+        svg.appendChild(el('rect',{x:ox+i*s*sc,y:oy+j*s*sc,width:s*sc,height:s*sc,fill:'#25d399','fill-opacity':.4,stroke:'#25d399','stroke-width':.8}));
+    }
+    var area=w*h,usada=tot*s*s;
+    if(tot===0){
+      msg.textContent='El cuadrado de '+num(s)+' cm no entra en una hoja de '+num(w)+' x '+num(h)+' cm.';
+      sob.textContent='Pruebe con un lado menor que '+num(Math.min(w,h))+' cm.';
+    }else{
+      msg.textContent='Salen '+plural(tot,'cuadrado','cuadrados')+' de '+num(s)+' cm: '+plural(c,'columna','columnas')+' por '+plural(f,'fila','filas')+'.';
+      var rw=w-c*s,rh=h-f*s;
+      sob.textContent='Sobra el '+num((1-usada/area)*100,0)+' % de la hoja'+(rw>0.05||rh>0.05?': una tira de '+num(Math.max(rw,0),1)+' cm de ancho y otra de '+num(Math.max(rh,0),1)+' cm de alto.':'.');
+    }
+    var n=Math.max(1,Math.floor(+N.value)||1),best=0,bc=0,bf=0;
+    for(var a=1;a<=n;a++){var b=Math.ceil(n/a);var l=Math.min(w/a,h/b);if(l>best){best=l;bc=a;bf=b}}
+    var l2=Math.floor(best*10+1e-9)/10;
+    inv.textContent=n+' cuadrados: el lado más grande que alcanza es '+num(l2,1)+' cm ('+plural(bc,'columna','columnas')+' por '+plural(bf,'fila','filas')+').';
+  }
+  chips(hoja,HOJAS,function(x){return x[0]},function(x){W.value=x[1];H.value=x[2];paint()});
+  chips(lados,LADOS,function(x){return num(x)+' cm'},function(x){S.value=x;paint()});
+  [W,H,S,N].forEach(function(i){i.addEventListener('input',paint)});
   paint();
 })();
 </script>
