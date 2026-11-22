@@ -82,6 +82,21 @@
         .gr-cv{width:100%;max-width:360px;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0d1512}
         .hg-range{width:100%;max-width:360px;accent-color:#25d399;display:block;min-height:32px}
         .kw-cv .kw-h:focus-visible{stroke:#ffd34d;stroke-width:3;outline:none}
+        .ori-toc{padding:0 0 .5rem}
+        .ori-toc details{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.2rem 1rem}
+        .ori-toc summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;list-style:none}
+        .ori-toc summary::-webkit-details-marker{display:none}
+        .ori-toc summary::after{content:"+";margin-left:auto;color:var(--accent);font-size:1.3rem}
+        .ori-toc details[open] summary::after{content:"\2212"}
+        .ori-toc summary:focus-visible,.ori-toc a:focus-visible,.ori-top:focus-visible{outline:3px solid #ffd34d;outline-offset:2px}
+        .ori-toc ul{list-style:none;margin:0;padding:0 0 .6rem;columns:2 220px;column-gap:1.5rem}
+        .ori-toc li{break-inside:avoid}
+        .ori-toc li a{display:block;padding:.55rem 0;min-height:44px;box-sizing:border-box;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06)}
+        main section[id],h2[id]{scroll-margin-top:12px}
+        .ori-top{position:fixed;right:14px;bottom:14px;z-index:20;background:#15201c;color:#e8eeeb;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:.55rem .9rem;min-height:44px;font:600 .9rem 'Open Sans',sans-serif;text-decoration:none;display:none}
+        .ori-top.on{display:inline-flex;align-items:center}
+        html{scroll-behavior:smooth}
+        @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
     </style>
 </head>
 <body>
@@ -103,7 +118,32 @@
             </div>
         </section>
 
-        <section class="section-padding bg-darker">
+        <nav class="ori-toc" aria-label="Índice de la página">
+            <div class="container">
+                <details>
+                    <summary>Ir a una sección (15)</summary>
+                    <ul>
+                        <li><a href="#leer">Cómo leer un diagrama</a></li>
+                        <li><a href="#bases">Bases tradicionales</a></li>
+                        <li><a href="#barco">Barco paso a paso</a></li>
+                        <li><a href="#paso-a-paso">Paso a paso interactivo</a></li>
+                        <li><a href="#ranas">Carrera de ranas</a></li>
+                        <li><a href="#cronometro">Cronómetro de plegado</a></li>
+                        <li><a href="#modelos">Mis modelos</a></li>
+                        <li><a href="#busquedas">Búsquedas para repetir</a></li>
+                        <li><a href="#cuadrado">Cuadrado desde una hoja</a></li>
+                        <li><a href="#kirigami">Doblar y cortar</a></li>
+                        <li><a href="#maekawa">Regla de Maekawa</a></li>
+                        <li><a href="#kawasaki">Teorema de Kawasaki</a></li>
+                        <li><a href="#haga">Pliegue de Haga</a></li>
+                        <li><a href="#grosor">Dobleces y grosor</a></li>
+                        <li><a href="#hojas-a">Hojas A</a></li>
+                    </ul>
+                </details>
+            </div>
+        </nav>
+
+        <section class="section-padding bg-darker" id="leer">
             <div class="container">
                 <h2 class="section-title mb-4">Cómo leer un diagrama</h2>
                 <div class="mb-3"><svg viewBox="0 0 300 74" role="img" aria-label="Símbolos de los diagramas" class="legend-svg">
@@ -120,7 +160,7 @@
             </div>
         </section>
 
-        <section class="section-padding">
+        <section class="section-padding" id="bases">
             <div class="container">
                 <h2 class="section-title mb-2">Bases tradicionales</h2>
                 <p class="text-muted-light mb-4">Trazado de pliegues sobre el cuadrado. Valle y monte se miran desde la cara que queda hacia arriba al empezar.</p>
@@ -129,14 +169,14 @@
             </div>
         </section>
 
-        <section class="section-padding bg-darker">
+        <section class="section-padding bg-darker" id="barco">
             <div class="container">
                 <h2 class="section-title mb-4">Barco paso a paso</h2>
                 <div class="row g-3"><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Hoja rectangular con el pliegue central"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="20,8 80,8 80,92 20,92"/><line class="vl" x1="20" y1="50" x2="80" y2="50"/><path class="ar" d="M50 16 Q68 30 50 44"/></svg><figcaption><b>1.</b> Hoja rectangular (sirve una A4). Dóblela por la mitad, bajando la parte de arriba.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Rectángulo doblado con las esquinas por plegar"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="10,28 90,28 90,84.6 10,84.6"/><line class="vl" x1="50" y1="28" x2="10" y2="68"/><line class="vl" x1="50" y1="28" x2="90" y2="68"/><path class="ar" d="M16 33 Q34 40 45 60"/><path class="ar" d="M84 33 Q66 40 55 60"/></svg><figcaption><b>2.</b> El doblez queda arriba. Lleve las dos esquinas de arriba hacia el centro, como un tejado.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Tejado con la franja inferior por doblar"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="50,28 90,68 90,84.6 10,84.6 10,68"/><polygon class="p-w" points="50,28 10,68 50,68"/><polygon class="p-w" points="50,28 90,68 50,68"/><line class="vl" x1="10" y1="68" x2="90" y2="68"/><path class="ar" d="M50 83 C66 80 66 72 53 69"/></svg><figcaption><b>3.</b> Doble hacia arriba la franja de abajo de la capa de adelante. Dé vuelta y repita atrás.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Sombrero que se abre desde abajo"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="50,28 73.4,51.4 26.6,51.4"/><polygon class="p-w" points="10,51.4 90,51.4 90,68 10,68"/><path class="ar" d="M36 78 L20 78"/><path class="ar" d="M64 78 L80 78"/></svg><figcaption><b>4.</b> Queda un sombrero. Ábralo desde abajo y aplástelo: el doblez del medio queda vertical.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Rombo con la punta de abajo por doblar"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="50,16 86,52 50,88 14,52"/><line class="vl" x1="14" y1="52" x2="86" y2="52"/><path class="ar" d="M50 83 Q66 70 52 57"/></svg><figcaption><b>5.</b> Queda un rombo. Doble hacia arriba la punta de abajo de la capa de adelante. Dé vuelta y repita.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Triángulo que se abre desde la base"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="50,16 86,52 14,52"/><path class="ar" d="M34 62 L18 62"/><path class="ar" d="M66 62 L82 62"/></svg><figcaption><b>6.</b> Queda un triángulo. Ábralo otra vez desde la base y aplástelo para formar un rombo.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Rombo con las puntas laterales para estirar"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-c" points="50,16 86,52 50,88 14,52"/><path class="ar" d="M22 52 L7 52"/><path class="ar" d="M78 52 L93 52"/></svg><figcaption><b>7.</b> Tome las dos puntas de los costados y tire suavemente hacia afuera. El fondo se aplana.</figcaption></figure></div><div class="col-12 col-sm-6 col-lg-3"><figure class="ori-fig"><svg viewBox="0 0 100 100" role="img" aria-label="Barquito terminado"><rect width="100" height="100" rx="6" fill="#15201c"/><polygon class="p-w" points="50,14 74,58 26,58"/><polygon class="p-c" points="8,58 92,58 76,82 24,82"/></svg><figcaption><b>8.</b> ¡Listo! Un barquito que flota. Pruébelo en agua.</figcaption></figure></div></div>
             </div>
         </section>
 
-        <section class="section-padding">
+        <section class="section-padding" id="paso-a-paso">
             <div class="container">
                 <h2 class="section-title mb-2">Paso a paso interactivo</h2>
                 <p class="text-muted-light mb-3">Un paso por pantalla, con el avance guardado en este dispositivo. Son versiones sencillas con papel cuadrado.</p>
@@ -158,7 +198,7 @@
             </div>
         </section>
 
-        <section class="section-padding bg-darker">
+        <section class="section-padding bg-darker" id="ranas">
             <div class="container">
                 <h2 class="section-title mb-2">Carrera de ranas</h2>
                 <p class="text-muted-light mb-3">Cuando la rana de papel esté lista, aprenda cómo se la hace saltar: se presiona atrás y se suelta. Acá toque el botón para practicar el ritmo.</p>
@@ -192,7 +232,7 @@
             </div>
         </section>
 
-        <section class="section-padding">
+        <section class="section-padding" id="modelos">
             <div class="container">
                 <h2 class="section-title mb-2">Mis modelos</h2>
                 <p class="text-muted-light mb-4">Guías externas para los modelos que todavía no tienen diagrama propio en esta página.</p>
@@ -200,7 +240,7 @@
             </div>
         </section>
 
-        <section class="section-padding bg-darker">
+        <section class="section-padding bg-darker" id="busquedas">
             <div class="container">
                 <h2 class="section-title mb-2">Búsquedas para repetir</h2>
                 <p class="text-muted-light mb-4">Un toque y se abre la búsqueda lista, en imágenes, YouTube o Pinterest.</p>
@@ -852,6 +892,18 @@
     tabs.appendChild(b);
   });
   paint();
+})();
+</script>
+<a href="#indice" class="ori-top" id="ori-top">Subir al índice</a>
+<script>
+(function(){
+  var t=document.getElementById('ori-top'),nav=document.querySelector('.ori-toc'),d=nav&&nav.querySelector('details');
+  if(!t||!d)return;
+  nav.id='indice';
+  function chk(){t.classList.toggle('on',(window.pageYOffset||0)>nav.offsetTop+400);}
+  window.addEventListener('scroll',chk,{passive:true});chk();
+  t.addEventListener('click',function(){d.open=true;});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){d.open=false;});});
 })();
 </script>
 </body>
