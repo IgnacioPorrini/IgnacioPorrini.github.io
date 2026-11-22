@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<title>Clínicas de verano para escuelas de vela · Ignacio Porrini</title>
+<meta name="description" content="Clínicas cortas para escuelas de vela en el verano: puesta a punto por clase, largadas y reglas, meteorología y seguridad. También suplencias de instructor.">
+<link rel="canonical" href="https://ignacioporrini.github.io/clinicas.html">
+<meta property="og:title" content="Clínicas de verano para escuelas de vela">
+<meta property="og:description" content="Puesta a punto, largadas y reglas, meteorología y seguridad, con material digital para cada navegante.">
+<meta property="og:url" content="https://ignacioporrini.github.io/clinicas.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: guía de consulta en una columna, como un derrotero: secciones por necesidad, fichas con su fuente al pie; acento verde de boya de babor */
+:root{
+  --bg:#EEF3F2; --grid:#DDE6E4; --surface:#FFFFFF; --ink:#10262B; --muted:#4D6469; --line:#C7D5D3;
+  --sea:#0E4F73; --sea-ink:#FFFFFF; --buoy:#1F7A4D; --buoy-bg:#E2F2E8; --flag:#B45309;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.8rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance}
+h2{font:700 1.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+h3{font:700 1.2rem/1.2 var(--display);margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--sea)}
+.lede{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-weight:600}
+.quick a small{font-weight:400;color:var(--muted);font-size:13px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{border-color:var(--buoy);background:var(--buoy-bg)}
+.cards{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.contacts{display:flex;flex-wrap:wrap;gap:6px}
+.contacts a,.contacts span{font-size:14px;border:1px solid var(--line);border-radius:6px;padding:4px 8px;text-decoration:none;color:var(--ink);word-break:break-all}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--muted)}
+.tag{display:inline-block;white-space:nowrap;vertical-align:middle;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 6px;background:var(--buoy-bg);color:var(--buoy)}
+.tag.warn{background:transparent;border:1px solid var(--flag);color:var(--flag)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;text-align:right}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 10px}
+.note{font-size:14px;color:var(--muted)}
+input{font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+footer{font-size:13px;color:var(--muted);text-align:center}
+</style>
+<style>.num{font:700 2rem/1 var(--display);color:var(--buoy)}.copy{font:15px var(--body);background:var(--buoy-bg);border-radius:8px;padding:12px}</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow">Navegante Escuela Itinerante · Temporada 2026–2027</p>
+    <h1>Clínicas de verano para escuelas de vela</h1>
+    <p class="lede">Clínicas cortas que se suman a la escuela de su club, en su sede y con sus barcos. Cada navegante se lleva el material en el celular para seguir practicando.</p>
+  </header>
+
+  <section>
+    <h2>Clínicas</h2>
+    <div class="cards">
+      <div class="card"><div class="meta"><span>Optimist · ILCA · Snipe · Tabla</span><span>3 h (1 h en tierra + 2 h en el agua)</span></div><h3>Puesta a punto por clase</h3><p>Ajustes de mástil, vela y escotas según el viento; cómo leer la vela; ejercicios de velocidad en ceñida y popa. Cada navegante se lleva su guía de puesta a punto en el celular.</p><p class="note"><b>Grupo:</b> 8 a 12 navegantes de una misma clase. <b>Material:</b> <a href="entrenamiento-a-bordo.html">Entrenamiento a bordo</a>.</p></div>
+      <div class="card"><div class="meta"><span>Todas las clases</span><span>2 h 30 (45 min en tierra + agua)</span></div><h3>Largadas y reglas</h3><p>Secuencia de largada 5-4-1, posición en la línea, cronómetro, reglas básicas de prioridad y penalizaciones. Largadas cortas repetidas con el cronómetro de la app.</p><p class="note"><b>Grupo:</b> 8 a 16 navegantes. <b>Material:</b> <a href="tactica-a-bordo.html">Táctica a bordo</a>.</p></div>
+      <div class="card"><div class="meta"><span>Taller en tierra</span><span>1 h 30</span></div><h3>Meteorología para navegantes</h3><p>Viento, presión y frentes en el Río de la Plata: pampero, sudestada, brisas, nubes que avisan y mareas. Ideal para días sin viento o con temporal. Cierra con quiz grupal.</p><p class="note"><b>Grupo:</b> Hasta 20 personas, desde 12 años. <b>Material:</b> <a href="meteorologia-a-bordo.html">Meteorología a bordo</a>.</p></div>
+      <div class="card"><div class="meta"><span>Tierra + agua</span><span>2 h</span></div><h3>Seguridad y hombre al agua</h3><p>Revisión del barco antes de salir, chaleco y equipo, qué hacer al volcar, maniobra de hombre al agua y señales con la lancha. Cada barco termina con su lista de revisión completa.</p><p class="note"><b>Grupo:</b> 8 a 12 navegantes. <b>Material:</b> <a href="revision-seguridad.html">Revisión de seguridad</a>.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Suplencias</h2>
+    <p>Cubro días o semanas de instructor en escuelas y colonias de verano: grupos de iniciación y perfeccionamiento, con la planificación y la seguridad del club.</p>
+  </section>
+
+  <section>
+    <h2>Cómo funciona</h2>
+    <ul style="margin:0;padding-left:20px">
+      <li><b>Dónde:</b> en la sede del club, con sus barcos y su lancha de apoyo.</li>
+      <li><b>Cuándo:</b> de diciembre a marzo, entre semana o fines de semana. Con mal tiempo, la parte en el agua se cambia por la clínica de meteorología o se reprograma.</li>
+      <li><b>Qué se adapta:</b> edad, nivel y clase de barco de cada grupo.</li>
+      <li><b>Costo:</b> se cotiza según la clínica y la cantidad de navegantes.</li>
+    </ul>
+    <div class="contacts" style="margin-top:12px"><a href="https://wa.me/59899348110?text=Hola%20Ignacio%2C%20quiero%20consultar%20por%20una%20cl%C3%ADnica%20de%20verano.%0AClub%20o%20escuela%3A%0ACl%C3%ADnica%3A%0AClase%20de%20barco%3A%0ACantidad%20y%20edades%20de%20navegantes%3A%0AFechas%20posibles%3A" target="_blank" rel="noopener">Consultar por WhatsApp</a><a href="clubes.html">Kit gratis para clubes</a></div>
+  </section>
+
+  <section>
+    <h2>Quién las da</h2>
+    <p>Ignacio Porrini, instructor de vela con experiencia en escuelas de Montevideo, docente de cursos de Brevet, cartas náuticas y meteorología marina, y autor de las apps náuticas que se usan en cada clínica. <a href="cv-nautico.html">Ver CV náutico</a>.</p>
+  </section>
+
+  <footer>Navegante Escuela Itinerante · <a href="apps/">Apps náuticas</a> · <a href="docencia-de-vela.html#agenda">Agenda Náutica</a></footer>
+</div>
+</body>
+</html>
