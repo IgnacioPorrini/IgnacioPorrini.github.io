@@ -493,6 +493,17 @@ footer a{color:var(--c)}
 .sp-sec .sp-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .sp-sec .sp-res b{font-family:Fredoka,sans-serif}
 @media print{.sp-sec{display:none}}
+.hz-sec .hz-svg{display:block;width:100%;max-width:360px;margin:10px auto;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.hz-sec .hz-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.hz-sec .hz-ctl input[type=range]{width:100%;min-height:44px;accent-color:#2fbf71}
+.hz-sec .hz-ctl input[type=range]:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.hz-sec .hz-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.hz-sec .hz-pre button{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.hz-sec .hz-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.hz-sec .hz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.hz-sec .hz-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hz-sec .hz-res b{font-family:Fredoka,sans-serif}
+@media print{.hz-sec{display:none}}
 .lp-sec .lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;margin:10px 0;padding:0;list-style:none}
 .lp-sec .lp-grid button{width:100%;min-height:44px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;position:relative}
 .lp-sec .lp-grid button[aria-pressed="true"]{border-color:#2fbf71;box-shadow:0 0 0 2px #2fbf71 inset}
@@ -618,6 +629,7 @@ footer a{color:var(--c)}
     <a href="#escala-lapices">Escala de lápices</a>
     <a href="#ampliar-reducir">Ampliar y reducir</a>
     <a href="#sombra-proyectada">Sombra proyectada</a>
+    <a href="#horizonte">Línea del horizonte</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2209,6 +2221,28 @@ footer a{color:var(--c)}
     <ul class="sp-res" id="sp-res" aria-live="polite"></ul>
     <p class="rt-msg" id="sp-msg" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: la cuenta es largo de la sombra = alto del objeto ÷ tangente de la altura del sol. A 45° la sombra mide lo mismo que el objeto; con el sol más bajo es más larga y con el sol más alto, más corta. Esto vale para una luz lejana como el sol, donde las sombras de todos los objetos son paralelas; con una lámpara cercana las sombras se abren en abanico desde la luz. Para probarlo en la vida real, mirá la sombra de un poste, de un compañero o de un lápiz parado en la mesa, y compará con el control.</div>
+  </div>
+</section>
+
+<section id="horizonte" class="hz-sec">
+  <h2>Línea del horizonte</h2>
+  <p style="color:var(--muted)">La línea del horizonte es la altura de tus ojos: cambia con el lugar desde donde mirás. Subí o bajá la altura de los ojos y mirá cómo cambia la escena con tres personas paradas a distintas distancias. Sirve para ubicar el horizonte antes de dibujar un paisaje, una calle o un grupo de gente.</p>
+  <div class="card">
+    <label class="hz-ctl" for="hz-e"><span>Altura de tus ojos: <span id="hz-e-v">150</span> cm</span>
+      <input id="hz-e" type="range" min="20" max="250" step="5" value="150">
+    </label>
+    <div class="hz-pre" role="group" aria-label="Alturas de ejemplo">
+      <button type="button" data-e="40">Sentado en el piso (40 cm)</button>
+      <button type="button" data-e="150">De pie (150 cm)</button>
+      <button type="button" data-e="250">Desde un balcón (250 cm)</button>
+    </div>
+    <label class="hz-ctl" for="hz-p"><span>Altura de las personas: <span id="hz-p-v">170</span> cm</span>
+      <input id="hz-p" type="range" min="100" max="200" step="5" value="170">
+    </label>
+    <svg id="hz-svg" class="hz-svg" viewBox="0 0 300 180" role="img" aria-label="Tres personas a distintas distancias y la línea del horizonte"></svg>
+    <ul class="hz-res" id="hz-res" aria-live="polite"></ul>
+    <p class="rt-msg" id="hz-msg" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: el horizonte es una línea horizontal a la altura de tus ojos, y todo lo que está por encima de esa línea está más alto que tus ojos y todo lo que está por debajo, más bajo. Por eso, si una persona mide lo mismo que la altura de tus ojos, el horizonte le pasa por los ojos aunque esté lejos, y a todas las personas parecidas las cruza a la misma altura relativa; la que está más lejos se ve más chica pero el horizonte la corta en el mismo lugar. Si estás sentado o en el piso, las cabezas quedan por encima del horizonte; desde un balcón, todo queda por debajo y el horizonte sube. El dibujo supone un piso plano y una hoja que mirás de frente, sin inclinar la cámara ni la cabeza.</div>
   </div>
 </section>
 
@@ -6194,6 +6228,42 @@ footer a{color:var(--c)}
   }
   ids.forEach(function(i){$(i).addEventListener("input",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#sombra-proyectada .sp-pre button"),function(b){b.addEventListener("click",function(){$("sp-alt").value=b.getAttribute("data-a");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-horizonte-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var ids=["hz-e","hz-p"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){ids.forEach(function(k){var v=parseFloat(t[k]);var r=$(k);if(isFinite(v)&&v>=parseFloat(r.min)&&v<=parseFloat(r.max))r.value=v})}}catch(e){}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function clear(n){while(n.firstChild)n.removeChild(n.firstChild)}
+  function f(x,d){var m=Math.pow(10,d);return (Math.round(x*m)/m).toLocaleString("es-AR",{minimumFractionDigits:0,maximumFractionDigits:d})}
+  var DIST=[300,600,1200],XS=[70,150,225],SC=120,HY=70;
+  function draw(){
+    var e=parseFloat($("hz-e").value),h=parseFloat($("hz-p").value);
+    var svg=$("hz-svg"),res=$("hz-res"),msg=$("hz-msg");
+    clear(svg);clear(res);
+    $("hz-e-v").textContent=f(e,0);$("hz-p-v").textContent=f(h,0);
+    svg.appendChild(el("line",{x1:0,y1:HY,x2:300,y2:HY,stroke:"#f4c20d","stroke-width":2,"stroke-dasharray":"6 4"}));
+    var lb=el("text",{x:4,y:HY-5,"font-size":11,fill:"#f4c20d"});lb.textContent="horizonte";svg.appendChild(lb);
+    for(var i=DIST.length-1;i>=0;i--){
+      var d=DIST[i],fy=HY+SC*e/d,hy=HY+SC*(e-h)/d,w=Math.max(2,SC*40/d);
+      svg.appendChild(el("line",{x1:XS[i]-60/(i+1),y1:fy,x2:XS[i]+60/(i+1),y2:fy,stroke:"currentColor","stroke-width":1.5,opacity:.35}));
+      svg.appendChild(el("line",{x1:XS[i],y1:fy-w/2,x2:XS[i],y2:hy+w/2,stroke:"#2fbf71","stroke-width":w,"stroke-linecap":"round",opacity:.9}));
+      svg.appendChild(el("circle",{cx:XS[i],cy:hy+w/2,r:Math.max(1.5,SC*10/d),fill:"#2fbf71"}));
+    }
+    var t3=el("text",{x:8,y:14,"font-size":11,fill:"currentColor"});t3.textContent="Altura de los ojos: "+f(e,0)+" cm";svg.appendChild(t3);
+    var frac=Math.max(0,Math.min(1,e/h))*100;
+    var pos;
+    if(Math.abs(e-h)<2.5)pos="justo en el horizonte";else if(e<h)pos="por encima del horizonte";else pos="por debajo del horizonte";
+    var rows=[["Cabezas",pos],["El horizonte cruza a cada persona a",e>=h?"más arriba de la cabeza":f(frac,0)+"% de su altura, desde los pies"],["La persona del fondo se ve de","1/4 del tamaño de la del frente"]];
+    rows.forEach(function(r){var li=document.createElement("li"),s=document.createElement("span"),b=document.createElement("b");s.textContent=r[0];b.textContent=r[1];li.appendChild(s);li.appendChild(b);res.appendChild(li)});
+    msg.textContent=e<h-2.5?(e<80?"Ojos muy bajos: se ve a las personas desde abajo, con el horizonte cerca del piso.":"Los ojos están más bajos que las cabezas: el horizonte corta a cada persona a la misma altura relativa."):(Math.abs(e-h)<2.5?"Los ojos y las cabezas están a la misma altura: el horizonte pasa por los ojos de todas las personas, sin importar la distancia.":"Mirás desde más alto que las cabezas: el horizonte queda por encima de todas y se ve un piso amplio.");
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#horizonte .hz-pre button"),function(b){b.addEventListener("click",function(){$("hz-e").value=b.getAttribute("data-e");draw()})});
   draw();
 })();
 </script>
