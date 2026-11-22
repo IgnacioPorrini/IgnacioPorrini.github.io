@@ -558,6 +558,7 @@ footer a{color:var(--c)}
     <a href="#ojo-distancia">Ojo para la distancia</a>
     <a href="#ojo-paralelo">Ojo para el paralelo</a>
     <a href="#ojo-bisectriz">Ojo para la bisectriz</a>
+    <a href="#ojo-tangente">Ojo para la tangente</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1896,6 +1897,32 @@ footer a{color:var(--c)}
       <button type="button" id="bi-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: no mirá la línea verde sola; comparé los dos huecos que deja con cada gris y buscá que sean iguales en forma y en tamaño. Tras comparar, la línea blanca punteada es la mitad exacta. Menos de 1,5 grados es un ojo muy afinado. En papel, comprobalo calcando el ángulo en una hoja fina y doblándola de modo que una gris caiga sobre la otra: el pliegue es la bisectriz.</div>
+  </div>
+</section>
+
+<section id="ojo-tangente" class="pa-sec">
+  <h2>Ojo para la tangente</h2>
+  <p style="color:var(--muted)">Una tangente es la línea que roza una curva en un solo punto, sin cortarla ni quedar lejos. Se usa para apoyar una regla en una rueda, un vaso o una cabeza al dibujar. Acá hay un círculo gris y una línea verde inclinada al azar. Con el control, acercá o alejá la línea hasta que apenas toque el círculo y tocá Comparar. Se muestra por cuánto te pasaste o te quedaste corto, y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <div class="pa-sw" role="img" aria-label="Un círculo gris y una línea verde inclinada que acercás o alejás con el control hasta que apenas lo toque">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle id="tg-c" cx="100" cy="100" r="35" fill="none" stroke="#8b9099" stroke-width="4"/>
+        <line id="tg-true" x1="0" y1="0" x2="0" y2="0" stroke="#e8eaed" stroke-width="1.5" stroke-dasharray="4 4" visibility="hidden"/>
+        <line id="tg-me" x1="0" y1="0" x2="0" y2="0" stroke="#4cc26a" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <label for="tg-rng" style="position:absolute;left:-9999px">Distancia de tu línea al círculo</label>
+    <input type="range" id="tg-rng" min="0" max="70" value="40" step="0.25" aria-label="Distancia de tu línea verde al centro del círculo">
+    <p class="pa-msg" id="tg-msg" aria-live="polite">Dejá la línea verde apenas tocando el círculo gris.</p>
+    <ul class="pa-stats" aria-label="Resultados guardados">
+      <li id="tg-n">Rondas: 0</li><li id="tg-avg">Promedio: -</li><li id="tg-best">Mejor: -</li>
+    </ul>
+    <div class="pa-row">
+      <button type="button" id="tg-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="tg-next" class="tm-rs">Otro círculo</button>
+      <button type="button" id="tg-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: no busques el punto de contacto; mirá el hueco de luz entre la línea y la curva a ambos lados del roce, que debe ir cerrándose parejo. Si la línea corta el círculo, el sector cortado se ve como una lente. Tras comparar, la línea blanca punteada es la tangente exacta. Menos de 3 % del radio es un ojo muy afinado. En papel, comprobalo apoyando una regla en un vaso o una tapa calcada: la regla toca el borde en un solo punto, y el radio que va a ese punto forma un ángulo recto con ella.</div>
   </div>
 </section>
 
@@ -5423,6 +5450,53 @@ footer a{color:var(--c)}
   });
   $("bi-next").addEventListener("click",newRound);
   $("bi-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-tangente-v1",$=function(i){return document.getElementById(i)};
+  var C=$("tg-c"),me=$("tg-me"),tr=$("tg-true"),R=$("tg-rng"),msg=$("tg-msg"),cmp=$("tg-cmp");
+  var st={errs:[]},r=35,th=0,shift=0,done=false;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st=t}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function line(el,dist){
+    var a=th*Math.PI/180,dx=Math.cos(a),dy=Math.sin(a),nx=-dy,ny=dx;
+    var fx=100+nx*dist,fy=100+ny*dist;
+    el.setAttribute("x1",(fx-dx*130).toFixed(2));el.setAttribute("y1",(fy-dy*130).toFixed(2));
+    el.setAttribute("x2",(fx+dx*130).toFixed(2));el.setAttribute("y2",(fy+dy*130).toFixed(2));
+  }
+  function put(v){line(me,+v+shift)}
+  function fmt(x){return String(x).replace(".",",")}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("tg-n").textContent="Rondas: "+n;
+    $("tg-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" %":"-");
+    $("tg-best").textContent="Mejor: "+(n?fmt(Math.min.apply(null,e).toFixed(1))+" %":"-");
+  }
+  function newRound(){
+    r=Math.round((22+Math.random()*26)*2)/2;
+    th=Math.round(Math.random()*180);
+    shift=Math.round((Math.random()*16-8)*2)/2;
+    C.setAttribute("r",r);
+    line(tr,r);tr.setAttribute("visibility","hidden");
+    var s=Math.round((r-shift+(Math.random()<.5?-1:1)*(10+Math.random()*18))*2)/2;
+    s=Math.max(0,Math.min(70,s));
+    R.value=s;put(s);done=false;cmp.textContent="Comparar";
+    msg.textContent="Dej\u00e1 la l\u00ednea verde apenas tocando el c\u00edrculo gris.";
+  }
+  R.addEventListener("input",function(){if(!done)put(R.value)});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var dist=+R.value+shift,diff=dist-r,pc=Math.round(Math.abs(diff)/r*1000)/10;
+    st.errs.push(pc);save();stats();done=true;
+    tr.setAttribute("visibility","visible");
+    var q=pc<=3?"Excelente.":pc<=6?"Muy bien.":pc<=12?"Cerca; prob\u00e1 de nuevo.":"Hay margen: mir\u00e1 el hueco de luz entre la l\u00ednea y la curva.";
+    msg.textContent=(pc>0?(diff<0?"La l\u00ednea cortaba el c\u00edrculo":"Quedaste separada del c\u00edrculo"):"Tangente exacta")+(pc>0?" por "+fmt(pc.toFixed(1))+" % del radio. ":". ")+q;
+    cmp.textContent="Siguiente";
+  });
+  $("tg-next").addEventListener("click",newRound);
+  $("tg-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
