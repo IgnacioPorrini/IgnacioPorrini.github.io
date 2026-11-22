@@ -482,6 +482,17 @@ footer a{color:var(--c)}
 .mp-sec .mp-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .mp-sec .mp-res b{font-family:Fredoka,sans-serif}
 @media print{.mp-sec{display:none}}
+.sp-sec .sp-svg{display:block;width:100%;max-width:360px;margin:10px auto;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.sp-sec .sp-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.sp-sec .sp-ctl input[type=range]{width:100%;min-height:44px;accent-color:#2fbf71}
+.sp-sec .sp-ctl input[type=range]:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.sp-sec .sp-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.sp-sec .sp-pre button{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.sp-sec .sp-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.sp-sec .sp-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.sp-sec .sp-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sp-sec .sp-res b{font-family:Fredoka,sans-serif}
+@media print{.sp-sec{display:none}}
 .lp-sec .lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;margin:10px 0;padding:0;list-style:none}
 .lp-sec .lp-grid button{width:100%;min-height:44px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;position:relative}
 .lp-sec .lp-grid button[aria-pressed="true"]{border-color:#2fbf71;box-shadow:0 0 0 2px #2fbf71 inset}
@@ -606,6 +617,7 @@ footer a{color:var(--c)}
     <a href="#marco-paspartu">Marco y paspartú</a>
     <a href="#escala-lapices">Escala de lápices</a>
     <a href="#ampliar-reducir">Ampliar y reducir</a>
+    <a href="#sombra-proyectada">Sombra proyectada</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2171,6 +2183,32 @@ footer a{color:var(--c)}
     <ul class="ar-res" id="ar-res" aria-live="polite"></ul>
     <p class="rt-msg" id="ar-msg" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: el original y la copia tienen que conservar la misma proporción; por eso solo se elige el ancho y el alto sale de la cuenta (alto nuevo = alto original × ancho nuevo ÷ ancho original). Si el resultado no entra en una sola hoja, se puede imprimir o fotocopiar en partes. Cada fotocopiadora tiene su propio rango de porcentajes, así que conviene mirar el de la que vayan a usar. Los números se redondean al milímetro y los valores quedan guardados en este celular.</div>
+  </div>
+</section>
+
+<section id="sombra-proyectada" class="sp-sec">
+  <h2>Sombra proyectada</h2>
+  <p style="color:var(--muted)">La sombra de un objeto sobre el piso se alarga cuando el sol está bajo y se acorta cuando está alto. Mové la altura del sol y la dirección de la luz: se ve el objeto de costado, la sombra vista desde arriba y cuánto mide respecto del objeto. Sirve para dibujar de observación y para inventar escenas con luz coherente.</p>
+  <div class="card">
+    <label class="sp-ctl" for="sp-alt"><span>Altura del sol: <span id="sp-alt-v">40</span>°</span>
+      <input id="sp-alt" type="range" min="5" max="85" step="1" value="40">
+    </label>
+    <div class="sp-pre" role="group" aria-label="Alturas de ejemplo">
+      <button type="button" data-a="15">Sol bajo (15°)</button>
+      <button type="button" data-a="45">Mitad (45°)</button>
+      <button type="button" data-a="70">Sol alto (70°)</button>
+    </div>
+    <label class="sp-ctl" for="sp-dir"><span>La luz viene de: <span id="sp-dir-v">arriba a la izquierda</span></span>
+      <input id="sp-dir" type="range" min="0" max="359" step="1" value="315">
+    </label>
+    <label class="sp-ctl" for="sp-h"><span>Alto del objeto (cm): <span id="sp-h-v">100</span></span>
+      <input id="sp-h" type="range" min="5" max="300" step="5" value="100">
+    </label>
+    <svg id="sp-side" class="sp-svg" viewBox="0 0 300 150" role="img" aria-label="Vista de costado: objeto, rayo de sol y sombra sobre el piso"></svg>
+    <svg id="sp-top" class="sp-svg" viewBox="0 0 200 200" role="img" aria-label="Vista desde arriba: objeto, sombra y lugar de donde viene la luz"></svg>
+    <ul class="sp-res" id="sp-res" aria-live="polite"></ul>
+    <p class="rt-msg" id="sp-msg" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: la cuenta es largo de la sombra = alto del objeto ÷ tangente de la altura del sol. A 45° la sombra mide lo mismo que el objeto; con el sol más bajo es más larga y con el sol más alto, más corta. Esto vale para una luz lejana como el sol, donde las sombras de todos los objetos son paralelas; con una lámpara cercana las sombras se abren en abanico desde la luz. Para probarlo en la vida real, mirá la sombra de un poste, de un compañero o de un lápiz parado en la mesa, y compará con el control.</div>
   </div>
 </section>
 
@@ -6106,6 +6144,57 @@ footer a{color:var(--c)}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc)});
   calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-sombra-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var ids=["sp-alt","sp-dir","sp-h"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){ids.forEach(function(k){var v=parseFloat(t[k]);var r=$(k);if(isFinite(v)&&v>=parseFloat(r.min)&&v<=parseFloat(r.max))r.value=v})}}catch(e){}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function clear(n){while(n.firstChild)n.removeChild(n.firstChild)}
+  function f(x,d){var m=Math.pow(10,d);return (Math.round(x*m)/m).toLocaleString("es-AR",{minimumFractionDigits:0,maximumFractionDigits:d})}
+  var NAMES=["arriba","arriba a la derecha","la derecha","abajo a la derecha","abajo","abajo a la izquierda","la izquierda","arriba a la izquierda"];
+  function dirName(d){var i=Math.round(d/45)%8;return NAMES[i]}
+  function draw(){
+    var a=parseFloat($("sp-alt").value),d=parseFloat($("sp-dir").value),h=parseFloat($("sp-h").value);
+    var side=$("sp-side"),top=$("sp-top"),res=$("sp-res"),msg=$("sp-msg");
+    clear(side);clear(top);clear(res);
+    var rad=a*Math.PI/180,ratio=1/Math.tan(rad),len=h*ratio;
+    $("sp-alt-v").textContent=f(a,0);$("sp-h-v").textContent=f(h,0);
+    $("sp-dir-v").textContent=dirName(d);
+    // vista de costado
+    var gy=120,px=60,bx=95,drawLen=Math.min(px*ratio,195),clipped=px*ratio>195;
+    side.appendChild(el("line",{x1:10,y1:gy,x2:290,y2:gy,stroke:"currentColor","stroke-width":2,opacity:.5}));
+    side.appendChild(el("line",{x1:bx,y1:gy,x2:bx+drawLen,y2:gy,stroke:"currentColor","stroke-width":6,opacity:.55,"stroke-linecap":"round"}));
+    side.appendChild(el("line",{x1:bx,y1:gy,x2:bx,y2:gy-px,stroke:"#2fbf71","stroke-width":6,"stroke-linecap":"round"}));
+    side.appendChild(el("line",{x1:bx,y1:gy-px,x2:bx+Math.min(drawLen,195),y2:gy,stroke:"#f4c20d","stroke-width":2,"stroke-dasharray":"5 4"}));
+    var sx=bx-70*Math.cos(rad),sy=gy-px-70*Math.sin(rad);
+    side.appendChild(el("line",{x1:sx,y1:sy,x2:bx,y2:gy-px,stroke:"#f4c20d","stroke-width":2}));
+    side.appendChild(el("circle",{cx:sx,cy:sy,r:9,fill:"#f4c20d"}));
+    var arc=el("path",{d:"M "+(bx-26)+" "+(gy-px)+" A 26 26 0 0 1 "+(bx-26*Math.cos(rad))+" "+(gy-px-26*Math.sin(rad)),fill:"none",stroke:"currentColor","stroke-width":1.5,opacity:.7});
+    side.appendChild(arc);
+    var tx=el("text",{x:bx+drawLen/2,y:gy+16,"text-anchor":"middle","font-size":11,fill:"currentColor"});tx.textContent=clipped?"sombra (cortada en el dibujo)":"sombra";side.appendChild(tx);
+    var t2=el("text",{x:bx-8,y:gy-px/2,"text-anchor":"end","font-size":11,fill:"currentColor"});t2.textContent="objeto";side.appendChild(t2);
+    var t3=el("text",{x:14,y:16,"font-size":11,fill:"currentColor"});t3.textContent="Vista de costado";side.appendChild(t3);
+    // vista desde arriba
+    var cx=100,cy=100,sd=d*Math.PI/180,ux=-Math.sin(sd),uy=Math.cos(sd);
+    var dl=Math.min(ratio*22,78),lx=cx+Math.sin(sd)*80,ly=cy-Math.cos(sd)*80;
+    top.appendChild(el("circle",{cx:cx,cy:cy,r:86,fill:"none",stroke:"currentColor",opacity:.2,"stroke-dasharray":"3 4"}));
+    top.appendChild(el("line",{x1:cx,y1:cy,x2:cx+ux*dl,y2:cy+uy*dl,stroke:"currentColor","stroke-width":9,opacity:.55,"stroke-linecap":"round"}));
+    top.appendChild(el("line",{x1:lx,y1:ly,x2:cx+Math.sin(sd)*14,y2:cy-Math.cos(sd)*14,stroke:"#f4c20d","stroke-width":2,"stroke-dasharray":"5 4"}));
+    top.appendChild(el("circle",{cx:lx,cy:ly,r:8,fill:"#f4c20d"}));
+    top.appendChild(el("circle",{cx:cx,cy:cy,r:6,fill:"#2fbf71"}));
+    var t4=el("text",{x:8,y:14,"font-size":11,fill:"currentColor"});t4.textContent="Vista desde arriba";top.appendChild(t4);
+    // resultados
+    var rows=[["Largo de la sombra",f(len,len<100?1:0)+" cm"],["Sombra ÷ objeto",f(ratio,2)+" veces"],["Sombra cae hacia",dirName((d+180)%360)]];
+    rows.forEach(function(r){var li=document.createElement("li"),s=document.createElement("span"),b=document.createElement("b");s.textContent=r[0];b.textContent=r[1];li.appendChild(s);li.appendChild(b);res.appendChild(li)});
+    msg.textContent=a<20?"Sol muy bajo: la sombra es larga, típica de la mañana temprano o del atardecer.":(a<=50?"Sol a media altura: la sombra mide entre una y dos veces el objeto, ideal para dibujar con volumen.":"Sol alto: la sombra es corta y queda pegada al objeto, como cerca del mediodía.");
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#sombra-proyectada .sp-pre button"),function(b){b.addEventListener("click",function(){$("sp-alt").value=b.getAttribute("data-a");draw()})});
+  draw();
 })();
 </script>
 </body>
