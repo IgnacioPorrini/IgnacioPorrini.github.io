@@ -482,6 +482,15 @@ footer a{color:var(--c)}
 .mp-sec .mp-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .mp-sec .mp-res b{font-family:Fredoka,sans-serif}
 @media print{.mp-sec{display:none}}
+.lp-sec .lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;margin:10px 0;padding:0;list-style:none}
+.lp-sec .lp-grid button{width:100%;min-height:44px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;position:relative}
+.lp-sec .lp-grid button[aria-pressed="true"]{border-color:#2fbf71;box-shadow:0 0 0 2px #2fbf71 inset}
+.lp-sec .lp-grid button.lp-own::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#2fbf71}
+.lp-sec .lp-svg{display:block;width:100%;max-width:360px;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#f4f1ea}
+.lp-sec .lp-chk{display:flex;gap:10px;align-items:center;font-weight:700;min-height:44px}
+.lp-sec .lp-chk input{width:24px;min-height:24px;height:24px}
+.lp-sec .lp-name{font-family:Fredoka,sans-serif;font-size:1.3rem;margin:4px 0;text-align:center}
+@media print{.lp-sec{display:none}}
 .gr5-sec .gr5-row{display:flex;gap:6px;max-width:460px;margin:10px auto}
 .gr5-sec .gr5-b{flex:1 1 0;min-width:0;height:112px;border-radius:10px;border:2px solid var(--line);cursor:pointer;position:relative;padding:0;font-family:Fredoka,sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
 .gr5-sec .gr5-b:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
@@ -590,6 +599,7 @@ footer a{color:var(--c)}
     <a href="#ojo-formato">Ojo para el formato</a>
     <a href="#ojo-aureo">Ojo para la sección áurea</a>
     <a href="#marco-paspartu">Marco y paspartú</a>
+    <a href="#escala-lapices">Escala de lápices</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2112,6 +2122,20 @@ footer a{color:var(--c)}
     <ul class="mp-res" id="mp-res" aria-live="polite"></ul>
     <p class="rt-msg" id="mp-msg" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: el solape es la franja de la obra que queda tapada por el cartón para que no se caiga por la ventana; se suele dejar entre 3 y 6 mm. Dejar el borde de abajo un poco más ancho es una costumbre de enmarcado para que el dibujo no parezca hundirse, no una regla. Cortá con regla metálica y cutter sobre una base, y medí dos veces antes de cortar. Los números se redondean al milímetro.</div>
+  </div>
+</section>
+
+<section id="escala-lapices" class="lp-sec">
+  <h2>Escala de lápices</h2>
+  <p style="color:var(--muted)">Los lápices de grafito se ordenan por dureza: la H viene de "hard" (duro) y la B de "black" (negro, más blando). Tocá un grado para ver qué esperar de él, probalo en tu hoja y marcá los que tenés en la mochila.</p>
+  <div class="card">
+    <ul class="lp-grid" id="lp-grid" aria-label="Grados de lápiz"></ul>
+    <p class="lp-name" id="lp-name" aria-live="polite"></p>
+    <svg id="lp-svg" class="lp-svg" viewBox="0 0 300 90" role="img" aria-label="Muestra ilustrativa de trazos del grado elegido"></svg>
+    <p class="rt-msg" id="lp-msg" aria-live="polite"></p>
+    <label class="lp-chk" for="lp-own"><input id="lp-own" type="checkbox"> Tengo este lápiz en la mochila</label>
+    <p id="lp-kit" aria-live="polite" style="margin:6px 0;color:var(--muted)"></p>
+    <div class="tip">Cómo usarlo: la muestra del dibujo es solo ilustrativa; el gris real cambia según la marca, el papel y la presión de la mano, así que la prueba que vale es la de tu hoja. Los números son la escala europea; en la numeración norteamericana el lápiz común "número 2" equivale aproximadamente al HB. Una idea práctica para el taller es empezar con un HB para esbozar, un 2B para la forma y un 4B o 6B para las sombras profundas, y sumar uno duro (H o 2H) si querés líneas finas de construcción. Con los blandos conviene apoyar una hoja bajo la mano para no manchar.</div>
   </div>
 </section>
 
@@ -5970,6 +5994,53 @@ footer a{color:var(--c)}
   }
   ids.concat(["mp-b"]).forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-escala-lapices-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var G=[];["9H","8H","7H","6H","5H","4H","3H","2H","H","F","HB","B","2B","3B","4B","5B","6B","7B","8B","9B"].forEach(function(g){G.push(g)});
+  var sel="HB",own={};
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){if(G.indexOf(t.sel)>=0)sel=t.sel;if(t.own&&typeof t.own==="object"){G.forEach(function(g){if(t.own[g]===true)own[g]=true})}}}catch(e){}
+  function pos(g){return G.indexOf(g)}
+  function info(g){
+    var i=pos(g),n=parseInt(g,10);
+    if(g==="F")return ["Intermedio, entre el HB y el H. Su nombre viene de \"fine point\" (punta fina).","Es un grado de uso general: sirve para trazar y para escribir."];
+    if(g==="HB")return ["Intermedio: ni muy duro ni muy blando.","Es el grado típico del lápiz de escribir; sirve para esbozar y para empezar cualquier dibujo."];
+    if(g.indexOf("H")>=0){var k=isNaN(n)?1:n;return [k===1?"Duro: deja un trazo gris claro y fino.":"Duro ("+k+"H): trazo claro y fino, que casi no mancha y se borra fácil.", k<=2?"Va bien para líneas de construcción y para dibujo técnico o detalles finos.":"Muy duro: casi no marca en papel de dibujo y puede dejar surcos si apretás. Se usa para trabajos técnicos muy precisos."]}
+    var b=isNaN(n)?1:n;
+    return [b===1?"Blando: trazo algo más oscuro que el HB.":"Blando ("+b+"B): trazo oscuro y suave, que mancha con facilidad.", b<=3?"Sirve para dar forma, volumen y sombras medias.":"Muy blando: sombras profundas y zonas oscuras; se desgasta rápido y conviene fijar o proteger el dibujo."];
+  }
+  function tone(g){var i=pos(g);return i/(G.length-1)}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function draw(){
+    var svg=$("lp-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var d=tone(sel),gray=Math.round(215-d*190),w=1.2+d*3.2;
+    svg.appendChild(el("path",{d:"M12 24 Q60 6 110 24 T210 24 T288 24",fill:"none",stroke:"rgb("+gray+","+gray+","+gray+")","stroke-width":w,"stroke-linecap":"round"}));
+    for(var i=0;i<14;i++){var x=14+i*6;svg.appendChild(el("line",{x1:x,y1:46,x2:x+22,y2:74,stroke:"rgb("+gray+","+gray+","+gray+")","stroke-width":w*0.7,"stroke-linecap":"round"}))}
+    var r=el("rect",{x:150,y:44,width:136,height:34,rx:4,fill:"rgb("+gray+","+gray+","+gray+")"});svg.appendChild(r);
+  }
+  function render(){
+    var grid=$("lp-grid");while(grid.firstChild)grid.removeChild(grid.firstChild);
+    G.forEach(function(g){
+      var li=document.createElement("li"),b=document.createElement("button");
+      b.type="button";b.textContent=g;b.setAttribute("aria-pressed",g===sel?"true":"false");
+      b.setAttribute("aria-label","Lápiz "+g+(own[g]?", lo tengo":""));
+      if(own[g])b.className="lp-own";
+      b.addEventListener("click",function(){sel=g;save();render()});
+      li.appendChild(b);grid.appendChild(li);
+    });
+    var inf=info(sel);
+    $("lp-name").textContent="Lápiz "+sel;
+    $("lp-msg").textContent=inf[0]+" "+inf[1];
+    $("lp-own").checked=own[sel]===true;
+    var mine=G.filter(function(g){return own[g]});
+    $("lp-kit").textContent=mine.length?"En tu mochila ("+mine.length+"): "+mine.join(", ")+".":"Todavía no marcaste ningún lápiz.";
+    draw();
+  }
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({sel:sel,own:own}))}catch(e){}}
+  $("lp-own").addEventListener("change",function(){if($("lp-own").checked)own[sel]=true;else delete own[sel];save();render()});
+  render();
 })();
 </script>
 </body>
