@@ -422,6 +422,18 @@ footer a{color:var(--c)}
 .oe-sec .oe-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .oe-sec .oe-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.oe-sec{display:none}}
+.dc-sec .dc-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.dc-sec .dc-ctl input[type=range]{width:100%;min-height:44px;accent-color:#2fbf71}
+.dc-sec .dc-ctl input[type=number]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:140px}
+.dc-sec .dc-ctl input:focus-visible,.dc-sec .dc-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.dc-sec .dc-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.dc-sec .dc-pre button{min-height:44px;min-width:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.dc-sec .dc-sw{max-width:360px;margin:8px auto}
+.dc-sec .dc-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.dc-sec .dc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.dc-sec .dc-res li b{white-space:nowrap}
+.dc-sec .dc-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+@media print{.dc-sec{display:none}}
 .rc-sec .rc-sw{max-width:420px;margin:8px auto}
 .rc-sec .rc-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .rc-sec input[type=range]{width:100%;min-height:44px}
@@ -648,6 +660,7 @@ footer a{color:var(--c)}
     <a href="#sombra-proyectada">Sombra proyectada</a>
     <a href="#horizonte">Línea del horizonte</a>
     <a href="#reparto-clase">Reparto del tiempo</a>
+    <a href="#dividir-circulo">Dividir el círculo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2284,6 +2297,25 @@ footer a{color:var(--c)}
     <ol class="rc-res" id="rc-res" aria-live="polite" style="list-style:none;padding:0"></ol>
     <p class="rt-msg" id="rc-msg" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: los minutos de cada momento salen de repartir la duración elegida con las mismas proporciones del plan de 60 minutos (5, 10, 12, 10, 13, 7 y 3), redondeadas al minuto; con más tiempo, cada actividad se estira un poco, pero para una clase larga conviene sumar una actividad (por ejemplo pintar un fondo o salir a dibujar el lugar, como se sugiere en el plan) en lugar de apurar menos. El recreo se suma al final del total, así que la clase dura 5 minutos más. Es una guía orientativa: si el grupo está en medio de algo, dejalo terminar y sacale minutos a la muestra o al collage, no a la primera actividad, que es la que rompe el hielo.</div>
+  </div>
+</section>
+
+<section id="dividir-circulo" class="dc-sec">
+  <h2>Dividir el círculo</h2>
+  <p style="color:var(--muted)">Elegí en cuántas partes iguales querés repartir un círculo (para una mandala, una rosa de los vientos o un polígono regular) y el radio con el que vas a trabajar. Te da el ángulo que tenés que marcar con el transportador y el largo de la cuerda para abrir el compás.</p>
+  <div class="card">
+    <label class="dc-ctl" for="dc-n"><span>Partes iguales: <span id="dc-n-v">6</span></span>
+      <input id="dc-n" type="range" min="3" max="24" step="1" value="6">
+    </label>
+    <div class="dc-pre" role="group" aria-label="Cantidades habituales">
+      <button type="button" data-n="3">3</button><button type="button" data-n="4">4</button><button type="button" data-n="5">5</button><button type="button" data-n="6">6</button><button type="button" data-n="8">8</button><button type="button" data-n="12">12</button>
+    </div>
+    <label class="dc-ctl" for="dc-r"><span>Radio en cm</span>
+      <input id="dc-r" type="number" inputmode="decimal" min="1" max="50" step="0.5" value="8">
+    </label>
+    <div class="dc-sw"><svg id="dc-svg" viewBox="0 0 200 200" role="img" aria-label="Círculo dividido en partes iguales con el polígono regular inscrito"></svg></div>
+    <ul class="dc-res" id="dc-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: marcá el centro, trazá el círculo con el compás y andá marcando sobre él el ángulo central con el transportador (360 grados dividido la cantidad de partes). La cuerda es el largo de la recta que une dos marcas vecinas: 2 por el radio por el seno de 180 grados sobre la cantidad de partes. Con 6 partes la cuerda es igual al radio, por eso el hexágono se hace con el compás sin cambiar la abertura. Con 5 o 7 partes la abertura no es redonda: el transportador da un resultado más prolijo. Las cuentas son matemática estándar, no una receta de ningún autor; los redondeos del trazo a mano alzada son parte del encanto.</div>
   </div>
 </section>
 
@@ -6349,6 +6381,38 @@ footer a{color:var(--c)}
   }
   ["rc-d","rc-h","rc-r"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#reparto-clase .rc-pre button"),function(b){b.addEventListener("click",function(){$("rc-d").value=b.getAttribute("data-d");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-dividir-circulo-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    var n0=parseInt(t.n,10),r0=parseFloat(t.r);
+    if(n0>=3&&n0<=24)$("dc-n").value=n0;
+    if(isFinite(r0)&&r0>=1&&r0<=50)$("dc-r").value=r0}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function draw(){
+    var n=parseInt($("dc-n").value,10),r=parseFloat($("dc-r").value);
+    $("dc-n-v").textContent=n;
+    if(!isFinite(r)||r<1)r=1;if(r>50)r=50;
+    var svg=$("dc-svg"),c=100,R=86,pts=[],i;
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    svg.appendChild(el("circle",{cx:c,cy:c,r:R,fill:"none",stroke:"#868e96","stroke-width":1.5}));
+    for(i=0;i<n;i++){var a=-Math.PI/2+2*Math.PI*i/n;pts.push([c+R*Math.cos(a),c+R*Math.sin(a)])}
+    for(i=0;i<n;i++)svg.appendChild(el("line",{x1:c,y1:c,x2:pts[i][0].toFixed(1),y2:pts[i][1].toFixed(1),stroke:"#495057","stroke-width":1}));
+    svg.appendChild(el("polygon",{points:pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" "),fill:"rgba(47,191,113,.15)",stroke:"#2fbf71","stroke-width":2.5,"stroke-linejoin":"round"}));
+    pts.forEach(function(p){svg.appendChild(el("circle",{cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:3,fill:"#2fbf71"}))});
+    svg.appendChild(el("circle",{cx:c,cy:c,r:2.5,fill:"#e9ecef"}));
+    var ang=360/n,chord=2*r*Math.sin(Math.PI/n),apo=r*Math.cos(Math.PI/n),inner=180-ang,perim=chord*n;
+    var rows=[["Ángulo central (transportador)",f(ang,1)+"°"],["Ángulo interior del polígono",f(inner,1)+"°"],["Cuerda: abertura del compás entre marcas",f(chord,2)+" cm"],["Apotema: del centro al medio de un lado",f(apo,2)+" cm"],["Perímetro del polígono",f(perim,1)+" cm"]];
+    var ul=$("dc-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)});
+    try{localStorage.setItem(KEY,JSON.stringify({n:n,r:r}))}catch(e2){}
+  }
+  ["dc-n","dc-r"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#dividir-circulo .dc-pre button"),function(b){b.addEventListener("click",function(){$("dc-n").value=b.getAttribute("data-n");draw()})});
   draw();
 })();
 </script>
