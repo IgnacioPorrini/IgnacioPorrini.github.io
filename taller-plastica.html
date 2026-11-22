@@ -466,6 +466,15 @@ footer a{color:var(--c)}
 .vf-sec .vf-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .vf-sec .vf-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.vf-sec{display:none}}
+.rt-sec .rt-svg{display:block;width:100%;max-width:360px;margin:8px auto;touch-action:none;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.rt-sec input[type=range]{width:100%;min-height:44px}
+.rt-sec .rt-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.rt-sec .rt-row .tm-go,.rt-sec .rt-row .tm-rs{flex:1 1 140px}
+.rt-sec .rt-ask{font-family:Fredoka,sans-serif;font-size:1.2rem;text-align:center;margin:6px 0}
+.rt-sec .rt-msg{font-family:Fredoka,sans-serif;font-size:1.1rem;text-align:center;margin:8px 0;min-height:2.6em}
+.rt-sec .rt-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.rt-sec .rt-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
+@media print{.rt-sec{display:none}}
 .gr5-sec .gr5-row{display:flex;gap:6px;max-width:460px;margin:10px auto}
 .gr5-sec .gr5-b{flex:1 1 0;min-width:0;height:112px;border-radius:10px;border:2px solid var(--line);cursor:pointer;position:relative;padding:0;font-family:Fredoka,sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
 .gr5-sec .gr5-b:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
@@ -569,6 +578,7 @@ footer a{color:var(--c)}
     <a href="#ojo-bisectriz">Ojo para la bisectriz</a>
     <a href="#ojo-tangente">Ojo para la tangente</a>
     <a href="#ojo-fuga">Ojo para el punto de fuga</a>
+    <a href="#ojo-ritmo">Ojo para el ritmo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -1961,6 +1971,32 @@ footer a{color:var(--c)}
       <button type="button" id="vf-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: prolongá con la vista cada línea en la dirección en que se acercan y fijate dónde se tocarían. Cuanto menos inclinadas entre sí, más lejos queda el cruce y más cuesta ubicarlo. En papel, apoyá una regla sobre cada borde de la vía o del camino, trazá las dos prolongaciones con lápiz suave y el cruce es el punto de fuga. Con el punto de fuga marcado, el resto de las líneas paralelas del dibujo se dirigen a ese mismo punto (la herramienta "Perspectiva: punto de fuga", más arriba, sirve para practicarlo).</div>
+  </div>
+</section>
+
+<section id="ojo-ritmo" class="rt-sec">
+  <h2>Ojo para el ritmo</h2>
+  <p style="color:var(--muted)">Una fila de postes, las ventanas de un edificio o los durmientes de una vía se repiten con un ritmo. Si se miran de frente, los intervalos son parejos; si se alejan en perspectiva, cada intervalo es un poco más corto que el anterior. Acá hay cuatro puntos grises sobre una línea. Con el control de abajo corré el punto verde hasta donde creés que sigue la serie y tocá Comparar. A veces los intervalos son parejos y a veces se achican. Se muestra cuánto te corriste, en porcentaje del ancho, y se guardan en este celular el promedio y la mejor ronda.</p>
+  <div class="card">
+    <p class="rt-ask" id="rt-ask" aria-live="polite">Seguí la serie.</p>
+    <svg id="rt-svg" class="rt-svg" viewBox="0 0 300 100" role="img" aria-label="Línea con cuatro puntos grises en serie y un punto verde que se puede correr para continuarla">
+      <line x1="8" y1="50" x2="292" y2="50" stroke="#3a3f47" stroke-width="2"/>
+      <g id="rt-dots" fill="#9aa0a6"></g>
+      <line id="rt-tgt" x1="0" y1="26" x2="0" y2="74" stroke="#e8eaed" stroke-width="2" stroke-dasharray="4 3" visibility="hidden"/>
+      <circle id="rt-me" cx="150" cy="50" r="7" fill="#4cc26a"/>
+    </svg>
+    <label for="rt-rng" style="position:absolute;left:-9999px">Posición del punto verde</label>
+    <input type="range" id="rt-rng" min="0" max="1000" value="500" step="1" aria-label="Posición del punto verde sobre la línea">
+    <p class="rt-msg" id="rt-msg" aria-live="polite">Corré el punto verde hasta donde seguiría la serie.</p>
+    <ul class="rt-stats" aria-label="Resultados guardados">
+      <li id="rt-n">Rondas: 0</li><li id="rt-avg">Promedio: -</li><li id="rt-best">Mejor: -</li>
+    </ul>
+    <div class="rt-row">
+      <button type="button" id="rt-cmp" class="tm-go">Comparar</button>
+      <button type="button" id="rt-next" class="tm-rs">Otra serie</button>
+      <button type="button" id="rt-reset" class="tm-rs">Borrar resultados</button>
+    </div>
+    <div class="tip">Cómo usarlo: antes de mover el punto, comparé el último intervalo con el anterior. Si son iguales, la serie es pareja; si el último es más corto, el siguiente también lo será, y en una proporción parecida. Al comparar, la marca punteada muestra el lugar exacto. Como técnica de dibujo, para repetir ventanas, postes o baldosas en perspectiva no copies el mismo largo: medí el primer y el segundo intervalo, y hacé cada nuevo intervalo un poco más corto, en la misma proporción. La herramienta "Ojo para el punto de fuga", más arriba, ayuda a ubicar hacia dónde se achica la serie.</div>
   </div>
 </section>
 
@@ -5608,6 +5644,49 @@ footer a{color:var(--c)}
   });
   $("vf-next").addEventListener("click",newRound);
   $("vf-reset").addEventListener("click",function(){st.errs=[];save();stats()});
+  newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ojo-ritmo-v1",$=function(i){return document.getElementById(i)};
+  var dots=$("rt-dots"),me=$("rt-me"),tgt=$("rt-tgt"),R=$("rt-rng"),msg=$("rt-msg"),cmp=$("rt-cmp"),ask=$("rt-ask");
+  var st={errs:[]},T=0,done=false,NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&Array.isArray(t.errs))st.errs=t.errs.filter(function(x){return typeof x==="number"})}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({errs:st.errs.slice(-200)}))}catch(e){}}
+  function fmt(x){return String(x).replace(".",",")}
+  function stats(){
+    var e=st.errs,n=e.length;
+    $("rt-n").textContent="Rondas: "+n;
+    $("rt-avg").textContent="Promedio: "+(n?fmt((e.reduce(function(a,b){return a+b},0)/n).toFixed(1))+" %":"-");
+    $("rt-best").textContent="Mejor: "+(n?fmt(Math.min.apply(null,e).toFixed(1))+" %":"-");
+  }
+  function mx(){return 10+R.value/1000*280}
+  function upd(){me.setAttribute("cx",mx().toFixed(1))}
+  function newRound(){
+    var r=[1,0.85,0.7][Math.floor(Math.random()*3)];
+    var g=r===1?(34+Math.random()*22):(46+Math.random()*24);
+    var x=26+Math.random()*(r===1?28:24),pts=[x],i;
+    for(i=0;i<4;i++){x+=g*Math.pow(r,i);pts.push(x)}
+    T=pts[4];
+    while(dots.firstChild)dots.removeChild(dots.firstChild);
+    for(i=0;i<4;i++){var c=document.createElementNS(NS,"circle");c.setAttribute("cx",pts[i].toFixed(1));c.setAttribute("cy","50");c.setAttribute("r","7");dots.appendChild(c)}
+    tgt.setAttribute("x1",T.toFixed(1));tgt.setAttribute("x2",T.toFixed(1));tgt.setAttribute("visibility","hidden");
+    R.value=T<150?1000:0;upd();done=false;cmp.textContent="Comparar";
+    msg.textContent="Corré el punto verde hasta donde seguiría la serie.";
+  }
+  R.addEventListener("input",function(){if(!done)upd();else{R.value=Math.round((mx()-10)/280*1000)}});
+  cmp.addEventListener("click",function(){
+    if(done){newRound();return}
+    var d=Math.round(Math.abs(mx()-T)/300*1000)/10;
+    st.errs.push(d);save();stats();done=true;
+    tgt.setAttribute("visibility","visible");
+    var q=d<=2?"Excelente.":d<=4?"Muy bien.":d<=8?"Cerca; probá de nuevo.":"Hay margen: comparé el último intervalo con el anterior.";
+    msg.textContent="Te corriste "+fmt(d)+" % del ancho. "+q;
+    cmp.textContent="Siguiente";
+  });
+  $("rt-next").addEventListener("click",newRound);
+  $("rt-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
 })();
 </script>
