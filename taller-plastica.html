@@ -504,6 +504,23 @@ footer a{color:var(--c)}
 .hz-sec .hz-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .hz-sec .hz-res b{font-family:Fredoka,sans-serif}
 @media print{.hz-sec{display:none}}
+.rc-sec .rc-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.rc-sec .rc-ctl input[type=range]{width:100%;min-height:44px;accent-color:#2fbf71}
+.rc-sec .rc-ctl input[type=time]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:180px}
+.rc-sec .rc-ctl input:focus-visible,.rc-sec .rc-chk input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.rc-sec .rc-chk{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:700;margin-top:6px}
+.rc-sec .rc-chk input{width:24px;height:24px;accent-color:#2fbf71}
+.rc-sec .rc-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.rc-sec .rc-pre button{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.rc-sec .rc-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.rc-sec .rc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.rc-sec .rc-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.rc-sec .rc-res li.rc-rest{border-style:dashed}
+.rc-sec .rc-res .rc-t{font-variant-numeric:tabular-nums;color:var(--muted)}
+.rc-sec .rc-res b{font-family:Fredoka,sans-serif;white-space:nowrap}
+.rc-sec .rc-bar{display:flex;height:14px;border-radius:7px;overflow:hidden;border:2px solid var(--line);margin:8px 0}
+.rc-sec .rc-bar span{display:block;height:100%}
+@media print{.rc-sec{display:none}}
 .lp-sec .lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;margin:10px 0;padding:0;list-style:none}
 .lp-sec .lp-grid button{width:100%;min-height:44px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;position:relative}
 .lp-sec .lp-grid button[aria-pressed="true"]{border-color:#2fbf71;box-shadow:0 0 0 2px #2fbf71 inset}
@@ -630,6 +647,7 @@ footer a{color:var(--c)}
     <a href="#ampliar-reducir">Ampliar y reducir</a>
     <a href="#sombra-proyectada">Sombra proyectada</a>
     <a href="#horizonte">Línea del horizonte</a>
+    <a href="#reparto-clase">Reparto del tiempo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2243,6 +2261,29 @@ footer a{color:var(--c)}
     <ul class="hz-res" id="hz-res" aria-live="polite"></ul>
     <p class="rt-msg" id="hz-msg" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: el horizonte es una línea horizontal a la altura de tus ojos, y todo lo que está por encima de esa línea está más alto que tus ojos y todo lo que está por debajo, más bajo. Por eso, si una persona mide lo mismo que la altura de tus ojos, el horizonte le pasa por los ojos aunque esté lejos, y a todas las personas parecidas las cruza a la misma altura relativa; la que está más lejos se ve más chica pero el horizonte la corta en el mismo lugar. Si estás sentado o en el piso, las cabezas quedan por encima del horizonte; desde un balcón, todo queda por debajo y el horizonte sube. El dibujo supone un piso plano y una hoja que mirás de frente, sin inclinar la cámara ni la cabeza.</div>
+  </div>
+</section>
+
+<section id="reparto-clase" class="rc-sec">
+  <h2>Reparto del tiempo de la clase</h2>
+  <p style="color:var(--muted)">Elegí cuánto dura la clase y a qué hora empieza: se reparten los siete momentos del plan de la clase 0 con la misma proporción, con horario de inicio y de fin de cada uno. Sirve para tener la grilla a mano en el celular mientras das el taller.</p>
+  <div class="card">
+    <label class="rc-ctl" for="rc-d"><span>Duración de la clase: <span id="rc-d-v">60</span> min</span>
+      <input id="rc-d" type="range" min="45" max="150" step="5" value="60">
+    </label>
+    <div class="rc-pre" role="group" aria-label="Duraciones de ejemplo">
+      <button type="button" data-d="60">1 h</button>
+      <button type="button" data-d="90">1 h 30</button>
+      <button type="button" data-d="120">2 h</button>
+    </div>
+    <label class="rc-ctl" for="rc-h"><span>Hora de inicio</span>
+      <input id="rc-h" type="time" value="15:00">
+    </label>
+    <label class="rc-chk" for="rc-r"><input id="rc-r" type="checkbox"> Sumar un recreo de 5 minutos después de Tres colores</label>
+    <div class="rc-bar" id="rc-bar" role="img" aria-label="Proporción de cada momento de la clase"></div>
+    <ol class="rc-res" id="rc-res" aria-live="polite" style="list-style:none;padding:0"></ol>
+    <p class="rt-msg" id="rc-msg" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: los minutos de cada momento salen de repartir la duración elegida con las mismas proporciones del plan de 60 minutos (5, 10, 12, 10, 13, 7 y 3), redondeadas al minuto; con más tiempo, cada actividad se estira un poco, pero para una clase larga conviene sumar una actividad (por ejemplo pintar un fondo o salir a dibujar el lugar, como se sugiere en el plan) en lugar de apurar menos. El recreo se suma al final del total, así que la clase dura 5 minutos más. Es una guía orientativa: si el grupo está en medio de algo, dejalo terminar y sacale minutos a la muestra o al collage, no a la primera actividad, que es la que rompe el hielo.</div>
   </div>
 </section>
 
@@ -6264,6 +6305,50 @@ footer a{color:var(--c)}
   }
   ids.forEach(function(i){$(i).addEventListener("input",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#horizonte .hz-pre button"),function(b){b.addEventListener("click",function(){$("hz-e").value=b.getAttribute("data-e");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-reparto-clase-v1",$=function(i){return document.getElementById(i)};
+  var N=["Mi línea","Dibujo a ciegas","Tres colores, todos los colores","Cazar texturas","Collage del lugar","Una obra de todos","Muestra relámpago"];
+  var W=[5,10,12,10,13,7,3],COL=["#2fbf71","#f4c20d","#e8590c","#4dabf7","#cc5de8","#94d82d","#adb5bd"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    var d=parseFloat(t.d);if(isFinite(d)&&d>=45&&d<=150)$("rc-d").value=d;
+    if(typeof t.h==="string"&&/^\d\d:\d\d$/.test(t.h))$("rc-h").value=t.h;
+    $("rc-r").checked=t.r===true}}catch(e){}
+  function split(total){
+    var sum=W.reduce(function(a,b){return a+b},0),raw=W.map(function(w){return w*total/sum}),fl=raw.map(Math.floor);
+    var left=total-fl.reduce(function(a,b){return a+b},0);
+    raw.map(function(r,i){return [r-Math.floor(r),i]}).sort(function(a,b){return b[0]-a[0]||a[1]-b[1]}).slice(0,left).forEach(function(p){fl[p[1]]++});
+    return fl;
+  }
+  function pad(n){return (n<10?"0":"")+n}
+  function clock(m){m=((m%1440)+1440)%1440;return pad(Math.floor(m/60))+":"+pad(m%60)}
+  function dur(m){var h=Math.floor(m/60),r=m%60;return h?h+" h"+(r?" "+r+" min":""):r+" min"}
+  function draw(){
+    var total=parseInt($("rc-d").value,10),hv=$("rc-h").value||"15:00",rest=$("rc-r").checked;
+    var hm=hv.split(":"),start=parseInt(hm[0],10)*60+parseInt(hm[1],10);if(!isFinite(start))start=900;
+    $("rc-d-v").textContent=total;
+    var mins=split(total),res=$("rc-res"),bar=$("rc-bar"),cur=start,i;
+    while(res.firstChild)res.removeChild(res.firstChild);while(bar.firstChild)bar.removeChild(bar.firstChild);
+    function row(cls,label,from,m,color){
+      var li=document.createElement("li");if(cls)li.className=cls;
+      var a=document.createElement("span");a.className="rc-t";a.textContent=clock(from)+" – "+clock(from+m);
+      var b=document.createElement("span");b.textContent=label;
+      var c=document.createElement("b");c.textContent=m+" min";
+      li.appendChild(a);li.appendChild(b);li.appendChild(c);res.appendChild(li);
+      var sg=document.createElement("span");sg.style.width=(m*100/(total+(rest?5:0)))+"%";sg.style.background=color;bar.appendChild(sg);
+    }
+    for(i=0;i<N.length;i++){
+      row("",(i+1)+". "+N[i],cur,mins[i],COL[i]);cur+=mins[i];
+      if(rest&&i===2){row("rc-rest","Recreo",cur,5,"#868e96");cur+=5}
+    }
+    $("rc-msg").textContent="Termina a las "+clock(cur)+". Duración total: "+dur(total+(rest?5:0))+".";
+    try{localStorage.setItem(KEY,JSON.stringify({d:total,h:hv,r:rest}))}catch(e2){}
+  }
+  ["rc-d","rc-h","rc-r"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#reparto-clase .rc-pre button"),function(b){b.addEventListener("click",function(){$("rc-d").value=b.getAttribute("data-d");draw()})});
   draw();
 })();
 </script>
