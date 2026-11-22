@@ -475,6 +475,13 @@ footer a{color:var(--c)}
 .rt-sec .rt-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
 .rt-sec .rt-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.rt-sec{display:none}}
+.mp-sec .mp-chk{display:flex;gap:10px;align-items:center;font-weight:700;min-height:44px}
+.mp-sec .mp-chk input{width:24px;min-height:24px;height:24px}
+.mp-sec .mp-svg{display:block;width:100%;max-width:360px;margin:12px auto;border-radius:12px;border:2px solid var(--line);background:var(--card)}
+.mp-sec .mp-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.mp-sec .mp-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mp-sec .mp-res b{font-family:Fredoka,sans-serif}
+@media print{.mp-sec{display:none}}
 .gr5-sec .gr5-row{display:flex;gap:6px;max-width:460px;margin:10px auto}
 .gr5-sec .gr5-b{flex:1 1 0;min-width:0;height:112px;border-radius:10px;border:2px solid var(--line);cursor:pointer;position:relative;padding:0;font-family:Fredoka,sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
 .gr5-sec .gr5-b:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
@@ -582,6 +589,7 @@ footer a{color:var(--c)}
     <a href="#ojo-mitad">Ojo para la mitad del área</a>
     <a href="#ojo-formato">Ojo para el formato</a>
     <a href="#ojo-aureo">Ojo para la sección áurea</a>
+    <a href="#marco-paspartu">Marco y paspartú</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2074,6 +2082,36 @@ footer a{color:var(--c)}
       <button type="button" id="au-reset" class="tm-rs">Borrar resultados</button>
     </div>
     <div class="tip">Cómo usarlo: no es la mitad ni el tercio, queda en el medio de los dos: el tercio está al 33 %, la sección áurea al 38 % o al 62 %, y la mitad al 50 %. Una pista práctica es pensar "un poco más que dos quintos" desde el extremo corto. Al comparar, la línea punteada marca el punto exacto. Como técnica de dibujo, para ubicar el horizonte o el rasgo principal en la hoja, marcá suave el 62 % del alto o del ancho y probá si la composición respira mejor que con la mitad. Para ver la guía sobre una foto propia, usá la herramienta de composición más arriba.</div>
+  </div>
+</section>
+
+<section id="marco-paspartu" class="mp-sec">
+  <h2>Marco y paspartú</h2>
+  <p style="color:var(--muted)">El paspartú es el cartón con una ventana que rodea el dibujo dentro del marco. Cargá la medida de la obra y el ancho que querés de borde: la calculadora te da la medida de la ventana, la del cartón y un dibujo a escala para cortar con regla.</p>
+  <div class="card">
+    <div class="bt-form">
+      <div class="bt-row">
+        <label for="mp-w">Ancho de la obra (cm)
+          <input id="mp-w" type="number" inputmode="decimal" min="1" max="200" step="0.1" value="21">
+        </label>
+        <label for="mp-h">Alto de la obra (cm)
+          <input id="mp-h" type="number" inputmode="decimal" min="1" max="200" step="0.1" value="29.7">
+        </label>
+      </div>
+      <div class="bt-row">
+        <label for="mp-m">Ancho del borde (cm)
+          <input id="mp-m" type="number" inputmode="decimal" min="0.5" max="30" step="0.1" value="5">
+        </label>
+        <label for="mp-s">Solape sobre la obra (cm)
+          <input id="mp-s" type="number" inputmode="decimal" min="0" max="3" step="0.1" value="0.5">
+        </label>
+      </div>
+      <label class="mp-chk" for="mp-b"><input id="mp-b" type="checkbox"> Borde de abajo un 20 % más ancho</label>
+    </div>
+    <svg id="mp-svg" class="mp-svg" viewBox="0 0 300 300" role="img" aria-label="Dibujo a escala del paspartú con la ventana y la obra"></svg>
+    <ul class="mp-res" id="mp-res" aria-live="polite"></ul>
+    <p class="rt-msg" id="mp-msg" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: el solape es la franja de la obra que queda tapada por el cartón para que no se caiga por la ventana; se suele dejar entre 3 y 6 mm. Dejar el borde de abajo un poco más ancho es una costumbre de enmarcado para que el dibujo no parezca hundirse, no una regla. Cortá con regla metálica y cutter sobre una base, y medí dos veces antes de cortar. Los números se redondean al milímetro.</div>
   </div>
 </section>
 
@@ -5897,6 +5935,41 @@ footer a{color:var(--c)}
   $("au-next").addEventListener("click",newRound);
   $("au-reset").addEventListener("click",function(){st.errs=[];save();stats()});
   newRound();stats();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-marco-paspartu-v1",$=function(i){return document.getElementById(i)};
+  var ids=["mp-w","mp-h","mp-m","mp-s"],NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){ids.forEach(function(i){if(typeof t[i]==="number"&&isFinite(t[i]))$(i).value=t[i]});$("mp-b").checked=t.b===true}}catch(e){}
+  function num(i){var v=parseFloat(String($(i).value).replace(",","."));return isFinite(v)?v:NaN}
+  function f(x){var r=Math.round(x*10)/10;return String(r).replace(".",",")+" cm"}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function draw(W,H,vw,vh,m,mb,s,ow,oh){
+    var svg=$("mp-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var k=Math.min(260/ow,260/oh),x0=(300-ow*k)/2,y0=(300-oh*k)/2;
+    svg.appendChild(el("rect",{x:x0,y:y0,width:ow*k,height:oh*k,fill:"#e9dcc3",stroke:"#8a7a5c","stroke-width":2}));
+    var wx=x0+m*k,wy=y0+m*k;
+    svg.appendChild(el("rect",{x:wx-s*k,y:wy-s*k,width:W*k,height:H*k,fill:"none",stroke:"#2fbf71","stroke-width":2,"stroke-dasharray":"5 3"}));
+    svg.appendChild(el("rect",{x:wx,y:wy,width:vw*k,height:vh*k,fill:"#ffffff",stroke:"#8a7a5c","stroke-width":2}));
+  }
+  function calc(){
+    var W=num("mp-w"),H=num("mp-h"),m=num("mp-m"),s=num("mp-s"),b=$("mp-b").checked;
+    var res=$("mp-res"),msg=$("mp-msg");
+    while(res.firstChild)res.removeChild(res.firstChild);
+    var bad=[W,H,m,s].some(function(x){return !isFinite(x)||x<0});
+    if(bad||W<=0||H<=0||m<=0){msg.textContent="Completá las medidas con números positivos.";$("mp-svg").innerHTML="";return}
+    var vw=W-2*s,vh=H-2*s;
+    if(vw<=0||vh<=0){msg.textContent="El solape es demasiado grande para esa obra: la ventana quedaría sin tamaño.";$("mp-svg").innerHTML="";return}
+    var mb=b?m*1.2:m,ow=vw+2*m,oh=vh+m+mb;
+    var rows=[["Ventana (lo que se ve)",f(vw)+" x "+f(vh)],["Cartón del paspartú (y vidrio del marco)",f(ow)+" x "+f(oh)],["Borde arriba y a los lados",f(m)],["Borde abajo",f(mb)]];
+    rows.forEach(function(r){var li=document.createElement("li"),a=document.createElement("span"),c=document.createElement("b");a.textContent=r[0];c.textContent=r[1];li.appendChild(a);li.appendChild(c);res.appendChild(li)});
+    msg.textContent="Marcá en el dorso del cartón: ventana de "+f(vw)+" x "+f(vh)+", a "+f(m)+" del borde izquierdo y del superior.";
+    draw(W,H,vw,vh,m,mb,s,ow,oh);
+    try{var o={b:b};ids.forEach(function(i){o[i]=num(i)});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}
+  }
+  ids.concat(["mp-b"]).forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
 })();
 </script>
 </body>
