@@ -491,6 +491,11 @@ footer a{color:var(--c)}
 .lp-sec .lp-chk input{width:24px;min-height:24px;height:24px}
 .lp-sec .lp-name{font-family:Fredoka,sans-serif;font-size:1.3rem;margin:4px 0;text-align:center}
 @media print{.lp-sec{display:none}}
+.ar-sec .ar-svg{display:block;width:100%;max-width:360px;margin:12px auto;border-radius:12px;border:2px solid var(--line);background:var(--card)}
+.ar-sec .ar-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.ar-sec .ar-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ar-sec .ar-res b{font-family:Fredoka,sans-serif}
+@media print{.ar-sec{display:none}}
 .gr5-sec .gr5-row{display:flex;gap:6px;max-width:460px;margin:10px auto}
 .gr5-sec .gr5-b{flex:1 1 0;min-width:0;height:112px;border-radius:10px;border:2px solid var(--line);cursor:pointer;position:relative;padding:0;font-family:Fredoka,sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center}
 .gr5-sec .gr5-b:focus-visible{outline:3px solid #4cc26a;outline-offset:2px}
@@ -600,6 +605,7 @@ footer a{color:var(--c)}
     <a href="#ojo-aureo">Ojo para la sección áurea</a>
     <a href="#marco-paspartu">Marco y paspartú</a>
     <a href="#escala-lapices">Escala de lápices</a>
+    <a href="#ampliar-reducir">Ampliar y reducir</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2136,6 +2142,35 @@ footer a{color:var(--c)}
     <label class="lp-chk" for="lp-own"><input id="lp-own" type="checkbox"> Tengo este lápiz en la mochila</label>
     <p id="lp-kit" aria-live="polite" style="margin:6px 0;color:var(--muted)"></p>
     <div class="tip">Cómo usarlo: la muestra del dibujo es solo ilustrativa; el gris real cambia según la marca, el papel y la presión de la mano, así que la prueba que vale es la de tu hoja. Los números son la escala europea; en la numeración norteamericana el lápiz común "número 2" equivale aproximadamente al HB. Una idea práctica para el taller es empezar con un HB para esbozar, un 2B para la forma y un 4B o 6B para las sombras profundas, y sumar uno duro (H o 2H) si querés líneas finas de construcción. Con los blandos conviene apoyar una hoja bajo la mano para no manchar.</div>
+  </div>
+</section>
+
+<section id="ampliar-reducir" class="ar-sec">
+  <h2>Ampliar y reducir</h2>
+  <p style="color:var(--muted)">Para pasar un boceto a otro tamaño (por ejemplo de una hoja A4 a un cartón grande) hace falta saber cuánto crece o se achica. Cargá la medida del original y el ancho que querés: la calculadora da el porcentaje para la fotocopiadora, el alto nuevo y el tamaño que tendrá cada cuadradito si usás el método de la cuadrícula.</p>
+  <div class="card">
+    <div class="bt-form">
+      <div class="bt-row">
+        <label for="ar-w">Ancho del original (cm)
+          <input id="ar-w" type="number" inputmode="decimal" min="0.5" max="500" step="0.1" value="21">
+        </label>
+        <label for="ar-h">Alto del original (cm)
+          <input id="ar-h" type="number" inputmode="decimal" min="0.5" max="500" step="0.1" value="29.7">
+        </label>
+      </div>
+      <div class="bt-row">
+        <label for="ar-n">Ancho que querés (cm)
+          <input id="ar-n" type="number" inputmode="decimal" min="0.5" max="500" step="0.1" value="50">
+        </label>
+        <label for="ar-c">Cuadradito del original (cm)
+          <input id="ar-c" type="number" inputmode="decimal" min="0.1" max="50" step="0.1" value="1">
+        </label>
+      </div>
+    </div>
+    <svg id="ar-svg" class="ar-svg" viewBox="0 0 300 200" role="img" aria-label="Dibujo a escala del original y de la copia nueva"></svg>
+    <ul class="ar-res" id="ar-res" aria-live="polite"></ul>
+    <p class="rt-msg" id="ar-msg" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: el original y la copia tienen que conservar la misma proporción; por eso solo se elige el ancho y el alto sale de la cuenta (alto nuevo = alto original × ancho nuevo ÷ ancho original). Si el resultado no entra en una sola hoja, se puede imprimir o fotocopiar en partes. Cada fotocopiadora tiene su propio rango de porcentajes, así que conviene mirar el de la que vayan a usar. Los números se redondean al milímetro y los valores quedan guardados en este celular.</div>
   </div>
 </section>
 
@@ -6041,6 +6076,36 @@ footer a{color:var(--c)}
   function save(){try{localStorage.setItem(KEY,JSON.stringify({sel:sel,own:own}))}catch(e){}}
   $("lp-own").addEventListener("change",function(){if($("lp-own").checked)own[sel]=true;else delete own[sel];save();render()});
   render();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-ampliar-reducir-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var ids=["ar-w","ar-h","ar-n","ar-c"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){ids.forEach(function(k){var v=parseFloat(t[k]);if(isFinite(v)&&v>0&&v<=500)$(k).value=v})}}catch(e){}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function f(x){return (Math.round(x*10)/10).toLocaleString("es-AR",{minimumFractionDigits:0,maximumFractionDigits:1})}
+  function calc(){
+    var w=parseFloat($("ar-w").value),h=parseFloat($("ar-h").value),n=parseFloat($("ar-n").value),c=parseFloat($("ar-c").value);
+    var res=$("ar-res"),msg=$("ar-msg"),svg=$("ar-svg");
+    while(res.firstChild)res.removeChild(res.firstChild);while(svg.firstChild)svg.removeChild(svg.firstChild);
+    if(!(w>0&&h>0&&n>0&&c>0)){msg.textContent="Completá medidas mayores que cero.";return}
+    var k=n/w,nh=h*k,nc=c*k;
+    var rows=[["Porcentaje de fotocopia",f(k*100)+" %"],["Alto de la copia",f(nh)+" cm"],["Cuadradito en la copia",f(nc)+" cm"],["Cuadraditos del original",(Math.round(w/c*10)/10).toLocaleString("es-AR")+" × "+(Math.round(h/c*10)/10).toLocaleString("es-AR")]];
+    rows.forEach(function(r){var li=document.createElement("li"),s=document.createElement("span"),b=document.createElement("b");s.textContent=r[0];b.textContent=r[1];li.appendChild(s);li.appendChild(b);res.appendChild(li)});
+    var big=Math.max(w,n),bigH=Math.max(h,nh),sc=Math.min(280/(w+n),180/Math.max(h,nh));
+    var ox=10,oy=10,w1=w*sc,h1=h*sc,w2=n*sc,h2=nh*sc;
+    var x2=ox+w1+10;
+    svg.appendChild(el("rect",{x:ox,y:oy,width:w1,height:h1,fill:"none",stroke:"#9aa0a6","stroke-width":2}));
+    svg.appendChild(el("rect",{x:x2,y:oy,width:w2,height:h2,fill:"none",stroke:"#2fbf71","stroke-width":2}));
+    var tx=el("text",{x:ox+2,y:oy+h1+12,fill:"#9aa0a6","font-size":10});tx.textContent="Original";svg.appendChild(tx);
+    var ty=el("text",{x:x2+2,y:oy+h2+12,fill:"#2fbf71","font-size":10});ty.textContent="Copia";svg.appendChild(ty);
+    svg.setAttribute("viewBox","0 0 "+Math.ceil(x2+w2+10)+" "+Math.ceil(oy+Math.max(h1,h2)+20));
+    msg.textContent=k>1?"La copia es una ampliación: "+f(k)+" veces el tamaño del original.":(k<1?"La copia es una reducción: "+f(k)+" veces el tamaño del original.":"La copia tiene el mismo tamaño que el original.");
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc)});
+  calc();
 })();
 </script>
 </body>
