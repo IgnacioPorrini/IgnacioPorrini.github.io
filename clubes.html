@@ -65,6 +65,16 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 footer{font-size:13px;color:var(--muted);text-align:center}
 </style>
 <style>.num{font:700 2rem/1 var(--display);color:var(--buoy)}.copy{font:15px var(--body);background:var(--buoy-bg);border-radius:8px;padding:12px}</style>
+<script>
+  // Estadísticas agregadas solo en la web; en la app instalada no se usan (ver privacidad-apps.html).
+  window.ES_APP = matchMedia("(display-mode: standalone)").matches || /[?&]fuente=app/.test(location.search) || document.referrer.startsWith("android-app://");
+  if (!window.ES_APP) {
+    const g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=G-YZMZTJDH70"; document.head.appendChild(g);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", "G-YZMZTJDH70");
+  }
+</script>
 </head>
 <body>
 <div class="wrap">
