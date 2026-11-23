@@ -121,7 +121,7 @@
         <nav class="ori-toc" aria-label="Índice de la página">
             <div class="container">
                 <details>
-                    <summary>Ir a una sección (16)</summary>
+                    <summary>Ir a una sección (17)</summary>
                     <ul>
                         <li><a href="#leer">Cómo leer un diagrama</a></li>
                         <li><a href="#bases">Bases tradicionales</a></li>
@@ -139,6 +139,7 @@
                         <li><a href="#grosor">Dobleces y grosor</a></li>
                         <li><a href="#hojas-a">Hojas A</a></li>
                         <li><a href="#cortar-cuadrados">Cuántos cuadrados salen de una hoja</a></li>
+                        <li><a href="#mil-grullas">Mil grullas: contador</a></li>
                     </ul>
                 </details>
             </div>
@@ -401,6 +402,38 @@
                     </div>
                 </div>
                 <p class="small text-muted-light mt-3 mb-0">Es una cuenta de cortes rectos en cuadrícula, sin contar lo que se pierde con la guillotina o la tijera. Para repetirlo en papel: marque con lápiz y regla las filas y las columnas antes de cortar. Para el papel de origami ya cortado, busque &laquo;papel kami&raquo; en <a target="_blank" rel="noopener" href="https://es.wikipedia.org/w/index.php?search=papel+kami+origami">Wikipedia</a>. Cuentas, dibujo y texto propios.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" id="mil-grullas">
+            <div class="container">
+                <h2 class="section-title mb-2">Mil grullas: contador</h2>
+                <p class="text-muted-light mb-3">Senbazuru significa «mil grullas»: la tradición japonesa de plegar mil grullas de papel, que simbolizan longevidad, felicidad y buena fortuna, y que suele hacerse como deseo para uno mismo o para otra persona (<a target="_blank" rel="noopener" href="https://www.japan-experience.com/plan-your-trip/to-know/understanding-japan/senbazuru-one-thousand-cranes">Japan Experience</a>). Para llevar la cuenta sin perderse, toque cada vez que termine una. Puede cambiar la meta (100, por ejemplo, es un buen primer objetivo). Todo queda guardado solo en este dispositivo.</p>
+                <div class="row g-4 align-items-start">
+                    <div class="col-12 col-md-6">
+                        <div class="cr-box">
+                            <div class="cr-clock" id="mg-n" role="status" aria-live="polite" aria-label="Grullas plegadas">0</div>
+                            <p class="sq-res mb-2" id="mg-de" aria-live="polite"></p>
+                            <div class="stp"><div class="bar" aria-hidden="true"><div id="mg-bar"></div></div></div>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <button class="ori-act" type="button" id="mg-1">Una grulla más</button>
+                                <button class="ori-act alt" type="button" id="mg-5">+5</button>
+                                <button class="ori-act alt" type="button" id="mg-m">Quitar una</button>
+                            </div>
+                            <button class="ori-act alt" type="button" id="mg-rs">Poner en cero</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="mb-3" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:22rem">
+                            <label class="d-block">Meta (grullas)<br><input class="sq-in" type="number" id="mg-meta" min="1" max="10000" step="1" inputmode="numeric" value="1000"></label>
+                            <label class="d-block">Minutos por grulla<br><input class="sq-in" type="number" id="mg-min" min="1" max="120" step="1" inputmode="numeric" value="10"></label>
+                            <label class="d-block">Grullas por semana<br><input class="sq-in" type="number" id="mg-sem" min="1" max="500" step="1" inputmode="numeric" value="7"></label>
+                        </div>
+                        <p class="sq-res mb-2" id="mg-res" aria-live="polite"></p>
+                        <p class="sq-res mb-2" id="mg-fecha" aria-live="polite"></p>
+                        <p class="small text-muted-light mb-0">Cada grulla pide un cuadrado de papel: para cortar muchos de una hoja grande, use <a href="#cortar-cuadrados">la herramienta de más arriba</a>. El tiempo por grulla lo ajusta usted con el <a href="#cronometro">cronómetro de plegado</a>; el cálculo es una estimación simple, no una promesa.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -974,6 +1007,44 @@
   chips(hoja,HOJAS,function(x){return x[0]},function(x){W.value=x[1];H.value=x[2];paint()});
   chips(lados,LADOS,function(x){return num(x)+' cm'},function(x){S.value=x;paint()});
   [W,H,S,N].forEach(function(i){i.addEventListener('input',paint)});
+  paint();
+})();
+</script>
+<script>
+(function(){
+  var KEY='origami-grullas-v1',st={n:0,meta:1000,min:10,sem:7},armado=false,tmr=null;
+  try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');if(o&&typeof o==='object'){['n','meta','min','sem'].forEach(function(k){var v=parseInt(o[k],10);if(v>=0)st[k]=v})}}catch(e){}
+  if(st.meta<1)st.meta=1000;if(st.min<1)st.min=10;if(st.sem<1)st.sem=7;
+  var $=function(i){return document.getElementById(i)};
+  var N=$('mg-n'),DE=$('mg-de'),BAR=$('mg-bar'),META=$('mg-meta'),MIN=$('mg-min'),SEM=$('mg-sem'),RES=$('mg-res'),FE=$('mg-fecha'),RS=$('mg-rs');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function leer(el,def,max){var v=parseInt(el.value,10);if(!(v>=1))return def;return Math.min(v,max)}
+  function paint(){
+    var rest=Math.max(0,st.meta-st.n),pc=Math.min(100,Math.round(st.n/st.meta*100));
+    N.textContent=st.n;
+    DE.textContent='de '+st.meta+' ('+pc+' %)';
+    BAR.style.width=pc+'%';
+    if(rest===0){RES.textContent='Meta cumplida: '+st.n+' grullas. Puede subir la meta para seguir.';FE.textContent=''}
+    else{
+      var h=rest*st.min/60;
+      var tx=h>=1?(Math.round(h*10)/10).toString().replace('.',',')+' horas':(rest*st.min)+' minutos';
+      RES.textContent='Faltan '+rest+' grullas, o sea '+rest+' cuadrados de papel. Con '+st.min+' minutos cada una son unas '+tx+' de plegado.';
+      var sem=Math.ceil(rest/st.sem),d=new Date();d.setDate(d.getDate()+sem*7);
+      FE.textContent='A '+st.sem+' por semana, serían unas '+sem+(sem===1?' semana':' semanas')+' (hacia el '+d.toLocaleDateString('es-UY',{day:'numeric',month:'long',year:'numeric'})+').';
+    }
+  }
+  function sumar(k){st.n=Math.max(0,Math.min(100000,st.n+k));save();desarmar();paint()}
+  function desarmar(){armado=false;clearTimeout(tmr);RS.textContent='Poner en cero'}
+  $('mg-1').addEventListener('click',function(){sumar(1)});
+  $('mg-5').addEventListener('click',function(){sumar(5)});
+  $('mg-m').addEventListener('click',function(){sumar(-1)});
+  RS.addEventListener('click',function(){
+    if(!armado){armado=true;RS.textContent='Toque otra vez para confirmar';tmr=setTimeout(desarmar,4000);return}
+    st.n=0;save();desarmar();paint();
+  });
+  function ent(){st.meta=leer(META,st.meta,10000);st.min=leer(MIN,st.min,120);st.sem=leer(SEM,st.sem,500);save();paint()}
+  [META,MIN,SEM].forEach(function(i){i.addEventListener('input',ent)});
+  META.value=st.meta;MIN.value=st.min;SEM.value=st.sem;
   paint();
 })();
 </script>
