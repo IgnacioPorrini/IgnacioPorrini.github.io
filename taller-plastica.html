@@ -711,6 +711,21 @@ footer a{color:var(--c)}
 .pw-sec .pw-bar{height:14px;border-radius:8px;border:2px solid var(--line);background:#14161a;overflow:hidden;margin:6px 0}
 .pw-sec .pw-bar i{display:block;height:100%;background:#2fbf71;width:0}
 @media print{.pw-sec{display:none}}
+.sd-sec .sd-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.sd-sec .sd-ctl input[type=number]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:160px}
+.sd-sec .sd-ctl input:focus-visible,.sd-sec button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.sd-sec .sd-two{display:flex;flex-wrap:wrap;gap:12px}
+.sd-sec .sd-two .sd-ctl{flex:1 1 130px}
+.sd-sec .sd-clock{font-size:2.6rem;font-weight:800;text-align:center;margin:10px 0 4px;font-variant-numeric:tabular-nums}
+.sd-sec .sd-btns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.sd-sec .sd-btns button{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.sd-sec .sd-btns button:disabled{opacity:.5;cursor:default}
+.sd-sec .sd-bar{height:14px;border-radius:8px;border:2px solid var(--line);background:#14161a;overflow:hidden;margin:6px 0}
+.sd-sec .sd-bar i{display:block;height:100%;background:#2fbf71;width:0}
+.sd-sec .sd-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.sd-sec .sd-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.sd-sec .sd-res li b{text-align:right}
+@media print{.sd-sec{display:none}}
 </style>
 </head>
 <body>
@@ -804,6 +819,7 @@ footer a{color:var(--c)}
     <a href="#diluir-pintura">Diluir la pintura por partes</a>
     <a href="#materiales-grupo">Materiales para el grupo</a>
     <a href="#peso-papel">Peso del papel</a>
+    <a href="#secado">Reloj de secado</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2692,6 +2708,26 @@ footer a{color:var(--c)}
     <div class="pw-bar" aria-hidden="true"><i id="pw-bar"></i></div>
     <ul class="pw-res" id="pw-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: el peso es el área de la hoja por el gramaje, sin contar el envoltorio ni la carpeta. Como referencia, el papel de fotocopia común suele ser de 75 u 80 g/m2 y las cartulinas y papeles para acuarela son bastante más pesados, pero conviene leer el dato real en el paquete. La barra muestra qué parte del peso elegido ocupan las hojas cargadas.</div>
+  </div>
+</section>
+
+<section id="secado" class="sd-sec">
+  <h2>Reloj de secado entre manos</h2>
+  <p style="color:var(--muted)">Pintar en capas pide esperar entre una mano y la siguiente. Elegí cuántos minutos indica la etiqueta o la prueba que hiciste y cuántas manos das: el reloj cuenta cada espera y te dice a qué hora terminás.</p>
+  <div class="card">
+    <div class="sd-two">
+      <label class="sd-ctl" for="sd-min"><span>Minutos de espera por mano</span><input id="sd-min" type="number" inputmode="numeric" min="1" max="720" step="1" value="30"></label>
+      <label class="sd-ctl" for="sd-n"><span>Cantidad de manos</span><input id="sd-n" type="number" inputmode="numeric" min="1" max="10" step="1" value="3"></label>
+    </div>
+    <div class="sd-clock" id="sd-clock" role="timer" aria-live="off">00:00</div>
+    <div class="sd-bar" aria-hidden="true"><i id="sd-bar"></i></div>
+    <div class="sd-btns">
+      <button type="button" id="sd-go">Empezar a esperar</button>
+      <button type="button" id="sd-next" disabled>Doy la siguiente mano</button>
+      <button type="button" id="sd-reset">Reiniciar</button>
+    </div>
+    <ul class="sd-res" id="sd-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: pintá la mano, tocá "Empezar a esperar" y el reloj cuenta la espera; al llegar a cero avisa con el texto y, si el celular lo permite, con vibración. Después tocá "Doy la siguiente mano". El secado real depende de la pintura, del grosor, de la temperatura y de la humedad: si el envase trae una indicación, usala, y tocá una esquina antes de cargar la próxima capa. Mantené la pantalla encendida: si el navegador queda en segundo plano el aviso puede llegar tarde, pero la cuenta se calcula con la hora del celular y no se pierde.</div>
   </div>
 </section>
 
@@ -7224,6 +7260,42 @@ footer a{color:var(--c)}
   }
   IDS.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-secado-v1",$=function(i){return document.getElementById(i)};
+  var st={end:0,hand:1,run:false};
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    if(isFinite(parseFloat(t.min)))$("sd-min").value=t.min;if(isFinite(parseFloat(t.n)))$("sd-n").value=t.n;
+    if(isFinite(t.end)&&isFinite(t.hand)){st.end=+t.end;st.hand=Math.max(1,+t.hand|0);st.run=!!t.run}}}catch(e){}
+  function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,Math.round(v)))}
+  function p2(x){return(x<10?"0":"")+x}
+  function hhmm(d){return p2(d.getHours())+":"+p2(d.getMinutes())}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({min:$("sd-min").value,n:$("sd-n").value,end:st.end,hand:st.hand,run:st.run}))}catch(e2){}}
+  var warned=false;
+  function draw(){
+    var m=num("sd-min",1,720,30),n=num("sd-n",1,10,3),tot=m*60000;
+    if(st.hand>n)st.hand=n;
+    var left=st.run?Math.max(0,st.end-Date.now()):0,done=st.run&&left===0;
+    var sec=Math.ceil(left/1000),mm=Math.floor(sec/60),ss=sec%60;
+    $("sd-clock").textContent=(mm>=60?Math.floor(mm/60)+":"+p2(mm%60):p2(mm))+":"+p2(ss);
+    $("sd-bar").style.width=(st.run?Math.min(100,100*(1-left/tot)):0)+"%";
+    $("sd-next").disabled=!(done&&st.hand<n);
+    $("sd-go").disabled=st.run&&!done;
+    if(done&&!warned){warned=true;try{if(navigator.vibrate)navigator.vibrate([300,150,300])}catch(e3){}}
+    if(!done)warned=false;
+    var rest=(st.run?left:0)+(n-st.hand)*tot;
+    var rows=[["Mano",st.hand+" de "+n],["Estado",done?(st.hand<n?"Seca: podés dar la siguiente mano":"Última mano seca: terminaste"):(st.run?"Esperando que seque":"Sin empezar")],["Esperas en total",m*n+" min ("+Math.floor(m*n/60)+" h "+(m*n%60)+" min)"]];
+    if(st.run&&!done)rows.push(["Terminás a las",hhmm(new Date(Date.now()+rest))+" si pintás sin demora"]);
+    var ul=$("sd-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)});
+  }
+  $("sd-go").addEventListener("click",function(){st.end=Date.now()+num("sd-min",1,720,30)*60000;st.run=true;warned=false;save();draw()});
+  $("sd-next").addEventListener("click",function(){st.hand++;st.run=false;st.end=0;save();draw()});
+  $("sd-reset").addEventListener("click",function(){st={end:0,hand:1,run:false};warned=false;save();draw()});
+  ["sd-min","sd-n"].forEach(function(i){$(i).addEventListener("input",function(){save();draw()});$(i).addEventListener("change",function(){save();draw()})});
+  draw();setInterval(draw,1000);
 })();
 </script>
 </body>
