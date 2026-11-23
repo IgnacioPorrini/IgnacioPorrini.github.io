@@ -447,6 +447,18 @@ footer a{color:var(--c)}
 .dl-sec .dl-res li b{white-space:nowrap}
 .dl-sec .dl-res li{flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 @media print{.dl-sec{display:none}}
+.if-sec .if-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.if-sec .if-ctl input[type=number],.if-sec .if-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.if-sec .if-ctl input[type=number]{max-width:160px}
+.if-sec .if-two{display:flex;flex-wrap:wrap;gap:12px}
+.if-sec .if-two .if-ctl{flex:1 1 130px}
+.if-sec .if-ctl input:focus-visible,.if-sec .if-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.if-sec .if-sw{max-width:360px;margin:8px auto}
+.if-sec .if-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.if-sec .if-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.if-sec .if-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.if-sec .if-res li b{text-align:right}
+@media print{.if-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -690,6 +702,7 @@ footer a{color:var(--c)}
     <a href="#dividir-circulo">Dividir el círculo</a>
     <a href="#dividir-linea">Dividir una línea</a>
     <a href="#cartel">Cartel: tamaño de letra</a>
+    <a href="#imprimir-foto">Imprimir la foto de referencia</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2391,6 +2404,26 @@ footer a{color:var(--c)}
     <div class="cr-sw"><svg id="cr-svg" viewBox="0 0 200 200" role="img" aria-label="Vista previa de la hoja con las cajas de cada letra y las líneas guía de cada renglón"></svg></div>
     <ul class="cr-res" id="cr-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: marcá el margen con lápiz suave, trazá las líneas guía de cada renglón con la regla y dividí el ancho de cada renglón en cajas de la medida que sale acá (si hace falta, con la línea auxiliar de "Dividir una línea"). Escribí cada letra dentro de su caja, tocando la línea de arriba y la de abajo. Supuestos de la cuenta: el espacio entre palabras vale 6/10 de una caja, el hueco entre letras es 1/5 del ancho de la caja y el espacio entre renglones es 3/10 del alto de la letra. Son proporciones elegidas para que la cuenta sea clara, y se pueden cambiar a ojo según la letra que dibuje cada uno.</div>
+  </div>
+</section>
+
+<section id="imprimir-foto" class="if-sec">
+  <h2>Imprimir la foto de referencia</h2>
+  <p style="color:var(--muted)">Para copiar una foto con cuadrícula conviene imprimirla. Cargá los píxeles de la foto (en el celular suelen figurar en la información o los detalles de la imagen) y la hoja: te dice cuánto mide impresa con la calidad que elijas y cuánta calidad tiene si la estirás hasta llenar la hoja.</p>
+  <div class="card">
+    <div class="if-two">
+      <label class="if-ctl" for="if-w"><span>Ancho de la foto (px)</span><input id="if-w" type="number" inputmode="numeric" min="100" max="20000" step="1" value="4000"></label>
+      <label class="if-ctl" for="if-h"><span>Alto de la foto (px)</span><input id="if-h" type="number" inputmode="numeric" min="100" max="20000" step="1" value="3000"></label>
+    </div>
+    <div class="if-two">
+      <label class="if-ctl" for="if-s"><span>Hoja</span>
+        <select id="if-s"><option value="21,29.7,A4" selected>A4 (21 x 29,7 cm)</option><option value="29.7,42,A3">A3 (29,7 x 42 cm)</option><option value="14.85,21,A5">A5 (14,85 x 21 cm)</option><option value="21.59,27.94,Carta">Carta (21,59 x 27,94 cm)</option></select></label>
+      <label class="if-ctl" for="if-d"><span>Calidad buscada</span>
+        <select id="if-d"><option value="150">150 puntos por pulgada (borrador)</option><option value="200">200 puntos por pulgada</option><option value="300" selected>300 puntos por pulgada (buena)</option></select></label>
+    </div>
+    <div class="if-sw"><svg id="if-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala de la hoja y de la foto ajustada con margen de 1 centímetro"></svg></div>
+    <ul class="if-res" id="if-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: la hoja se gira sola para acompañar la forma de la foto y se deja 1 cm de margen. Las cuentas son las estándar: una pulgada son 2,54 cm y los puntos por pulgada son píxeles divididos por pulgadas. Para una referencia de dibujo alcanza con 150, porque lo que importa son las masas y los valores, no el detalle fino. Si la foto es muy chica, pedí una versión más grande al sacarla o al descargarla, en lugar de estirarla.</div>
   </div>
 </section>
 
@@ -6599,6 +6632,50 @@ footer a{color:var(--c)}
   }
   ["cr-txt","cr-w","cr-h","cr-m","cr-l","cr-p"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#cartel .cr-pre button"),function(b){b.addEventListener("click",function(){$("cr-w").value=b.getAttribute("data-w");$("cr-h").value=b.getAttribute("data-h");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-imprimir-foto-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    var a=parseInt(t.w,10),b=parseInt(t.h,10);
+    if(a>=100&&a<=20000)$("if-w").value=a;
+    if(b>=100&&b<=20000)$("if-h").value=b;
+    if(typeof t.s==="string"&&$("if-s").querySelector('option[value="'+t.s+'"]'))$("if-s").value=t.s;
+    if(typeof t.d==="string"&&$("if-d").querySelector('option[value="'+t.d+'"]'))$("if-d").value=t.d}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function draw(){
+    var w=parseInt($("if-w").value,10),h=parseInt($("if-h").value,10);
+    if(!isFinite(w)||w<100)w=100;if(w>20000)w=20000;
+    if(!isFinite(h)||h<100)h=100;if(h>20000)h=20000;
+    var sp=$("if-s").value.split(","),dpi=parseInt($("if-d").value,10);
+    var sw=parseFloat(sp[0]),sh=parseFloat(sp[1]),name=sp[2];
+    var land=w>=h;if(land){var tmp=sw;sw=sh;sh=tmp}
+    var M=1,aw=sw-2*M,ah=sh-2*M;
+    var pw=w/dpi*2.54,ph=h/dpi*2.54;
+    var k=Math.min(aw/w,ah/h),fw=w*k,fh=h*k,eff=2.54/k;
+    var svg=$("if-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(180/sw,180/sh),ox=(200-sw*sc)/2,oy=(200-sh*sc)/2;
+    svg.appendChild(el("rect",{x:ox.toFixed(1),y:oy.toFixed(1),width:(sw*sc).toFixed(1),height:(sh*sc).toFixed(1),fill:"#e9ecef"}));
+    svg.appendChild(el("rect",{x:(ox+M*sc+(aw-fw)/2*sc).toFixed(1),y:(oy+M*sc+(ah-fh)/2*sc).toFixed(1),width:(fw*sc).toFixed(1),height:(fh*sc).toFixed(1),fill:"#2fbf71","fill-opacity":0.55,stroke:"#2fbf71","stroke-width":1.5}));
+    svg.appendChild(el("rect",{x:(ox+M*sc).toFixed(1),y:(oy+M*sc).toFixed(1),width:(aw*sc).toFixed(1),height:(ah*sc).toFixed(1),fill:"none",stroke:"#868e96","stroke-width":1,"stroke-dasharray":"3 3"}));
+    var tt=el("text",{x:100,y:197,"text-anchor":"middle",fill:"#e9ecef","font-size":8});tt.textContent="Hoja "+name+(land?" apaisada":" vertical")+", margen de 1 cm";svg.appendChild(tt);
+    var q=eff>=300?"muy buena":eff>=200?"buena":eff>=150?"aceptable para una referencia":"baja: se va a ver con cuadraditos";
+    var fits=pw<=aw+1e-9&&ph<=ah+1e-9;
+    var rows=[
+      ["Tamaño impreso a "+dpi+" puntos por pulgada",f(pw,1)+" x "+f(ph,1)+" cm"],
+      ["¿Entra en la hoja "+name+" con margen?",fits?"Sí, sobra lugar":"No, es más grande que la hoja"],
+      ["Foto ajustada para llenar la hoja",f(fw,1)+" x "+f(fh,1)+" cm"],
+      ["Calidad al llenar la hoja",f(eff,0)+" puntos por pulgada ("+q+")"],
+      ["Para llenar la hoja con 300 puntos por pulgada hacen falta",Math.ceil(fw/2.54*300)+" x "+Math.ceil(fh/2.54*300)+" px"]
+    ];
+    var ul=$("if-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)});
+    try{localStorage.setItem(KEY,JSON.stringify({w:w,h:h,s:$("if-s").value,d:$("if-d").value}))}catch(e2){}
+  }
+  ["if-w","if-h","if-s","if-d"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
 </script>
