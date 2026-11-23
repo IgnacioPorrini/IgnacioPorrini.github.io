@@ -506,6 +506,17 @@ footer a{color:var(--c)}
 .cc-sec .cc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .cc-sec .cc-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.cc-sec{display:none}}
+.pn-sec .pn-two{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.pn-sec .pn-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 130px;margin-top:8px}
+.pn-sec .pn-ctl input[type=number],.pn-sec .pn-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.pn-sec .pn-ctl input[type=number]{max-width:160px}
+.pn-sec .pn-ctl input:focus-visible,.pn-sec .pn-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.pn-sec .pn-sw{max-width:360px;margin:8px auto}
+.pn-sec .pn-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.pn-sec .pn-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.pn-sec .pn-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.pn-sec .pn-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.pn-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -754,6 +765,7 @@ footer a{color:var(--c)}
     <a href="#medir-lapiz">Medir con el lápiz</a>
     <a href="#grilla-columnas">Grilla de columnas</a>
     <a href="#contraste-cartel">Contraste del cartel</a>
+    <a href="#pintura-mural">Cuánta pintura necesito</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2564,6 +2576,28 @@ footer a{color:var(--c)}
     </div>
     <ul class="cc-res" id="cc-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: probá la combinación en la pantalla antes de pintar el cartel. Ojo con que la pantalla y la témpera no muestran igual el color: si el resultado queda justo, elegí un fondo más claro o una letra más oscura. Un contraste alto ayuda a leer de lejos y también a quien ve poco. Fórmula y niveles: <a href="https://www.w3.org/TR/WCAG21/#contrast-minimum" target="_blank" rel="noopener">pautas WCAG 2.1, criterio de contraste mínimo</a>.</div>
+  </div>
+</section>
+
+<section id="pintura-mural" class="pn-sec">
+  <h2>Cuánta pintura necesito</h2>
+  <p style="color:var(--muted)">Antes de ir a comprar témpera, látex o pintura para un mural, un telón o un panel grande, conviene calcular los litros. Cargá el ancho y el alto de la superficie, la cantidad de manos y el rendimiento que dice la etiqueta del envase (metros cuadrados por litro y por mano): la herramienta suma una reserva y te dice cuántos envases comprar. Sirve desde el celular, parado frente a la pared.</p>
+  <div class="card">
+    <div class="pn-two">
+      <label class="pn-ctl" for="pn-w"><span>Ancho (m)</span><input id="pn-w" type="number" inputmode="decimal" min="0.1" max="100" step="0.1" value="3"></label>
+      <label class="pn-ctl" for="pn-h"><span>Alto (m)</span><input id="pn-h" type="number" inputmode="decimal" min="0.1" max="100" step="0.1" value="2.4"></label>
+      <label class="pn-ctl" for="pn-x"><span>Aberturas a descontar (m&sup2;)</span><input id="pn-x" type="number" inputmode="decimal" min="0" max="500" step="0.1" value="0"></label>
+    </div>
+    <div class="pn-two">
+      <label class="pn-ctl" for="pn-m"><span>Manos</span><input id="pn-m" type="number" inputmode="numeric" min="1" max="6" step="1" value="2"></label>
+      <label class="pn-ctl" for="pn-y"><span>Rendimiento (m&sup2; por litro y por mano)</span><input id="pn-y" type="number" inputmode="decimal" min="1" max="40" step="0.5" value="10"></label>
+      <label class="pn-ctl" for="pn-r"><span>Reserva para retoques (%)</span><input id="pn-r" type="number" inputmode="numeric" min="0" max="50" step="5" value="10"></label>
+    </div>
+    <label class="pn-ctl" for="pn-e"><span>Envase</span>
+      <select id="pn-e"><option value="0.25">1/4 de litro</option><option value="0.5">1/2 litro</option><option value="1">1 litro</option><option value="4" selected>4 litros</option><option value="10">10 litros</option><option value="20">20 litros</option></select></label>
+    <div class="pn-sw"><svg id="pn-svg" viewBox="0 0 200 140" role="img" aria-label="Dibujo a escala de la superficie a pintar"></svg></div>
+    <ul class="pn-res" id="pn-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: el rendimiento de la etiqueta es para una superficie lisa y ya preparada; una pared rugosa, porosa o muy absorbente chupa más, así que si dudás subí la reserva. Para un color que mezclás vos, hacé la cuenta con el total de litros y preparalo todo junto: igualar un tono después es difícil. Los valores quedan guardados en este celular.</div>
   </div>
 </section>
 
@@ -6980,6 +7014,37 @@ footer a{color:var(--c)}
   $("cc-sw").addEventListener("click",function(){var x=$("cc-fg").value;$("cc-fg").value=$("cc-bg").value;$("cc-bg").value=x;draw()});
   $("cc-ej").addEventListener("click",function(){var i;do{i=Math.floor(Math.random()*EJ.length)}while(i===ult);ult=i;$("cc-fg").value=EJ[i][0];$("cc-bg").value=EJ[i][1];draw()});
   ["cc-fg","cc-bg"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+
+/* Cuanta pintura necesito */
+(function(){
+  var KEY="tp-pintura-mural-v1",$=function(i){return document.getElementById(i)};
+  var IDS=["pn-w","pn-h","pn-x","pn-m","pn-y","pn-r","pn-e"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")IDS.forEach(function(i){if(typeof t[i]==="string"&&t[i].length<12)$(i).value=t[i]})}catch(e){}
+  function num(i,lo,hi,d){var v=parseFloat($(i).value);if(!isFinite(v))return d;return Math.min(hi,Math.max(lo,v))}
+  function f(n,d){return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace(".",",")}
+  function setRows(rows){var ul=$("pn-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)})}
+  function svgEl(n,at){var e=document.createElementNS("http://www.w3.org/2000/svg",n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function draw(){
+    var w=num("pn-w",0.1,100,3),h=num("pn-h",0.1,100,2.4),x=num("pn-x",0,500,0),m=Math.round(num("pn-m",1,6,2)),y=num("pn-y",1,40,10),r=num("pn-r",0,50,10),e=parseFloat($("pn-e").value)||4;
+    var bruta=w*h,util=Math.max(0,bruta-x),litros=util*m/y,total=litros*(1+r/100),env=Math.ceil(total/e-1e-9),comp=env*e;
+    var sv=$("pn-svg");while(sv.firstChild)sv.removeChild(sv.firstChild);
+    var k=Math.min(180/w,120/h),rw=w*k,rh=h*k,ox=(200-rw)/2,oy=(140-rh)/2;
+    sv.appendChild(svgEl("rect",{x:ox,y:oy,width:rw,height:rh,fill:"#2fbf71","fill-opacity":"0.35",stroke:"#2fbf71","stroke-width":"2"}));
+    if(bruta>0&&x>0){var q=Math.min(1,x/bruta),s=Math.sqrt(q);sv.appendChild(svgEl("rect",{x:ox+rw*(1-s)/2,y:oy+rh*(1-s)/2,width:rw*s,height:rh*s,fill:"#14161a",stroke:"#9aa3ad","stroke-dasharray":"4 3"}))}
+    var t1=svgEl("text",{x:100,y:oy+rh+0.1>134?134:Math.min(oy+rh+10,138),"text-anchor":"middle",fill:"#e8eaed","font-size":"8"});t1.textContent=f(w,1)+" m x "+f(h,1)+" m";sv.appendChild(t1);
+    setRows([
+      ["Superficie a pintar",f(util,2)+" m\u00b2"],
+      ["Litros con "+m+(m===1?" mano":" manos"),f(litros,2)+" L"],
+      ["Con "+f(r,0)+" % de reserva",f(total,2)+" L"],
+      ["Envases de "+(e<1?(e===0.5?"1/2":"1/4")+" litro":f(e,0)+" L"),env+(env===1?" envase":" envases")],
+      ["Pintura que sobra",f(Math.max(0,comp-total),2)+" L"]
+    ]);
+    var o={};IDS.forEach(function(i){o[i]=$(i).value});try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
 </script>
