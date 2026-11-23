@@ -482,6 +482,18 @@ footer a{color:var(--c)}
 .cp-sec .cp-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .cp-sec .cp-res li b{text-align:right}
 @media print{.cp-sec{display:none}}
+.gc-sec .gc-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.gc-sec .gc-ctl input[type=number],.gc-sec .gc-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.gc-sec .gc-ctl input[type=number]{max-width:160px}
+.gc-sec .gc-two{display:flex;flex-wrap:wrap;gap:12px}
+.gc-sec .gc-two .gc-ctl{flex:1 1 130px}
+.gc-sec .gc-ctl input:focus-visible,.gc-sec .gc-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.gc-sec .gc-sw{max-width:360px;margin:8px auto}
+.gc-sec .gc-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.gc-sec .gc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.gc-sec .gc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.gc-sec .gc-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.gc-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -728,6 +740,7 @@ footer a{color:var(--c)}
     <a href="#imprimir-foto">Imprimir la foto de referencia</a>
     <a href="#cortar-pliego">Cortar el pliego</a>
     <a href="#medir-lapiz">Medir con el lápiz</a>
+    <a href="#grilla-columnas">Grilla de columnas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2491,6 +2504,32 @@ footer a{color:var(--c)}
     <div class="ml-sw"><svg id="ml-svg" viewBox="0 0 200 200" role="img" aria-label="Esquema de costado: el ojo, el lápiz a brazo estirado y el objeto, con los rayos que unen el ojo con sus extremos"></svg></div>
     <ul class="ml-res" id="ml-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: estirá el brazo sin doblar el codo, cerrá un ojo, hacé coincidir la punta del lápiz con la parte de arriba del objeto y corré el pulgar hasta la parte de abajo. Esa distancia sobre el lápiz es la que calcula la herramienta (los dos triángulos son semejantes, por eso la medida se reduce en la misma proporción que la distancia). Si el brazo se dobla o el cuerpo se mueve, la medida cambia: lo importante es repetir siempre la misma postura y comparar medidas tomadas así. El dibujo del esquema no está a escala, solo muestra la idea. La cuenta toma la distancia desde el ojo en línea recta y un objeto que mira de frente.</div>
+  </div>
+</section>
+
+<section id="grilla-columnas" class="gc-sec">
+  <h2>Grilla de columnas</h2>
+  <p style="color:var(--muted)">Para armar un afiche, una página de cuaderno o un librito con el texto y las imágenes bien alineados conviene dividir la hoja en columnas y filas iguales. Elegí la hoja, el margen y la cantidad de columnas: te dice el ancho de cada una y dónde van las líneas guía, medidas desde el borde izquierdo y desde arriba.</p>
+  <div class="card">
+    <div class="gc-two">
+      <label class="gc-ctl" for="gc-p"><span>Hoja</span>
+        <select id="gc-p"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="21.59,27.94">Carta (21,6 x 27,9 cm)</option><option value="otro">Otra medida</option></select></label>
+      <label class="gc-ctl" for="gc-o"><span>Posición</span>
+        <select id="gc-o"><option value="v">De pie (vertical)</option><option value="h">Acostada (horizontal)</option></select></label>
+    </div>
+    <div class="gc-two">
+      <label class="gc-ctl" for="gc-w"><span>Ancho de la hoja (cm)</span><input id="gc-w" type="number" inputmode="decimal" min="5" max="200" step="0.1" value="21"></label>
+      <label class="gc-ctl" for="gc-h"><span>Alto de la hoja (cm)</span><input id="gc-h" type="number" inputmode="decimal" min="5" max="200" step="0.1" value="29.7"></label>
+      <label class="gc-ctl" for="gc-m"><span>Margen (cm)</span><input id="gc-m" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="1.5"></label>
+    </div>
+    <div class="gc-two">
+      <label class="gc-ctl" for="gc-c"><span>Columnas</span><input id="gc-c" type="number" inputmode="numeric" min="1" max="12" step="1" value="4"></label>
+      <label class="gc-ctl" for="gc-r"><span>Filas</span><input id="gc-r" type="number" inputmode="numeric" min="1" max="12" step="1" value="6"></label>
+      <label class="gc-ctl" for="gc-g"><span>Espacio entre columnas (cm)</span><input id="gc-g" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="0.5"></label>
+    </div>
+    <div class="gc-sw"><svg id="gc-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala de la hoja con el margen, las columnas y las filas"></svg></div>
+    <ul class="gc-res" id="gc-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: con regla, marcá en el borde de arriba y de abajo de la hoja las posiciones que indica la lista (siempre desde el borde izquierdo) y uní cada par con un trazo muy suave de lápiz duro; hacé lo mismo con las filas desde el borde de arriba. Un título puede ocupar dos o tres columnas juntas y una foto, una sola; lo importante es que todo arranque y termine sobre una guía. El espacio entre filas es el mismo que entre columnas. Es un cálculo de geometría: las medidas son exactas, el trazado depende de la regla y del pulso.</div>
   </div>
 </section>
 
@@ -6828,6 +6867,53 @@ footer a{color:var(--c)}
     rows.forEach(function(x){var li=document.createElement("li"),s1=document.createElement("span"),s2=document.createElement("b");s1.textContent=x[0];s2.textContent=x[1];li.appendChild(s1);li.appendChild(s2);ul.appendChild(li)});
     try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
+  IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-grilla-columnas-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var IDS=["gc-p","gc-o","gc-w","gc-h","gc-m","gc-c","gc-r","gc-g"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    IDS.forEach(function(id){var v=t[id];if(typeof v==="string"||typeof v==="number"){
+      var e=$(id);if(e.tagName==="SELECT"){if(e.querySelector('option[value="'+v+'"]'))e.value=v}else if(isFinite(parseFloat(v)))e.value=v}})}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function setTxt(ul,rows){while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)})}
+  function draw(){
+    var sel=$("gc-p").value;
+    if(sel!=="otro"){var q=sel.split(",").map(parseFloat);if($("gc-o").value==="h")q.reverse();$("gc-w").value=q[0];$("gc-h").value=q[1]}
+    var W=num("gc-w",5,200,21),H=num("gc-h",5,200,29.7),m=num("gc-m",0,20,1.5),n=Math.round(num("gc-c",1,12,4)),r=Math.round(num("gc-r",1,12,6)),g=num("gc-g",0,5,0.5);
+    var U=W-2*m,V=H-2*m,svg=$("gc-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var ul=$("gc-res"),cw=(U-(n-1)*g)/n,rh=(V-(r-1)*g)/r;
+    if(U<=0||V<=0||cw<=0||rh<=0){
+      setTxt(ul,[["Resultado","No entra: el margen o el espacio entre columnas es demasiado grande para esa hoja. Probá con valores menores o menos columnas"]]);
+      return}
+    var sc=Math.min(170/W,170/H),ox=(200-W*sc)/2,oy=(200-H*sc)/2;
+    svg.appendChild(el("rect",{x:ox.toFixed(1),y:oy.toFixed(1),width:(W*sc).toFixed(1),height:(H*sc).toFixed(1),fill:"#e9ecef"}));
+    for(var i=0;i<n;i++)for(var j=0;j<r;j++){
+      svg.appendChild(el("rect",{x:(ox+(m+i*(cw+g))*sc).toFixed(2),y:(oy+(m+j*(rh+g))*sc).toFixed(2),width:(cw*sc).toFixed(2),height:(rh*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.5,stroke:"#14161a","stroke-width":0.5}))}
+    var tt=el("text",{x:100,y:195,"text-anchor":"middle",fill:"#e9ecef","font-size":8});tt.textContent="Hoja de "+f(W,1)+" x "+f(H,1)+" cm";svg.appendChild(tt);
+    var xs=[],ys=[];
+    for(var a=0;a<n;a++){xs.push(f(m+a*(cw+g),1)+(g>0?"-"+f(m+a*(cw+g)+cw,1):""))}
+    for(var b=0;b<r;b++){ys.push(f(m+b*(rh+g),1)+(g>0?"-"+f(m+b*(rh+g)+rh,1):""))}
+    var rows=[
+      ["Zona útil (dentro del margen)",f(U,1)+" x "+f(V,1)+" cm"],
+      ["Ancho de cada columna",f(cw,2)+" cm"+(n>1?" (con "+f(g,1)+" cm entre una y otra)":"")],
+      ["Alto de cada fila",f(rh,2)+" cm"+(r>1?" (con "+f(g,1)+" cm entre una y otra)":"")],
+      ["Dos columnas juntas miden",n>1?f(2*cw+g,2)+" cm":"No hay, es una sola columna"],
+      ["Cuadros en total",(n*r)+" ("+n+" x "+r+")"],
+      ["Columnas, de dónde a dónde (cm, desde el borde izquierdo)",xs.join(" | ")],
+      ["Filas, de dónde a dónde (cm, desde el borde de arriba)",ys.join(" | ")]
+    ];
+    if(cw<2)rows.push(["Aviso","Cada columna mide menos de 2 cm: sirve para guiar el trazo, pero no para texto"]);
+    setTxt(ul,rows);
+    try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ["gc-w","gc-h"].forEach(function(i){$(i).addEventListener("input",function(){$("gc-p").value="otro"})});
   IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
