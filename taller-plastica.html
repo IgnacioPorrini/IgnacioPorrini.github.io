@@ -459,6 +459,17 @@ footer a{color:var(--c)}
 .if-sec .if-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .if-sec .if-res li b{text-align:right}
 @media print{.if-sec{display:none}}
+.ml-sec .ml-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.ml-sec .ml-ctl input[type=number]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:160px}
+.ml-sec .ml-two{display:flex;flex-wrap:wrap;gap:12px}
+.ml-sec .ml-two .ml-ctl{flex:1 1 130px}
+.ml-sec .ml-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.ml-sec .ml-sw{max-width:360px;margin:8px auto}
+.ml-sec .ml-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.ml-sec .ml-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.ml-sec .ml-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.ml-sec .ml-res li b{text-align:right}
+@media print{.ml-sec{display:none}}
 .cp-sec .cp-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cp-sec .cp-ctl input[type=number],.cp-sec .cp-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cp-sec .cp-ctl input[type=number]{max-width:160px}
@@ -716,6 +727,7 @@ footer a{color:var(--c)}
     <a href="#cartel">Cartel: tamaño de letra</a>
     <a href="#imprimir-foto">Imprimir la foto de referencia</a>
     <a href="#cortar-pliego">Cortar el pliego</a>
+    <a href="#medir-lapiz">Medir con el lápiz</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2461,6 +2473,24 @@ footer a{color:var(--c)}
     <div class="cp-sw"><svg id="cp-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala del pliego con las piezas acomodadas"></svg></div>
     <ul class="cp-res" id="cp-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: la cuenta prueba la pieza de pie y acostada, con cortes rectos de lado a lado (como con una guillotina o con regla y cúter), y se queda con la que da más piezas. Las medidas de 50 x 70 y 70 x 100 son las habituales de la cartulina, y las A salen de la norma ISO 216, pero cada librería puede vender medidas un poco distintas: medí el pliego que tenga a mano y usá "Otra medida". Si la pieza se va a pegar o a doblar, sumale al tamaño lo que haga falta antes de cargarla. La pérdida por corte es el ancho de lo que se come el cúter o la sierra: con tijera o cúter y regla suele ser casi nada.</div>
+  </div>
+</section>
+
+<section id="medir-lapiz" class="ml-sec">
+  <h2>Medir con el lápiz</h2>
+  <p style="color:var(--muted)">Para dibujar del natural se mide con el lápiz sostenido con el brazo estirado y un ojo cerrado. Cargá el alto real del objeto y a qué distancia está: te dice cuánto debería marcar en el lápiz y cuántas veces hay que ampliar esa medida para llegar al tamaño del dibujo.</p>
+  <div class="card">
+    <div class="ml-two">
+      <label class="ml-ctl" for="ml-h"><span>Alto real del objeto (cm)</span><input id="ml-h" type="number" inputmode="decimal" min="1" max="1000" step="1" value="180"></label>
+      <label class="ml-ctl" for="ml-d"><span>Distancia al objeto (m)</span><input id="ml-d" type="number" inputmode="decimal" min="0.5" max="200" step="0.5" value="4"></label>
+    </div>
+    <div class="ml-two">
+      <label class="ml-ctl" for="ml-a"><span>Largo del brazo hasta el lápiz (cm)</span><input id="ml-a" type="number" inputmode="decimal" min="30" max="100" step="1" value="60"></label>
+      <label class="ml-ctl" for="ml-p"><span>Alto del objeto en el papel (cm)</span><input id="ml-p" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="20"></label>
+    </div>
+    <div class="ml-sw"><svg id="ml-svg" viewBox="0 0 200 200" role="img" aria-label="Esquema de costado: el ojo, el lápiz a brazo estirado y el objeto, con los rayos que unen el ojo con sus extremos"></svg></div>
+    <ul class="ml-res" id="ml-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: estirá el brazo sin doblar el codo, cerrá un ojo, hacé coincidir la punta del lápiz con la parte de arriba del objeto y corré el pulgar hasta la parte de abajo. Esa distancia sobre el lápiz es la que calcula la herramienta (los dos triángulos son semejantes, por eso la medida se reduce en la misma proporción que la distancia). Si el brazo se dobla o el cuerpo se mueve, la medida cambia: lo importante es repetir siempre la misma postura y comparar medidas tomadas así. El dibujo del esquema no está a escala, solo muestra la idea. La cuenta toma la distancia desde el ojo en línea recta y un objeto que mira de frente.</div>
   </div>
 </section>
 
@@ -6759,6 +6789,45 @@ footer a{color:var(--c)}
     try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
   ["cp-pw","cp-ph"].forEach(function(i){$(i).addEventListener("input",function(){$("cp-p").value="otro"})});
+  IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-medir-lapiz-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var IDS=["ml-h","ml-d","ml-a","ml-p"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    IDS.forEach(function(id){var v=t[id];if((typeof v==="string"||typeof v==="number")&&isFinite(parseFloat(v)))$(id).value=v})}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function draw(){
+    var h=num("ml-h",1,1000,180),d=num("ml-d",0.5,200,4)*100,a=num("ml-a",30,100,60),p=num("ml-p",1,100,20);
+    var s=h*a/d,ang=2*Math.atan(h/(2*d))*180/Math.PI,k=p/s;
+    var svg=$("ml-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var ex=22,ey=100,px=72,ox=172,oh=62,ph=oh*(px-ex)/(ox-ex);
+    function ln(x1,y1,x2,y2,c,w,da){var o={x1:x1,y1:y1,x2:x2,y2:y2,stroke:c,"stroke-width":w};if(da)o["stroke-dasharray"]=da;svg.appendChild(el("line",o))}
+    ln(ex,ey,ox,ey-oh,"#8b929c",1,"3 3");ln(ex,ey,ox,ey+oh,"#8b929c",1,"3 3");
+    ln(ox,ey-oh,ox,ey+oh,"#e9ecef",4);
+    ln(px,ey-ph,px,ey+ph,"#2fbf71",5);
+    svg.appendChild(el("circle",{cx:ex,cy:ey,r:5,fill:"#e9ecef"}));
+    function tx(x,y,t,c){var e=el("text",{x:x,y:y,"text-anchor":"middle",fill:c,"font-size":8});e.textContent=t;svg.appendChild(e)}
+    tx(ex,ey+18,"Ojo","#e9ecef");tx(px,ey+ph+14,"Lápiz","#2fbf71");tx(ox-6,ey+oh+14,"Objeto","#e9ecef");
+    tx(100,22,"Esquema de costado, no está a escala","#8b929c");
+    tx(px,ey-ph-6,f(s,1)+" cm","#2fbf71");tx(ox-8,ey-oh-6,f(h,0)+" cm","#e9ecef");
+    var ul=$("ml-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var rows=[
+      ["Medida sobre el lápiz",f(s,1)+" cm (con el brazo a "+f(a,0)+" cm)"],
+      ["Ángulo que ocupa a la vista",f(ang,1)+" grados"],
+      ["Escala real a papel","1 a "+f(h/p,1)+" (cada "+f(h/p,1)+" cm reales son 1 cm en el papel)"],
+      ["Ampliar la medida del lápiz",f(k,1)+" veces para llegar a "+f(p,1)+" cm en el papel"]
+    ];
+    if(s>25)rows.push(["Aviso","La medida pasa de 25 cm: un lápiz común no alcanza, dividí el objeto en partes o alejate"]);
+    if(s<1)rows.push(["Aviso","Menos de 1 cm sobre el lápiz: es difícil medir con precisión, acercate o medí un detalle mayor"]);
+    rows.forEach(function(x){var li=document.createElement("li"),s1=document.createElement("span"),s2=document.createElement("b");s1.textContent=x[0];s2.textContent=x[1];li.appendChild(s1);li.appendChild(s2);ul.appendChild(li)});
+    try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
   IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
