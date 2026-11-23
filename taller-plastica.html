@@ -699,6 +699,18 @@ footer a{color:var(--c)}
 .mg-sec .mg-rows input{max-width:90px}
 .mg-sec .mg-tot{font-weight:700;text-align:right;overflow-wrap:anywhere}
 @media print{.mg-sec{display:none}}
+.pw-sec .pw-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.pw-sec .pw-ctl input[type=number],.pw-sec .pw-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.pw-sec .pw-ctl input[type=number]{max-width:160px}
+.pw-sec .pw-two{display:flex;flex-wrap:wrap;gap:12px}
+.pw-sec .pw-two .pw-ctl{flex:1 1 130px}
+.pw-sec .pw-ctl input:focus-visible,.pw-sec .pw-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.pw-sec .pw-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.pw-sec .pw-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.pw-sec .pw-res li b{text-align:right}
+.pw-sec .pw-bar{height:14px;border-radius:8px;border:2px solid var(--line);background:#14161a;overflow:hidden;margin:6px 0}
+.pw-sec .pw-bar i{display:block;height:100%;background:#2fbf71;width:0}
+@media print{.pw-sec{display:none}}
 </style>
 </head>
 <body>
@@ -791,6 +803,7 @@ footer a{color:var(--c)}
     <a href="#pintura-mural">Cuánta pintura necesito</a>
     <a href="#diluir-pintura">Diluir la pintura por partes</a>
     <a href="#materiales-grupo">Materiales para el grupo</a>
+    <a href="#peso-papel">Peso del papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2660,6 +2673,25 @@ footer a{color:var(--c)}
     <ul class="mg-rows" id="mg-rows" aria-label="Materiales y cantidad por persona"></ul>
     <p class="mg-tot" id="mg-sum" aria-live="polite"></p>
     <div class="tip">Cómo usarlo: la cantidad por persona admite decimales; 0,5 pinceles por persona significa uno cada dos. El resultado se redondea siempre hacia arriba, porque no se puede llevar medio pincel. En la témpera, la cuenta es en mililitros y se muestra también en litros cuando pasa de uno. Todo queda guardado en este celular y no se envía a ningún lado.</div>
+  </div>
+</section>
+
+<section id="peso-papel" class="pw-sec">
+  <h2>Peso del papel en la mochila</h2>
+  <p style="color:var(--muted)">Un taller nómade se lleva a cuestas. Elegí el tamaño de la hoja, el gramaje (los gramos por metro cuadrado que figuran en el envoltorio) y cuántas hojas llevás: te dice cuánto pesan y cuántas entran en un peso que quieras cargar.</p>
+  <div class="card">
+    <div class="pw-two">
+      <label class="pw-ctl" for="pw-f"><span>Tamaño</span>
+        <select id="pw-f"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="42,59.4">A2 (42 x 59,4 cm)</option><option value="50,70">Pliego 50 x 70 cm</option><option value="70,100">Pliego 70 x 100 cm</option></select></label>
+      <label class="pw-ctl" for="pw-g"><span>Gramaje (g/m2)</span><input id="pw-g" type="number" inputmode="numeric" min="20" max="800" step="1" value="120"></label>
+    </div>
+    <div class="pw-two">
+      <label class="pw-ctl" for="pw-n"><span>Cantidad de hojas</span><input id="pw-n" type="number" inputmode="numeric" min="1" max="2000" step="1" value="40"></label>
+      <label class="pw-ctl" for="pw-m"><span>Peso que quiero cargar (kg)</span><input id="pw-m" type="number" inputmode="decimal" min="0.1" max="30" step="0.1" value="2"></label>
+    </div>
+    <div class="pw-bar" aria-hidden="true"><i id="pw-bar"></i></div>
+    <ul class="pw-res" id="pw-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: el peso es el área de la hoja por el gramaje, sin contar el envoltorio ni la carpeta. Como referencia, el papel de fotocopia común suele ser de 75 u 80 g/m2 y las cartulinas y papeles para acuarela son bastante más pesados, pero conviene leer el dato real en el paquete. La barra muestra qué parte del peso elegido ocupan las hojas cargadas.</div>
   </div>
 </section>
 
@@ -7167,6 +7199,30 @@ footer a{color:var(--c)}
   }
   ["mg-n","mg-r"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   Array.prototype.forEach.call(document.querySelectorAll("#materiales-grupo .mg-pre button"),function(b){b.addEventListener("click",function(){$("mg-n").value=b.getAttribute("data-n");calc()})});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-peso-papel-v1",$=function(i){return document.getElementById(i)};
+  var IDS=["pw-f","pw-g","pw-n","pw-m"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    IDS.forEach(function(id){var v=t[id];if(typeof v==="string"||typeof v==="number"){
+      var e=$(id);if(e.tagName==="SELECT"){if(e.querySelector('option[value="'+v+'"]'))e.value=v}else if(isFinite(parseFloat(v)))e.value=v}})}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function peso(g){return g>=1000?f(g/1000,2)+" kg":f(g,g<10?2:1)+" g"}
+  function calc(){
+    var q=$("pw-f").value.split(","),A=q[0]*q[1]/10000,g=num("pw-g",20,800,120),n=Math.round(num("pw-n",1,2000,40)),m=num("pw-m",0.1,30,2);
+    var uno=A*g,tot=uno*n,cab=Math.floor(m*1000/uno+1e-9);
+    $("pw-bar").style.width=Math.min(100,100*tot/(m*1000))+"%";
+    var rows=[["Una hoja pesa",peso(uno)],["Superficie de una hoja",f(A*10000,1)+" cm2"],[n+(n===1?" hoja pesa":" hojas pesan"),peso(tot)],["En "+f(m,1)+" kg entran",cab+(cab===1?" hoja":" hojas")+" (sin carpeta ni envoltorio)"]];
+    if(tot>m*1000)rows.push(["Aviso","Las hojas cargadas superan el peso elegido en "+peso(tot-m*1000)]);
+    var ul=$("pw-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)});
+    try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  IDS.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
 })();
 </script>
