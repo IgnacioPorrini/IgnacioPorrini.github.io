@@ -517,6 +517,17 @@ footer a{color:var(--c)}
 .pn-sec .pn-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .pn-sec .pn-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.pn-sec{display:none}}
+.dl-sec .dl-two{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.dl-sec .dl-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 130px;margin-top:8px}
+.dl-sec .dl-ctl input[type=number],.dl-sec .dl-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.dl-sec .dl-ctl input[type=number]{max-width:160px}
+.dl-sec .dl-ctl input:focus-visible,.dl-sec .dl-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.dl-sec .dl-sw{max-width:360px;margin:8px auto}
+.dl-sec .dl-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.dl-sec .dl-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.dl-sec .dl-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.dl-sec .dl-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.dl-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -766,6 +777,7 @@ footer a{color:var(--c)}
     <a href="#grilla-columnas">Grilla de columnas</a>
     <a href="#contraste-cartel">Contraste del cartel</a>
     <a href="#pintura-mural">Cuánta pintura necesito</a>
+    <a href="#diluir-pintura">Diluir la pintura por partes</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2598,6 +2610,26 @@ footer a{color:var(--c)}
     <div class="pn-sw"><svg id="pn-svg" viewBox="0 0 200 140" role="img" aria-label="Dibujo a escala de la superficie a pintar"></svg></div>
     <ul class="pn-res" id="pn-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: el rendimiento de la etiqueta es para una superficie lisa y ya preparada; una pared rugosa, porosa o muy absorbente chupa más, así que si dudás subí la reserva. Para un color que mezclás vos, hacé la cuenta con el total de litros y preparalo todo junto: igualar un tono después es difícil. Los valores quedan guardados en este celular.</div>
+  </div>
+</section>
+
+<section id="diluir-pintura" class="dl-sec">
+  <h2>Diluir la pintura por partes</h2>
+  <p style="color:var(--muted)">Para una témpera más aguada, un lavado o una mezcla con adhesivo, se trabaja por partes: una parte de pintura y dos de agua, por ejemplo. Cargá las partes y la cantidad que querés preparar, o la pintura que ya tenés servida, y la herramienta te dice cuántos mililitros va de cada cosa. Sirve desde el celular, con un vasito medidor al lado.</p>
+  <div class="card">
+    <div class="dl-two">
+      <label class="dl-ctl" for="dl-a"><span>Partes de pintura</span><input id="dl-a" type="number" inputmode="decimal" min="0.5" max="20" step="0.5" value="1"></label>
+      <label class="dl-ctl" for="dl-b"><span>Partes de agua</span><input id="dl-b" type="number" inputmode="decimal" min="0" max="20" step="0.5" value="2"></label>
+      <label class="dl-ctl" for="dl-c"><span>Partes de adhesivo (opcional)</span><input id="dl-c" type="number" inputmode="decimal" min="0" max="20" step="0.5" value="0"></label>
+    </div>
+    <div class="dl-two">
+      <label class="dl-ctl" for="dl-m"><span>Qué cantidad conozco</span>
+        <select id="dl-m"><option value="t" selected>Lo que quiero preparar (total)</option><option value="p">La pintura que ya tengo</option></select></label>
+      <label class="dl-ctl" for="dl-q"><span>Cantidad (ml)</span><input id="dl-q" type="number" inputmode="decimal" min="1" max="5000" step="10" value="300"></label>
+    </div>
+    <div class="dl-sw"><svg id="dl-svg" viewBox="0 0 200 80" role="img" aria-label="Barra con la proporción de pintura, agua y adhesivo"></svg></div>
+    <ul class="dl-res" id="dl-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: medí siempre con el mismo vasito o tapa, porque lo que importa es la proporción y no la unidad. Agregá el agua de a poco y probá el color en una hoja: al secarse, la pintura aguada se ve más clara. Una mezcla preparada se usa en el día. Los valores quedan guardados en este celular.</div>
   </div>
 </section>
 
@@ -7042,6 +7074,34 @@ footer a{color:var(--c)}
       ["Envases de "+(e<1?(e===0.5?"1/2":"1/4")+" litro":f(e,0)+" L"),env+(env===1?" envase":" envases")],
       ["Pintura que sobra",f(Math.max(0,comp-total),2)+" L"]
     ]);
+    var o={};IDS.forEach(function(i){o[i]=$(i).value});try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+
+/* Diluir la pintura por partes */
+(function(){
+  var KEY="tp-diluir-pintura-v1",$=function(i){return document.getElementById(i)};
+  var IDS=["dl-a","dl-b","dl-c","dl-m","dl-q"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")IDS.forEach(function(i){if(typeof t[i]==="string"&&t[i].length<12&&$(i).tagName!=="SELECT")$(i).value=t[i];else if(typeof t[i]==="string"&&$(i).tagName==="SELECT"&&(t[i]==="t"||t[i]==="p"))$(i).value=t[i]})}catch(e){}
+  function num(i,lo,hi,d){var v=parseFloat($(i).value);if(!isFinite(v))return d;return Math.min(hi,Math.max(lo,v))}
+  function f(n,d){return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace(".",",")}
+  function svgEl(n,at){var e=document.createElementNS("http://www.w3.org/2000/svg",n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function draw(){
+    var a=num("dl-a",0.5,20,1),b=num("dl-b",0,20,2),c=num("dl-c",0,20,0),q=num("dl-q",1,5000,300),modo=$("dl-m").value==="p"?"p":"t";
+    var suma=a+b+c,parte=modo==="p"?q/a:q/suma,mp=a*parte,ma=b*parte,mc=c*parte,tot=suma*parte;
+    var sv=$("dl-svg");while(sv.firstChild)sv.removeChild(sv.firstChild);
+    var seg=[[mp,"#2fbf71","pintura"],[ma,"#4aa3df","agua"],[mc,"#e0b341","adhesivo"]],x=10;
+    seg.forEach(function(s){if(s[0]<=0)return;var w=180*s[0]/tot;sv.appendChild(svgEl("rect",{x:x,y:14,width:w,height:36,fill:s[1],"fill-opacity":"0.75",stroke:"#14161a","stroke-width":"1"}));x+=w});
+    var t1=svgEl("text",{x:100,y:72,"text-anchor":"middle",fill:"#e8eaed","font-size":"9"});
+    t1.textContent=f(a,1)+" : "+f(b,1)+(c>0?" : "+f(c,1):"")+"  (pintura : agua"+(c>0?" : adhesivo":"")+")";sv.appendChild(t1);
+    var rows=[["Pintura",f(mp,0)+" ml"],["Agua",f(ma,0)+" ml"]];
+    if(c>0)rows.push(["Adhesivo",f(mc,0)+" ml"]);
+    rows.push(["Total de la mezcla",f(tot,0)+" ml"]);
+    rows.push(["Pintura en la mezcla",f(100*a/suma,0)+" %"]);
+    var ul=$("dl-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),s1=document.createElement("span"),bb=document.createElement("b");s1.textContent=x[0];bb.textContent=x[1];li.appendChild(s1);li.appendChild(bb);ul.appendChild(li)});
     var o={};IDS.forEach(function(i){o[i]=$(i).value});try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
   IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
