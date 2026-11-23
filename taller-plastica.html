@@ -443,9 +443,24 @@ footer a{color:var(--c)}
 .dl-sec .dl-sw{max-width:360px;margin:8px auto}
 .dl-sec .dl-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .dl-sec .dl-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.dl-sec .dl-res li,.cr-sec .cr-res li{box-sizing:border-box;min-width:0;max-width:100%}
 .dl-sec .dl-res li b{white-space:nowrap}
 .dl-sec .dl-res li{flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 @media print{.dl-sec{display:none}}
+.cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.cr-sec .cr-ctl input[type=number]{max-width:140px}
+.cr-sec .cr-two{display:flex;flex-wrap:wrap;gap:12px}
+.cr-sec .cr-two .cr-ctl{flex:1 1 130px}
+.cr-sec .cr-ctl input:focus-visible,.cr-sec .cr-ctl select:focus-visible,.cr-sec .cr-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.cr-sec .cr-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.cr-sec .cr-pre button{min-height:44px;min-width:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.cr-sec .cr-sw{max-width:420px;margin:8px auto}
+.cr-sec .cr-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.cr-sec .cr-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.cr-sec .cr-res li b{white-space:nowrap}
+.cr-sec .cr-res li{flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+@media print{.cr-sec{display:none}}
 .rc-sec .rc-sw{max-width:420px;margin:8px auto}
 .rc-sec .rc-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .rc-sec input[type=range]{width:100%;min-height:44px}
@@ -674,6 +689,7 @@ footer a{color:var(--c)}
     <a href="#reparto-clase">Reparto del tiempo</a>
     <a href="#dividir-circulo">Dividir el círculo</a>
     <a href="#dividir-linea">Dividir una línea</a>
+    <a href="#cartel">Cartel: tamaño de letra</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2348,6 +2364,33 @@ footer a{color:var(--c)}
     <div class="dl-sw"><svg id="dl-svg" viewBox="0 0 200 170" role="img" aria-label="Línea dividida en partes iguales con una línea auxiliar inclinada y rectas paralelas"></svg></div>
     <ul class="dl-res" id="dl-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: dibujá la línea AB. Desde A trazá otra línea inclinada, más o menos a 45 grados, y marcá sobre ella tantos tramos iguales como partes quieras, con cualquier medida cómoda (1 cm, por ejemplo). Unite la última marca con B y trazá paralelas a esa recta desde cada marca: cortan a AB en partes iguales. Es el teorema de Tales, matemática estándar y no una receta de ningún autor. Con la regla común conviene medir directo cuando el resultado es redondo, y usar la línea auxiliar cuando sale algo como 2,86 cm.</div>
+  </div>
+</section>
+
+<section id="cartel" class="cr-sec">
+  <h2>Cartel: qué tamaño de letra entra</h2>
+  <p style="color:var(--muted)">Escribí el texto del cartel y el tamaño de la hoja. Te dice cuánto miden las letras para que entren parejas, cuántos renglones conviene usar y dónde van las líneas guía. Es una cuenta de reparto del ancho, sin modelos de letra de nadie: las letras se dibujan a mano sobre las cajas.</p>
+  <div class="card">
+    <label class="cr-ctl" for="cr-txt"><span>Texto (hasta 40 caracteres)</span>
+      <input id="cr-txt" type="text" maxlength="40" value="TALLER DE PLASTICA" autocomplete="off">
+    </label>
+    <div class="cr-pre" role="group" aria-label="Tamaños de hoja habituales">
+      <button type="button" data-w="21" data-h="29.7">A4 vertical</button><button type="button" data-w="29.7" data-h="21">A4 apaisada</button><button type="button" data-w="29.7" data-h="42">A3 vertical</button><button type="button" data-w="42" data-h="29.7">A3 apaisada</button>
+    </div>
+    <div class="cr-two">
+      <label class="cr-ctl" for="cr-w"><span>Ancho de la hoja (cm)</span><input id="cr-w" type="number" inputmode="decimal" min="10" max="200" step="0.1" value="42"></label>
+      <label class="cr-ctl" for="cr-h"><span>Alto de la hoja (cm)</span><input id="cr-h" type="number" inputmode="decimal" min="10" max="200" step="0.1" value="29.7"></label>
+      <label class="cr-ctl" for="cr-m"><span>Margen (cm)</span><input id="cr-m" type="number" inputmode="decimal" min="0" max="20" step="0.5" value="2"></label>
+    </div>
+    <div class="cr-two">
+      <label class="cr-ctl" for="cr-l"><span>Renglones</span>
+        <select id="cr-l"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label>
+      <label class="cr-ctl" for="cr-p"><span>Forma de la letra</span>
+        <select id="cr-p"><option value="0.5">Angosta (ancho = 1/2 del alto)</option><option value="0.7" selected>Común (ancho = 7/10 del alto)</option><option value="0.9">Ancha (ancho = 9/10 del alto)</option></select></label>
+    </div>
+    <div class="cr-sw"><svg id="cr-svg" viewBox="0 0 200 200" role="img" aria-label="Vista previa de la hoja con las cajas de cada letra y las líneas guía de cada renglón"></svg></div>
+    <ul class="cr-res" id="cr-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: marcá el margen con lápiz suave, trazá las líneas guía de cada renglón con la regla y dividí el ancho de cada renglón en cajas de la medida que sale acá (si hace falta, con la línea auxiliar de "Dividir una línea"). Escribí cada letra dentro de su caja, tocando la línea de arriba y la de abajo. Supuestos de la cuenta: el espacio entre palabras vale 6/10 de una caja, el hueco entre letras es 1/5 del ancho de la caja y el espacio entre renglones es 3/10 del alto de la letra. Son proporciones elegidas para que la cuenta sea clara, y se pueden cambiar a ojo según la letra que dibuje cada uno.</div>
   </div>
 </section>
 
@@ -6484,6 +6527,78 @@ footer a{color:var(--c)}
   }
   ["dl-n","dl-l"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#dividir-linea .dl-pre button"),function(b){b.addEventListener("click",function(){$("dl-n").value=b.getAttribute("data-n");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-cartel-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    if(typeof t.txt==="string"&&t.txt.length<=40)$("cr-txt").value=t.txt;
+    var a=parseFloat(t.w),b=parseFloat(t.h),m=parseFloat(t.m);
+    if(isFinite(a)&&a>=10&&a<=200)$("cr-w").value=a;
+    if(isFinite(b)&&b>=10&&b<=200)$("cr-h").value=b;
+    if(isFinite(m)&&m>=0&&m<=20)$("cr-m").value=m;
+    if(["1","2","3"].indexOf(String(t.l))>-1)$("cr-l").value=String(t.l);
+    if(["0.5","0.7","0.9"].indexOf(String(t.p))>-1)$("cr-p").value=String(t.p)}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  /* ancho de un renglón en unidades de caja: letras 1, espacio 0,6, hueco 0,2 entre caracteres */
+  function units(s){var c=0,sp=0,i;for(i=0;i<s.length;i++){if(s.charAt(i)===" ")sp++;else c++}
+    var n=c+sp;return n?c+0.6*sp+0.2*(n-1):0}
+  function split(words,k){
+    var best=null,n=words.length;
+    function go(start,left,acc){
+      if(left===1){var rest=words.slice(start).join(" ");if(!rest)return;var all=acc.concat([rest]);
+        var mx=Math.max.apply(null,all.map(units));if(!best||mx<best.mx-1e-9)best={mx:mx,lines:all};return}
+      for(var e=start+1;e<=n-left+1;e++)go(e,left-1,acc.concat([words.slice(start,e).join(" ")]))}
+    go(0,k,[]);return best}
+  function draw(){
+    var raw=$("cr-txt").value.replace(/\s+/g," ").replace(/^ | $/g,"");
+    var W=parseFloat($("cr-w").value),H=parseFloat($("cr-h").value),M=parseFloat($("cr-m").value),
+        k=parseInt($("cr-l").value,10),p=parseFloat($("cr-p").value);
+    if(!isFinite(W)||W<10)W=10;if(W>200)W=200;if(!isFinite(H)||H<10)H=10;if(H>200)H=200;
+    if(!isFinite(M)||M<0)M=0;if(M>20)M=20;
+    var svg=$("cr-svg"),ul=$("cr-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var uw=W-2*M,uh=H-2*M;
+    function rows(r){r.forEach(function(x){var li=document.createElement("li"),s=document.createElement("span"),q=document.createElement("b");s.textContent=x[0];q.textContent=x[1];q.style.textAlign="right";li.appendChild(s);li.appendChild(q);ul.appendChild(li)})}
+    var words=raw?raw.split(" "):[];
+    if(!words.length||uw<=0||uh<=0){rows([["Falta","un texto y un margen que deje lugar en la hoja"]]);return}
+    var kk=Math.min(k,words.length),sp=split(words,kk);
+    if(!sp){rows([["Falta","un texto para repartir"]]);return}
+    var wBox=uw/sp.mx;                 /* ancho de caja si manda el ancho */
+    var hByW=wBox/p;                   /* alto de letra si manda el ancho */
+    var hByH=uh/(kk+0.3*(kk-1));       /* alto de letra si manda el alto */
+    var h=Math.min(hByW,hByH),lim=hByW<=hByH?"el ancho":"el alto";
+    var w=h*p,gap=0.2*w,gapL=0.3*h;
+    var totH=kk*h+(kk-1)*gapL;
+    var sc=180/Math.max(W,H),ox=(200-W*sc)/2,oy=(200-H*sc)/2;
+    svg.appendChild(el("rect",{x:ox.toFixed(1),y:oy.toFixed(1),width:(W*sc).toFixed(1),height:(H*sc).toFixed(1),fill:"#1b1e23",stroke:"#868e96","stroke-width":1}));
+    svg.appendChild(el("rect",{x:(ox+M*sc).toFixed(1),y:(oy+M*sc).toFixed(1),width:(uw*sc).toFixed(1),height:(uh*sc).toFixed(1),fill:"none",stroke:"#495057","stroke-width":.8,"stroke-dasharray":"3 3"}));
+    var y0=oy+(M+(uh-totH)/2)*sc;
+    sp.lines.forEach(function(line,li){
+      var lw=units(line)*w,x=ox+(M+(uw-lw)/2)*sc,yT=y0+li*(h+gapL)*sc,yB=yT+h*sc,i;
+      svg.appendChild(el("line",{x1:(ox+M*sc).toFixed(1),y1:yT.toFixed(1),x2:(ox+(M+uw)*sc).toFixed(1),y2:yT.toFixed(1),stroke:"#495057","stroke-width":.6}));
+      svg.appendChild(el("line",{x1:(ox+M*sc).toFixed(1),y1:yB.toFixed(1),x2:(ox+(M+uw)*sc).toFixed(1),y2:yB.toFixed(1),stroke:"#495057","stroke-width":.6}));
+      for(i=0;i<line.length;i++){var ch=line.charAt(i);
+        if(ch===" "){x+=0.6*w*sc+gap*sc;continue}
+        svg.appendChild(el("rect",{x:x.toFixed(1),y:yT.toFixed(1),width:(w*sc).toFixed(1),height:(h*sc).toFixed(1),fill:"none",stroke:"#2fbf71","stroke-width":.8}));
+        var tx=el("text",{x:(x+w*sc/2).toFixed(1),y:(yT+h*sc*0.72).toFixed(1),"text-anchor":"middle",fill:"#e9ecef","font-size":(h*sc*0.6).toFixed(1)});
+        tx.textContent=ch;svg.appendChild(tx);x+=w*sc+gap*sc}});
+    var r=[["Letra: ancho de la caja × alto",f(w,1)+" × "+f(h,1)+" cm"],
+      ["Hueco entre letras",f(gap,1)+" cm"],
+      ["Espacio entre palabras",f(0.6*w,1)+" cm"],
+      ["Renglones",kk+(kk<k?" (el texto no tiene más palabras)":"")],
+      ["Manda",lim+" de la hoja"],
+      ["Altura que ocupa el texto",f(totH,1)+" de "+f(uh,1)+" cm útiles"]];
+    if(kk>1)r.push(["Espacio entre renglones",f(gapL,1)+" cm"]);
+    r.push(["Líneas guía desde el borde de arriba",sp.lines.map(function(_,i){var top=(H-totH)/2+i*(h+gapL);return f(top,1)+" y "+f(top+h,1)}).join(" · ")+" cm"]);
+    rows(r);
+    try{localStorage.setItem(KEY,JSON.stringify({txt:$("cr-txt").value,w:W,h:H,m:M,l:k,p:p}))}catch(e2){}
+  }
+  ["cr-txt","cr-w","cr-h","cr-m","cr-l","cr-p"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#cartel .cr-pre button"),function(b){b.addEventListener("click",function(){$("cr-w").value=b.getAttribute("data-w");$("cr-h").value=b.getAttribute("data-h");draw()})});
   draw();
 })();
 </script>
