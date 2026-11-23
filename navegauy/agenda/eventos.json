@@ -1,0 +1,227 @@
+{
+ "actualizado": "2026-11-23",
+ "eventos": [
+  {
+   "id": "audo6-2026",
+   "titulo": "AUDO 6 · Campeonato Nacional Individual de Optimist",
+   "inicio": "2026-11-14",
+   "fin": "2026-11-22",
+   "lugar": "Club Náutico Carrasco y Punta Gorda, Montevideo",
+   "tipo": "Campeonato",
+   "organiza": "Asociación Uruguaya de Optimist (AUDO)",
+   "detalle": "Fecha del campeonato nacional individual de Optimist.",
+   "fuente": {
+    "nombre": "Viramos",
+    "url": "https://viramos.com/audo6-campeonato-nacional-individual-cncpg-2026"
+   }
+  },
+  {
+   "id": "polvarini-2026",
+   "titulo": "Regata Eduardo Polvarini · Festival multiclase y handicap",
+   "inicio": "2026-11-22",
+   "hora": "11:00",
+   "duracionHoras": 5,
+   "lugar": "Nautilus Yachting Club, Rambla Gandhi 530, Montevideo",
+   "tipo": "Regata de club",
+   "organiza": "Nautilus Yachting Club",
+   "detalle": "Primera largada a las 11:00. Clases Optimist, Pampero, Laser, Snipe, catamarán, 29er, windsurf, windfoil y handicap. Inscripción hasta el viernes 20 a las 20:00 ($750 multiclase, $1.000 handicap).",
+   "fuente": {
+    "nombre": "Aviso de regata (PDF)",
+    "url": "https://nyc.com.uy/web/downloads/Aviso_Festival_Polvarini_NYC_2026.pdf"
+   }
+  },
+  {
+   "id": "prensa-2026",
+   "titulo": "Regata de la Prensa 2026",
+   "inicio": "2026-11-28",
+   "lugar": "Yacht Club Uruguayo, Puerto del Buceo, Montevideo",
+   "tipo": "Regata de club",
+   "organiza": "Yacht Club Uruguayo",
+   "detalle": "Regata organizada por el Yacht Club Uruguayo. Clases y horarios en el aviso del evento.",
+   "fuente": {
+    "nombre": "Viramos",
+    "url": "https://viramos.com/regata-de-la-prensa-2026-2026"
+   }
+  },
+  {
+   "id": "sudestada-8",
+   "titulo": "8.ª Regata Aniversario «Martha Nieves» · Club Náutico Sudestada",
+   "inicio": "2026-11-28",
+   "fin": "2026-11-29",
+   "lugar": "Club Náutico Sudestada, Bahía Grande, La Paloma (Rocha)",
+   "tipo": "Aniversario",
+   "organiza": "Club Náutico Sudestada",
+   "detalle": "Dos jornadas de navegación por el 8.º aniversario del club, abiertas a navegantes y clubes amigos.",
+   "fuente": {
+    "nombre": "Visión Marítima",
+    "url": "https://www.visionmaritima.com.uy/martha-nieves/"
+   }
+  },
+  {
+   "id": "estacada-86",
+   "titulo": "Aniversario 86 · Club La Estacada",
+   "inicio": "2026-12-01",
+   "lugar": "Club La Estacada, Punta Carretas, Montevideo",
+   "tipo": "Aniversario",
+   "organiza": "Club La Estacada",
+   "detalle": "El club fue fundado el 1 de diciembre de 1940, junto al faro de Punta Carretas. Tiene escuela de vela.",
+   "fuente": {
+    "nombre": "clublaestacada.com",
+    "url": "https://www.clublaestacada.com/nuestro-club"
+   }
+  },
+  {
+   "id": "audo7-2026",
+   "titulo": "AUDO 7 · Campeonato Nacional Team Race de Optimist",
+   "inicio": "2026-12-05",
+   "fin": "2026-12-06",
+   "lugar": "Nautilus Yachting Club, Montevideo",
+   "tipo": "Campeonato",
+   "organiza": "Asociación Uruguaya de Optimist (AUDO)",
+   "detalle": "Campeonato nacional por equipos de Optimist.",
+   "fuente": {
+    "nombre": "Viramos",
+    "url": "https://viramos.com/audo-7-campeonato-nacional-team-race-nyc-2026"
+   }
+  },
+  {
+   "id": "estacada-festival-2026",
+   "titulo": "Regata Festival 86.º Aniversario · Club Náutico y Pesca La Estacada",
+   "inicio": "2026-12-13",
+   "lugar": "Club Náutico y Pesca La Estacada, Punta Carretas, Montevideo",
+   "tipo": "Regata de club",
+   "organiza": "Club Náutico y Pesca La Estacada",
+   "detalle": "Regata festival por los 86 años del club. Horario, recorrido e inscripción a confirmar con el club (tel. 2711 9075).",
+   "fuente": {
+    "nombre": "Afiche oficial del club (Instagram @clublaestacada)",
+    "url": "https://instagram.com/clublaestacada"
+   }
+  },
+  {
+   "id": "nyc-colonia-q1",
+   "titulo": "Colonia náutica de verano · 1.ª quincena",
+   "inicio": "2027-01-04",
+   "fin": "2027-01-15",
+   "lugar": "Nautilus Yachting Club, Montevideo",
+   "tipo": "Escuela de verano",
+   "organiza": "Nautilus Yachting Club",
+   "detalle": "De 4 a 11 años. Turnos de 9 a 13, de 14 a 18 o doble. Consultas: administracion@nyc.com.uy o WhatsApp 098 665 202.",
+   "fuente": {
+    "nombre": "nyc.com.uy",
+    "url": "https://www.nyc.com.uy/colonia-nautica-de-verano-2027/"
+   }
+  },
+  {
+   "id": "nyc-colonia-q2",
+   "titulo": "Colonia náutica de verano · 2.ª quincena",
+   "inicio": "2027-01-18",
+   "fin": "2027-01-29",
+   "lugar": "Nautilus Yachting Club, Montevideo",
+   "tipo": "Escuela de verano",
+   "organiza": "Nautilus Yachting Club",
+   "detalle": "De 4 a 11 años. Turnos de 9 a 13, de 14 a 18 o doble.",
+   "fuente": {
+    "nombre": "nyc.com.uy",
+    "url": "https://www.nyc.com.uy/colonia-nautica-de-verano-2027/"
+   }
+  },
+  {
+   "id": "rcas-2027-bapde",
+   "titulo": "Rolex Circuito Atlántico Sur 2027 · Regata Buenos Aires – Punta del Este",
+   "inicio": "2027-01-22",
+   "lugar": "Buenos Aires – Punta del Este (llegada a Punta del Este, Maldonado)",
+   "tipo": "Campeonato",
+   "organiza": "Rolex Circuito Atlántico Sur (oficina de regatas en el Yacht Club Argentino)",
+   "detalle": "Regata de altura que abre el Rolex Circuito Atlántico Sur 2027. Horarios e inscripción en la web del circuito.",
+   "fuente": {
+    "nombre": "rcas.org.ar",
+    "url": "https://rcas.org.ar/"
+   }
+  },
+  {
+   "id": "rcas-2027-pde",
+   "titulo": "Rolex Circuito Atlántico Sur 2027 · Regatas en Punta del Este",
+   "inicio": "2027-01-25",
+   "fin": "2027-01-28",
+   "lugar": "Punta del Este, Maldonado",
+   "tipo": "Campeonato",
+   "organiza": "Rolex Circuito Atlántico Sur (oficina de regatas en el Yacht Club Argentino)",
+   "detalle": "25/01 Circuito La Barra · 26 y 27/01 barlovento-sotavento · 28/01 Vuelta Gorriti y entrega de premios.",
+   "fuente": {
+    "nombre": "rcas.org.ar",
+    "url": "https://rcas.org.ar/"
+   }
+  },
+  {
+   "id": "nyc-colonia-q3",
+   "titulo": "Colonia náutica de verano · 3.ª quincena",
+   "inicio": "2027-02-01",
+   "fin": "2027-02-12",
+   "lugar": "Nautilus Yachting Club, Montevideo",
+   "tipo": "Escuela de verano",
+   "organiza": "Nautilus Yachting Club",
+   "detalle": "De 4 a 11 años. Turnos de 9 a 13, de 14 a 18 o doble.",
+   "fuente": {
+    "nombre": "nyc.com.uy",
+    "url": "https://www.nyc.com.uy/colonia-nautica-de-verano-2027/"
+   }
+  },
+  {
+   "id": "nyc-colonia-q4",
+   "titulo": "Colonia náutica de verano · 4.ª quincena",
+   "inicio": "2027-02-15",
+   "fin": "2027-02-26",
+   "lugar": "Nautilus Yachting Club, Montevideo",
+   "tipo": "Escuela de verano",
+   "organiza": "Nautilus Yachting Club",
+   "detalle": "De 4 a 11 años. Turnos de 9 a 13, de 14 a 18 o doble.",
+   "fuente": {
+    "nombre": "nyc.com.uy",
+    "url": "https://www.nyc.com.uy/colonia-nautica-de-verano-2027/"
+   }
+  },
+  {
+   "id": "snipe-sudam-2027",
+   "titulo": "Campeonato Sudamericano de Snipe 2027",
+   "inicio": "2027-03-22",
+   "fin": "2027-03-28",
+   "lugar": "Yacht Club Uruguayo, Puerto del Buceo, Montevideo",
+   "tipo": "Campeonato",
+   "organiza": "Yacht Club Uruguayo",
+   "detalle": "Sudamericano de la clase Snipe en Montevideo.",
+   "fuente": {
+    "nombre": "Viramos",
+    "url": "https://viramos.com/snipe-south-american-championship-2027-2027"
+   }
+  },
+  {
+   "id": "meseta-2027",
+   "titulo": "78.ª Regata Meseta de Artigas",
+   "inicio": "2027-03-26",
+   "fin": "2027-03-27",
+   "lugar": "Paysandú, río Uruguay",
+   "tipo": "Regata de club",
+   "organiza": "Yacht Club Paysandú",
+   "detalle": "Regata tradicional del río Uruguay. Recorrido, clases e inscripción en la web de la regata.",
+   "fuente": {
+    "nombre": "regatameseta.uy",
+    "url": "https://www.regatameseta.uy/"
+   }
+  },
+  {
+   "id": "sail-mvd-2027",
+   "titulo": "Sail Montevideo 2027 · Velas Latinoamérica",
+   "inicio": "2027-08-10",
+   "fin": "2027-08-14",
+   "lugar": "Puerto de Montevideo",
+   "tipo": "Evento",
+   "organiza": "Armada Nacional",
+   "detalle": "Encuentro de grandes veleros escuela de las armadas de América. Declarado de interés nacional.",
+   "fuente": {
+    "nombre": "Resolución de Presidencia (PDF)",
+    "url": "https://medios.presidencia.gub.uy/legal/2026/resoluciones/09/mdn_336.pdf"
+   }
+  }
+ ],
+ "aConfirmar": []
+}

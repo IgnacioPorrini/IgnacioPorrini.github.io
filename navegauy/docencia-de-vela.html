@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<link rel="canonical" href="https://navegauy.github.io/docencia-de-vela.html">
+<meta name="author" content="Ignacio Porrini">
+<meta property="og:url" content="https://navegauy.github.io/docencia-de-vela.html">
+<meta property="og:type" content="website">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Docencia de Vela · Navegauy</title>
+<meta name="description" content="Escuelas de vela, formación, campeonatos y referentes de la náutica en Uruguay, siempre con el enlace a la fuente.">
+<meta property="og:title" content="Docencia de Vela · Navegauy">
+<meta property="og:description" content="Escuelas de vela, formación, campeonatos y referentes de la náutica en Uruguay, siempre con el enlace a la fuente.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: guía de consulta en una columna, como un derrotero: secciones por necesidad, fichas con su fuente al pie; acento verde de boya de babor */
+:root{
+  --bg:#EEF3F2; --grid:#DDE6E4; --surface:#FFFFFF; --ink:#10262B; --muted:#4D6469; --line:#C7D5D3;
+  --sea:#0E4F73; --sea-ink:#FFFFFF; --buoy:#1F7A4D; --buoy-bg:#E2F2E8; --flag:#B45309;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.8rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance}
+h2{font:700 1.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+h3{font:700 1.2rem/1.2 var(--display);margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--sea)}
+.lede{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-weight:600}
+.quick a small{font-weight:400;color:var(--muted);font-size:13px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{border-color:var(--buoy);background:var(--buoy-bg)}
+.cards{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.contacts{display:flex;flex-wrap:wrap;gap:6px}
+.contacts a,.contacts span{font-size:14px;border:1px solid var(--line);border-radius:6px;padding:4px 8px;text-decoration:none;color:var(--ink);word-break:break-all}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--muted)}
+.tag{display:inline-block;white-space:nowrap;vertical-align:middle;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 6px;background:var(--buoy-bg);color:var(--buoy)}
+.tag.warn{background:transparent;border:1px solid var(--flag);color:var(--flag)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;text-align:right}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 10px}
+.note{font-size:14px;color:var(--muted)}
+input{font:16px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+footer{font-size:13px;color:var(--muted);text-align:center}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow"><a href="./" style="color:inherit">Navegauy</a> · Red de profes de navegación a vela</p>
+    <h1>Docencia de Vela Uruguay</h1>
+    <p class="lede">Dónde aprender, dónde enseñar, dónde competir y a quién consultar. Cada dato tiene su enlace a la fuente original: ante la duda, manda la fuente.</p>
+  </header>
+
+  <nav class="quick" aria-label="Accesos rápidos">
+    <a href="#aniversarios">Aniversarios<small>fechas clave de los clubes</small></a>
+    <a href="#escuelas">Escuelas de vela<small>por departamento</small></a>
+    <a href="#formacion">Formación<small>Brevet, cursos, apps</small></a>
+    <a href="#campeonatos">Campeonatos<small>calendario y resultados</small></a>
+    <a href="#referentes">Referentes<small>clases y asociaciones</small></a>
+    <a href="#tiendas">Tiendas<small>barcos, equipos y velas</small></a>
+    <a href="#agenda">Agenda<small>fechas y suscripción</small></a>
+    <a href="https://ignacioporrini.github.io/clubes.html">Para clubes<small>kit gratis y servicios</small></a>
+  </nav>
+
+  <section id="aniversarios">
+    <h2>Aniversarios clave</h2>
+    <p class="note">Fechas de clubes clave para el desarrollo náutico del país. Confirme cada actividad en la fuente del club.</p>
+    <div class="cards">
+      <div class="card" style="border:2px solid var(--buoy)"><div class="meta"><span>Montevideo · Punta Carretas</span><span>1 de diciembre</span></div><h3>Club La Estacada <span class="tag">86 años en 2026</span></h3><p>Fundado el 1 de diciembre de 1940, junto al Faro de Punta Carretas. Tiene escuela de vela.</p><p><strong>⛵ Regata Festival del 86º aniversario: domingo 13 de diciembre de 2026.</strong> Horario, recorrido e inscripción a confirmar con el club.</p><div class="contacts"><a href="tel:27119075">☎ 2711 9075</a><span>clubestacada@hotmail.com</span><a href="https://instagram.com/clublaestacada" target="_blank" rel="noopener">Instagram @clublaestacada</a></div><p class="src">Fuente: <a href="https://www.clublaestacada.com/nuestro-club" target="_blank" rel="noopener">clublaestacada.com</a></p></div>
+      <div class="card" style="border:2px solid var(--buoy)"><div class="meta"><span>Rocha · La Paloma</span><span>28 y 29 de noviembre</span></div><h3>Club Náutico Sudestada <span class="tag">8.º aniversario en 2026</span></h3><p><strong>⛵ 8.ª Regata Aniversario «Martha Nieves»: sábado 28 y domingo 29 de noviembre de 2026</strong>, en Bahía Grande, abierta a navegantes y clubes amigos. Celebra cada año con su regata aniversario (la 6.ª edición fue el 30 de noviembre de 2024).</p><div class="contacts"><a href="https://www.cnsudestada.uy/" target="_blank" rel="noopener">cnsudestada.uy</a></div><p class="src">Fuentes: <a href="https://www.visionmaritima.com.uy/martha-nieves/" target="_blank" rel="noopener">Visión Marítima</a> · <a href="https://turismorocha.gub.uy/eventos/2024/11/30/6ta-regata-aniversario-3824" target="_blank" rel="noopener">Turismo Rocha</a></p></div>
+      <div class="card"><div class="meta"><span>Maldonado · Punta Ballena</span><span>31 de marzo</span></div><h3>Club de los Balleneros</h3><p>Fundado el 31 de marzo de 1965. Fue sede de la fecha AUDO 4 de Optimist en 2026.</p><p class="src">Fuente: <a href="https://clubdelosballeneros.com.uy/" target="_blank" rel="noopener">clubdelosballeneros.com.uy</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo · Puerto del Buceo</span><span>julio</span></div><h3>Yacht Club Uruguayo</h3><p>Festejó su 120.º aniversario con una regata el 25 de julio de 2026.</p><p class="src">Fuente: <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">viramos.com</a></p></div>
+    </div>
+  </section>
+
+  <section id="escuelas">
+    <h2>Escuelas de vela</h2>
+    <p class="note">Para quien quiere aprender o busca dónde dar clases. Escriba siempre a la escuela para confirmar horarios y cupos.</p>
+    <input id="q" type="search" placeholder="Buscar por club, ciudad o tipo de clase" aria-label="Buscar escuela">
+    <div class="chips" id="deptos" role="group" aria-label="Departamento"></div>
+    <div class="cards" id="lista"></div>
+    <div class="card" style="border-style:dashed">
+      <h3>¿Falta su escuela o hay un dato para corregir?</h3>
+      <p>Estamos relevando Canelones, Soriano y el resto del país, y confirmando si los clubes de Colonia y Salto tienen escuela. Para el litoral sirve la guía <a href="https://www.caru.org.uy/web/wp-content/uploads/2020/01/Clubes%5Fnauticos%5Fdigital.pdf" target="_blank" rel="noopener">Clubes náuticos del Río Uruguay</a> (CARU, 2019). Mande el nombre, el departamento, el contacto público y el enlace a su fuente (web, Instagram o Facebook del club).</p>
+      <div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20sumar%20o%20corregir%20una%20escuela%20en%20Docencia%20de%20Vela%20Uruguay.%0ANombre%3A%20%0ADepartamento%3A%20%0AContacto%20p%C3%BAblico%3A%20%0AFuente%20(enlace)%3A%20" target="_blank" rel="noopener">Enviar por WhatsApp</a></div>
+    </div>
+  </section>
+
+  <section id="formacion">
+    <h2>Formación</h2>
+    <div class="cards">
+      <div class="card"><h3>Brevet (permiso de navegación)</h3><p>Lo otorga la Prefectura Nacional Naval. Para practicar las 100 preguntas del cuestionario: <a href="https://ignacioporrini.github.io/cuestionario-brevet.html">Cuestionario Brevet</a>.</p><p class="src">Requisitos oficiales: consultar en la Prefectura Nacional Naval.</p></div>
+      <div class="card"><h3>UTU: Entrenamiento Deportivo de Náutica</h3><p>Área 2476T, registro de aspirantes docentes para Montevideo, Maldonado, Rocha y Salto (convocatoria hasta el 17/11/2026).</p><p class="src">Fuente: <a href="https://www.utu.edu.uy/wp-content/uploads/2026/10/Res-5590-2026_-exp2026-25-4-006613.pdf" target="_blank" rel="noopener">Resolución 5590/2026 de UTU</a></p></div>
+      <div class="card"><h3>Herramientas libres para escuelas</h3><p><a href="https://ignacioporrini.github.io/entrenamiento-a-bordo.html">Entrenamiento a bordo</a> (puesta a punto, ejercicios, largada, bitácora), <a href="https://ignacioporrini.github.io/tactica-a-bordo.html">Táctica a bordo</a> y <a href="https://ignacioporrini.github.io/revision-seguridad.html">Revisión de seguridad</a>.</p></div>
+    </div>
+  </section>
+
+  <section id="campeonatos">
+    <h2>Campeonatos</h2>
+    <p>La competencia en Uruguay se publica hoy en dos plataformas. Apostamos por el desarrollo local: <b>Cabo</b> es uruguaya.</p>
+    <div class="cards">
+      <div class="card"><h3>Cabo <span class="tag">desarrollo uruguayo</span></h3><p>Plataforma para correr campeonatos y clubes: inscripciones, resultados en vivo y protestas. La usa ILCA Uruguay.</p><p class="src">Fuente: <a href="https://mateovidal.com/" target="_blank" rel="noopener">mateovidal.com</a> · sitio: cabo.boats</p></div>
+      <div class="card"><h3>Viramos</h3><p>Reúne campeonatos de la región, entre ellos los del Yacht Club Uruguayo y de la Asociación Uruguaya de Optimist.</p><p class="src">Fuente: <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">viramos.com</a></p></div>
+    </div>
+    <h3>Dos temporadas en números</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Organiza</th><th class="n">2025</th><th class="n">2026</th></tr></thead>
+      <tbody>
+        <tr><td>Yacht Club Uruguayo</td><td class="n">29</td><td class="n">27</td></tr>
+        <tr><td>Asociación Uruguaya de Optimist (AUDO), en distintos clubes</td><td class="n">7</td><td class="n">7</td></tr>
+        <tr><td>Otros (Semana de Clásicos de Punta del Este, 29er)</td><td class="n">2</td><td class="n">1</td></tr>
+        <tr><td><b>Total en Uruguay</b></td><td class="n"><b>38</b></td><td class="n"><b>35</b></td></tr>
+      </tbody></table></div>
+    <p class="note">Clases con actividad: Optimist, ILCA (4, 6, 7 y Master), Snipe, 29er, Sunfish, J24, J70, Fórmula Foil, windsurf y crucero (ORC y hándicap). Conteo de los campeonatos uruguayos listados en <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">Viramos</a> al 16/11/2026.</p>
+  </section>
+
+  <section id="referentes">
+    <h2>Referentes y asociaciones</h2>
+    <p class="note">Solo instituciones. Las personas aparecen únicamente cuando su asociación las publica como referentes en su propia fuente.</p>
+    <div class="cards" id="refs"></div>
+  </section>
+
+  <section id="tiendas">
+    <h2>Tiendas y servicios náuticos</h2>
+    <p class="note">Empresas que venden barcos, equipamiento y velas en Uruguay. Aparecen por orden de relevamiento, no por recomendación: confirme precios, stock y horarios con cada una.</p>
+    <div class="cards">
+      <div class="card"><div class="meta"><span>Montevideo · Puerto del Buceo y La Estacada</span></div><h3>Tata Barcos</h3><p>Compra y venta de barcos usados (veleros, lanchas, cruceros y gomones) y nuevos (Rodman y Sea Fox). Accesorios y equipamiento, seguros, trámites ante Prefectura, traslados y mantenimiento de balsas salvavidas. Tiene local en el Puerto del Buceo, en el Yacht Club Uruguayo, y en la sede náutica de La Estacada.</p><div class="contacts"><a href="https://wa.me/59899498631" target="_blank" rel="noopener">WhatsApp 099 498 631</a><a href="tel:+59826242032">☎ 2624 2032</a><a href="tel:098322541">☎ 098 322 541 (La Estacada)</a><a href="https://www.instagram.com/tatabarcos/" target="_blank" rel="noopener">Instagram @tatabarcos</a></div><p class="src">Fuente: <a href="https://www.tatabarcos.com.uy/" target="_blank" rel="noopener">tatabarcos.com.uy</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo y Punta del Este</span></div><h3>Aeromarine</h3><p>Tienda náutica desde 1977: electrónica marina, kayaks y SUP, chalecos, cabos, herrajes, bombas y cartas. Montevideo: Rambla 25 de Agosto de 1825 Nº 326. Punta del Este: calle 17 esquina Rambla Artigas, Edificio Puerto.</p><div class="contacts"><a href="tel:29166456">☎ 2916 6456</a><a href="tel:094295594">☎ 094 295 594</a><span>ventas@aeromarine.com.uy</span><a href="https://instagram.com/aeromarinesa" target="_blank" rel="noopener">Instagram @aeromarinesa</a></div><p class="src">Fuente: <a href="https://shop.aeromarine.com.uy/" target="_blank" rel="noopener">shop.aeromarine.com.uy</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo</span></div><h3>Nautika · Fábrica Uruguaya de Salvavidas</h3><p>Fabrica chalecos y aros salvavidas para uso deportivo y profesional, y accesorios náuticos. Hocquart 2159, de lunes a viernes de 9:30 a 18:00.</p><div class="contacts"><a href="tel:+59824032215">☎ 2403 2215</a></div><p class="src">Fuente: <a href="https://www.nautika.com.uy/" target="_blank" rel="noopener">nautika.com.uy</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo</span></div><h3>Mercury Uruguay</h3><p>Representa motores Mercury y Mercruiser y lanchas Sea Ray, Bayliner y Scout. Vende embarcaciones, kayaks, accesorios y trailers, con servicio técnico. Luis Alberto de Herrera 3468.</p><div class="contacts"><a href="tel:22092800">☎ 2209 2800</a><a href="https://wa.me/59899442577" target="_blank" rel="noopener">WhatsApp 099 442 577</a><a href="https://instagram.com/mercuryuruguay" target="_blank" rel="noopener">Instagram @mercuryuruguay</a></div><p class="src">Fuente: <a href="https://mercuryuruguay.com.uy/" target="_blank" rel="noopener">mercuryuruguay.com.uy</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo · Puerto del Buceo</span></div><h3>Bermúdez Náutica</h3><p>Representante oficial de los veleros Bavaria en Uruguay: venta, repuestos, puesta en marcha de barcos nuevos, jarcia, mantenimiento y reparaciones eléctricas.</p><div class="contacts"><a href="tel:+59826288059">☎ 2628 8059</a></div><p class="src">Fuente: <a href="https://www.bavariayachts.com/service/dealers/bermudez-nautica-76/" target="_blank" rel="noopener">Bavaria Yachts, red de representantes</a></p></div>
+      <div class="card"><div class="meta"><span>Montevideo</span></div><h3>Quantum Sails Uruguay</h3><p>Velería: velas nuevas, servicio, reparaciones y recortes. Alejandro Chucarro 1168.</p><div class="contacts"><a href="tel:+59899878918">☎ 099 878 918</a></div><p class="src">Fuente: <a href="https://www.quantumsails.com/en/lofts/quantum-sails-uruguay" target="_blank" rel="noopener">quantumsails.com</a></p></div>
+      <div class="card" style="border-style:dashed">
+        <h3>¿Su empresa forma parte de la náutica uruguaya?</h3>
+        <p>Si vende, fabrica o repara para el mundo náutico, mande el nombre, qué hace, el contacto público y el enlace a su web o Instagram.</p>
+        <div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20sumar%20mi%20empresa%20a%20Tiendas%20y%20servicios%20n%C3%A1uticos%20en%20Docencia%20de%20Vela%20Uruguay.%0ANombre%3A%20%0AQu%C3%A9%20hace%3A%20%0AContacto%20p%C3%BAblico%3A%20%0AWeb%20o%20Instagram%3A%20" target="_blank" rel="noopener">Enviar por WhatsApp</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agenda">
+    <h2>Agenda náutica</h2>
+    <p>Regatas de club, escuelas de verano, aniversarios y los campeonatos principales en un solo calendario. Suscríbase una vez y las fechas nuevas le aparecen solas en el celular.</p>
+    <div class="card" style="border:2px solid var(--sea)">
+      <h3>Suscribirse a la agenda</h3>
+      <div class="contacts">
+        <a id="sub-google" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fnavegauy.github.io%2Fagenda-nautica.ics" target="_blank" rel="noopener">📅 Google Calendar (Android)</a>
+        <a id="sub-webcal" href="webcal://navegauy.github.io/agenda-nautica.ics">🍎 iPhone, Mac y Outlook</a>
+        <a href="agenda-nautica.ics" download>⬇ Descargar .ics</a>
+        <button class="chip" id="copiar-ics" type="button">Copiar enlace</button>
+      </div>
+      <p class="note">Si no abre en la computadora: en Google Calendar elija «Otros calendarios», luego «Desde URL», y pegue <span style="font-family:var(--mono);word-break:break-all">https://navegauy.github.io/agenda-nautica.ics</span></p>
+    </div>
+    <div class="chips" id="tipos" role="group" aria-label="Tipo de actividad"></div>
+    <div class="cards" id="eventos"><p class="note">Cargando la agenda…</p></div>
+    <div id="aconfirmar"></div>
+    <div class="card" style="border-style:dashed">
+      <h3>¿Su club o escuela tiene una actividad?</h3>
+      <p>Cursos, clínicas, bautismos, salidas o regatas de club. Mande la fecha, el lugar y el enlace a la fuente (web, Instagram, aviso de regata) y se publica con su crédito. Más herramientas en el <a href="https://ignacioporrini.github.io/clubes.html">kit para clubes</a>.</p>
+      <div class="contacts"><a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20sumar%20una%20actividad%20a%20la%20Agenda%20N%C3%A1utica.%0AActividad%3A%20%0AFecha%20y%20hora%3A%20%0ALugar%3A%20%0AOrganiza%3A%20%0AFuente%20(enlace)%3A%20" target="_blank" rel="noopener">Enviar por WhatsApp</a></div>
+    </div>
+    <p class="note">Los campeonatos completos están en <a href="https://viramos.com/championships/all" target="_blank" rel="noopener">Viramos</a> y en <a href="https://mateovidal.com/" target="_blank" rel="noopener">Cabo</a>. Esta agenda cubre todo lo demás y enlaza a esas fuentes.</p>
+  </section>
+
+  <footer><a href="./">Navegauy</a> · Mantiene Ignacio Porrini, instructor de vela. Datos revisados el 23/11/2026. ¿Algo cambió o falta? La fuente original siempre tiene la última palabra.</footer>
+</div>
+
+<script>
+const ESCUELAS=[
+ {n:'Yacht Club Uruguayo · Instituto Náutico',d:'Montevideo',z:'Puerto del Buceo',t:'Vela, navegación y actividades náuticas para todas las edades',c:[['tel','+598 99 259 782'],['tel','+598 2622 1221'],['mail','info@ycu.org.uy']],s:['ycu.org.uy/instituto_nautico','https://ycu.org.uy/instituto_nautico']},
+ {n:'Nautilus Yachting Club',d:'Montevideo',z:'Rambla Gandhi 530, Punta Carretas',t:'Náutica, regatas y escuela',c:[['wa','095 661 207'],['mail','nautica@nyc.com.uy'],['tel','+598 2710 1149']],s:['nyc.com.uy','https://nyc.com.uy/']},
+ {n:'Full Sailing (Centro Náutico de Vela Completa)',d:'Montevideo',z:'Club Náutico de Carrasco y Punta Gorda',t:'Cursos de vela y windsurf de 5 clases; alquiler de veleros, tablas, kayaks y SUP',c:[['tel','+598 99 278 878'],['mail','lucia@fullsailing.com.uy']],s:["Guru'Guay",'https://www.guruguay.com/es/alquiler-de-tabla-de-barco/']},
+ {n:'Club La Estacada · Escuela de vela',d:'Montevideo',z:'Punta Carretas',t:'Escuela de vela. Club fundado el 1 de diciembre de 1940.',c:[['tel','2711 9075'],['mail','clubestacada@hotmail.com'],['web','Instagram @clublaestacada','https://instagram.com/clublaestacada'],['web','Facebook de la escuela','https://www.facebook.com/p/Escuela-de-Vela-Club-N%C3%A1utico-La-Estacada-61559034894935/']],s:['clublaestacada.com','https://www.clublaestacada.com/nuestro-club']},
+ {n:'ACAL Náutico Club',d:'Montevideo',z:'ubicación a confirmar',t:'Club náutico, sede de la flota 900 de Snipe',c:[['mail','admclub@clubacal.org.uy']],s:['contacto público del club','']},
+ {n:'Club Náutico de Carrasco y Punta Gorda',d:'Montevideo',z:'Punta Gorda',t:'Sede del Campeonato Nacional Individual de Optimist 2026 (AUDO 6)',c:[],s:['Viramos','https://viramos.com/championships/all']},
+ {n:'Club de los Balleneros',d:'Maldonado',z:'Punta Ballena',t:'Club náutico con bajada y varada de embarcaciones. Sede de la fecha AUDO 4 de Optimist en 2026.',c:[['tel','+598 4257 9254'],['tel','098 852 498']],s:['clubdelosballeneros.com.uy','https://clubdelosballeneros.com.uy/']},
+ {n:'Club Náutico Sudestada',d:'Rocha',z:'La Paloma',t:'Regatas, travesías y clases abiertas de deportes náuticos; regata aniversario cada fin de año.',c:[['web','cnsudestada.uy','https://www.cnsudestada.uy/']],s:['Turismo Rocha','https://turismorocha.gub.uy/eventos/2020/11/21/2do-aniversario-de-sudestada-1986']},
+ {n:'Yacht Club Punta del Este · Escuela',d:'Maldonado',z:'Punta del Este',t:'Escuela de vela del club',c:[['web','Facebook @ycpeescuela','https://www.facebook.com/ycpeescuela/']],s:['Facebook','https://www.facebook.com/ycpeescuela/']},
+ {n:'Yacht Club Paysandú · Escuela de vela',d:'Paysandú',z:'Av. Salto y Costanera',t:'Escuelita de Optimist para niños, cursos certificados para adolescentes y adultos, windsurf. Abierto al público, todo el año.',c:[['wa','096 230 842'],['tel','4722 2059'],['mail','ycpaysandu@gmail.com'],['web','Instagram @ycpaysandu','https://instagram.com/ycpaysandu']],s:['ycp.org.uy','https://ycp.org.uy/vela/escuela-de-vela/']},
+ {n:'Club Yachting y Pesca',d:'Colonia',z:'Puerto de Yates de Colonia del Sacramento',t:'Club náutico del puerto de yates de Colonia. Escuela de vela a confirmar con el club.',c:[['tel','+598 4522 6154']],s:['ANP · Puerto de Yates de Colonia','https://anp.com.uy/en/home/ports/marinas/colonia-marina']},
+ {n:'Club Náutico Puerto Sauce',d:'Colonia',z:'Juan Lacaze',t:'Puerto deportivo con regatas de vela en enero, febrero y abril, y la Regata del Inmigrante en setiembre. Escuela a confirmar con el club.',c:[],s:['MTOP · Puerto José Carbajal','https://www.gub.uy/ministerio-transporte-obras-publicas/comunicacion/publicaciones/puerto-jose-carbajal-sabalero-juan-lacaze-colonia']},
+ {n:'Yacht Club Salto',d:'Salto',z:'Bahía del Durazno, lago de Salto Grande',t:'Club con amarras en el lago de Salto Grande. Escuela de vela a confirmar con el club.',c:[],s:['PredictWind · Yacht Club Salto','https://explore.predictwind.com/es/marinas/uruguay/salto-department/yacht-club-salto']},
+ {n:'Centro de Estudios Náuticos',d:'Montevideo',z:'Presencial y en línea',t:'Clases de cartas náuticas y Brevet; prácticas a demanda si el alumno tiene barco',c:[['wa','099 348 110']],s:['ignacioporrini.github.io','https://ignacioporrini.github.io/nautica.html']}
+];
+const REFS=[
+ {n:'Federación Uruguaya de Yachting a Vela',t:'Federación nacional de la vela, con sede en el edificio del Yacht Club Uruguayo, Puerto del Buceo. Afiliada al Comité Olímpico Uruguayo.',l:[['fedevela@fuyv.org','']],s:['Secretaría Nacional de Deporte, listado de federaciones (2019)','https://www.gub.uy/secretaria-nacional-deporte/comunicacion/publicaciones/listado-federaciones']},
+ {n:'World Sailing (ex ISAF)',t:'Federación internacional de la vela: reglamento de regatas, clases y calendario mundial.',l:[['sailing.org','https://www.sailing.org/']],s:['GAISF','https://gaisf.sport/members/World-Sailing/']},
+ {n:'Asociación Uruguaya de Optimist (AUDO)',t:'Circuito AUDO en distintos clubes del país, con selectivos para mundiales, sudamericanos y panamericanos.',l:[['Campeonatos en Viramos','https://viramos.com/championships/all']],s:['viramos.com','https://viramos.com/championships/all']},
+ {n:'ILCA Uruguay',t:'Asociación de la clase olímpica ILCA (ex Laser): ranking y calendario propios, gestionados en Cabo.',l:[['Instagram @ilcauruguay','https://www.instagram.com/ilcauruguay/']],s:['mateovidal.com','https://mateovidal.com/']},
+ {n:'Snipe en Uruguay',t:'Tres flotas registradas: 506 Yacht Club Uruguayo, 725 Punta del Este y 900 ACAL Náutico Club.',l:[['snipe.org','https://www.snipe.org/']],s:['Lista de flotas de Snipe','https://en.wikipedia.org/wiki/List_of_Snipe_fleets']},
+ {n:'Clase J24',t:'Una de las clases con más campeonatos en el Yacht Club Uruguayo (apertura, otoño, invierno, aniversario y uruguayo).',l:[['j24class.org','https://j24class.org/news/uruguay-is-the-new-south-american-champion/']],s:['viramos.com','https://viramos.com/championships/all']},
+ {n:'AUSAV',t:'Figura con una fecha de regata (14 y 15 de noviembre de 2026) en el calendario del Nautilus. Sitio propio no encontrado.',l:[['Aviso de regata (NYC)','https://nyc.com.uy/web/downloads/AVISO_REGATA_AUSAV.pdf']],s:['Nautilus Yachting Club','https://nyc.com.uy/']}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let dep='Todos';
+const deps=['Todos',...new Set(ESCUELAS.map(e=>e.d))];
+$('#deptos').innerHTML=deps.map(d=>`<button class="chip" aria-pressed="${d===dep}" data-d="${esc(d)}">${esc(d)}</button>`).join('');
+function link(c){const [k,v,u]=c;if(k==='tel')return `<a href="tel:${v.replace(/\s/g,'')}">☎ ${esc(v)}</a>`;if(k==='wa')return `<a href="https://wa.me/598${v.replace(/\D/g,'').replace(/^0/,'')}" target="_blank" rel="noopener">WhatsApp ${esc(v)}</a>`;if(k==='mail')return `<span>${esc(v)}</span>`;return `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(v)}</a>`}
+function src(s){return s[1]?`Fuente: <a href="${esc(s[1])}" target="_blank" rel="noopener">${esc(s[0])}</a>`:`Fuente: ${esc(s[0])}`}
+function render(){const q=$('#q').value.trim().toLowerCase();
+ const list=ESCUELAS.filter(e=>(dep==='Todos'||e.d===dep)&&(!q||(e.n+' '+e.d+' '+e.z+' '+e.t).toLowerCase().includes(q)));
+ $('#lista').innerHTML=list.length?list.map(e=>`<div class="card"><div class="meta"><span>${esc(e.d)}</span>${e.z?`<span>${esc(e.z)}</span>`:''}</div><h3>${esc(e.n)}</h3><p>${esc(e.t)}</p>${e.c.length?`<div class="contacts">${e.c.map(link).join('')}</div>`:'<p class="note">Contacto: consultar en la sede del club.</p>'}<p class="src">${src(e.s)} · revisado 16/11/2026</p></div>`).join(''):'<p class="note">No hay escuelas con ese filtro todavía.</p>';
+ document.querySelectorAll('#deptos .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.d===dep))}
+$('#deptos').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;dep=b.dataset.d;render()});
+$('#q').addEventListener('input',render);
+$('#refs').innerHTML=REFS.map(r=>`<div class="card"><h3>${esc(r.n)}</h3><p>${esc(r.t)}</p>${r.l.length?`<div class="contacts">${r.l.map(x=>x[1]?`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`:`<span>${esc(x[0])}</span>`).join('')}</div>`:''}<p class="src">${src(r.s)}</p></div>`).join('');
+render();
+
+// Agenda náutica: datos en agenda/eventos.json (el mismo archivo genera agenda-nautica.ics)
+(function(){
+ const MES=['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
+ const f=iso=>{const [y,m,d]=iso.split('-').map(Number);return {y,m,d,t:Date.UTC(y,m-1,d)}};
+ const fecha=e=>{const a=f(e.inicio),b=f(e.fin||e.inicio);if(a.t===b.t)return `${a.d} ${MES[a.m-1]} ${a.y}${e.hora?' · '+e.hora:''}`;return a.m===b.m&&a.y===b.y?`${a.d} al ${b.d} ${MES[a.m-1]} ${a.y}`:`${a.d} ${MES[a.m-1]} al ${b.d} ${MES[b.m-1]} ${b.y}`};
+ const gcal=e=>{const z=n=>String(n).padStart(2,'0');let dates;
+  if(e.hora){const [h,mi]=e.hora.split(':').map(Number);const a=f(e.inicio);const ini=new Date(Date.UTC(a.y,a.m-1,a.d,h+3,mi));const fin=new Date(ini.getTime()+(e.duracionHoras||2)*36e5);const g=x=>`${x.getUTCFullYear()}${z(x.getUTCMonth()+1)}${z(x.getUTCDate())}T${z(x.getUTCHours())}${z(x.getUTCMinutes())}00Z`;dates=g(ini)+'/'+g(fin)}
+  else{const b=f(e.fin||e.inicio);const nx=new Date(b.t+864e5);dates=e.inicio.replace(/-/g,'')+'/'+`${nx.getUTCFullYear()}${z(nx.getUTCMonth()+1)}${z(nx.getUTCDate())}`}
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.titulo)+'&dates='+dates+'&location='+encodeURIComponent(e.lugar)+'&details='+encodeURIComponent(e.detalle+'\nFuente: '+e.fuente.url)};
+ let EV=[],tipo='Todas';
+ const hoy=(()=>{const n=new Date();return Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())})();
+ function pintar(){const list=EV.filter(e=>tipo==='Todas'||e.tipo===tipo);
+  $('#eventos').innerHTML=list.length?list.map(e=>{const enCurso=f(e.inicio).t<=hoy;return `<div class="card"${e.tipo==='Aniversario'?' style="border:2px solid var(--buoy)"':''}><div class="meta"><span>${esc(fecha(e))}</span><span>${esc(e.tipo)}</span>${enCurso?'<span class="tag">en curso</span>':''}</div><h3>${esc(e.titulo)}</h3><p>${esc(e.detalle)}</p><p class="note">📍 ${esc(e.lugar)} · Organiza: ${esc(e.organiza)}</p><div class="contacts"><a href="${esc(gcal(e))}" target="_blank" rel="noopener">+ Agregar a mi calendario</a></div><p class="src">Fuente: <a href="${esc(e.fuente.url)}" target="_blank" rel="noopener">${esc(e.fuente.nombre)}</a></p></div>`}).join(''):'<p class="note">No hay actividades de ese tipo por ahora.</p>';
+  document.querySelectorAll('#tipos .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===tipo))}
+ fetch('agenda/eventos.json',{cache:'no-cache'}).then(r=>r.json()).then(d=>{
+  EV=d.eventos.filter(e=>f(e.fin||e.inicio).t>=hoy).sort((a,b)=>a.inicio.localeCompare(b.inicio));
+  const tipos=['Todas',...new Set(EV.map(e=>e.tipo))];
+  $('#tipos').innerHTML=tipos.map(t=>`<button class="chip" data-t="${esc(t)}" aria-pressed="${t===tipo}">${esc(t)}</button>`).join('');
+  $('#aconfirmar').innerHTML=(d.aConfirmar||[]).map(a=>`<div class="card"><div class="meta"><span>fecha a confirmar</span></div><h3>${esc(a.titulo)}</h3><p>${esc(a.nota)}</p><p class="src">Fuente: <a href="${esc(a.fuente.url)}" target="_blank" rel="noopener">${esc(a.fuente.nombre)}</a></p></div>`).join('');
+  pintar()}).catch(()=>{$('#eventos').innerHTML='<p class="note">No se pudo cargar la agenda. Pruebe recargar la página o suscríbase con el botón de arriba.</p>'});
+ $('#tipos').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;tipo=b.dataset.t;pintar()});
+ $('#copiar-ics').addEventListener('click',async e=>{const u='https://navegauy.github.io/agenda-nautica.ics';try{await navigator.clipboard.writeText(u);e.target.textContent='¡Copiado!'}catch(_){prompt('Copie este enlace:',u)}});
+})();
+</script>
+
+</body>
+</html>

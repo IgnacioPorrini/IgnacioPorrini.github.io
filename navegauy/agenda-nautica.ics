@@ -1,0 +1,248 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ignacio Porrini//Agenda Nautica Uruguay//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Agenda Náutica Uruguay
+X-WR-TIMEZONE:America/Montevideo
+X-WR-CALDESC:Regatas de club\, escuelas de verano\, aniversarios y campeona
+ tos de la náutica uruguaya. Cada evento con su fuente.
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:audo6-2026@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261123
+SUMMARY:AUDO 6 · Campeonato Nacional Individual de Optimist
+LOCATION:Club Náutico Carrasco y Punta Gorda\, Montevideo
+DESCRIPTION:Fecha del campeonato nacional individual de Optimist.\nOrganiza
+ : Asociación Uruguaya de Optimist (AUDO)\nFuente: Viramos – https://vir
+ amos.com/audo6-campeonato-nacional-individual-cncpg-2026\nAgenda: https://
+ navegauy.github.io/docencia-de-vela.html#agenda
+URL:https://viramos.com/audo6-campeonato-nacional-individual-cncpg-2026
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:polvarini-2026@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART:20261122T140000Z
+DTEND:20261122T190000Z
+SUMMARY:Regata Eduardo Polvarini · Festival multiclase y handicap
+LOCATION:Nautilus Yachting Club\, Rambla Gandhi 530\, Montevideo
+DESCRIPTION:Primera largada a las 11:00. Clases Optimist\, Pampero\, Laser\
+ , Snipe\, catamarán\, 29er\, windsurf\, windfoil y handicap. Inscripción
+  hasta el viernes 20 a las 20:00 ($750 multiclase\, $1.000 handicap).\nOrg
+ aniza: Nautilus Yachting Club\nFuente: Aviso de regata (PDF) – https://n
+ yc.com.uy/web/downloads/Aviso_Festival_Polvarini_NYC_2026.pdf\nAgenda: htt
+ ps://navegauy.github.io/docencia-de-vela.html#agenda
+URL:https://nyc.com.uy/web/downloads/Aviso_Festival_Polvarini_NYC_2026.pdf
+CATEGORIES:Regata de club
+END:VEVENT
+BEGIN:VEVENT
+UID:prensa-2026@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261128
+DTEND;VALUE=DATE:20261129
+SUMMARY:Regata de la Prensa 2026
+LOCATION:Yacht Club Uruguayo\, Puerto del Buceo\, Montevideo
+DESCRIPTION:Regata organizada por el Yacht Club Uruguayo. Clases y horarios
+  en el aviso del evento.\nOrganiza: Yacht Club Uruguayo\nFuente: Viramos 
+ – https://viramos.com/regata-de-la-prensa-2026-2026\nAgenda: https://nav
+ egauy.github.io/docencia-de-vela.html#agenda
+URL:https://viramos.com/regata-de-la-prensa-2026-2026
+CATEGORIES:Regata de club
+END:VEVENT
+BEGIN:VEVENT
+UID:sudestada-8@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261128
+DTEND;VALUE=DATE:20261130
+SUMMARY:8.ª Regata Aniversario «Martha Nieves» · Club Náutico Sudestad
+ a
+LOCATION:Club Náutico Sudestada\, Bahía Grande\, La Paloma (Rocha)
+DESCRIPTION:Dos jornadas de navegación por el 8.º aniversario del club\, 
+ abiertas a navegantes y clubes amigos.\nOrganiza: Club Náutico Sudestada\
+ nFuente: Visión Marítima – https://www.visionmaritima.com.uy/martha-ni
+ eves/\nAgenda: https://navegauy.github.io/docencia-de-vela.html#agenda
+URL:https://www.visionmaritima.com.uy/martha-nieves/
+CATEGORIES:Aniversario
+END:VEVENT
+BEGIN:VEVENT
+UID:estacada-86@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+SUMMARY:Aniversario 86 · Club La Estacada
+LOCATION:Club La Estacada\, Punta Carretas\, Montevideo
+DESCRIPTION:El club fue fundado el 1 de diciembre de 1940\, junto al faro d
+ e Punta Carretas. Tiene escuela de vela.\nOrganiza: Club La Estacada\nFuen
+ te: clublaestacada.com – https://www.clublaestacada.com/nuestro-club\nAg
+ enda: https://navegauy.github.io/docencia-de-vela.html#agenda
+URL:https://www.clublaestacada.com/nuestro-club
+CATEGORIES:Aniversario
+END:VEVENT
+BEGIN:VEVENT
+UID:audo7-2026@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261205
+DTEND;VALUE=DATE:20261207
+SUMMARY:AUDO 7 · Campeonato Nacional Team Race de Optimist
+LOCATION:Nautilus Yachting Club\, Montevideo
+DESCRIPTION:Campeonato nacional por equipos de Optimist.\nOrganiza: Asociac
+ ión Uruguaya de Optimist (AUDO)\nFuente: Viramos – https://viramos.com/
+ audo-7-campeonato-nacional-team-race-nyc-2026\nAgenda: https://navegauy.gi
+ thub.io/docencia-de-vela.html#agenda
+URL:https://viramos.com/audo-7-campeonato-nacional-team-race-nyc-2026
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:estacada-festival-2026@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+SUMMARY:Regata Festival 86.º Aniversario · Club Náutico y Pesca La Estac
+ ada
+LOCATION:Club Náutico y Pesca La Estacada\, Punta Carretas\, Montevideo
+DESCRIPTION:Regata festival por los 86 años del club. Horario\, recorrido 
+ e inscripción a confirmar con el club (tel. 2711 9075).\nOrganiza: Club N
+ áutico y Pesca La Estacada\nFuente: Afiche oficial del club (Instagram @c
+ lublaestacada) – https://instagram.com/clublaestacada\nAgenda: https://n
+ avegauy.github.io/docencia-de-vela.html#agenda
+URL:https://instagram.com/clublaestacada
+CATEGORIES:Regata de club
+END:VEVENT
+BEGIN:VEVENT
+UID:nyc-colonia-q1@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270116
+SUMMARY:Colonia náutica de verano · 1.ª quincena
+LOCATION:Nautilus Yachting Club\, Montevideo
+DESCRIPTION:De 4 a 11 años. Turnos de 9 a 13\, de 14 a 18 o doble. Consult
+ as: administracion@nyc.com.uy o WhatsApp 098 665 202.\nOrganiza: Nautilus 
+ Yachting Club\nFuente: nyc.com.uy – https://www.nyc.com.uy/colonia-nauti
+ ca-de-verano-2027/\nAgenda: https://navegauy.github.io/docencia-de-vela.ht
+ ml#agenda
+URL:https://www.nyc.com.uy/colonia-nautica-de-verano-2027/
+CATEGORIES:Escuela de verano
+END:VEVENT
+BEGIN:VEVENT
+UID:nyc-colonia-q2@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270130
+SUMMARY:Colonia náutica de verano · 2.ª quincena
+LOCATION:Nautilus Yachting Club\, Montevideo
+DESCRIPTION:De 4 a 11 años. Turnos de 9 a 13\, de 14 a 18 o doble.\nOrgani
+ za: Nautilus Yachting Club\nFuente: nyc.com.uy – https://www.nyc.com.uy/
+ colonia-nautica-de-verano-2027/\nAgenda: https://navegauy.github.io/docenc
+ ia-de-vela.html#agenda
+URL:https://www.nyc.com.uy/colonia-nautica-de-verano-2027/
+CATEGORIES:Escuela de verano
+END:VEVENT
+BEGIN:VEVENT
+UID:rcas-2027-bapde@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270123
+SUMMARY:Rolex Circuito Atlántico Sur 2027 · Regata Buenos Aires – Punta
+  del Este
+LOCATION:Buenos Aires – Punta del Este (llegada a Punta del Este\, Maldon
+ ado)
+DESCRIPTION:Regata de altura que abre el Rolex Circuito Atlántico Sur 2027
+ . Horarios e inscripción en la web del circuito.\nOrganiza: Rolex Circuit
+ o Atlántico Sur (oficina de regatas en el Yacht Club Argentino)\nFuente: 
+ rcas.org.ar – https://rcas.org.ar/\nAgenda: https://navegauy.github.io/d
+ ocencia-de-vela.html#agenda
+URL:https://rcas.org.ar/
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:rcas-2027-pde@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270129
+SUMMARY:Rolex Circuito Atlántico Sur 2027 · Regatas en Punta del Este
+LOCATION:Punta del Este\, Maldonado
+DESCRIPTION:25/01 Circuito La Barra · 26 y 27/01 barlovento-sotavento · 2
+ 8/01 Vuelta Gorriti y entrega de premios.\nOrganiza: Rolex Circuito Atlán
+ tico Sur (oficina de regatas en el Yacht Club Argentino)\nFuente: rcas.org
+ .ar – https://rcas.org.ar/\nAgenda: https://navegauy.github.io/docencia-
+ de-vela.html#agenda
+URL:https://rcas.org.ar/
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:nyc-colonia-q3@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270213
+SUMMARY:Colonia náutica de verano · 3.ª quincena
+LOCATION:Nautilus Yachting Club\, Montevideo
+DESCRIPTION:De 4 a 11 años. Turnos de 9 a 13\, de 14 a 18 o doble.\nOrgani
+ za: Nautilus Yachting Club\nFuente: nyc.com.uy – https://www.nyc.com.uy/
+ colonia-nautica-de-verano-2027/\nAgenda: https://navegauy.github.io/docenc
+ ia-de-vela.html#agenda
+URL:https://www.nyc.com.uy/colonia-nautica-de-verano-2027/
+CATEGORIES:Escuela de verano
+END:VEVENT
+BEGIN:VEVENT
+UID:nyc-colonia-q4@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270227
+SUMMARY:Colonia náutica de verano · 4.ª quincena
+LOCATION:Nautilus Yachting Club\, Montevideo
+DESCRIPTION:De 4 a 11 años. Turnos de 9 a 13\, de 14 a 18 o doble.\nOrgani
+ za: Nautilus Yachting Club\nFuente: nyc.com.uy – https://www.nyc.com.uy/
+ colonia-nautica-de-verano-2027/\nAgenda: https://navegauy.github.io/docenc
+ ia-de-vela.html#agenda
+URL:https://www.nyc.com.uy/colonia-nautica-de-verano-2027/
+CATEGORIES:Escuela de verano
+END:VEVENT
+BEGIN:VEVENT
+UID:snipe-sudam-2027@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270329
+SUMMARY:Campeonato Sudamericano de Snipe 2027
+LOCATION:Yacht Club Uruguayo\, Puerto del Buceo\, Montevideo
+DESCRIPTION:Sudamericano de la clase Snipe en Montevideo.\nOrganiza: Yacht 
+ Club Uruguayo\nFuente: Viramos – https://viramos.com/snipe-south-america
+ n-championship-2027-2027\nAgenda: https://navegauy.github.io/docencia-de-v
+ ela.html#agenda
+URL:https://viramos.com/snipe-south-american-championship-2027-2027
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:meseta-2027@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270326
+DTEND;VALUE=DATE:20270328
+SUMMARY:78.ª Regata Meseta de Artigas
+LOCATION:Paysandú\, río Uruguay
+DESCRIPTION:Regata tradicional del río Uruguay. Recorrido\, clases e inscr
+ ipción en la web de la regata.\nOrganiza: Yacht Club Paysandú\nFuente: r
+ egatameseta.uy – https://www.regatameseta.uy/\nAgenda: https://navegauy.
+ github.io/docencia-de-vela.html#agenda
+URL:https://www.regatameseta.uy/
+CATEGORIES:Regata de club
+END:VEVENT
+BEGIN:VEVENT
+UID:sail-mvd-2027@ignacioporrini.github.io
+DTSTAMP:20261123T230929Z
+DTSTART;VALUE=DATE:20270810
+DTEND;VALUE=DATE:20270815
+SUMMARY:Sail Montevideo 2027 · Velas Latinoamérica
+LOCATION:Puerto de Montevideo
+DESCRIPTION:Encuentro de grandes veleros escuela de las armadas de América
+ . Declarado de interés nacional.\nOrganiza: Armada Nacional\nFuente: Reso
+ lución de Presidencia (PDF) – https://medios.presidencia.gub.uy/legal/2
+ 026/resoluciones/09/mdn_336.pdf\nAgenda: https://navegauy.github.io/docenc
+ ia-de-vela.html#agenda
+URL:https://medios.presidencia.gub.uy/legal/2026/resoluciones/09/mdn_336.pd
+ f
+CATEGORIES:Evento
+END:VEVENT
+END:VCALENDAR
