@@ -494,6 +494,18 @@ footer a{color:var(--c)}
 .gc-sec .gc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .gc-sec .gc-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.gc-sec{display:none}}
+.cc-sec .cc-two{display:flex;flex-wrap:wrap;gap:12px}
+.cc-sec .cc-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.cc-sec .cc-ctl input[type=color]{width:100%;min-height:48px;padding:2px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer}
+.cc-sec .cc-ctl input:focus-visible,.cc-sec .tm-rs:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.cc-sec .cc-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.cc-sec .cc-prev{border-radius:14px;border:2px solid var(--line);padding:16px;margin:8px 0;overflow-wrap:anywhere}
+.cc-sec .cc-big{font-size:1.9rem;font-weight:800;line-height:1.15}
+.cc-sec .cc-small{font-size:1rem;margin-top:6px}
+.cc-sec .cc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.cc-sec .cc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.cc-sec .cc-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.cc-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -741,6 +753,7 @@ footer a{color:var(--c)}
     <a href="#cortar-pliego">Cortar el pliego</a>
     <a href="#medir-lapiz">Medir con el lápiz</a>
     <a href="#grilla-columnas">Grilla de columnas</a>
+    <a href="#contraste-cartel">Contraste del cartel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2530,6 +2543,27 @@ footer a{color:var(--c)}
     <div class="gc-sw"><svg id="gc-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala de la hoja con el margen, las columnas y las filas"></svg></div>
     <ul class="gc-res" id="gc-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: con regla, marcá en el borde de arriba y de abajo de la hoja las posiciones que indica la lista (siempre desde el borde izquierdo) y uní cada par con un trazo muy suave de lápiz duro; hacé lo mismo con las filas desde el borde de arriba. Un título puede ocupar dos o tres columnas juntas y una foto, una sola; lo importante es que todo arranque y termine sobre una guía. El espacio entre filas es el mismo que entre columnas. Es un cálculo de geometría: las medidas son exactas, el trazado depende de la regla y del pulso.</div>
+  </div>
+</section>
+
+<section id="contraste-cartel" class="cc-sec">
+  <h2>Contraste del cartel: ¿se lee desde lejos?</h2>
+  <p style="color:var(--muted)">Un cartel lindo que no se lee no sirve. Elegí el color de la letra y el del fondo: la herramienta calcula la relación de contraste con la fórmula de luminancia de las pautas de accesibilidad WCAG 2.x y te dice para qué tamaño de letra alcanza. Sirve desde el celular, con los dedos, mientras se prepara el cartel.</p>
+  <div class="card">
+    <div class="cc-two">
+      <label class="cc-ctl" for="cc-fg"><span>Color de la letra</span><input id="cc-fg" type="color" value="#14161a"></label>
+      <label class="cc-ctl" for="cc-bg"><span>Color del fondo</span><input id="cc-bg" type="color" value="#f4d03f"></label>
+    </div>
+    <div class="cc-btns">
+      <button type="button" class="tm-rs" id="cc-sw">Intercambiar letra y fondo</button>
+      <button type="button" class="tm-rs" id="cc-ej">Ejemplo al azar</button>
+    </div>
+    <div class="cc-prev" id="cc-prev" role="img" aria-label="Muestra de texto grande y chico con los colores elegidos">
+      <div class="cc-big">Taller de plástica</div>
+      <div class="cc-small">Sábado a las 15 h, traer una hoja y un lápiz blando.</div>
+    </div>
+    <ul class="cc-res" id="cc-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: probá la combinación en la pantalla antes de pintar el cartel. Ojo con que la pantalla y la témpera no muestran igual el color: si el resultado queda justo, elegí un fondo más claro o una letra más oscura. Un contraste alto ayuda a leer de lejos y también a quien ve poco. Fórmula y niveles: <a href="https://www.w3.org/TR/WCAG21/#contrast-minimum" target="_blank" rel="noopener">pautas WCAG 2.1, criterio de contraste mínimo</a>.</div>
   </div>
 </section>
 
@@ -6915,6 +6949,37 @@ footer a{color:var(--c)}
   }
   ["gc-w","gc-h"].forEach(function(i){$(i).addEventListener("input",function(){$("gc-p").value="otro"})});
   IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-contraste-cartel-v1",$=function(i){return document.getElementById(i)};
+  var HEX=/^#[0-9a-fA-F]{6}$/;
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&HEX.test(t.fg||""))$("cc-fg").value=t.fg;if(t&&HEX.test(t.bg||""))$("cc-bg").value=t.bg}catch(e){}
+  function lum(h){var c=[1,3,5].map(function(i){var v=parseInt(h.substr(i,2),16)/255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)});return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]}
+  function setTxt(ul,rows){while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];li.appendChild(a);li.appendChild(b);ul.appendChild(li)})}
+  function draw(){
+    var fg=$("cc-fg").value,bg=$("cc-bg").value,p=$("cc-prev");
+    p.style.color=fg;p.style.background=bg;
+    var a=lum(fg),b=lum(bg),r=(Math.max(a,b)+0.05)/(Math.min(a,b)+0.05);
+    var rs=(Math.round(r*100)/100).toFixed(2).replace(".",",");
+    var v=r>=7?"Muy bueno: se lee bien de lejos y con luz pobre":r>=4.5?"Bueno: sirve para texto común":r>=3?"Justo: solo para letras grandes y gruesas (títulos)":"Insuficiente: se pierde, cambiá algún color";
+    setTxt($("cc-res"),[
+      ["Relación de contraste",rs+" a 1"],
+      ["Veredicto",v],
+      ["Texto común (mínimo 4,5)",r>=4.5?"Cumple":"No cumple"],
+      ["Letra grande y gruesa (mínimo 3)",r>=3?"Cumple":"No cumple"],
+      ["Nivel alto (mínimo 7)",r>=7?"Cumple":"No cumple"]
+    ]);
+    try{localStorage.setItem(KEY,JSON.stringify({fg:fg,bg:bg}))}catch(e2){}
+  }
+  var EJ=[["#14161a","#f4d03f"],["#ffffff","#1f4e9c"],["#ffffff","#e8743b"],["#8a8a8a","#bdbdbd"],["#2fbf71","#ffffff"],["#7a1f1f","#f7efe0"],["#ffe14d","#ffffff"],["#ffffff","#2a2a72"]];
+  var ult=-1;
+  $("cc-sw").addEventListener("click",function(){var x=$("cc-fg").value;$("cc-fg").value=$("cc-bg").value;$("cc-bg").value=x;draw()});
+  $("cc-ej").addEventListener("click",function(){var i;do{i=Math.floor(Math.random()*EJ.length)}while(i===ult);ult=i;$("cc-fg").value=EJ[i][0];$("cc-bg").value=EJ[i][1];draw()});
+  ["cc-fg","cc-bg"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
 </script>
