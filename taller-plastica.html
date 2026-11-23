@@ -687,6 +687,18 @@ footer a{color:var(--c)}
 .pa-sec .pa-stats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;padding:0;list-style:none}
 .pa-sec .pa-stats li{padding:2px 12px;border-radius:99px;border:2px solid var(--line)}
 @media print{.pa-sec{display:none}}
+.mg-sec .mg-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px;flex:1 1 130px}
+.mg-sec input[type=number]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:140px;width:100%}
+.mg-sec input:focus-visible,.mg-sec button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.mg-sec .mg-two{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.mg-sec .mg-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.mg-sec .mg-pre button{min-height:44px;min-width:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.mg-sec .mg-rows{list-style:none;padding:0;margin:10px 0;display:grid;gap:8px}
+.mg-sec .mg-rows li{box-sizing:border-box;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:8px 12px;border-radius:12px;border:2px solid var(--line)}
+.mg-sec .mg-rows label{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-weight:700;flex:1 1 200px}
+.mg-sec .mg-rows input{max-width:90px}
+.mg-sec .mg-tot{font-weight:700;text-align:right;overflow-wrap:anywhere}
+@media print{.mg-sec{display:none}}
 </style>
 </head>
 <body>
@@ -778,6 +790,7 @@ footer a{color:var(--c)}
     <a href="#contraste-cartel">Contraste del cartel</a>
     <a href="#pintura-mural">Cuánta pintura necesito</a>
     <a href="#diluir-pintura">Diluir la pintura por partes</a>
+    <a href="#materiales-grupo">Materiales para el grupo</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2630,6 +2643,23 @@ footer a{color:var(--c)}
     <div class="dl-sw"><svg id="dl-svg" viewBox="0 0 200 80" role="img" aria-label="Barra con la proporción de pintura, agua y adhesivo"></svg></div>
     <ul class="dl-res" id="dl-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: medí siempre con el mismo vasito o tapa, porque lo que importa es la proporción y no la unidad. Agregá el agua de a poco y probá el color en una hoja: al secarse, la pintura aguada se ve más clara. Una mezcla preparada se usa en el día. Los valores quedan guardados en este celular.</div>
+  </div>
+</section>
+
+<section id="materiales-grupo" class="mg-sec">
+  <h2>Materiales para el grupo</h2>
+  <p style="color:var(--muted)">Para preparar una clase con varias personas: cargá cuántas van a venir y cuánto usa cada una, y la herramienta calcula lo que hay que llevar, con una reserva por si falta o se rompe algo. Las cantidades por persona son de ejemplo: cambialas según la actividad y la edad.</p>
+  <div class="card">
+    <div class="mg-two">
+      <label class="mg-ctl" for="mg-n"><span>Personas en el grupo</span><input id="mg-n" type="number" inputmode="numeric" min="1" max="200" step="1" value="12"></label>
+      <label class="mg-ctl" for="mg-r"><span>Reserva en %</span><input id="mg-r" type="number" inputmode="numeric" min="0" max="100" step="5" value="10"></label>
+    </div>
+    <div class="mg-pre" role="group" aria-label="Tamaños de grupo habituales">
+      <button type="button" data-n="6">6</button><button type="button" data-n="10">10</button><button type="button" data-n="15">15</button><button type="button" data-n="20">20</button><button type="button" data-n="30">30</button>
+    </div>
+    <ul class="mg-rows" id="mg-rows" aria-label="Materiales y cantidad por persona"></ul>
+    <p class="mg-tot" id="mg-sum" aria-live="polite"></p>
+    <div class="tip">Cómo usarlo: la cantidad por persona admite decimales; 0,5 pinceles por persona significa uno cada dos. El resultado se redondea siempre hacia arriba, porque no se puede llevar medio pincel. En la témpera, la cuenta es en mililitros y se muestra también en litros cuando pasa de uno. Todo queda guardado en este celular y no se envía a ningún lado.</div>
   </div>
 </section>
 
@@ -7106,6 +7136,38 @@ footer a{color:var(--c)}
   }
   IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
+})();
+/* Materiales para el grupo */
+(function(){
+  var KEY="tp-materiales-grupo-v1",$=function(i){return document.getElementById(i)};
+  var ITEMS=[["Hojas blancas","hojas",3],["Témpera (por color, en total)","ml",20],["Pinceles","pinceles",0.5],["Vasos o frascos con agua","vasos",0.5],["Trapos o toallas de papel","trapos",0.5],["Barras de adhesivo","barras",0.34],["Lápices o crayones (cajas)","cajas",0.25]];
+  var st={n:"12",r:"10",q:[]};
+  ITEMS.forEach(function(it){st.q.push(String(it[2]).replace(".",","))});
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    if(typeof t.n==="string"&&t.n.length<6)st.n=t.n;if(typeof t.r==="string"&&t.r.length<6)st.r=t.r;
+    if(Array.isArray(t.q))ITEMS.forEach(function(x,k){if(typeof t.q[k]==="string"&&t.q[k].length<8)st.q[k]=t.q[k]})}}catch(e){}
+  $("mg-n").value=st.n;$("mg-r").value=st.r;
+  function pn(v,lo,hi,d){var x=parseFloat(String(v).replace(",","."));if(!isFinite(x))return d;return Math.min(hi,Math.max(lo,x))}
+  function f(n,d){return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace(".",",")}
+  var ul=$("mg-rows"),outs=[],ins=[];
+  ITEMS.forEach(function(it,k){
+    var li=document.createElement("li"),lb=document.createElement("label"),sp=document.createElement("span"),inp=document.createElement("input"),un=document.createElement("span"),o=document.createElement("b");
+    sp.textContent=it[0]+": ";inp.type="text";inp.inputMode="decimal";inp.id="mg-q"+k;inp.value=st.q[k];inp.setAttribute("aria-label","Cantidad por persona de "+it[0]);
+    inp.style.cssText="min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit";
+    un.textContent=it[1]+" por persona";lb.appendChild(sp);lb.appendChild(inp);lb.appendChild(un);o.className="mg-out";o.setAttribute("aria-live","polite");
+    li.appendChild(lb);li.appendChild(o);ul.appendChild(li);outs.push(o);ins.push(inp);inp.addEventListener("input",calc)});
+  function calc(){
+    var n=Math.round(pn($("mg-n").value,1,200,12)),r=pn($("mg-r").value,0,100,10),sum=0;
+    ITEMS.forEach(function(it,k){
+      var q=pn(ins[k].value,0,500,0),base=n*q,tot=Math.ceil(base*(1+r/100)-1e-9);
+      var txt=tot+" "+it[1];if(it[1]==="ml"&&tot>=1000)txt+=" ("+f(tot/1000,2)+" l)";
+      outs[k].textContent=txt;sum+=tot>0?1:0});
+    $("mg-sum").textContent="Para "+n+(n===1?" persona":" personas")+" con "+f(r,0)+" % de reserva: "+sum+" materiales en la lista.";
+    var o={n:$("mg-n").value,r:$("mg-r").value,q:ins.map(function(i){return i.value})};try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ["mg-n","mg-r"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  Array.prototype.forEach.call(document.querySelectorAll("#materiales-grupo .mg-pre button"),function(b){b.addEventListener("click",function(){$("mg-n").value=b.getAttribute("data-n");calc()})});
+  calc();
 })();
 </script>
 </body>
