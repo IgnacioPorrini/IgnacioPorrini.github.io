@@ -126,6 +126,33 @@
    }
   },
   {
+   "id": "rcas-2027-bapde",
+   "titulo": "Rolex Circuito Atlántico Sur 2027 · Regata Buenos Aires – Punta del Este",
+   "inicio": "2027-01-22",
+   "lugar": "Buenos Aires – Punta del Este (llegada a Punta del Este, Maldonado)",
+   "tipo": "Campeonato",
+   "organiza": "Rolex Circuito Atlántico Sur (oficina de regatas en el Yacht Club Argentino)",
+   "detalle": "Regata de altura que abre el Rolex Circuito Atlántico Sur 2027. Horarios e inscripción en la web del circuito.",
+   "fuente": {
+    "nombre": "rcas.org.ar",
+    "url": "https://rcas.org.ar/"
+   }
+  },
+  {
+   "id": "rcas-2027-pde",
+   "titulo": "Rolex Circuito Atlántico Sur 2027 · Regatas en Punta del Este",
+   "inicio": "2027-01-25",
+   "fin": "2027-01-28",
+   "lugar": "Punta del Este, Maldonado",
+   "tipo": "Campeonato",
+   "organiza": "Rolex Circuito Atlántico Sur (oficina de regatas en el Yacht Club Argentino)",
+   "detalle": "25/01 Circuito La Barra · 26 y 27/01 barlovento-sotavento · 28/01 Vuelta Gorriti y entrega de premios.",
+   "fuente": {
+    "nombre": "rcas.org.ar",
+    "url": "https://rcas.org.ar/"
+   }
+  },
+  {
    "id": "nyc-colonia-q3",
    "titulo": "Colonia náutica de verano · 3.ª quincena",
    "inicio": "2027-02-01",
@@ -165,6 +192,20 @@
    "fuente": {
     "nombre": "Viramos",
     "url": "https://viramos.com/snipe-south-american-championship-2027-2027"
+   }
+  },
+  {
+   "id": "meseta-2027",
+   "titulo": "78.ª Regata Meseta de Artigas",
+   "inicio": "2027-03-26",
+   "fin": "2027-03-27",
+   "lugar": "Paysandú, río Uruguay",
+   "tipo": "Regata de club",
+   "organiza": "Yacht Club Paysandú",
+   "detalle": "Regata tradicional del río Uruguay. Recorrido, clases e inscripción en la web de la regata.",
+   "fuente": {
+    "nombre": "regatameseta.uy",
+    "url": "https://www.regatameseta.uy/"
    }
   },
   {

@@ -11,7 +11,7 @@ REFRESH-INTERVAL;VALUE=DURATION:P1D
 X-PUBLISHED-TTL:P1D
 BEGIN:VEVENT
 UID:audo6-2026@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261114
 DTEND;VALUE=DATE:20261123
 SUMMARY:AUDO 6 · Campeonato Nacional Individual de Optimist
@@ -25,7 +25,7 @@ CATEGORIES:Campeonato
 END:VEVENT
 BEGIN:VEVENT
 UID:polvarini-2026@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART:20261122T140000Z
 DTEND:20261122T190000Z
 SUMMARY:Regata Eduardo Polvarini · Festival multiclase y handicap
@@ -41,7 +41,7 @@ CATEGORIES:Regata de club
 END:VEVENT
 BEGIN:VEVENT
 UID:prensa-2026@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261128
 DTEND;VALUE=DATE:20261129
 SUMMARY:Regata de la Prensa 2026
@@ -55,7 +55,7 @@ CATEGORIES:Regata de club
 END:VEVENT
 BEGIN:VEVENT
 UID:sudestada-8@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261128
 DTEND;VALUE=DATE:20261130
 SUMMARY:8.ª Regata Aniversario «Martha Nieves» · Club Náutico Sudestad
@@ -71,7 +71,7 @@ CATEGORIES:Aniversario
 END:VEVENT
 BEGIN:VEVENT
 UID:estacada-86@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261201
 DTEND;VALUE=DATE:20261202
 SUMMARY:Aniversario 86 · Club La Estacada
@@ -85,7 +85,7 @@ CATEGORIES:Aniversario
 END:VEVENT
 BEGIN:VEVENT
 UID:audo7-2026@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261205
 DTEND;VALUE=DATE:20261207
 SUMMARY:AUDO 7 · Campeonato Nacional Team Race de Optimist
@@ -99,7 +99,7 @@ CATEGORIES:Campeonato
 END:VEVENT
 BEGIN:VEVENT
 UID:estacada-festival-2026@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20261213
 DTEND;VALUE=DATE:20261214
 SUMMARY:Regata Festival 86.º Aniversario · Club Náutico y Pesca La Estac
@@ -115,7 +115,7 @@ CATEGORIES:Regata de club
 END:VEVENT
 BEGIN:VEVENT
 UID:nyc-colonia-q1@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270104
 DTEND;VALUE=DATE:20270116
 SUMMARY:Colonia náutica de verano · 1.ª quincena
@@ -130,7 +130,7 @@ CATEGORIES:Escuela de verano
 END:VEVENT
 BEGIN:VEVENT
 UID:nyc-colonia-q2@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270118
 DTEND;VALUE=DATE:20270130
 SUMMARY:Colonia náutica de verano · 2.ª quincena
@@ -143,8 +143,40 @@ URL:https://www.nyc.com.uy/colonia-nautica-de-verano-2027/
 CATEGORIES:Escuela de verano
 END:VEVENT
 BEGIN:VEVENT
+UID:rcas-2027-bapde@ignacioporrini.github.io
+DTSTAMP:20261123T214504Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270123
+SUMMARY:Rolex Circuito Atlántico Sur 2027 · Regata Buenos Aires – Punta
+  del Este
+LOCATION:Buenos Aires – Punta del Este (llegada a Punta del Este\, Maldon
+ ado)
+DESCRIPTION:Regata de altura que abre el Rolex Circuito Atlántico Sur 2027
+ . Horarios e inscripción en la web del circuito.\nOrganiza: Rolex Circuit
+ o Atlántico Sur (oficina de regatas en el Yacht Club Argentino)\nFuente: 
+ rcas.org.ar – https://rcas.org.ar/\nAgenda: https://ignacioporrini.githu
+ b.io/docencia-de-vela.html#agenda
+URL:https://rcas.org.ar/
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
+UID:rcas-2027-pde@ignacioporrini.github.io
+DTSTAMP:20261123T214504Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270129
+SUMMARY:Rolex Circuito Atlántico Sur 2027 · Regatas en Punta del Este
+LOCATION:Punta del Este\, Maldonado
+DESCRIPTION:25/01 Circuito La Barra · 26 y 27/01 barlovento-sotavento · 2
+ 8/01 Vuelta Gorriti y entrega de premios.\nOrganiza: Rolex Circuito Atlán
+ tico Sur (oficina de regatas en el Yacht Club Argentino)\nFuente: rcas.org
+ .ar – https://rcas.org.ar/\nAgenda: https://ignacioporrini.github.io/doc
+ encia-de-vela.html#agenda
+URL:https://rcas.org.ar/
+CATEGORIES:Campeonato
+END:VEVENT
+BEGIN:VEVENT
 UID:nyc-colonia-q3@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270201
 DTEND;VALUE=DATE:20270213
 SUMMARY:Colonia náutica de verano · 3.ª quincena
@@ -158,7 +190,7 @@ CATEGORIES:Escuela de verano
 END:VEVENT
 BEGIN:VEVENT
 UID:nyc-colonia-q4@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270215
 DTEND;VALUE=DATE:20270227
 SUMMARY:Colonia náutica de verano · 4.ª quincena
@@ -172,7 +204,7 @@ CATEGORIES:Escuela de verano
 END:VEVENT
 BEGIN:VEVENT
 UID:snipe-sudam-2027@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270322
 DTEND;VALUE=DATE:20270329
 SUMMARY:Campeonato Sudamericano de Snipe 2027
@@ -185,8 +217,22 @@ URL:https://viramos.com/snipe-south-american-championship-2027-2027
 CATEGORIES:Campeonato
 END:VEVENT
 BEGIN:VEVENT
+UID:meseta-2027@ignacioporrini.github.io
+DTSTAMP:20261123T214504Z
+DTSTART;VALUE=DATE:20270326
+DTEND;VALUE=DATE:20270328
+SUMMARY:78.ª Regata Meseta de Artigas
+LOCATION:Paysandú\, río Uruguay
+DESCRIPTION:Regata tradicional del río Uruguay. Recorrido\, clases e inscr
+ ipción en la web de la regata.\nOrganiza: Yacht Club Paysandú\nFuente: r
+ egatameseta.uy – https://www.regatameseta.uy/\nAgenda: https://ignaciopo
+ rrini.github.io/docencia-de-vela.html#agenda
+URL:https://www.regatameseta.uy/
+CATEGORIES:Regata de club
+END:VEVENT
+BEGIN:VEVENT
 UID:sail-mvd-2027@ignacioporrini.github.io
-DTSTAMP:20261123T125558Z
+DTSTAMP:20261123T214504Z
 DTSTART;VALUE=DATE:20270810
 DTEND;VALUE=DATE:20270815
 SUMMARY:Sail Montevideo 2027 · Velas Latinoamérica
