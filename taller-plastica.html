@@ -434,6 +434,18 @@ footer a{color:var(--c)}
 .dc-sec .dc-res li b{white-space:nowrap}
 .dc-sec .dc-res li{padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 @media print{.dc-sec{display:none}}
+.dl-sec .dl-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.dl-sec .dl-ctl input[type=range]{width:100%;min-height:44px;accent-color:#2fbf71}
+.dl-sec .dl-ctl input[type=number]{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:140px}
+.dl-sec .dl-ctl input:focus-visible,.dl-sec .dl-pre button:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.dl-sec .dl-pre{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.dl-sec .dl-pre button{min-height:44px;min-width:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.dl-sec .dl-sw{max-width:360px;margin:8px auto}
+.dl-sec .dl-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.dl-sec .dl-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.dl-sec .dl-res li b{white-space:nowrap}
+.dl-sec .dl-res li{flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+@media print{.dl-sec{display:none}}
 .rc-sec .rc-sw{max-width:420px;margin:8px auto}
 .rc-sec .rc-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .rc-sec input[type=range]{width:100%;min-height:44px}
@@ -661,6 +673,7 @@ footer a{color:var(--c)}
     <a href="#horizonte">Línea del horizonte</a>
     <a href="#reparto-clase">Reparto del tiempo</a>
     <a href="#dividir-circulo">Dividir el círculo</a>
+    <a href="#dividir-linea">Dividir una línea</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2316,6 +2329,25 @@ footer a{color:var(--c)}
     <div class="dc-sw"><svg id="dc-svg" viewBox="0 0 200 200" role="img" aria-label="Círculo dividido en partes iguales con el polígono regular inscrito"></svg></div>
     <ul class="dc-res" id="dc-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: marcá el centro, trazá el círculo con el compás y andá marcando sobre él el ángulo central con el transportador (360 grados dividido la cantidad de partes). La cuerda es el largo de la recta que une dos marcas vecinas: 2 por el radio por el seno de 180 grados sobre la cantidad de partes. Con 6 partes la cuerda es igual al radio, por eso el hexágono se hace con el compás sin cambiar la abertura. Con 5 o 7 partes la abertura no es redonda: el transportador da un resultado más prolijo. Las cuentas son matemática estándar, no una receta de ningún autor; los redondeos del trazo a mano alzada son parte del encanto.</div>
+  </div>
+</section>
+
+<section id="dividir-linea" class="dl-sec">
+  <h2>Dividir una línea</h2>
+  <p style="color:var(--muted)">Elegí el largo de una línea y en cuántas partes iguales querés repartirla (para una cuadrícula, un friso o un reparto de columnas). Te da cada cuánto marcar y, si el resultado no es redondo, el método de la línea auxiliar inclinada, que reparte sin hacer cuentas con decimales.</p>
+  <div class="card">
+    <label class="dl-ctl" for="dl-l"><span>Largo de la línea en cm</span>
+      <input id="dl-l" type="number" inputmode="decimal" min="1" max="100" step="0.5" value="20">
+    </label>
+    <label class="dl-ctl" for="dl-n"><span>Partes iguales: <span id="dl-n-v">7</span></span>
+      <input id="dl-n" type="range" min="2" max="20" step="1" value="7">
+    </label>
+    <div class="dl-pre" role="group" aria-label="Cantidades habituales">
+      <button type="button" data-n="3">3</button><button type="button" data-n="5">5</button><button type="button" data-n="7">7</button><button type="button" data-n="9">9</button><button type="button" data-n="12">12</button>
+    </div>
+    <div class="dl-sw"><svg id="dl-svg" viewBox="0 0 200 170" role="img" aria-label="Línea dividida en partes iguales con una línea auxiliar inclinada y rectas paralelas"></svg></div>
+    <ul class="dl-res" id="dl-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: dibujá la línea AB. Desde A trazá otra línea inclinada, más o menos a 45 grados, y marcá sobre ella tantos tramos iguales como partes quieras, con cualquier medida cómoda (1 cm, por ejemplo). Unite la última marca con B y trazá paralelas a esa recta desde cada marca: cortan a AB en partes iguales. Es el teorema de Tales, matemática estándar y no una receta de ningún autor. Con la regla común conviene medir directo cuando el resultado es redondo, y usar la línea auxiliar cuando sale algo como 2,86 cm.</div>
   </div>
 </section>
 
@@ -6413,6 +6445,45 @@ footer a{color:var(--c)}
   }
   ["dc-n","dc-r"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   Array.prototype.forEach.call(document.querySelectorAll("#dividir-circulo .dc-pre button"),function(b){b.addEventListener("click",function(){$("dc-n").value=b.getAttribute("data-n");draw()})});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-dividir-linea-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    var n0=parseInt(t.n,10),l0=parseFloat(t.l);
+    if(n0>=2&&n0<=20)$("dl-n").value=n0;
+    if(isFinite(l0)&&l0>=1&&l0<=100)$("dl-l").value=l0}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function draw(){
+    var n=parseInt($("dl-n").value,10),L=parseFloat($("dl-l").value);
+    $("dl-n-v").textContent=n;
+    if(!isFinite(L)||L<1)L=1;if(L>100)L=100;
+    var svg=$("dl-svg"),ax=20,ay=150,bx=180,i;
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var dx=100,dy=-100,px=[],py=[];
+    for(i=0;i<=n;i++){px.push(ax+dx*i/n);py.push(ay+dy*i/n)}
+    svg.appendChild(el("line",{x1:ax,y1:ay,x2:px[n],y2:py[n],stroke:"#868e96","stroke-width":1.5}));
+    svg.appendChild(el("line",{x1:px[n],y1:py[n],x2:bx,y2:ay,stroke:"#e9ecef","stroke-width":1.5}));
+    for(i=1;i<n;i++){var mx=ax+(bx-ax)*i/n;
+      svg.appendChild(el("line",{x1:px[i].toFixed(1),y1:py[i].toFixed(1),x2:mx.toFixed(1),y2:ay,stroke:"#495057","stroke-width":1,"stroke-dasharray":"3 3"}));
+      svg.appendChild(el("circle",{cx:px[i].toFixed(1),cy:py[i].toFixed(1),r:2,fill:"#868e96"}))}
+    svg.appendChild(el("line",{x1:ax,y1:ay,x2:bx,y2:ay,stroke:"#2fbf71","stroke-width":3,"stroke-linecap":"round"}));
+    for(i=0;i<=n;i++){var x=ax+(bx-ax)*i/n;svg.appendChild(el("circle",{cx:x.toFixed(1),cy:ay,r:3,fill:"#2fbf71"}))}
+    var tA=el("text",{x:ax,y:166,"text-anchor":"middle",fill:"#e9ecef","font-size":10});tA.textContent="A";svg.appendChild(tA);
+    var tB=el("text",{x:bx,y:166,"text-anchor":"middle",fill:"#e9ecef","font-size":10});tB.textContent="B";svg.appendChild(tB);
+    var d=L/n,marks=[],lim=Math.min(n-1,8);
+    for(i=1;i<=lim;i++)marks.push(f(d*i,2));
+    var m=marks.join(" · ")+(n-1>lim?" …":"")+" cm";
+    var rows=[["Cada parte mide",f(d,2)+" cm"],["Marcas desde A",m],["Línea auxiliar: tramos de 1 cm",n+" tramos (largo total "+n+" cm)"],["Se une la marca "+n+" con",'el extremo B']];
+    var ul=$("dl-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=x[0];b.textContent=x[1];b.style.textAlign="right";li.appendChild(a);li.appendChild(b);ul.appendChild(li)});
+    try{localStorage.setItem(KEY,JSON.stringify({n:n,l:L}))}catch(e2){}
+  }
+  ["dl-n","dl-l"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  Array.prototype.forEach.call(document.querySelectorAll("#dividir-linea .dl-pre button"),function(b){b.addEventListener("click",function(){$("dl-n").value=b.getAttribute("data-n");draw()})});
   draw();
 })();
 </script>
