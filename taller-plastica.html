@@ -459,6 +459,18 @@ footer a{color:var(--c)}
 .if-sec .if-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .if-sec .if-res li b{text-align:right}
 @media print{.if-sec{display:none}}
+.cp-sec .cp-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.cp-sec .cp-ctl input[type=number],.cp-sec .cp-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.cp-sec .cp-ctl input[type=number]{max-width:160px}
+.cp-sec .cp-two{display:flex;flex-wrap:wrap;gap:12px}
+.cp-sec .cp-two .cp-ctl{flex:1 1 130px}
+.cp-sec .cp-ctl input:focus-visible,.cp-sec .cp-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.cp-sec .cp-sw{max-width:360px;margin:8px auto}
+.cp-sec .cp-sw svg{display:block;width:100%;height:auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.cp-sec .cp-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.cp-sec .cp-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.cp-sec .cp-res li b{text-align:right}
+@media print{.cp-sec{display:none}}
 .cr-sec .cr-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
 .cr-sec .cr-ctl input[type=text],.cr-sec .cr-ctl input[type=number],.cr-sec .cr-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
 .cr-sec .cr-ctl input[type=number]{max-width:140px}
@@ -703,6 +715,7 @@ footer a{color:var(--c)}
     <a href="#dividir-linea">Dividir una línea</a>
     <a href="#cartel">Cartel: tamaño de letra</a>
     <a href="#imprimir-foto">Imprimir la foto de referencia</a>
+    <a href="#cortar-pliego">Cortar el pliego</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2424,6 +2437,30 @@ footer a{color:var(--c)}
     <div class="if-sw"><svg id="if-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala de la hoja y de la foto ajustada con margen de 1 centímetro"></svg></div>
     <ul class="if-res" id="if-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: la hoja se gira sola para acompañar la forma de la foto y se deja 1 cm de margen. Las cuentas son las estándar: una pulgada son 2,54 cm y los puntos por pulgada son píxeles divididos por pulgadas. Para una referencia de dibujo alcanza con 150, porque lo que importa son las masas y los valores, no el detalle fino. Si la foto es muy chica, pedí una versión más grande al sacarla o al descargarla, en lugar de estirarla.</div>
+  </div>
+</section>
+
+<section id="cortar-pliego" class="cp-sec">
+  <h2>Cortar el pliego</h2>
+  <p style="color:var(--muted)">Antes de comprar cartulina o papel para toda la clase, conviene saber cuántas piezas salen de un pliego. Elegí el pliego, cargá la medida de la pieza y el espacio que se pierde en cada corte: te dice cuántas salen, cuánto sobra y cuántos pliegos hacen falta.</p>
+  <div class="card">
+    <div class="cp-two">
+      <label class="cp-ctl" for="cp-p"><span>Pliego</span>
+        <select id="cp-p"><option value="50,70">50 x 70 cm</option><option value="70,100">70 x 100 cm</option><option value="59.4,84.1">A1 (59,4 x 84,1 cm)</option><option value="42,59.4">A2 (42 x 59,4 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="otro">Otra medida (la cargo abajo)</option></select></label>
+      <label class="cp-ctl" for="cp-n"><span>Piezas que necesito</span><input id="cp-n" type="number" inputmode="numeric" min="1" max="999" step="1" value="30"></label>
+    </div>
+    <div class="cp-two">
+      <label class="cp-ctl" for="cp-pw"><span>Pliego: lado corto (cm)</span><input id="cp-pw" type="number" inputmode="decimal" min="5" max="300" step="0.1" value="50"></label>
+      <label class="cp-ctl" for="cp-ph"><span>Pliego: lado largo (cm)</span><input id="cp-ph" type="number" inputmode="decimal" min="5" max="300" step="0.1" value="70"></label>
+    </div>
+    <div class="cp-two">
+      <label class="cp-ctl" for="cp-w"><span>Pieza: ancho (cm)</span><input id="cp-w" type="number" inputmode="decimal" min="1" max="300" step="0.1" value="15"></label>
+      <label class="cp-ctl" for="cp-h"><span>Pieza: alto (cm)</span><input id="cp-h" type="number" inputmode="decimal" min="1" max="300" step="0.1" value="20"></label>
+      <label class="cp-ctl" for="cp-k"><span>Pérdida por corte (mm)</span><input id="cp-k" type="number" inputmode="decimal" min="0" max="10" step="0.5" value="0"></label>
+    </div>
+    <div class="cp-sw"><svg id="cp-svg" viewBox="0 0 200 200" role="img" aria-label="Dibujo a escala del pliego con las piezas acomodadas"></svg></div>
+    <ul class="cp-res" id="cp-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: la cuenta prueba la pieza de pie y acostada, con cortes rectos de lado a lado (como con una guillotina o con regla y cúter), y se queda con la que da más piezas. Las medidas de 50 x 70 y 70 x 100 son las habituales de la cartulina, y las A salen de la norma ISO 216, pero cada librería puede vender medidas un poco distintas: medí el pliego que tenga a mano y usá "Otra medida". Si la pieza se va a pegar o a doblar, sumale al tamaño lo que haga falta antes de cargarla. La pérdida por corte es el ancho de lo que se come el cúter o la sierra: con tijera o cúter y regla suele ser casi nada.</div>
   </div>
 </section>
 
@@ -6676,6 +6713,53 @@ footer a{color:var(--c)}
     try{localStorage.setItem(KEY,JSON.stringify({w:w,h:h,s:$("if-s").value,d:$("if-d").value}))}catch(e2){}
   }
   ["if-w","if-h","if-s","if-d"].forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-cortar-pliego-v1",$=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+  var IDS=["cp-p","cp-n","cp-pw","cp-ph","cp-w","cp-h","cp-k"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object"){
+    IDS.forEach(function(id){var v=t[id];if(typeof v==="string"||typeof v==="number"){
+      var e=$(id);if(e.tagName==="SELECT"){if(e.querySelector('option[value="'+v+'"]'))e.value=v}else if(isFinite(parseFloat(v)))e.value=v}})}}catch(e){}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function grid(W,H,w,h,k){var c=Math.floor((W+k+1e-9)/(w+k)),r=Math.floor((H+k+1e-9)/(h+k));return{c:c,r:r,n:c*r,w:w,h:h}}
+  function draw(){
+    var sel=$("cp-p").value;
+    if(sel!=="otro"){var q=sel.split(",");$("cp-pw").value=q[0];$("cp-ph").value=q[1]}
+    var W=num("cp-pw",5,300,50),H=num("cp-ph",5,300,70),w=num("cp-w",1,300,15),h=num("cp-h",1,300,20);
+    var k=num("cp-k",0,10,0)/10,need=Math.round(num("cp-n",1,999,30));
+    var a=grid(W,H,w,h,k),b=grid(W,H,h,w,k),best=b.n>a.n?b:a,rot=best===b&&w!==h;
+    var svg=$("cp-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(180/W,180/H),ox=(200-W*sc)/2,oy=(200-H*sc)/2;
+    svg.appendChild(el("rect",{x:ox.toFixed(1),y:oy.toFixed(1),width:(W*sc).toFixed(1),height:(H*sc).toFixed(1),fill:"#e9ecef"}));
+    for(var i=0;i<best.c;i++)for(var j=0;j<best.r;j++){
+      svg.appendChild(el("rect",{x:(ox+i*(best.w+k)*sc).toFixed(2),y:(oy+j*(best.h+k)*sc).toFixed(2),width:(best.w*sc).toFixed(2),height:(best.h*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.55,stroke:"#14161a","stroke-width":0.6}))}
+    var tt=el("text",{x:100,y:197,"text-anchor":"middle",fill:"#e9ecef","font-size":8});tt.textContent="Pliego de "+f(W,1)+" x "+f(H,1)+" cm";svg.appendChild(tt);
+    var ul=$("cp-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var rows;
+    if(best.n<1){rows=[["Resultado","La pieza no entra en el pliego: probá con una medida menor o con otro pliego"]]}
+    else{
+      var used=best.n*w*h,waste=100*(1-used/(W*H));
+      var sobraX=W-(best.c*best.w+(best.c-1)*k),sobraY=H-(best.r*best.h+(best.r-1)*k);
+      var pl=Math.ceil(need/best.n);
+      rows=[
+        ["Piezas por pliego",best.n+" ("+best.c+" columnas x "+best.r+" filas)"],
+        ["Cómo se acomodan",w===h?"Cuadradas, da igual el sentido":(rot?"Acostadas (giradas respecto de lo cargado)":"Como las cargó")],
+        ["Se aprovecha",f(100-waste,1)+" % del pliego (sobra "+f(waste,1)+" %)"],
+        ["Tiras que sobran",f(Math.max(0,sobraX),1)+" cm al costado y "+f(Math.max(0,sobraY),1)+" cm abajo"],
+        ["Para "+need+" piezas hacen falta",pl+(pl===1?" pliego":" pliegos")+" ("+(pl*best.n)+" piezas, "+(pl*best.n-need)+" de más)"]
+      ];
+      if(a.n!==b.n&&w!==h)rows.push(["La otra posición daba",Math.min(a.n,b.n)+" piezas por pliego"]);
+    }
+    rows.forEach(function(x){var li=document.createElement("li"),s1=document.createElement("span"),s2=document.createElement("b");s1.textContent=x[0];s2.textContent=x[1];li.appendChild(s1);li.appendChild(s2);ul.appendChild(li)});
+    try{var o={};IDS.forEach(function(id){o[id]=$(id).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ["cp-pw","cp-ph"].forEach(function(i){$(i).addEventListener("input",function(){$("cp-p").value="otro"})});
+  IDS.forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
 })();
 </script>
