@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-22",
+ "actualizado": "2026-11-23",
  "eventos": [
   {
    "id": "audo6-2026",
@@ -82,6 +82,19 @@
    "fuente": {
     "nombre": "Viramos",
     "url": "https://viramos.com/audo-7-campeonato-nacional-team-race-nyc-2026"
+   }
+  },
+  {
+   "id": "estacada-festival-2026",
+   "titulo": "Regata Festival 86.º Aniversario · Club Náutico y Pesca La Estacada",
+   "inicio": "2026-12-13",
+   "lugar": "Club Náutico y Pesca La Estacada, Punta Carretas, Montevideo",
+   "tipo": "Regata de club",
+   "organiza": "Club Náutico y Pesca La Estacada",
+   "detalle": "Regata festival por los 86 años del club. Horario, recorrido e inscripción a confirmar con el club (tel. 2711 9075).",
+   "fuente": {
+    "nombre": "Afiche oficial del club (Instagram @clublaestacada)",
+    "url": "https://instagram.com/clublaestacada"
    }
   },
   {
