@@ -121,7 +121,7 @@
         <nav class="ori-toc" aria-label="Índice de la página">
             <div class="container">
                 <details>
-                    <summary>Ir a una sección (17)</summary>
+                    <summary>Ir a una sección (18)</summary>
                     <ul>
                         <li><a href="#leer">Cómo leer un diagrama</a></li>
                         <li><a href="#bases">Bases tradicionales</a></li>
@@ -140,6 +140,7 @@
                         <li><a href="#hojas-a">Hojas A</a></li>
                         <li><a href="#cortar-cuadrados">Cuántos cuadrados salen de una hoja</a></li>
                         <li><a href="#mil-grullas">Mil grullas: contador</a></li>
+                        <li><a href="#mitades">Una fracción con mitades</a></li>
                     </ul>
                 </details>
             </div>
@@ -437,7 +438,22 @@
             </div>
         </section>
 
-        <section class="section-padding bg-darker">
+        <section class="section-padding bg-darker" id="mitades">
+            <div class="container">
+                <h2 class="section-title mb-2">Una fracción con mitades: hasta dónde llega cada doblez</h2>
+                <p class="text-muted-light mb-3">Doblar por la mitad, una y otra vez, solo marca puntos de la forma k sobre 2 elevado a n: 1/2, 1/4, 3/8, 5/16... Para ubicar un punto como 1/3 o 1/5 del lado hay que acercarse. Elija la fracción, el lado del papel y la cantidad de dobleces: la herramienta busca la marca más cercana y le dice cuánto se aleja, en milímetros.</p>
+                <div id="mi-tabs" role="group" aria-label="Fracción que se quiere marcar"></div>
+                <label class="d-block mt-3 mb-3" style="max-width:10rem">Lado del papel (cm)<br><input class="sq-in" type="number" id="mi-l" min="2" max="100" step="0.5" inputmode="decimal" value="15"></label>
+                <svg id="mi-svg" class="gr-cv" viewBox="0 0 340 120" role="img" aria-label="Lado del papel con la marca buscada y la marca más cercana obtenida con mitades"></svg>
+                <label for="mi-n" class="mt-2 d-block"><b>Dobleces por la mitad:</b> <span id="mi-nv"></span></label>
+                <input id="mi-n" class="hg-range" type="range" min="1" max="8" value="3" step="1">
+                <p class="sq-res mt-3 mb-1" id="mi-msg" aria-live="polite"></p>
+                <p class="sq-res mb-1" id="mi-err" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">En el dibujo, el punto amarillo es la fracción buscada, el verde es la marca más cercana que dan las mitades y los trazos grises son todas las marcas posibles con esa cantidad de dobleces. Es una cuenta de aritmética: en papel real cada doblez suma un error de unas décimas de milímetro. Para repetirlo: doble el lado por la mitad, desdoble y marque; luego lleve cada extremo hasta la marca, y así sucesivamente. Si necesita el tercio o el quinto exacto, use <a href="#haga">el pliegue de Haga</a>.</p>
+            </div>
+        </section>
+
+        <section class="section-padding">
             <div class="container text-center">
                 <a href="origami.html" class="btn btn-whatsapp shadow-sm"><i class="fas fa-arrow-left me-2"></i> Volver a Origami</a>
             </div>
@@ -1045,6 +1061,44 @@
   function ent(){st.meta=leer(META,st.meta,10000);st.min=leer(MIN,st.min,120);st.sem=leer(SEM,st.sem,500);save();paint()}
   [META,MIN,SEM].forEach(function(i){i.addEventListener('input',ent)});
   META.value=st.meta;MIN.value=st.min;SEM.value=st.sem;
+  paint();
+})();
+</script>
+<script>
+(function(){
+  var svg=document.getElementById('mi-svg'),tabs=document.getElementById('mi-tabs'),nr=document.getElementById('mi-n'),nv=document.getElementById('mi-nv'),L=document.getElementById('mi-l'),msg=document.getElementById('mi-msg'),er=document.getElementById('mi-err');
+  var NS='http://www.w3.org/2000/svg',X0=20,W=300;
+  var PRE=[[1,3],[1,5],[1,6],[1,7],[2,3],[3,5]];
+  var cur=0;
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(x,d){return x.toLocaleString('es-UY',{maximumFractionDigits:d==null?2:d})}
+  function txt(x,y,c,t,anchor){var e=el('text',{x:x,y:y,fill:c,'font-size':12,'font-weight':700,'text-anchor':anchor||'middle'});e.textContent=t;svg.appendChild(e)}
+  function gcd(a,b){return b?gcd(b,a%b):a}
+  function paint(){
+    var n=+nr.value,p=PRE[cur][0],q=PRE[cur][1],t=p/q,cap=Math.pow(2,n);
+    var lado=parseFloat(String(L.value).replace(',','.'));if(!(lado>=2))lado=15;if(lado>100)lado=100;
+    var k=Math.round(t*cap),a=k/cap,errMm=Math.abs(a-t)*lado*10;
+    nv.textContent=n;
+    svg.textContent='';
+    svg.appendChild(el('line',{x1:X0,y1:60,x2:X0+W,y2:60,stroke:'#e8eeeb','stroke-width':3,'stroke-linecap':'round'}));
+    for(var i=0;i<=cap;i++){var x=X0+W*i/cap;svg.appendChild(el('line',{x1:x,y1:i%2?52:48,x2:x,y2:i%2?68:72,stroke:'#8a9a94','stroke-width':1}))}
+    svg.appendChild(el('line',{x1:X0+W*a,y1:40,x2:X0+W*a,y2:80,stroke:'#25d399','stroke-width':3}));
+    svg.appendChild(el('circle',{cx:X0+W*t,cy:60,r:6,fill:'#ffd34d',stroke:'#0d1512','stroke-width':1.5}));
+    txt(X0+W*t,36,'#ffd34d',p+'/'+q);
+    var ka=k,da=cap,g=gcd(ka,da)||1;
+    txt(X0+W*a,102,'#25d399',k===0?'0':(ka/g)+'/'+(da/g));
+    txt(X0,18,'#8a9a94','0','start');txt(X0+W,18,'#8a9a94','1','end');
+    var f=k===0?'0':(ka/g)+'/'+(da/g);
+    msg.textContent='Con '+n+(n===1?' doblez':' dobleces')+' se llega a '+f+' del lado: marca a '+num(a*lado,2)+' cm del borde, cuando '+p+'/'+q+' caería a '+num(t*lado,2)+' cm.';
+    er.textContent='La diferencia es de '+num(errMm,2)+' mm'+(errMm<1?' (menos de un milímetro: ya es difícil verla en el papel).':'.');
+  }
+  PRE.forEach(function(f,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=f[0]+'/'+f[1];
+    b.setAttribute('aria-pressed',j===0?'true':'false');
+    b.addEventListener('click',function(){cur=j;Array.prototype.forEach.call(tabs.children,function(x,i){x.setAttribute('aria-pressed',i===j?'true':'false')});paint()});
+    tabs.appendChild(b);
+  });
+  nr.addEventListener('input',paint);L.addEventListener('input',paint);
   paint();
 })();
 </script>
