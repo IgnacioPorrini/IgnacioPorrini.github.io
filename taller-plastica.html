@@ -519,6 +519,14 @@ footer a{color:var(--c)}
 .dt-sec .dt-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .dt-sec .dt-res li b{text-align:right}
 @media print{.dt-sec{display:none}}
+.st-sec .st-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.st-sec .st-two{display:flex;flex-wrap:wrap;gap:12px}
+.st-sec .st-ctl input:focus-visible,.st-sec .st-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.st-sec #st-svg{display:block;width:100%;max-width:360px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.st-sec .st-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.st-sec .st-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.st-sec .st-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.st-sec{display:none}}
 .pn-sec .pn-two{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
 .pn-sec .pn-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 130px;margin-top:8px}
 .pn-sec .pn-ctl input[type=number],.pn-sec .pn-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
@@ -859,6 +867,7 @@ footer a{color:var(--c)}
     <a href="#distancia-obra">Desde dónde mirar la obra</a>
     <a href="#cuaderno-cosido">Cuaderno cosido</a>
     <a href="#daltonismo">Simulador de daltonismo</a>
+    <a href="#estampado">Estampar con un sello</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2820,6 +2829,25 @@ footer a{color:var(--c)}
     <div class="dt-rows" id="dt-rows"></div>
     <ul class="dt-res" id="dt-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: se pasa cada color a luz lineal y se multiplica por una matriz de 3 x 3 para cada tipo (protanopia, deuteranopia y tritanopia, que son las formas más marcadas). Las matrices vienen del modelo de Machado, Oliveira y Fernandes (2009, <i>A Physiologically-based Model for Simulation of Color Vision Deficiency</i>). Es una aproximación en pantalla: no reemplaza preguntarle a una persona con daltonismo. Para decidir si dos colores se confunden se compara su distancia en el color simulado con una regla práctica propia (diferencia de color menor a 60 sobre 441, o sea el 14 % del recorrido del cubo RGB): es un aviso orientativo, no una norma. Truco de taller: además del color, diferenciá con claridad (uno claro y otro oscuro), con dibujo (rayas, puntos) o con una etiqueta escrita.</div>
+  </div>
+</section>
+
+<section id="estampado" class="st-sec">
+  <h2>Estampar con un sello: cuántos entran en la hoja</h2>
+  <p style="color:var(--muted)">Para estampar con un sello de goma, de papa o de linóleo, o con una plantilla. Cargá el tamaño de la hoja, el del sello y el espacio que querés dejar entre estampas: te dice cuántas entran, con la fila alternada o en cuadrícula, y dibuja cómo queda.</p>
+  <div class="card">
+    <div class="st-two">
+      <label class="st-ctl" for="st-w"><span>Ancho de la hoja (cm)</span><input id="st-w" type="number" inputmode="decimal" min="3" max="200" step="0.1" value="21"></label>
+      <label class="st-ctl" for="st-h"><span>Alto de la hoja (cm)</span><input id="st-h" type="number" inputmode="decimal" min="3" max="200" step="0.1" value="29.7"></label>
+      <label class="st-ctl" for="st-m"><span>Margen sin estampar (cm)</span><input id="st-m" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="1.5"></label>
+      <label class="st-ctl" for="st-sw"><span>Ancho del sello (cm)</span><input id="st-sw" type="number" inputmode="decimal" min="0.5" max="100" step="0.1" value="4"></label>
+      <label class="st-ctl" for="st-sh"><span>Alto del sello (cm)</span><input id="st-sh" type="number" inputmode="decimal" min="0.5" max="100" step="0.1" value="4"></label>
+      <label class="st-ctl" for="st-g"><span>Espacio entre estampas (cm)</span><input id="st-g" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="1"></label>
+      <label class="st-ctl" for="st-d"><span>Disposición</span><select id="st-d"><option value="g">En cuadrícula</option><option value="a">Filas alternadas (ladrillo)</option></select></label>
+    </div>
+    <svg id="st-svg" viewBox="0 0 320 240" role="img" aria-label="Dibujo a escala de la hoja con las estampas acomodadas"></svg>
+    <ul class="st-res" id="st-res" aria-live="polite"></ul>
+    <div class="tip">Cómo se calcula: al área útil (la hoja menos el margen de cada lado) se le suma un espacio y se divide por el paso (sello + espacio), redondeando hacia abajo: así entran columnas y filas enteras. En filas alternadas, las filas pares se corren medio paso y pueden perder una estampa si no hay lugar. El sobrante se reparte parejo a los lados para que el dibujo quede centrado. Antes de estampar en la hoja buena, probá en papel borrador: la goma se carga de tinta, se apoya sin arrastrar y deja una marca algo más grande o más chica que el sello; si hace falta, medí una estampa de prueba y cargá ese tamaño. Para guiarte, marcá con lápiz suave los cruces del paso.</div>
   </div>
 </section>
 
@@ -7507,6 +7535,48 @@ footer a{color:var(--c)}
   $("dt-ej").addEventListener("click",function(){var i;do{i=Math.floor(Math.random()*EJ.length)}while(i===ult);ult=i;IDS.forEach(function(d,j){$(d).value=EJ[i][j]});draw()});
   IDS.concat(["dt-u3"]).forEach(function(i){$(i).addEventListener("input",draw);$(i).addEventListener("change",draw)});
   draw();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-estampado-v1",$=function(i){return document.getElementById(i)},ids=["st-w","st-h","st-m","st-sw","st-sh","st-g","st-d"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i]}})}catch(e){}
+  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function calc(){
+    var W=val("st-w",3,200,21),H=val("st-h",3,200,29.7),m=val("st-m",0,20,1.5),sw=val("st-sw",0.5,100,4),sh=val("st-sh",0.5,100,4),g=val("st-g",0,20,1),alt=$("st-d").value==="a";
+    var uw=Math.max(0,W-2*m),uh=Math.max(0,H-2*m),pw=sw+g,ph=sh+g;
+    var c=Math.max(0,Math.floor((uw+g+1e-9)/pw)),r=Math.max(0,Math.floor((uh+g+1e-9)/ph));
+    var c2=alt?Math.max(0,Math.floor((uw-pw/2+g+1e-9)/pw)):c;
+    var tot=alt?Math.ceil(r/2)*c+Math.floor(r/2)*c2:c*r;
+    var usedW=c>0?c*sw+(c-1)*g+(alt&&r>1&&c2===c?pw/2:0):0,usedH=r>0?r*sh+(r-1)*g:0;
+    var ox=m+Math.max(0,(uw-usedW)/2),oy=m+Math.max(0,(uh-usedH)/2);
+    var cub=W*H>0?tot*sw*sh/(W*H)*100:0;
+    var rows=[["Estampas que entran",String(tot)],["Columnas x filas",c+" x "+r+(alt&&c2!==c?" (las filas corridas llevan "+c2+")":"")],["Área estampada",f(usedW,1)+" x "+f(usedH,1)+" cm"],["Hoja cubierta por sellos",f(cub,0)+" %"],["Primera estampa desde el borde",f(ox,1)+" cm a la izquierda y "+f(oy,1)+" cm arriba"]];
+    if(tot===0)rows=[["Estampas que entran","0: el sello no entra en el área útil. Probá achicar el margen o el sello."]];
+    var ul=$("st-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),b=document.createElement("b");p.textContent=x[0];b.textContent=x[1];li.appendChild(p);li.appendChild(b);ul.appendChild(li)});
+    var svg=$("st-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(300/W,220/H),x0=(320-W*sc)/2,y0=(240-H*sc)/2;
+    svg.appendChild(el("rect",{x:x0,y:y0,width:W*sc,height:H*sc,fill:"#1d2026",stroke:"#e8eaed","stroke-width":2}));
+    if(m>0)svg.appendChild(el("rect",{x:x0+m*sc,y:y0+m*sc,width:uw*sc,height:uh*sc,fill:"none",stroke:"#9aa3ad","stroke-width":1,"stroke-dasharray":"4 3"}));
+    if(tot>0&&tot<=600){
+      for(var i=0;i<r;i++){
+        var shift=alt&&i%2===1,n=shift?c2:c;
+        for(var j=0;j<n;j++){
+          var x=ox+j*pw+(shift?pw/2:0),y=oy+i*ph;
+          svg.appendChild(el("rect",{x:x0+x*sc,y:y0+y*sc,width:sw*sc,height:sh*sc,fill:"#2fbf7155",stroke:"#2fbf71","stroke-width":1}));
+        }
+      }
+    }else if(tot>600){
+      var tx=el("text",{x:160,y:122,fill:"#9aa3ad","font-size":12,"text-anchor":"middle"});tx.textContent="Son muchas estampas para dibujarlas una por una";svg.appendChild(tx);
+    }
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
 })();
 </script>
 </body>
