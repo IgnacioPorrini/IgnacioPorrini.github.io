@@ -535,6 +535,14 @@ footer a{color:var(--c)}
 .sb-sec .sb-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .sb-sec .sb-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.sb-sec{display:none}}
+.mu-sec .mu-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.mu-sec .mu-two{display:flex;flex-wrap:wrap;gap:12px}
+.mu-sec .mu-ctl input:focus-visible,.mu-sec .mu-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.mu-sec #mu-svg{display:block;width:100%;max-width:360px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mu-sec .mu-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.mu-sec .mu-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.mu-sec .mu-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.mu-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -886,6 +894,7 @@ footer a{color:var(--c)}
     <a href="#estampado">Estampar con un sello</a>
     <a href="#collage">Collage: cuántos trozos</a>
     <a href="#sobre">Sobre para una tarjeta</a>
+    <a href="#mural">Mural en hojas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2902,6 +2911,23 @@ footer a{color:var(--c)}
     <svg id="sb-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla a escala del sobre, en forma de cruz, con las líneas de doblez"></svg>
     <ul class="sb-res" id="sb-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: el interior del sobre es la tarjeta más la holgura de cada lado. La hoja se corta en cruz: el panel de atrás (interior), una solapa a cada lado del ancho que elegís, una solapa inferior de 60 % del alto y una solapa superior triangular de 40 % del ancho. Se doblan primero las laterales hacia adentro, después la inferior hacia arriba (pegada sobre las laterales) y al final se cierra la superior. Es una plantilla propia y simple, no un modelo de origami. Los sobres por hoja se cuentan con el rectángulo que encierra la cruz, en las dos orientaciones, sin aprovechar los huecos de las esquinas; si querés encajarlas, probá con papel borrador. Una hoja gruesa necesita un poco más de holgura.</div>
+  </div>
+</section>
+
+<section id="mural" class="mu-sec">
+  <h2>Mural en hojas: cuántas hojas pegar</h2>
+  <p style="color:var(--muted)">Para hacer un dibujo grande uniendo hojas A4, A3 o carta (o para ampliar una imagen impresa en partes). Cargá el tamaño del mural y el solape que dejás para pegar: te dice cuántas hojas van por fila y por columna, cuántas son en total y cuánto sobra.</p>
+  <div class="card">
+    <div class="mu-two">
+      <label class="mu-ctl" for="mu-w"><span>Ancho del mural (cm)</span><input id="mu-w" type="number" inputmode="decimal" min="10" max="1000" step="1" value="80"></label>
+      <label class="mu-ctl" for="mu-h"><span>Alto del mural (cm)</span><input id="mu-h" type="number" inputmode="decimal" min="10" max="1000" step="1" value="60"></label>
+      <label class="mu-ctl" for="mu-s"><span>Hoja</span><select id="mu-s"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="21.6,27.9">Carta (21,6 x 27,9 cm)</option></select></label>
+      <label class="mu-ctl" for="mu-o"><span>Cómo se apoyan las hojas</span><select id="mu-o"><option value="auto">La que use menos hojas</option><option value="p">De pie</option><option value="l">Acostadas</option></select></label>
+      <label class="mu-ctl" for="mu-v"><span>Solape para pegar (cm)</span><input id="mu-v" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="1"></label>
+    </div>
+    <svg id="mu-svg" viewBox="0 0 320 240" role="img" aria-label="Esquema a escala del mural formado por hojas pegadas, con los solapes"></svg>
+    <ul class="mu-res" id="mu-res" aria-live="polite"></ul>
+    <div class="tip">Cómo se calcula: cada hoja que se suma a una fila o a una columna aporta su medida menos el solape. Con n hojas se cubren n x hoja - (n - 1) x solape; se usa el menor n que alcanza. Con solape 0 las hojas quedan borde con borde (sin margen para pegar). Si la impresora deja margen blanco, sumalo al solape o recortalo antes de pegar.</div>
   </div>
 </section>
 
@@ -7699,6 +7725,41 @@ footer a{color:var(--c)}
     [[[sf,tf],[sf,tf+h]],[[sf+w,tf],[sf+w,tf+h]],[[sf,tf+h],[sf+w,tf+h]],[[sf,tf],[sf+w,tf]]].forEach(function(l){svg.appendChild(el("line",{x1:X(l[0][0]),y1:Y(l[0][1]),x2:X(l[1][0]),y2:Y(l[1][1]),stroke:"#e8eaed","stroke-width":1.2,"stroke-dasharray":"4 3"}))});
     var tx=el("text",{x:X(sf+w/2),y:Y(tf+h/2),fill:"#e8eaed","font-size":11,"text-anchor":"middle"});tx.textContent="tarjeta "+f(W,1)+" x "+f(H,1);svg.appendChild(tx);
     try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-mural-v1",$=function(i){return document.getElementById(i)},ids=["mu-w","mu-h","mu-s","mu-o","mu-v"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).value!==t[i]&&$(i).tagName==="SELECT")$(i).selectedIndex=0}})}catch(e){}
+  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function cnt(L,a,s){return L<=a?1:Math.ceil((L-s)/(a-s)-1e-9)}
+  function calc(){
+    var W=val("mu-w",10,1000,80),H=val("mu-h",10,1000,60),s=val("mu-v",0,5,1);
+    var sp=$("mu-s").value.split(","),a=parseFloat(sp[0]),b=parseFloat(sp[1]),o=$("mu-o").value;
+    function plan(sw,sh){var c=cnt(W,sw,s),r=cnt(H,sh,s);return{sw:sw,sh:sh,c:c,r:r,n:c*r}}
+    var P=plan(a,b),L=plan(b,a),q;
+    if(o==="p")q=P;else if(o==="l")q=L;else q=(L.n<P.n)?L:P;
+    var cw=q.c*q.sw-(q.c-1)*s,ch=q.r*q.sh-(q.r-1)*s;
+    var rows=[["Hojas por fila x por columna",q.c+" x "+q.r],["Hojas en total",String(q.n)],["Se apoyan",q.sw<q.sh?"de pie":"acostadas"],["Tamaño que cubren",f(cw,1)+" x "+f(ch,1)+" cm"],["Sobra (se recorta)",f(cw-W,1)+" cm de ancho y "+f(ch-H,1)+" cm de alto"]];
+    if(q.n>200)rows.push(["Aviso","Son muchísimas hojas: probá una hoja más grande o un mural más chico."]);
+    var ul=$("mu-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),bb=document.createElement("b");p.textContent=x[0];bb.textContent=x[1];li.appendChild(p);li.appendChild(bb);ul.appendChild(li)});
+    var svg=$("mu-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(290/cw,215/ch),x0=(320-cw*sc)/2,y0=(240-ch*sc)/2;
+    function X(v){return (x0+v*sc).toFixed(1)}function Y(v){return (y0+v*sc).toFixed(1)}
+    var draw=q.n<=400;
+    if(draw){for(var i=0;i<q.c;i++)for(var j=0;j<q.r;j++){
+      var px=i*(q.sw-s),py=j*(q.sh-s);
+      svg.appendChild(el("rect",{x:X(px),y:Y(py),width:(q.sw*sc).toFixed(1),height:(q.sh*sc).toFixed(1),fill:((i+j)%2?"#2fbf7122":"#2fbf7133"),stroke:"#2fbf71","stroke-width":1}))}}
+    svg.appendChild(el("rect",{x:X(0),y:Y(0),width:(W*sc).toFixed(1),height:(H*sc).toFixed(1),fill:"none",stroke:"#e8eaed","stroke-width":1.6,"stroke-dasharray":"5 3"}));
+    var tx=el("text",{x:X(W/2),y:Y(H/2),fill:"#e8eaed","font-size":11,"text-anchor":"middle"});tx.textContent="mural "+f(W,0)+" x "+f(H,0)+" cm";svg.appendChild(tx);
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
