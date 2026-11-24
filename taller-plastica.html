@@ -527,6 +527,14 @@ footer a{color:var(--c)}
 .st-sec .st-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .st-sec .st-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.st-sec{display:none}}
+.sb-sec .sb-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.sb-sec .sb-two{display:flex;flex-wrap:wrap;gap:12px}
+.sb-sec .sb-ctl input:focus-visible,.sb-sec .sb-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.sb-sec #sb-svg{display:block;width:100%;max-width:360px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.sb-sec .sb-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.sb-sec .sb-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.sb-sec .sb-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.sb-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -877,6 +885,7 @@ footer a{color:var(--c)}
     <a href="#daltonismo">Simulador de daltonismo</a>
     <a href="#estampado">Estampar con un sello</a>
     <a href="#collage">Collage: cuántos trozos</a>
+    <a href="#sobre">Sobre para una tarjeta</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2876,6 +2885,23 @@ footer a{color:var(--c)}
     <svg id="co-svg" viewBox="0 0 320 240" role="img" aria-label="Dibujo a escala de la superficie con los trozos de una capa"></svg>
     <ul class="co-res" id="co-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: cada trozo nuevo avanza (trozo menos solape). Se cuentan los trozos que hacen falta para llegar al borde, redondeando hacia arriba, en ancho y en alto; los que se pasan del borde se recortan o se doblan hacia atrás. Se multiplica por las capas y se suma la reserva, porque al recortar a mano siempre se pierde alguno. Una hoja A4 tiene 21 x 29,7 cm (623,7 cm²); el cálculo de hojas es por área y no cuenta lo que se pierde al cortar la hoja en trozos.</div>
+  </div>
+</section>
+
+<section id="sobre" class="sb-sec">
+  <h2>Sobre para una tarjeta</h2>
+  <p style="color:var(--muted)">Para hacer a mano el sobre de una tarjeta, un dibujo chico o un marcapáginas. Cargá el tamaño de la tarjeta y de la hoja: te da la plantilla en cruz con sus medidas, dónde doblar y cuántos sobres salen de cada hoja.</p>
+  <div class="card">
+    <div class="sb-two">
+      <label class="sb-ctl" for="sb-w"><span>Ancho de la tarjeta (cm)</span><input id="sb-w" type="number" inputmode="decimal" min="3" max="40" step="0.1" value="10.5"></label>
+      <label class="sb-ctl" for="sb-h"><span>Alto de la tarjeta (cm)</span><input id="sb-h" type="number" inputmode="decimal" min="3" max="40" step="0.1" value="14.8"></label>
+      <label class="sb-ctl" for="sb-g"><span>Holgura por lado (cm)</span><input id="sb-g" type="number" inputmode="decimal" min="0" max="3" step="0.1" value="0.3"></label>
+      <label class="sb-ctl" for="sb-f"><span>Solapa lateral (cm)</span><input id="sb-f" type="number" inputmode="decimal" min="1" max="8" step="0.1" value="2"></label>
+      <label class="sb-ctl" for="sb-s"><span>Hoja</span><select id="sb-s"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="21.6,27.9">Carta (21,6 x 27,9 cm)</option><option value="50,70">Pliego 50 x 70 cm</option></select></label>
+    </div>
+    <svg id="sb-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla a escala del sobre, en forma de cruz, con las líneas de doblez"></svg>
+    <ul class="sb-res" id="sb-res" aria-live="polite"></ul>
+    <div class="tip">Cómo se calcula: el interior del sobre es la tarjeta más la holgura de cada lado. La hoja se corta en cruz: el panel de atrás (interior), una solapa a cada lado del ancho que elegís, una solapa inferior de 60 % del alto y una solapa superior triangular de 40 % del ancho. Se doblan primero las laterales hacia adentro, después la inferior hacia arriba (pegada sobre las laterales) y al final se cierra la superior. Es una plantilla propia y simple, no un modelo de origami. Los sobres por hoja se cuentan con el rectángulo que encierra la cruz, en las dos orientaciones, sin aprovechar los huecos de las esquinas; si querés encajarlas, probá con papel borrador. Una hoja gruesa necesita un poco más de holgura.</div>
   </div>
 </section>
 
@@ -7639,6 +7665,39 @@ footer a{color:var(--c)}
     }
     svg.appendChild(g);
     svg.appendChild(el("rect",{x:x0,y:y0,width:W*sc,height:H*sc,fill:"none",stroke:"#e8eaed","stroke-width":2}));
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-sobre-v1",$=function(i){return document.getElementById(i)},ids=["sb-w","sb-h","sb-g","sb-f","sb-s"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).value!==t[i]&&$(i).tagName==="SELECT")$(i).selectedIndex=0}})}catch(e){}
+  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function fit(A,B,w,h){return Math.floor(A/w+1e-9)*Math.floor(B/h+1e-9)}
+  function calc(){
+    var W=val("sb-w",3,40,10.5),H=val("sb-h",3,40,14.8),g=val("sb-g",0,3,0.3),sf=val("sb-f",1,8,2);
+    var sp=$("sb-s").value.split(","),A=parseFloat(sp[0]),B=parseFloat(sp[1]);
+    var w=W+2*g,h=H+2*g,bf=0.6*h,tf=0.4*w,BW=w+2*sf,BH=tf+h+bf;
+    var n1=fit(A,B,BW,BH),n2=fit(A,B,BH,BW),n=Math.max(n1,n2);
+    var rows=[["Interior del sobre",f(w,1)+" x "+f(h,1)+" cm"],["Plantilla (rectángulo que la encierra)",f(BW,1)+" x "+f(BH,1)+" cm"],["Solapas","laterales "+f(sf,1)+" cm, inferior "+f(bf,1)+" cm, superior "+f(tf,1)+" cm"],["Sobres por hoja",n>0?String(n)+(n2>n1?" (con la plantilla acostada)":""):"No entra"]];
+    if(n===0)rows.push(["Aviso","La plantilla es más grande que la hoja: probá una hoja mayor o una solapa lateral más angosta."]);
+    var ul=$("sb-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),b=document.createElement("b");p.textContent=x[0];b.textContent=x[1];li.appendChild(p);li.appendChild(b);ul.appendChild(li)});
+    var svg=$("sb-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(290/BW,215/BH),x0=(320-BW*sc)/2,y0=(240-BH*sc)/2;
+    function X(v){return (x0+v*sc).toFixed(1)}function Y(v){return (y0+v*sc).toFixed(1)}
+    var pts=[[sf,0],[sf+w/2,0],[sf+w,tf],[sf+w,tf],[BW,tf],[BW,tf+h],[sf+w,tf+h],[sf+w,BH],[sf,BH],[sf,tf+h],[0,tf+h],[0,tf],[sf,tf]];
+    pts[0]=[sf+w/2,0];pts.splice(1,2);
+    var d="M"+pts.map(function(p){return X(p[0])+" "+Y(p[1])}).join(" L")+" Z";
+    svg.appendChild(el("path",{d:d,fill:"#2fbf7133",stroke:"#2fbf71","stroke-width":2,"stroke-linejoin":"round"}));
+    [[[sf,tf],[sf,tf+h]],[[sf+w,tf],[sf+w,tf+h]],[[sf,tf+h],[sf+w,tf+h]],[[sf,tf],[sf+w,tf]]].forEach(function(l){svg.appendChild(el("line",{x1:X(l[0][0]),y1:Y(l[0][1]),x2:X(l[1][0]),y2:Y(l[1][1]),stroke:"#e8eaed","stroke-width":1.2,"stroke-dasharray":"4 3"}))});
+    var tx=el("text",{x:X(sf+w/2),y:Y(tf+h/2),fill:"#e8eaed","font-size":11,"text-anchor":"middle"});tx.textContent="tarjeta "+f(W,1)+" x "+f(H,1);svg.appendChild(tx);
     try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
