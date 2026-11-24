@@ -543,6 +543,19 @@ footer a{color:var(--c)}
 .mu-sec .mu-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
 .mu-sec .mu-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.mu-sec{display:none}}
+.dg-sec .dg-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.dg-sec .dg-two{display:flex;flex-wrap:wrap;gap:12px}
+.dg-sec .dg-ctl input,.dg-sec .dg-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.dg-sec .dg-ctl input:focus-visible,.dg-sec .dg-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.dg-sec #dg-svg{display:block;width:100%;max-width:360px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.dg-sec .dg-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.dg-sec .dg-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;align-items:center;gap:10px}
+.dg-sec .dg-res i{flex:0 0 30px;height:30px;border-radius:8px;border:2px solid #e8eaed55}
+.dg-sec .dg-res span{flex:1 1 auto;min-width:0}
+.dg-sec .dg-res b{text-align:right;flex:0 0 auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dg-sec .dg-res li:not(:has(i)){display:block}
+.dg-sec .dg-res li:not(:has(i)) b{display:block;white-space:normal;text-align:left;margin-top:4px}
+@media print{.dg-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -895,6 +908,7 @@ footer a{color:var(--c)}
     <a href="#collage">Collage: cuántos trozos</a>
     <a href="#sobre">Sobre para una tarjeta</a>
     <a href="#mural">Mural en hojas</a>
+    <a href="#degrade">Degradé en pasos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2928,6 +2942,22 @@ footer a{color:var(--c)}
     <svg id="mu-svg" viewBox="0 0 320 240" role="img" aria-label="Esquema a escala del mural formado por hojas pegadas, con los solapes"></svg>
     <ul class="mu-res" id="mu-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: cada hoja que se suma a una fila o a una columna aporta su medida menos el solape. Con n hojas se cubren n x hoja - (n - 1) x solape; se usa el menor n que alcanza. Con solape 0 las hojas quedan borde con borde (sin margen para pegar). Si la impresora deja margen blanco, sumalo al solape o recortalo antes de pegar.</div>
+  </div>
+</section>
+
+<section id="degrade" class="dg-sec">
+  <h2>Degradé en pasos: cuánta pintura de cada color</h2>
+  <p style="color:var(--muted)">Para pintar un cielo, un fondo o una tira que pase de un color a otro en escalones parejos. Elegí los dos colores de los extremos y cuántos escalones querés: te dice en qué proporción mezclar cada uno, en partes (por ejemplo cucharadas o tapitas).</p>
+  <div class="card">
+    <div class="dg-two">
+      <label class="dg-ctl" for="dg-a"><span>Color de un extremo (A)</span><input id="dg-a" type="color" value="#1e5fbf"></label>
+      <label class="dg-ctl" for="dg-b"><span>Color del otro extremo (B)</span><input id="dg-b" type="color" value="#f2c230"></label>
+      <label class="dg-ctl" for="dg-n"><span>Escalones (3 a 9)</span><input id="dg-n" type="number" inputmode="numeric" min="3" max="9" step="1" value="5"></label>
+      <label class="dg-ctl" for="dg-p"><span>Partes por mezcla (2 a 24)</span><input id="dg-p" type="number" inputmode="numeric" min="2" max="24" step="1" value="8"></label>
+    </div>
+    <svg id="dg-svg" viewBox="0 0 320 90" role="img" aria-label="Tira con el degradé en escalones entre los dos colores elegidos"></svg>
+    <ul class="dg-res" id="dg-res" aria-live="polite"></ul>
+    <div class="tip">Cómo se calcula: el escalón k de n tiene una fracción k / (n - 1) de B y el resto de A; con P partes por mezcla, las partes de B son esa fracción por P, redondeada a un número entero. La muestra del color es un promedio simple en pantalla: la pintura real se mezcla distinto (amarillo y azul dan un verde más apagado, por ejemplo), así que hacé una prueba en un papel y ajustá. Si usás témpera, mezclá siempre en el mismo orden y con las mismas medidas.</div>
   </div>
 </section>
 
@@ -7759,6 +7789,41 @@ footer a{color:var(--c)}
       svg.appendChild(el("rect",{x:X(px),y:Y(py),width:(q.sw*sc).toFixed(1),height:(q.sh*sc).toFixed(1),fill:((i+j)%2?"#2fbf7122":"#2fbf7133"),stroke:"#2fbf71","stroke-width":1}))}}
     svg.appendChild(el("rect",{x:X(0),y:Y(0),width:(W*sc).toFixed(1),height:(H*sc).toFixed(1),fill:"none",stroke:"#e8eaed","stroke-width":1.6,"stroke-dasharray":"5 3"}));
     var tx=el("text",{x:X(W/2),y:Y(H/2),fill:"#e8eaed","font-size":11,"text-anchor":"middle"});tx.textContent="mural "+f(W,0)+" x "+f(H,0)+" cm";svg.appendChild(tx);
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-degrade-v1",$=function(i){return document.getElementById(i)},ids=["dg-a","dg-b","dg-n","dg-p"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i]}})}catch(e){}
+  function val(id,lo,hi,def){var v=parseInt(String($(id).value),10);if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function rgb(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+  function hex(c){return"#"+c.map(function(v){var x=Math.max(0,Math.min(255,Math.round(v))).toString(16);return x.length<2?"0"+x:x}).join("")}
+  function calc(){
+    var A=$("dg-a").value,B=$("dg-b").value;
+    if(!/^#[0-9a-fA-F]{6}$/.test(A))A="#1e5fbf";
+    if(!/^#[0-9a-fA-F]{6}$/.test(B))B="#f2c230";
+    var n=val("dg-n",3,9,5),P=val("dg-p",2,24,8),a=rgb(A),b=rgb(B);
+    var ul=$("dg-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var svg=$("dg-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var w=300/n,seen={},rep=false;
+    for(var k=0;k<n;k++){
+      var fr=k/(n-1),pb=Math.round(fr*P),pa=P-pb,f2=pb/P;
+      var c=hex([0,1,2].map(function(j){return a[j]+(b[j]-a[j])*f2}));
+      if(seen[pb+"-"+pa])rep=true;seen[pb+"-"+pa]=1;
+      svg.appendChild(el("rect",{x:(10+k*w).toFixed(1),y:12,width:(w+0.5).toFixed(1),height:56,fill:c}));
+      var tx=el("text",{x:(10+k*w+w/2).toFixed(1),y:83,fill:"#e8eaed","font-size":9,"text-anchor":"middle"});tx.textContent=String(k+1);svg.appendChild(tx);
+      var li=document.createElement("li"),sw=document.createElement("i"),sp=document.createElement("span"),bb=document.createElement("b");
+      sw.style.background=c;sw.setAttribute("aria-hidden","true");
+      sp.textContent="Escalón "+(k+1)+": "+pa+(pa===1?" parte":" partes")+" de A y "+pb+(pb===1?" parte":" partes")+" de B";
+      bb.textContent=c;li.appendChild(sw);li.appendChild(sp);li.appendChild(bb);ul.appendChild(li);
+    }
+    if(rep){var l2=document.createElement("li"),s2=document.createElement("span"),b2=document.createElement("b");s2.textContent="Aviso";b2.textContent="Hay escalones iguales: subí las partes por mezcla o bajá los escalones.";l2.appendChild(s2);l2.appendChild(b2);ul.appendChild(l2)}
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
