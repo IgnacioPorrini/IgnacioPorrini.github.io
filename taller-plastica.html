@@ -968,6 +968,7 @@ footer a{color:var(--c)}
     <a href="#guarda">Guarda decorativa</a>
     <a href="#triptico">Tríptico y políptico</a>
     <a href="#minilibro">Minilibro de 8 páginas</a>
+    <a href="#acordeon">Libro acordeón</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3109,6 +3110,27 @@ footer a{color:var(--c)}
       <li>Abrí la hoja, plegala a lo largo y empujá los extremos hacia el centro hasta formar una cruz; cerrá las páginas como un librito con la portada (página 1) al frente.</li>
     </ol>
     <div class="tip">Cómo usarlo: dibujá cada página con el número y la orientación del dibujo: las páginas de la fila de arriba (2, 3, 4 y 5) se dibujan boca abajo respecto de la fila de abajo. La disposición se comprobó con la regla de que las páginas que comparten hoja (1-2, 3-4, 5-6, 7-8) quedan unidas por un doblez y las enfrentadas (2-3, 4-5, 6-7, 8-1) quedan juntas en el librito. El método de pliegues y el corte coincide con la guía de <a href="https://tessneedham.com/folding-instructions/" target="_blank" rel="noopener">Tess Needham</a> y con la de la <a href="https://blogs.brighton.ac.uk/visuallearning/2019/09/25/create-a-mini-zine/" target="_blank" rel="noopener">Universidad de Brighton</a>, que trae un diagrama y un modelo para imprimir; probá primero con una hoja borrador.</div>
+  </div>
+</section>
+
+<section id="acordeon" class="mz-sec">
+  <h2>Libro acordeón: ancho de cada panel</h2>
+  <p style="color:var(--muted)">Una tira de papel plegada en zigzag hace un libro que se abre como acordeón: sirve para un paisaje largo, un cuento o un mural de bolsillo. Elegí la hoja, cuántas pegás y cuántos paneles querés: te dice cuánto mide cada panel y dónde van los pliegues.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="ac-h"><span>Hoja (apaisada)</span><select id="ac-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="ac-k"><span>Hojas pegadas (1 a 4)</span><input id="ac-k" type="number" inputmode="numeric" min="1" max="4" step="1" value="1"></label>
+      <label class="mz-ctl" for="ac-s"><span>Solape para pegar (cm)</span><input id="ac-s" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
+      <label class="mz-ctl" for="ac-n"><span>Paneles (2 a 16)</span><input id="ac-n" type="number" inputmode="numeric" min="2" max="16" step="1" value="6"></label>
+    </div>
+    <svg id="ac-svg" viewBox="0 0 320 110" role="img" aria-label="Tira de papel dividida en paneles iguales con los pliegues"></svg>
+    <ul class="mz-res" id="ac-res" aria-live="polite"></ul>
+    <ol>
+      <li>Si usás más de una hoja, pegalas por el borde corto solapando el ancho indicado y dejá secar. Apoyá la tira apaisada.</li>
+      <li>Marcá con lápiz, desde el borde izquierdo, cada pliegue a la distancia indicada, o doblá por mitades sucesivas si el número de paneles es una potencia de 2 (2, 4, 8 o 16).</li>
+      <li>Doblá en zigzag, un pliegue hacia adelante y el siguiente hacia atrás, y marcá bien cada doblez con la uña o una regla.</li>
+    </ol>
+    <div class="tip">Cómo usarlo: la tira plegada mide un panel de ancho; dibujá primero con la tira abierta para que la imagen siga de un panel al otro, y cuidá que una pegadura no caiga justo en medio de un detalle importante. Si la pegadura queda lejos de un pliegue, el resumen lo avisa para que cambies el solape o los paneles. El cálculo es una división en partes iguales, sin fuente externa: no encontré una guía de plegado que pudiera confirmar acá, así que probá primero con una tira de borrador y ajustá a tu papel.</div>
   </div>
 </section>
 
@@ -8179,6 +8201,51 @@ footer a{color:var(--c)}
     row("Largo del corte",f(W/2,1)+" cm, centrado sobre el pliegue del medio");
     row("Páginas boca abajo en la hoja","2, 3, 4 y 5");
     svg.setAttribute("aria-label","Hoja "+nom+" desplegada: arriba, boca abajo, las páginas 5, 4, 3 y 2; abajo 6, 7, 8 y 1; el corte va en el centro");
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-acordeon-v1",$=function(i){return document.getElementById(i)},ids=["ac-h","ac-k","ac-s","ac-n"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("ac-h").value.split(","),W=parseFloat(p[0]),H=parseFloat(p[1]),nom=p[2];
+    var k=num("ac-k",1,4,1,true),s=num("ac-s",0.5,3,1,false),n=num("ac-n",2,16,6,true);
+    var L=k*W-(k-1)*s,pw=L/n;
+    var svg=$("ac-svg"),ul=$("ac-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var sc=Math.min(300/L,80/H),x0=(320-L*sc)/2,y0=(110-H*sc)/2;
+    for(var i=0;i<n;i++){
+      svg.appendChild(el("rect",{x:(x0+i*pw*sc).toFixed(2),y:y0.toFixed(2),width:(pw*sc).toFixed(2),height:(H*sc).toFixed(2),fill:i===0?"#2fbf71":(i%2?"#1a7f4b":"#2c9c60"),stroke:"#14161a","stroke-width":0.4}));
+      if(pw*sc>9){var tx=el("text",{x:(x0+(i+0.5)*pw*sc).toFixed(2),y:(y0+H*sc/2+4).toFixed(2),"text-anchor":"middle","font-size":Math.min(12,pw*sc*0.6).toFixed(1),"font-weight":700,fill:"#ffffff"});tx.textContent=String(i+1);svg.appendChild(tx)}
+    }
+    var lejos=0,cer=[];
+    for(var j=1;j<k;j++){
+      var xj=j*(W-s),xe=xj+s,xe0=xj;
+      svg.appendChild(el("rect",{x:(x0+xe0*sc).toFixed(2),y:y0.toFixed(2),width:(s*sc).toFixed(2),height:(H*sc).toFixed(2),fill:"#ffc23d","fill-opacity":0.55}));
+      var d=Math.min(Math.abs(xe0/pw-Math.round(xe0/pw)),Math.abs(xe/pw-Math.round(xe/pw)))*pw;
+      cer.push(d);if(d>pw/4)lejos++;
+    }
+    row("Hoja",nom+" apaisada, "+f(W,1)+" x "+f(H,1)+" cm");
+    row("Largo de la tira",f(L,1)+" cm"+(k>1?" ("+k+" hojas con "+f(s,1)+" cm de solape)":""));
+    row("Cada panel",f(pw,2)+" x "+f(H,1)+" cm");
+    row("Proporción del panel (ancho : alto)",f(pw/H,2)+" : 1");
+    row("Pliegues",(n-1)+", a "+f(pw,2)+" cm uno del otro");
+    row("Caras para dibujar",(2*n)+" (frente y dorso, "+n+" por lado)");
+    row("Libro cerrado",f(pw,2)+" x "+f(H,1)+" cm");
+    if(pw<2)row("Aviso","Paneles muy angostos: pocos paneles o más hojas");
+    if(lejos>0)row("Aviso","Una pegadura cae lejos de un pliegue: probá otro solape o otra cantidad de paneles");
+    var lis=[];for(var q=1;q<n;q++)lis.push(f(q*pw,1));
+    row("Pliegues desde el borde izquierdo (cm)",lis.join(", "));
+    svg.setAttribute("aria-label","Tira de "+f(L,1)+" por "+f(H,1)+" cm dividida en "+n+" paneles de "+f(pw,2)+" cm");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
