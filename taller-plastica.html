@@ -579,6 +579,16 @@ footer a{color:var(--c)}
 .rl-sec .rl-res span{flex:0 1 auto;min-width:0}
 .rl-sec .rl-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media print{.rl-sec{display:none}}
+.gd-sec .gd-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.gd-sec .gd-two{display:flex;flex-wrap:wrap;gap:12px}
+.gd-sec .gd-ctl input,.gd-sec .gd-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.gd-sec .gd-ctl input:focus-visible,.gd-sec .gd-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.gd-sec #gd-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.gd-sec .gd-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.gd-sec .gd-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+.gd-sec .gd-res span{flex:0 1 auto;min-width:0}
+.gd-sec .gd-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media print{.gd-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -934,6 +944,7 @@ footer a{color:var(--c)}
     <a href="#degrade">Degradé en pasos</a>
     <a href="#regla-60-30-10">Regla 60-30-10</a>
     <a href="#renglones">Renglones para letras</a>
+    <a href="#guarda">Guarda decorativa</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3021,6 +3032,24 @@ footer a{color:var(--c)}
     <svg id="rl-svg" viewBox="0 0 200 280" role="img" aria-label="Hoja con los renglones de cuatro líneas a escala"></svg>
     <ul class="rl-res" id="rl-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: marcá en el margen izquierdo la medida del paso entre renglones con una tira de papel, y pasá la regla por cada marca. En el dibujo, la línea llena es la base, la punteada marca la altura de la «x», y las tenues marcan las letras altas y las que cuelgan. El paso es: «x» + letras altas + letras que cuelgan + espacio extra. Es una cuenta de geometría simple, sin fuentes externas.</div>
+  </div>
+</section>
+
+<section id="guarda" class="gd-sec">
+  <h2>Guarda decorativa: cuántas repeticiones entran</h2>
+  <p style="color:var(--muted)">Una guarda es una tira donde un mismo motivo se repite: en el borde de una carta, de una pared o de un cuaderno. Para que cierre sin que el último motivo quede cortado o apretado, hay que repartir bien el largo. Escribí el largo de la tira, el ancho de tu motivo y el espacio que querés dejar entre uno y otro: te dice cuántos entran, cuánto sobra y qué espacio conviene para que quede justo.</p>
+  <div class="card">
+    <div class="gd-two">
+      <label class="gd-ctl" for="gd-l"><span>Largo de la tira (cm)</span><input id="gd-l" type="number" inputmode="decimal" min="10" max="1000" step="0.5" value="60"></label>
+      <label class="gd-ctl" for="gd-a"><span>Alto de la guarda (cm)</span><input id="gd-a" type="number" inputmode="decimal" min="1" max="50" step="0.5" value="6"></label>
+      <label class="gd-ctl" for="gd-m"><span>Ancho de un motivo (cm)</span><input id="gd-m" type="number" inputmode="decimal" min="0.5" max="100" step="0.1" value="4"></label>
+      <label class="gd-ctl" for="gd-e"><span>Espacio entre motivos (cm)</span><input id="gd-e" type="number" inputmode="decimal" min="0" max="50" step="0.1" value="1.5"></label>
+      <label class="gd-ctl" for="gd-g"><span>Margen en cada punta (cm)</span><input id="gd-g" type="number" inputmode="decimal" min="0" max="50" step="0.5" value="2"></label>
+      <label class="gd-ctl" for="gd-f"><span>Forma del motivo en el dibujo</span><select id="gd-f"><option value="r">Rectángulo</option><option value="o">Óvalo</option><option value="t">Triángulo</option></select></label>
+    </div>
+    <svg id="gd-svg" viewBox="0 0 320 120" role="img" aria-label="Tira con los motivos repartidos a escala"></svg>
+    <ul class="gd-res" id="gd-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: cortá una tira de papel del largo de la guarda y marcá el borde izquierdo de cada motivo con la medida de «paso» (motivo más espacio). Doblá la tira al medio para chequear que quede simétrica. En el dibujo, el motivo es solo una forma de muestra: en tu guarda puede ser una hoja, una ola o lo que dibujes. Si el sobrante con tu espacio es grande, usá el espacio ajustado: reparte ese sobrante en partes iguales entre los motivos. Es una cuenta de reparto, sin modelos de nadie.</div>
   </div>
 </section>
 
@@ -7973,6 +8002,49 @@ footer a{color:var(--c)}
     row("Zona útil",f(uw,0)+" x "+f(util,0)+" mm");
     if(n===0)row("Aviso","El paso no entra en la zona útil: bajá el alto de la «x», el margen o el espacio extra.");
     svg.setAttribute("aria-label","Hoja de "+f(W,0)+" por "+f(H,0)+" mm con "+n+" renglones de cuatro líneas a escala"+(ang>0?" y líneas inclinadas "+f(ang,0)+" grados":""));
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-guarda-v1",$=function(i){return document.getElementById(i)},ids=["gd-l","gd-a","gd-m","gd-e","gd-g","gd-f"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function calc(){
+    var L=num("gd-l",10,1000,60),A=num("gd-a",1,50,6),m=num("gd-m",0.5,100,4),e=num("gd-e",0,50,1.5),g=num("gd-g",0,50,2),fo=$("gd-f").value;
+    var U=L-2*g,n=U>=m?Math.floor((U+e)/(m+e)+1e-9):0;
+    var sob=n>0?U-(n*m+(n-1)*e):0,eAj=n>1?(U-n*m)/(n-1):0,paso=m+e,pasoAj=m+eAj;
+    var svg=$("gd-svg"),ul=$("gd-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var sc=Math.min(300/L,100/A),pw=L*sc,ph=A*sc,x0=(320-pw)/2,y0=(120-ph)/2;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:pw.toFixed(2),height:ph.toFixed(2),fill:"#e8eaed"}));
+    svg.appendChild(el("rect",{x:(x0+g*sc).toFixed(2),y:y0.toFixed(2),width:Math.max(0,U*sc).toFixed(2),height:ph.toFixed(2),fill:"none",stroke:"#9aa0a6","stroke-width":0.5,"stroke-dasharray":"2 2"}));
+    var use=n>1?eAj:0,ox=n===1?(U-m)/2:0;
+    for(var k=0;k<n;k++){
+      var xm=x0+(g+ox+k*(m+use))*sc,w=m*sc,y1=y0+ph*0.12,h=ph*0.76,sh;
+      if(fo==="o")sh=el("ellipse",{cx:(xm+w/2).toFixed(2),cy:(y0+ph/2).toFixed(2),rx:(w/2).toFixed(2),ry:(h/2).toFixed(2)});
+      else if(fo==="t")sh=el("polygon",{points:[xm.toFixed(2)+","+(y1+h).toFixed(2),(xm+w).toFixed(2)+","+(y1+h).toFixed(2),(xm+w/2).toFixed(2)+","+y1.toFixed(2)].join(" ")});
+      else sh=el("rect",{x:xm.toFixed(2),y:y1.toFixed(2),width:w.toFixed(2),height:h.toFixed(2),rx:1});
+      sh.setAttribute("fill",k%2?"#1a7f4b":"#2fbf71");svg.appendChild(sh);
+    }
+    function row(l,v){var li=document.createElement("li"),sp=document.createElement("span"),b=document.createElement("b");sp.textContent=l;b.textContent=v;li.appendChild(sp);li.appendChild(b);ul.appendChild(li)}
+    if(n===0){row("Aviso","Un motivo no entra en el largo útil ("+f(Math.max(U,0),1)+" cm): achicá el motivo o el margen.")}
+    else{
+      row("Motivos que entran",String(n));
+      row("Con tu espacio ("+f(e,1)+" cm)","sobran "+f(sob,1)+" cm; paso de "+f(paso,1)+" cm");
+      if(n>1)row("Espacio ajustado para que cierre justo",f(eAj,2)+" cm; paso de "+f(pasoAj,2)+" cm");
+      else row("Un solo motivo","va centrado, a "+f((U-m)/2+g,1)+" cm de cada punta");
+      var pa=n>1?pasoAj:0,mk=[];for(var q=0;q<Math.min(n,5);q++)mk.push(f(g+q*pa,1));
+      row("Borde izquierdo de los primeros motivos (cm desde la punta)",mk.join(", ")+(n>5?", ...":""));
+      row("Largo útil",f(U,1)+" cm (largo menos "+f(2*g,1)+" cm de márgenes)");
+    }
+    svg.setAttribute("aria-label","Tira de "+f(L,1)+" por "+f(A,1)+" cm con "+n+" motivos repartidos a escala");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
