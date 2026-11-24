@@ -495,17 +495,17 @@ footer a{color:var(--c)}
 .gc-sec .gc-res li b{text-align:right;overflow-wrap:anywhere}
 @media print{.gc-sec{display:none}}
 .cc-sec .cc-two{display:flex;flex-wrap:wrap;gap:12px}
-.cc-sec .cc-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
-.cc-sec .cc-ctl input[type=color]{width:100%;min-height:48px;padding:2px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer}
-.cc-sec .cc-ctl input:focus-visible,.cc-sec .tm-rs:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
-.cc-sec .cc-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.cc-sec .cc-prev{border-radius:14px;border:2px solid var(--line);padding:16px;margin:8px 0;overflow-wrap:anywhere}
-.cc-sec .cc-big{font-size:1.9rem;font-weight:800;line-height:1.15}
-.cc-sec .cc-small{font-size:1rem;margin-top:6px}
-.cc-sec .cc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
-.cc-sec .cc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
-.cc-sec .cc-res li b{text-align:right;overflow-wrap:anywhere}
-@media print{.cc-sec{display:none}}
+.cq-sec .cq-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.cq-sec .cq-ctl input[type=color]{width:100%;min-height:48px;padding:2px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer}
+.cq-sec .cq-ctl input:focus-visible,.cq-sec .tm-rs:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.cq-sec .cq-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.cq-sec .cq-prev{border-radius:14px;border:2px solid var(--line);padding:16px;margin:8px 0;overflow-wrap:anywhere}
+.cq-sec .cq-big{font-size:1.9rem;font-weight:800;line-height:1.15}
+.cq-sec .cq-small{font-size:1rem;margin-top:6px}
+.cq-sec .cq-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.cq-sec .cq-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.cq-sec .cq-res li b{text-align:right;overflow-wrap:anywhere}
+@media print{.cq-sec{display:none}}
 .pn-sec .pn-two{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
 .pn-sec .pn-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 130px;margin-top:8px}
 .pn-sec .pn-ctl input[type=number],.pn-sec .pn-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
@@ -736,6 +736,19 @@ footer a{color:var(--c)}
 .vd-sec .vd-res li b{text-align:right}
 .vd-sec svg{display:block;width:100%;max-width:100%;height:auto;margin:8px 0;border-radius:12px;background:#14161a;border:2px solid var(--line)}
 @media print{.vd-sec{display:none}}
+.cc-sec .cc-ctl{display:grid;gap:4px;font-weight:700;margin-top:8px}
+.cc-sec .cc-ctl input[type=number],.cc-sec .cc-ctl select{min-height:44px;padding:4px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;max-width:100%}
+.cc-sec .cc-ctl input:focus-visible,.cc-sec .cc-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.cc-sec .cc-two{display:flex;flex-wrap:wrap;gap:12px}
+.cc-sec .cc-two .cc-ctl{flex:1 1 130px}
+.cc-sec .cc-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.cc-sec .cc-res li{box-sizing:border-box;min-width:0;max-width:100%;flex-wrap:wrap;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.cc-sec .cc-res li b{text-align:right}
+.cc-sec .cc-tw{overflow-x:auto;margin:8px 0}
+.cc-sec table{border-collapse:collapse;width:100%;font-size:.95rem}
+.cc-sec th,.cc-sec td{border:2px solid var(--line);padding:6px 8px;text-align:center}
+.cc-sec svg{display:block;width:100%;max-width:100%;height:auto;margin:8px 0;border-radius:12px;background:#14161a;border:2px solid var(--line)}
+@media print{.cc-sec{display:none}}
 </style>
 </head>
 <body>
@@ -831,6 +844,7 @@ footer a{color:var(--c)}
     <a href="#peso-papel">Peso del papel</a>
     <a href="#secado">Reloj de secado</a>
     <a href="#distancia-obra">Desde dónde mirar la obra</a>
+    <a href="#cuaderno-cosido">Cuaderno cosido</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2755,6 +2769,23 @@ footer a{color:var(--c)}
     <svg id="vd-svg" viewBox="0 0 320 170" role="img" aria-label="Vista desde arriba: la persona, la obra y el ángulo de visión"></svg>
     <ul class="vd-res" id="vd-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: la distancia para ver la obra entera sale de su diagonal y del ángulo elegido (distancia = diagonal / (2 x tangente de la mitad del ángulo)). Con 40 grados queda cerca de 1,4 veces la diagonal, una regla práctica habitual para mirar con comodidad sin mover la cabeza. El otro dato usa la agudeza visual normal, que distingue detalles de alrededor de 1 minuto de arco: un trazo de 1 mm deja de verse a unos 3,4 m. Es una estimación para vista normal y buena luz; para el cartel o el mural que se ve de lejos, conviene probar a esa distancia con una prueba en papel.</div>
+  </div>
+</section>
+
+<section id="cuaderno-cosido" class="cq-sec">
+  <h2>Cuaderno cosido: hojas y páginas</h2>
+  <p style="color:var(--muted)">Para hacer un cuaderno de bocetos o un libro de artista con hojas dobladas por la mitad y cosidas en el lomo. Elegí el tamaño de la hoja y cuántas páginas querés: te dice cuántas hojas cortar, qué tamaño queda y en qué orden van las páginas en cada hoja.</p>
+  <div class="card">
+    <div class="cq-two">
+      <label class="cq-ctl" for="cq-f"><span>Tamaño de la hoja sin doblar</span>
+        <select id="cq-f"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="42,59.4">A2 (42 x 59,4 cm)</option><option value="50,70">Pliego 50 x 70 cm</option></select></label>
+      <label class="cq-ctl" for="cq-p"><span>Páginas que quiero</span><input id="cq-p" type="number" inputmode="numeric" min="4" max="200" step="1" value="24"></label>
+      <label class="cq-ctl" for="cq-m"><span>Hojas por cuadernillo</span><input id="cq-m" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
+    </div>
+    <ul class="cq-res" id="cq-res" aria-live="polite"></ul>
+    <svg id="cq-svg" viewBox="0 0 320 120" role="img" aria-label="Dibujo a escala de la hoja abierta y de la página que queda al doblarla por la mitad"></svg>
+    <div class="cq-tw"><table id="cq-tab" aria-label="Orden de las páginas en cada hoja del primer cuadernillo"></table></div>
+    <div class="tip">Cómo se calcula: cada hoja doblada por la mitad da 4 páginas (dos de cada lado), así que las páginas se redondean hacia arriba al próximo múltiplo de 4 y las que sobran quedan en blanco. La página mide la mitad de la hoja: se dobla por la mitad del lado largo, por eso una A4 da páginas A5. Un cuadernillo es un grupo de hojas encajadas una dentro de otra; con muchas hojas se arman varios cuadernillos que se cosen juntos. La tabla muestra el primer cuadernillo: si las hojas están numeradas de afuera hacia adentro, la hoja k lleva de un lado las páginas (total - 2(k-1)) y (2k-1) y del otro la 2k y (total - 2k + 1), con el total del cuadernillo. Con muchas hojas encajadas el borde del lado abierto queda desparejo: se recorta al terminar o se usan cuadernillos de 2 a 4 hojas.</div>
   </div>
 </section>
 
@@ -7350,6 +7381,43 @@ footer a{color:var(--c)}
     var t1=el("text",{x:(ex+ox)/2,y:y-6,fill:"#e8eaed","font-size":13,"text-anchor":"middle"});t1.textContent=m(d);svg.appendChild(t1);
     var t2=el("text",{x:ex,y:y+26,fill:"#9aa3ad","font-size":12,"text-anchor":"start"});t2.textContent="vos";svg.appendChild(t2);
     var t3=el("text",{x:Math.min(ox,300),y:15,fill:"#9aa3ad","font-size":12,"text-anchor":"middle"});t3.textContent="obra (diagonal)";svg.appendChild(t3);
+    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-cuaderno-cosido-v1",$=function(i){return document.getElementById(i)},ids=["cq-f","cq-p","cq-m"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i]}})}catch(e){}
+  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(x,d){return x.toFixed(d).replace(".",",")}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function calc(){
+    var wh=$("cq-f").value.split(",").map(parseFloat),w=wh[0],h=wh[1];
+    var pg=Math.round(val("cq-p",4,200,24)),mh=Math.round(val("cq-m",1,8,3));
+    var tot=Math.ceil(pg/4)*4,hojas=tot/4,cuad=Math.ceil(hojas/mh),ph=h/2,pa=Math.min(w,ph),pb=Math.max(w,ph);
+    var rows=[["Páginas (múltiplo de 4)",tot+(tot>pg?" ("+(tot-pg)+" en blanco)":"")],["Hojas para cortar",String(hojas)],["Cuadernillos",cuad+(cuad>1?(hojas-(cuad-1)*mh===mh?" (de "+mh+" hojas cada uno)":" (de "+mh+" hojas, el último con "+(hojas-(cuad-1)*mh)+")"):" de "+hojas+" hoja"+(hojas>1?"s":""))],["Tamaño de la página",f(pa,1)+" x "+f(pb,1)+" cm"],["Hojas sin doblar",f(w,1)+" x "+f(h,1)+" cm"]];
+    var ul=$("cq-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),b=document.createElement("b");p.textContent=x[0];b.textContent=x[1];li.appendChild(p);li.appendChild(b);ul.appendChild(li)});
+    var svg=$("cq-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(190/w,100/h),W=w*sc,H=h*sc,x0=10,y0=(120-H)/2;
+    svg.appendChild(el("rect",{x:x0,y:y0,width:W,height:H,fill:"none",stroke:"#e8eaed","stroke-width":2}));
+    svg.appendChild(el("line",{x1:x0,y1:y0+H/2,x2:x0+W,y2:y0+H/2,stroke:"#2fbf71","stroke-width":2,"stroke-dasharray":"5 3"}));
+    var x1=x0+W+30;
+    svg.appendChild(el("rect",{x:x1,y:y0,width:W,height:H/2,fill:"#2fbf7133",stroke:"#2fbf71","stroke-width":2}));
+    var a=el("text",{x:x0,y:Math.max(12,y0-4),fill:"#9aa3ad","font-size":11,"text-anchor":"start"});a.textContent="hoja (pliegue en verde)";svg.appendChild(a);
+    var b=el("text",{x:x1+W/2,y:y0+H/2+13,fill:"#9aa3ad","font-size":11,"text-anchor":"middle"});b.textContent="página";svg.appendChild(b);
+    var tb=$("cq-tab");while(tb.firstChild)tb.removeChild(tb.firstChild);
+    var n=Math.min(mh,hojas),T=n*4;
+    var hd=document.createElement("tr");["Hoja","Un lado","Otro lado"].forEach(function(x){var th=document.createElement("th");th.textContent=x;hd.appendChild(th)});tb.appendChild(hd);
+    for(var k=1;k<=n;k++){
+      var tr=document.createElement("tr");
+      [String(k),(T-2*(k-1))+" y "+(2*k-1),(2*k)+" y "+(T-2*k+1)].forEach(function(x){var td=document.createElement("td");td.textContent=x;tr.appendChild(td)});
+      tb.appendChild(tr);
+    }
     try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
