@@ -569,6 +569,16 @@ footer a{color:var(--c)}
 .rg-sec .rg-res li:not(:has(i)){display:block}
 .rg-sec .rg-res li:not(:has(i)) b{display:block;white-space:normal;text-align:left;margin-top:4px}
 @media print{.rg-sec{display:none}}
+.rl-sec .rl-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.rl-sec .rl-two{display:flex;flex-wrap:wrap;gap:12px}
+.rl-sec .rl-ctl input,.rl-sec .rl-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.rl-sec .rl-ctl input:focus-visible,.rl-sec .rl-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.rl-sec #rl-svg{display:block;width:100%;max-width:340px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.rl-sec .rl-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.rl-sec .rl-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+.rl-sec .rl-res span{flex:0 1 auto;min-width:0}
+.rl-sec .rl-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media print{.rl-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -923,6 +933,7 @@ footer a{color:var(--c)}
     <a href="#mural">Mural en hojas</a>
     <a href="#degrade">Degradé en pasos</a>
     <a href="#regla-60-30-10">Regla 60-30-10</a>
+    <a href="#renglones">Renglones para letras</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2990,6 +3001,26 @@ footer a{color:var(--c)}
     <svg id="rg-svg" viewBox="0 0 320 200" role="img" aria-label="Esquema a escala de la superficie con los tres colores repartidos en franjas según el porcentaje elegido"></svg>
     <ul class="rg-res" id="rg-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: el área total es ancho por alto, y cada color toma su porcentaje de esa área. El dibujo lo reparte en franjas horizontales de alto proporcional, pero en tu obra los colores pueden ir en manchas, formas o fondos separados: lo que cuenta es la cantidad total. Es una pauta, no una ley: probá otros repartos y mirá con los ojos entrecerrados cuál equilibra mejor. Para saber cuánta pintura lleva cada uno, combinala con la herramienta "Cuánta pintura necesito".</div>
+  </div>
+</section>
+
+<section id="renglones" class="rl-sec">
+  <h2>Renglones para letras a mano</h2>
+  <p style="color:var(--muted)">Para practicar letra cursiva, de imprenta o rotulado, conviene trazar con regla cuatro líneas por renglón: la base, la altura de las letras bajas (la «x»), la de las letras altas y la de las que cuelgan. Elegí la hoja y el alto de la «x»: te dice cuántos renglones entran, cada cuántos milímetros va cada línea y, si querés, dibuja la inclinación.</p>
+  <div class="card">
+    <div class="rl-two">
+      <label class="rl-ctl" for="rl-h"><span>Hoja</span><select id="rl-h"><option value="210,297">A4</option><option value="148,210">A5</option><option value="297,420">A3</option><option value="216,279">Carta</option></select></label>
+      <label class="rl-ctl" for="rl-o"><span>Posición</span><select id="rl-o"><option value="p">De pie</option><option value="a">Acostada</option></select></label>
+      <label class="rl-ctl" for="rl-m"><span>Margen (mm)</span><input id="rl-m" type="number" inputmode="decimal" min="0" max="50" step="1" value="15"></label>
+      <label class="rl-ctl" for="rl-x"><span>Alto de la «x» (mm)</span><input id="rl-x" type="number" inputmode="decimal" min="2" max="40" step="0.5" value="8"></label>
+      <label class="rl-ctl" for="rl-a"><span>Letras altas (veces la «x»)</span><select id="rl-a"><option value="0.75">0,75</option><option value="1" selected>1</option><option value="1.5">1,5</option><option value="2">2</option></select></label>
+      <label class="rl-ctl" for="rl-d"><span>Letras que cuelgan (veces la «x»)</span><select id="rl-d"><option value="0.75">0,75</option><option value="1" selected>1</option><option value="1.5">1,5</option><option value="2">2</option></select></label>
+      <label class="rl-ctl" for="rl-g"><span>Espacio extra entre renglones (mm)</span><input id="rl-g" type="number" inputmode="decimal" min="0" max="40" step="0.5" value="0"></label>
+      <label class="rl-ctl" for="rl-i"><span>Inclinación (grados, 0 a 30)</span><input id="rl-i" type="number" inputmode="decimal" min="0" max="30" step="1" value="0"></label>
+    </div>
+    <svg id="rl-svg" viewBox="0 0 200 280" role="img" aria-label="Hoja con los renglones de cuatro líneas a escala"></svg>
+    <ul class="rl-res" id="rl-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: marcá en el margen izquierdo la medida del paso entre renglones con una tira de papel, y pasá la regla por cada marca. En el dibujo, la línea llena es la base, la punteada marca la altura de la «x», y las tenues marcan las letras altas y las que cuelgan. El paso es: «x» + letras altas + letras que cuelgan + espacio extra. Es una cuenta de geometría simple, sin fuentes externas.</div>
   </div>
 </section>
 
@@ -7894,6 +7925,54 @@ footer a{color:var(--c)}
     s2.textContent="Proporción de pintura";b2.textContent=pr[0]+" : "+pr[1]+" : "+pr[2]+" (por ejemplo "+pr[0]/5+" tapitas, "+pr[1]/5+" y "+pr[2]/5+")";
     l2.appendChild(s2);l2.appendChild(b2);ul.appendChild(l2);
     svg.setAttribute("aria-label","Esquema a escala de la superficie de "+f(W,0)+" por "+f(H,0)+" cm con los tres colores repartidos "+pr.join(", "));
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+
+<script>
+(function(){
+  var KEY="tp-renglones-v1",$=function(i){return document.getElementById(i)},ids=["rl-h","rl-o","rl-m","rl-x","rl-a","rl-d","rl-g","rl-i"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function calc(){
+    var wh=String($("rl-h").value).split(",").map(Number);if(wh.length!==2||wh.some(function(x){return !isFinite(x)}))wh=[210,297];
+    var W=wh[0],H=wh[1];if($("rl-o").value==="a"){var tmp=W;W=H;H=tmp}
+    var m=num("rl-m",0,50,15),x=num("rl-x",2,40,8),ka=num("rl-a",0.75,2,1),kd=num("rl-d",0.75,2,1),g=num("rl-g",0,40,0),ang=num("rl-i",0,30,0);
+    var a=x*ka,d=x*kd,paso=a+x+d+g,util=H-2*m,uw=W-2*m;
+    var n=util>0&&paso>0?Math.floor((util+g)/paso+1e-9):0;if(n<0)n=0;
+    var svg=$("rl-svg"),ul=$("rl-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    var sc=Math.min(190/W,270/H),pw=W*sc,ph=H*sc,x0=(200-pw)/2,y0=(280-ph)/2;
+    svg.setAttribute("viewBox","0 0 200 280");
+    var cp=el("clipPath",{id:"rl-clip"});cp.appendChild(el("rect",{x:(x0+m*sc).toFixed(2),y:(y0+m*sc).toFixed(2),width:Math.max(0,uw*sc).toFixed(2),height:Math.max(0,util*sc).toFixed(2)}));svg.appendChild(cp);
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:pw.toFixed(2),height:ph.toFixed(2),fill:"#e8eaed"}));
+    svg.appendChild(el("rect",{x:(x0+m*sc).toFixed(2),y:(y0+m*sc).toFixed(2),width:Math.max(0,uw*sc).toFixed(2),height:Math.max(0,util*sc).toFixed(2),fill:"none",stroke:"#9aa0a6","stroke-width":0.4,"stroke-dasharray":"2 2"}));
+    var gr=el("g",{"clip-path":"url(#rl-clip)"}),tg=Math.tan(ang*Math.PI/180);
+    for(var k=0;k<n;k++){
+      var yt=y0+(m+k*paso)*sc,yb=yt+a*sc,yx=yb,yBase=yb+x*sc,yd=yBase+d*sc,xl=x0+m*sc,xr=x0+(m+uw)*sc;
+      gr.appendChild(el("line",{x1:xl,y1:yt.toFixed(2),x2:xr,y2:yt.toFixed(2),stroke:"#2fbf71","stroke-width":0.3,opacity:0.55}));
+      gr.appendChild(el("line",{x1:xl,y1:yd.toFixed(2),x2:xr,y2:yd.toFixed(2),stroke:"#2fbf71","stroke-width":0.3,opacity:0.55}));
+      gr.appendChild(el("line",{x1:xl,y1:yx.toFixed(2),x2:xr,y2:yx.toFixed(2),stroke:"#1a7f4b","stroke-width":0.4,"stroke-dasharray":"1.5 1.5"}));
+      gr.appendChild(el("line",{x1:xl,y1:yBase.toFixed(2),x2:xr,y2:yBase.toFixed(2),stroke:"#14161a","stroke-width":0.6}));
+      if(ang>0){
+        var sp=Math.max(2*x*sc,6),hh=yd-yt,dx=hh*tg;
+        for(var xs=xl-dx;xs<xr+dx;xs+=sp){gr.appendChild(el("line",{x1:(xs+dx).toFixed(2),y1:yt.toFixed(2),x2:xs.toFixed(2),y2:yd.toFixed(2),stroke:"#c9a227","stroke-width":0.25,opacity:0.7}))}
+      }
+    }
+    svg.appendChild(gr);
+    function row(l,v){var li=document.createElement("li"),sp=document.createElement("span"),b=document.createElement("b");sp.textContent=l;b.textContent=v;li.appendChild(sp);li.appendChild(b);ul.appendChild(li)}
+    row("Renglones que entran en la hoja",String(n));
+    row("Paso entre renglones",f(paso,1)+" mm");
+    row("Alturas desde la línea de arriba","altas "+f(a,1)+" mm, «x» "+f(x,1)+" mm, que cuelgan "+f(d,1)+" mm");
+    row("Zona útil",f(uw,0)+" x "+f(util,0)+" mm");
+    if(n===0)row("Aviso","El paso no entra en la zona útil: bajá el alto de la «x», el margen o el espacio extra.");
+    svg.setAttribute("aria-label","Hoja de "+f(W,0)+" por "+f(H,0)+" mm con "+n+" renglones de cuatro líneas a escala"+(ang>0?" y líneas inclinadas "+f(ang,0)+" grados":""));
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
