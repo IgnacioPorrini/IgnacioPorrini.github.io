@@ -599,6 +599,17 @@ footer a{color:var(--c)}
 .tp-sec .tp-res span{flex:0 1 auto;min-width:0}
 .tp-sec .tp-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media print{.tp-sec{display:none}}
+.mz-sec .mz-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.mz-sec .mz-two{display:flex;flex-wrap:wrap;gap:12px}
+.mz-sec .mz-ctl input,.mz-sec .mz-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.mz-sec .mz-ctl input:focus-visible,.mz-sec .mz-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.mz-sec #mz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
+.mz-sec .mz-res span{flex:0 1 auto;min-width:0}
+.mz-sec .mz-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.mz-sec ol{padding-left:1.3em}
+@media print{.mz-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -956,6 +967,7 @@ footer a{color:var(--c)}
     <a href="#renglones">Renglones para letras</a>
     <a href="#guarda">Guarda decorativa</a>
     <a href="#triptico">Tríptico y políptico</a>
+    <a href="#minilibro">Minilibro de 8 páginas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3078,6 +3090,25 @@ footer a{color:var(--c)}
     <svg id="tp-svg" viewBox="0 0 320 140" role="img" aria-label="Paneles repartidos a escala"></svg>
     <ul class="tp-res" id="tp-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: el ancho total es la pared o el espacio que querés cubrir, contado de punta a punta de los paneles. Marcá los paneles sobre un cartón o una tela con las medidas de arriba y dejá la separación igual entre todos: el ojo lee mejor la obra como un conjunto cuando los huecos son parejos. Para que el dibujo continúe de un panel al siguiente, planeá la composición sobre la obra entera y recordá que lo que cae en la separación no se ve. Los números son una guía de reparto: ajustá a las medidas reales del bastidor o la madera que consigas.</div>
+  </div>
+</section>
+
+<section id="minilibro" class="mz-sec">
+  <h2>Minilibro de 8 páginas con una sola hoja</h2>
+  <p style="color:var(--muted)">Con una hoja, cuatro dobleces y un corte se arma un librito de 8 páginas, ideal para dibujos, un cuaderno de viaje o un cuento. Elegí la hoja y el margen: te dice cuánto mide cada página y cuál va boca abajo en la hoja desplegada.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="mz-h"><span>Hoja (apaisada)</span><select id="mz-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="mz-m"><span>Margen interior de cada página (cm)</span><input id="mz-m" type="number" inputmode="decimal" min="0" max="2" step="0.1" value="0.5"></label>
+    </div>
+    <svg id="mz-svg" viewBox="0 0 320 180" role="img" aria-label="Hoja desplegada con las 8 páginas numeradas"></svg>
+    <ul class="mz-res" id="mz-res" aria-live="polite"></ul>
+    <ol>
+      <li>Doblá la hoja a lo largo por la mitad y abrila. Doblala a lo ancho por la mitad, y de nuevo cada mitad hacia el centro: quedan 8 rectángulos.</li>
+      <li>Con la hoja doblada a lo ancho por la mitad, cortá sobre el pliegue desde el centro hasta la mitad del borde (la línea punteada del dibujo).</li>
+      <li>Abrí la hoja, plegala a lo largo y empujá los extremos hacia el centro hasta formar una cruz; cerrá las páginas como un librito con la portada (página 1) al frente.</li>
+    </ol>
+    <div class="tip">Cómo usarlo: dibujá cada página con el número y la orientación del dibujo: las páginas de la fila de arriba (2, 3, 4 y 5) se dibujan boca abajo respecto de la fila de abajo. La disposición se comprobó con la regla de que las páginas que comparten hoja (1-2, 3-4, 5-6, 7-8) quedan unidas por un doblez y las enfrentadas (2-3, 4-5, 6-7, 8-1) quedan juntas en el librito. El método de pliegues y el corte coincide con la guía de <a href="https://tessneedham.com/folding-instructions/" target="_blank" rel="noopener">Tess Needham</a> y con la de la <a href="https://blogs.brighton.ac.uk/visuallearning/2019/09/25/create-a-mini-zine/" target="_blank" rel="noopener">Universidad de Brighton</a>, que trae un diagrama y un modelo para imprimir; probá primero con una hoja borrador.</div>
   </div>
 </section>
 
@@ -8112,6 +8143,42 @@ footer a{color:var(--c)}
     var mk=[];for(var q=0;q<n;q++)mk.push(f(pos[q],1));
     row("Borde izquierdo de cada panel (cm desde la punta izquierda)",mk.join(", "));
     svg.setAttribute("aria-label","Obra de "+f(W,1)+" por "+f(H,1)+" cm con "+n+" paneles repartidos a escala");
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-minilibro-v1",$=function(i){return document.getElementById(i)},ids=["mz-h","mz-m"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function calc(){
+    var p=$("mz-h").value.split(","),W=parseFloat(p[0]),H=parseFloat(p[1]),nom=p[2];
+    var m=parseFloat(String($("mz-m").value).replace(",","."));if(!isFinite(m))m=0.5;m=Math.min(2,Math.max(0,m));
+    var pw=W/4,ph=H/2,uw=pw-2*m,uh=ph-2*m;
+    var svg=$("mz-svg"),ul=$("mz-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var sc=Math.min(300/W,160/H),x0=(320-W*sc)/2,y0=(180-H*sc)/2,top=[5,4,3,2],bot=[6,7,8,1];
+    for(var r=0;r<2;r++)for(var c=0;c<4;c++){
+      var n=r===0?top[c]:bot[c],x=x0+c*pw*sc,y=y0+r*ph*sc;
+      svg.appendChild(el("rect",{x:x.toFixed(2),y:y.toFixed(2),width:(pw*sc).toFixed(2),height:(ph*sc).toFixed(2),fill:n===1?"#2fbf71":((r+c)%2?"#1a7f4b":"#2c9c60"),stroke:"#14161a","stroke-width":0.5}));
+      var cx=x+pw*sc/2,cy=y+ph*sc/2+5,tx=el("text",{x:cx.toFixed(2),y:cy.toFixed(2),"text-anchor":"middle","font-size":16,"font-weight":700,fill:"#ffffff"});
+      if(r===0)tx.setAttribute("transform","rotate(180 "+cx.toFixed(2)+" "+(y+ph*sc/2).toFixed(2)+")");
+      tx.textContent=String(n);svg.appendChild(tx);
+    }
+    svg.appendChild(el("line",{x1:(x0+pw*sc).toFixed(2),y1:(y0+ph*sc).toFixed(2),x2:(x0+3*pw*sc).toFixed(2),y2:(y0+ph*sc).toFixed(2),stroke:"#ffc23d","stroke-width":2,"stroke-dasharray":"4 3"}));
+    row("Hoja",nom+" apaisada, "+f(W,1)+" x "+f(H,1)+" cm");
+    row("Cada página",f(pw,2)+" x "+f(ph,2)+" cm");
+    row("Zona de dibujo con margen",uw>0&&uh>0?f(uw,2)+" x "+f(uh,2)+" cm":"Sin lugar: achicá el margen");
+    row("Proporción de la página (ancho : alto)",f(pw/ph,2)+" : 1");
+    row("Largo del corte",f(W/2,1)+" cm, centrado sobre el pliegue del medio");
+    row("Páginas boca abajo en la hoja","2, 3, 4 y 5");
+    svg.setAttribute("aria-label","Hoja "+nom+" desplegada: arriba, boca abajo, las páginas 5, 4, 3 y 2; abajo 6, 7, 8 y 1; el corte va en el centro");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
