@@ -556,6 +556,19 @@ footer a{color:var(--c)}
 .dg-sec .dg-res li:not(:has(i)){display:block}
 .dg-sec .dg-res li:not(:has(i)) b{display:block;white-space:normal;text-align:left;margin-top:4px}
 @media print{.dg-sec{display:none}}
+.rg-sec .rg-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.rg-sec .rg-two{display:flex;flex-wrap:wrap;gap:12px}
+.rg-sec .rg-ctl input,.rg-sec .rg-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.rg-sec .rg-ctl input:focus-visible,.rg-sec .rg-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.rg-sec #rg-svg{display:block;width:100%;max-width:360px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.rg-sec .rg-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.rg-sec .rg-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;align-items:center;gap:10px}
+.rg-sec .rg-res i{flex:0 0 30px;height:30px;border-radius:8px;border:2px solid #e8eaed55}
+.rg-sec .rg-res span{flex:1 1 auto;min-width:0}
+.rg-sec .rg-res b{text-align:right;flex:0 0 auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rg-sec .rg-res li:not(:has(i)){display:block}
+.rg-sec .rg-res li:not(:has(i)) b{display:block;white-space:normal;text-align:left;margin-top:4px}
+@media print{.rg-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -909,6 +922,7 @@ footer a{color:var(--c)}
     <a href="#sobre">Sobre para una tarjeta</a>
     <a href="#mural">Mural en hojas</a>
     <a href="#degrade">Degradé en pasos</a>
+    <a href="#regla-60-30-10">Regla 60-30-10</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2958,6 +2972,24 @@ footer a{color:var(--c)}
     <svg id="dg-svg" viewBox="0 0 320 90" role="img" aria-label="Tira con el degradé en escalones entre los dos colores elegidos"></svg>
     <ul class="dg-res" id="dg-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: el escalón k de n tiene una fracción k / (n - 1) de B y el resto de A; con P partes por mezcla, las partes de B son esa fracción por P, redondeada a un número entero. La muestra del color es un promedio simple en pantalla: la pintura real se mezcla distinto (amarillo y azul dan un verde más apagado, por ejemplo), así que hacé una prueba en un papel y ajustá. Si usás témpera, mezclá siempre en el mismo orden y con las mismas medidas.</div>
+  </div>
+</section>
+
+<section id="regla-60-30-10" class="rg-sec">
+  <h2>Regla 60-30-10: cuánto cubre cada color</h2>
+  <p style="color:var(--muted)">Una pauta muy usada en diseño para repartir los colores de una obra, un cartel o un fondo: un color dominante, uno secundario y uno de acento. Elegí los tres colores y el tamaño de la superficie: te dice cuántos centímetros cuadrados lleva cada uno y cuánta pintura tenés que preparar en proporción.</p>
+  <div class="card">
+    <div class="rg-two">
+      <label class="rg-ctl" for="rg-a"><span>Color dominante</span><input id="rg-a" type="color" value="#2b4a6f"></label>
+      <label class="rg-ctl" for="rg-b"><span>Color secundario</span><input id="rg-b" type="color" value="#d9c9a3"></label>
+      <label class="rg-ctl" for="rg-c"><span>Color de acento</span><input id="rg-c" type="color" value="#d9482b"></label>
+      <label class="rg-ctl" for="rg-p"><span>Reparto (dominante - secundario - acento)</span><select id="rg-p"><option value="60,30,10">60 - 30 - 10 (la regla clásica)</option><option value="70,20,10">70 - 20 - 10 (más calmo)</option><option value="50,35,15">50 - 35 - 15 (más movido)</option><option value="80,15,5">80 - 15 - 5 (muy sobrio)</option></select></label>
+      <label class="rg-ctl" for="rg-w"><span>Ancho de la superficie (cm)</span><input id="rg-w" type="number" inputmode="decimal" min="5" max="1000" step="1" value="50"></label>
+      <label class="rg-ctl" for="rg-h"><span>Alto de la superficie (cm)</span><input id="rg-h" type="number" inputmode="decimal" min="5" max="1000" step="1" value="70"></label>
+    </div>
+    <svg id="rg-svg" viewBox="0 0 320 200" role="img" aria-label="Esquema a escala de la superficie con los tres colores repartidos en franjas según el porcentaje elegido"></svg>
+    <ul class="rg-res" id="rg-res" aria-live="polite"></ul>
+    <div class="tip">Cómo se calcula: el área total es ancho por alto, y cada color toma su porcentaje de esa área. El dibujo lo reparte en franjas horizontales de alto proporcional, pero en tu obra los colores pueden ir en manchas, formas o fondos separados: lo que cuenta es la cantidad total. Es una pauta, no una ley: probá otros repartos y mirá con los ojos entrecerrados cuál equilibra mejor. Para saber cuánta pintura lleva cada uno, combinala con la herramienta "Cuánta pintura necesito".</div>
   </div>
 </section>
 
@@ -7824,6 +7856,44 @@ footer a{color:var(--c)}
       bb.textContent=c;li.appendChild(sw);li.appendChild(sp);li.appendChild(bb);ul.appendChild(li);
     }
     if(rep){var l2=document.createElement("li"),s2=document.createElement("span"),b2=document.createElement("b");s2.textContent="Aviso";b2.textContent="Hay escalones iguales: subí las partes por mezcla o bajá los escalones.";l2.appendChild(s2);l2.appendChild(b2);ul.appendChild(l2)}
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-regla-v1",$=function(i){return document.getElementById(i)},ids=["rg-a","rg-b","rg-c","rg-p","rg-w","rg-h"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i]}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function col(id,def){var v=$(id).value;return /^#[0-9a-fA-F]{6}$/.test(v)?v:def}
+  function calc(){
+    var W=num("rg-w",5,1000,50),H=num("rg-h",5,1000,70);
+    var pr=String($("rg-p").value).split(",").map(Number);
+    if(pr.length!==3||pr.some(function(x){return !isFinite(x)}))pr=[60,30,10];
+    var cs=[col("rg-a","#2b4a6f"),col("rg-b","#d9c9a3"),col("rg-c","#d9482b")],nm=["Dominante","Secundario","Acento"];
+    var A=W*H,ul=$("rg-res"),svg=$("rg-svg");
+    while(ul.firstChild)ul.removeChild(ul.firstChild);while(svg.firstChild)svg.removeChild(svg.firstChild);
+    var sc=Math.min(300/W,180/H),pw=W*sc,ph=H*sc,x0=(320-pw)/2,y0=(200-ph)/2,y=y0;
+    for(var k=0;k<3;k++){
+      var ar=A*pr[k]/100,hh=ph*pr[k]/100;
+      svg.appendChild(el("rect",{x:x0.toFixed(1),y:y.toFixed(1),width:pw.toFixed(1),height:hh.toFixed(1),fill:cs[k]}));
+      if(hh>14){var tx=el("text",{x:(x0+pw/2).toFixed(1),y:(y+hh/2+3).toFixed(1),fill:"#e8eaed","font-size":10,"text-anchor":"middle","stroke":"#14161a","stroke-width":0.6,"paint-order":"stroke"});tx.textContent=pr[k]+" %";svg.appendChild(tx)}
+      y+=hh;
+      var li=document.createElement("li"),sw=document.createElement("i"),sp=document.createElement("span"),bb=document.createElement("b");
+      sw.style.background=cs[k];sw.setAttribute("aria-hidden","true");
+      sp.textContent=nm[k]+" ("+pr[k]+" %), "+cs[k];
+      bb.textContent=f(ar,0)+" cm\u00B2";
+      li.appendChild(sw);li.appendChild(sp);li.appendChild(bb);ul.appendChild(li);
+    }
+    var l2=document.createElement("li"),s2=document.createElement("span"),b2=document.createElement("b");
+    s2.textContent="Proporción de pintura";b2.textContent=pr[0]+" : "+pr[1]+" : "+pr[2]+" (por ejemplo "+pr[0]/5+" tapitas, "+pr[1]/5+" y "+pr[2]/5+")";
+    l2.appendChild(s2);l2.appendChild(b2);ul.appendChild(l2);
+    svg.setAttribute("aria-label","Esquema a escala de la superficie de "+f(W,0)+" por "+f(H,0)+" cm con los tres colores repartidos "+pr.join(", "));
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
