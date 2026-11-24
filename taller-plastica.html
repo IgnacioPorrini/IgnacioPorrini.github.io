@@ -969,6 +969,7 @@ footer a{color:var(--c)}
     <a href="#triptico">Tríptico y políptico</a>
     <a href="#minilibro">Minilibro de 8 páginas</a>
     <a href="#acordeon">Libro acordeón</a>
+    <a href="#guirnalda">Guirnalda de anillos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3131,6 +3132,29 @@ footer a{color:var(--c)}
       <li>Doblá en zigzag, un pliegue hacia adelante y el siguiente hacia atrás, y marcá bien cada doblez con la uña o una regla.</li>
     </ol>
     <div class="tip">Cómo usarlo: la tira plegada mide un panel de ancho; dibujá primero con la tira abierta para que la imagen siga de un panel al otro, y cuidá que una pegadura no caiga justo en medio de un detalle importante. Si la pegadura queda lejos de un pliegue, el resumen lo avisa para que cambies el solape o los paneles. El cálculo es una división en partes iguales, sin fuente externa: no encontré una guía de plegado que pudiera confirmar acá, así que probá primero con una tira de borrador y ajustá a tu papel.</div>
+  </div>
+</section>
+
+<section id="guirnalda" class="mz-sec">
+  <h2>Guirnalda de anillos de papel: cuántas hojas</h2>
+  <p style="color:var(--muted)">La cadena de anillos de papel es un clásico para decorar una sala o una muestra: se cortan tiras, se pegan en aro y se van enlazando. Elegí la hoja, el ancho de la tira y el largo que querés: te dice cuántas tiras salen de cada hoja y cuántas hojas comprar, con colores alternados si querés.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="gu-h"><span>Hoja</span><select id="gu-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="gu-o"><span>Cortar las tiras</span><select id="gu-o"><option value="largo" selected>A lo largo de la hoja (tiras largas)</option><option value="corto">A lo ancho de la hoja (tiras cortas)</option></select></label>
+      <label class="mz-ctl" for="gu-w"><span>Ancho de la tira (cm)</span><input id="gu-w" type="number" inputmode="decimal" min="1" max="6" step="0.5" value="2"></label>
+      <label class="mz-ctl" for="gu-s"><span>Solape para pegar (cm)</span><input id="gu-s" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
+      <label class="mz-ctl" for="gu-l"><span>Largo de la guirnalda (cm)</span><input id="gu-l" type="number" inputmode="numeric" min="20" max="2000" step="10" value="200"></label>
+      <label class="mz-ctl" for="gu-c"><span>Colores alternados (1 a 4)</span><input id="gu-c" type="number" inputmode="numeric" min="1" max="4" step="1" value="2"></label>
+    </div>
+    <svg id="gu-svg" viewBox="0 0 320 150" role="img" aria-label="Hoja dividida en tiras para los anillos"></svg>
+    <ul class="mz-res" id="gu-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá en la hoja el ancho de la tira con lápiz y regla, y cortá todas las tiras del mismo largo (el sobrante de la hoja queda para otro trabajo).</li>
+      <li>Pegá cada tira en aro, solapando los extremos el ancho indicado, y dejá secar un minuto antes de enlazar.</li>
+      <li>Pasá cada tira nueva por dentro del último anillo, antes de pegarla, y alterná los colores en el orden que elijas.</li>
+    </ol>
+    <div class="tip">Cómo usarlo: el largo de la guirnalda es una estimación, porque depende de qué tan flojos queden los enlaces y de qué tan gruesa sea la hoja: armá tres anillos de prueba, medilos tensos y, si da distinto, ajustá el largo que pedís. La cuenta es geométrica y no usa fuente externa: cada tira mide lo que mide el borde de la hoja, el aro queda con ese largo menos el solape, y cada eslabón suma, aproximadamente, media vuelta menos un ancho de tira.</div>
   </div>
 </section>
 
@@ -8246,6 +8270,58 @@ footer a{color:var(--c)}
     var lis=[];for(var q=1;q<n;q++)lis.push(f(q*pw,1));
     row("Pliegues desde el borde izquierdo (cm)",lis.join(", "));
     svg.setAttribute("aria-label","Tira de "+f(L,1)+" por "+f(H,1)+" cm dividida en "+n+" paneles de "+f(pw,2)+" cm");
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-guirnalda-v1",$=function(i){return document.getElementById(i)},ids=["gu-h","gu-o","gu-w","gu-s","gu-l","gu-c"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg",COL=["#2fbf71","#ffc23d","#4aa3ff","#ff6b81"];
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("gu-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]),nom=p[2];
+    var largo=$("gu-o").value!=="corto";
+    var w=num("gu-w",1,6,2,false),s=num("gu-s",0.5,3,1,false),G=num("gu-l",20,2000,200,true),nc=num("gu-c",1,4,2,true);
+    var L=largo?A:B,T=largo?B:A;
+    var svg=$("gu-svg"),ul=$("gu-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var per=Math.floor(T/w+1e-9),sob=T-per*w;
+    var c=L-s,paso=c/2-w;
+    if(per<1||paso<=0.5){
+      row("Aviso","Con esas medidas no se arma una cadena: probá una tira más angosta o cortar a lo largo de la hoja");
+      return;
+    }
+    var n=Math.max(1,Math.ceil((G-w)/paso));
+    var hojas=Math.ceil(n/per),real=n*paso+w;
+    var sc=Math.min(300/L,130/T),x0=(320-L*sc)/2,y0=(150-T*sc)/2;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(L*sc).toFixed(2),height:(T*sc).toFixed(2),fill:"#2a2d33",stroke:"#8a8f98","stroke-width":0.6}));
+    for(var i=0;i<per;i++){
+      svg.appendChild(el("rect",{x:x0.toFixed(2),y:(y0+i*w*sc).toFixed(2),width:(L*sc).toFixed(2),height:(w*sc).toFixed(2),fill:COL[i%nc],"fill-opacity":0.85,stroke:"#14161a","stroke-width":0.4}));
+    }
+    var ov=el("rect",{x:(x0+L*sc-s*sc).toFixed(2),y:y0.toFixed(2),width:(s*sc).toFixed(2),height:(per*w*sc).toFixed(2),fill:"#ffffff","fill-opacity":0.35});
+    svg.appendChild(ov);
+    row("Hoja",nom+(largo?", tiras a lo largo":", tiras a lo ancho")+" ("+f(L,1)+" cm de largo de tira)");
+    row("Tiras por hoja",per+" de "+f(w,1)+" cm"+(sob>0.05?" (sobran "+f(sob,1)+" cm de ancho)":""));
+    row("Aro de cada anillo","perímetro "+f(c,1)+" cm, diámetro unos "+f(c/Math.PI,1)+" cm");
+    row("Cada eslabón suma","unos "+f(paso,1)+" cm");
+    row("Anillos necesarios",String(n));
+    row("Hojas necesarias",hojas+(hojas===1?" hoja":" hojas")+" ("+(hojas*per-n)+" tiras de sobra)");
+    if(nc>1){
+      var pc=[],q;for(q=0;q<nc;q++)pc.push(Math.floor(n/nc)+(q<n%nc?1:0));
+      var hc=pc.map(function(a){return Math.ceil(a/per)});
+      row("Por color",pc.map(function(a,j){return "color "+(j+1)+": "+a+" anillos"}).join(", "));
+      row("Hojas por color",hc.map(function(a,j){return "color "+(j+1)+": "+a}).join(", ")+" (si se compra por color)");
+    }
+    row("Largo estimado",f(real,0)+" cm (pedido: "+f(G,0)+" cm)");
+    if(w>c/6)row("Aviso","Tira ancha para ese aro: la cadena queda rígida y se enlaza con dificultad");
+    svg.setAttribute("aria-label","Hoja "+nom+" dividida en "+per+" tiras de "+f(w,1)+" cm para anillos");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
