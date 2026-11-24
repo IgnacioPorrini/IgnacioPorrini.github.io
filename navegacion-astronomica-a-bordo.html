@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.ico">
+<link rel="canonical" href="https://ignacioporrini.github.io/navegacion-astronomica-a-bordo.html">
+<meta property="og:title" content="Navegación astronómica a bordo">
+<meta property="og:description" content="Apuntes, planilla de pasaje meridiano, recta de altura, tres estrellas y práctica de ángulos horarios, desde el celular.">
+<meta property="og:url" content="https://ignacioporrini.github.io/navegacion-astronomica-a-bordo.html">
+<meta property="og:type" content="website">
+<title>Navegación astronómica a bordo · Ignacio Porrini</title>
+<meta name="description" content="Espacio de estudio y cálculo de navegación astronómica: apuntes de la esfera celeste y ángulos horarios, planilla de pasaje meridiano, recta de altura, situación por tres estrellas, crepúsculos y práctica.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Mismo sistema visual que Meteorología a bordo: cuadrícula de plotting, fichas, acento azul de mar y verde de boya */
+:root{
+  --bg:#EEF3F2; --grid:#DDE6E4; --surface:#FFFFFF; --ink:#10262B; --muted:#4D6469; --line:#C7D5D3;
+  --sea:#0E4F73; --sea-ink:#FFFFFF; --buoy:#1F7A4D; --buoy-bg:#E2F2E8; --flag:#B45309; --star:#8A5A00;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; --star:#F2C45A; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1619; --grid:#122326; --surface:#112428; --ink:#E2EEEF; --muted:#95ADB1; --line:#24414A;
+  --sea:#62B6E0; --sea-ink:#03202E; --buoy:#5CC98E; --buoy-bg:#123020; --flag:#F5B14A; --star:#F2C45A; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:700 2.6rem/1 var(--display);margin:0;color:var(--sea);text-wrap:balance}
+h2{font:700 1.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+h3{font:700 1.2rem/1.2 var(--display);margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--sea)}
+.lede{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-weight:600}
+.quick a small{font-weight:400;color:var(--muted);font-size:13px}
+section{display:flex;flex-direction:column;gap:12px;scroll-margin-top:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card ul,.card ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+details.card>summary{cursor:pointer;font:700 1.15rem/1.2 var(--display);list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.card>summary::after{content:"+";font-family:var(--mono);color:var(--muted)}
+details.card[open]>summary::after{content:"–"}
+details.card>summary::-webkit-details-marker{display:none}
+.formula{font:500 14px/1.6 var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre}
+.tag{display:inline-block;white-space:nowrap;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;border-radius:4px;padding:2px 6px;background:var(--buoy-bg);color:var(--buoy)}
+.tag.warn{background:transparent;border:1px solid var(--flag);color:var(--flag)}
+.note{font-size:14px;color:var(--muted)}
+.warnbox{border-left:3px solid var(--flag);padding:6px 10px;font-size:14px;background:var(--bg)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:420px){.grid3{grid-template-columns:1fr 1fr}}
+label{display:flex;flex-direction:column;gap:2px;font:600 13px var(--body);color:var(--muted);min-width:0}
+input,select{font:500 16px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;min-height:42px;width:100%}
+input:focus,select:focus{outline:2px solid var(--sea);outline-offset:1px}
+.inrow{display:flex;gap:6px}
+.inrow input{flex:1}
+.inrow select{width:auto;flex:0 0 64px}
+button{font:600 15px var(--body);border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer;border:1px solid var(--sea);background:var(--sea);color:var(--sea-ink)}
+button.ghost{background:var(--surface);color:var(--sea)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font:500 14px var(--mono);text-align:right;white-space:nowrap}
+td.i{font:500 12px var(--mono);color:var(--muted);width:28px}
+tr.res td{background:var(--buoy-bg);font-weight:700}
+tr.sub td{color:var(--muted)}
+.big{font:700 clamp(1.4rem,6vw,1.9rem)/1.1 var(--display);color:var(--buoy)}
+.out{display:flex;flex-direction:column;gap:8px}
+svg{max-width:100%;height:auto;display:block}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;min-height:36px}
+.tab[aria-pressed="true"]{border-color:var(--buoy);background:var(--buoy-bg);color:var(--ink)}
+.q{font:600 17px var(--body)}
+.ok{color:var(--buoy);font-weight:700}.bad{color:var(--flag);font-weight:700}
+footer{font-size:13px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header style="display:flex;flex-direction:column;gap:8px">
+  <p class="eyebrow">Centro de Estudios Náuticos · Brevet A</p>
+  <h1>Navegación astronómica a bordo</h1>
+  <p class="lede">Mis apuntes del curso y las planillas de cálculo en un solo lugar: esfera celeste, ángulos horarios, pasaje meridiano, recta de altura y situación por tres estrellas. Para estudiar, preparar la observación y comprobar las cuentas hechas a mano.</p>
+  <p class="warnbox">Las efemérides del Sol y de las estrellas se calculan acá con fórmulas astronómicas (error menor a 0,2′ en declinación y a 5 s en el pasaje). Sirven para practicar y para controlar. <b>En el examen y a bordo, los datos salen del Almanaque Náutico</b>: todos los campos automáticos se pueden reemplazar a mano.</p>
+</header>
+
+<nav class="quick" aria-label="Secciones">
+  <a href="#apuntes">Apuntes<small>Teoría resumida</small></a>
+  <a href="#angulos">Ángulos horarios<small>AHG, AS, AHL y gráfico polar</small></a>
+  <a href="#meridiana">Pasaje meridiano<small>Planilla 1 a 20</small></a>
+  <a href="#recta">Recta de altura<small>Hc, Zn, Δh y situación</small></a>
+  <a href="#planificar">Planificar<small>Crepúsculos y estrellas</small></a>
+  <a href="#practica">Práctica<small>Ejercicios con corrección</small></a>
+  <a href="#clase">Apuntes de clase<small>Notas y materiales</small></a>
+</nav>
+
+<!-- ================= APUNTES ================= -->
+<section id="apuntes">
+  <h2>Apuntes</h2>
+  <p class="note">Resumen ordenado como el curso: primero la esfera celeste y los ángulos, después la corrección de alturas, el pasaje meridiano y la recta de altura.</p>
+
+  <details class="card" open>
+    <summary>1. La esfera celeste</summary>
+    <ul>
+      <li>Es una esfera imaginaria con centro en la Tierra donde ubicamos todos los astros. La Tierra gira de oeste a este, así que el cielo parece moverse de <b>este a oeste</b>.</li>
+      <li>Sus planos y ejes son la prolongación de los terrestres: <b>polos celestes</b>, <b>ecuador celeste</b>, meridianos y paralelos.</li>
+      <li><b>Cenit</b>: el punto justo sobre la cabeza del observador (90°). <b>Nadir</b>: el opuesto.</li>
+      <li><b>Verticales</b>: círculos máximos que pasan por cenit y nadir; cada astro tiene el suyo. El <b>primer vertical</b> corta el horizonte en el E y el W.</li>
+      <li><b>Meridiano del lugar</b>: pasa por los polos y por el cenit. El meridiano superior contiene al cenit; el inferior, al nadir.</li>
+      <li><b>Círculos horarios</b>: círculos máximos que pasan por los polos celestes. Cada astro tiene uno; el meridiano del lugar y el de Greenwich también lo son.</li>
+      <li><b>Eclíptica</b>: el camino aparente del Sol en el año, inclinado unos 23° 27′ respecto del ecuador. Se cruzan en el <b>punto Aries</b> (γ), donde el Sol pasa del hemisferio sur al norte, hacia el 21 de marzo.</li>
+      <li><b>Precesión de los equinoccios</b>: el eje terrestre describe un cono en unos 25 800 años; Aries retrocede unos 50″ por año (hoy se proyecta en Piscis). Por eso el Almanaque es de cada año.</li>
+    </ul>
+  </details>
+
+  <details class="card">
+    <summary>2. Sistemas de coordenadas</summary>
+    <div class="tbl"><table>
+      <tr><th>Sistema</th><th>Referencia</th><th>Coordenadas</th></tr>
+      <tr><td>Geográficas</td><td>Ecuador y Greenwich</td><td>Latitud φ, longitud λ</td></tr>
+      <tr><td>Horizontales (locales)</td><td>Horizonte del observador</td><td>Altura h y acimut Z (en navegación, desde el N y en sentido horario)</td></tr>
+      <tr><td>Ecuatoriales</td><td>Ecuador celeste y Aries</td><td>Declinación δ y ángulo sidéreo AS (complemento a 360° de la ascensión recta)</td></tr>
+      <tr><td>Horarias</td><td>Meridiano de Greenwich o del lugar</td><td>AHG o AHL y declinación</td></tr>
+    </table></div>
+    <p class="note">Las horizontales cambian según dónde esté el observador; las ecuatoriales y horarias sirven para todos. La recta de altura convierte unas en otras.</p>
+  </details>
+
+  <details class="card">
+    <summary>3. Ángulos horarios y representación polar</summary>
+    <p>Todos se miden <b>hacia el oeste</b>, de 0° a 360°. Conviene dibujar siempre el gráfico polar (visto desde el polo sur celeste) antes de hacer la cuenta.</p>
+    <div class="formula">AHG* = AHGγ + AS            (si pasa de 360°, restar 360°)
+AS   = AHG* − AHGγ           (si da negativo, sumar 360°)
+AHL  = AHG + λE   /   AHL = AHG − λW
+λ    = AHL − AHG  → positivo: E · negativo: W
+Astro al W del observador si AHL &lt; 180°, al E si AHL &gt; 180°</div>
+    <p class="note">Ejemplo del apunte: AHGγ 95° y AS 38° dan AHG* 133°. Para pasar arco a tiempo: 15° = 1 h, 1° = 4 min, 15′ = 1 min.</p>
+  </details>
+
+  <details class="card">
+    <summary>4. Corrección de alturas</summary>
+    <div class="formula">Hi  altura de instrumento (sextante)
+± Ei  corrección de índice del sextante
+− Dip depresión del horizonte ≈ 1,76′ × √(altura del ojo en m)
+= Ha  altura aparente
+± SD/Ref  tabla del AN (Sol: limbo inferior suma, superior resta)
+= Ho  altura observada corregida</div>
+    <ul>
+      <li>Para el Sol, la tabla combina semidiámetro (≈16′), refracción y paralaje según el mes y la altura.</li>
+      <li>Para las estrellas solo se resta la refracción (no tienen semidiámetro).</li>
+      <li>Las alturas bajas (menos de 15°) tienen refracción grande e incierta: mejor evitarlas.</li>
+    </ul>
+  </details>
+
+  <details class="card">
+    <summary>5. Latitud por pasaje meridiano</summary>
+    <ol>
+      <li><b>Posición estimada al mediodía</b>: con la última posición, el rumbo y la velocidad, estimar dónde vamos a estar en el pasaje. Cálculo mental: 12 + λ/15 − hora de la última posición = horas navegadas; × velocidad = millas.</li>
+      <li><b>Hora del pasaje</b>: hora del Mer. Pass del AN ± λ en tiempo (al W se suma, al E se resta). Es la hora patrón para estar listos con el sextante.</li>
+      <li><b>Observación</b>: tomar la altura máxima del Sol («el Sol colgado») y corregirla hasta Ho.</li>
+      <li><b>Latitud</b>: φ = (90° − Ho) ± δ. Nombres iguales se suman, distintos se restan. La distancia cenital (90° − Ho) toma el nombre contrario a la marcación del Sol.</li>
+      <li><b>Longitud</b>: plotear la latitud como recta horizontal y cortarla con el rumbo trazado desde la posición asumida.</li>
+    </ol>
+  </details>
+
+  <details class="card">
+    <summary>6. Recta de altura (Marcq Saint-Hilaire)</summary>
+    <div class="formula">sen Hc = sen φ · sen δ + cos φ · cos δ · cos AHL
+cos Z  = (sen δ − sen φ · sen Hc) / (cos φ · cos Hc)
+Zn = Z si AHL &gt; 180°   ·   Zn = 360° − Z si AHL &lt; 180°
+Δh = Ho − Hc   (+ hacia el astro, − desde el astro)</div>
+    <ul>
+      <li>Signos en la calculadora: latitud y declinación S van con signo negativo.</li>
+      <li>Desde la posición asumida (siempre se plotea) se traza el acimut, se miden Δh millas y por ese punto pasa la recta, perpendicular al acimut.</li>
+      <li>Si la diferencia entre Hc y Ho pasa de unos 20′, lo más probable es un error de cuenta o de lectura.</li>
+      <li>Las posiciones estimadas son las calculadas; se marcan en el plotting.</li>
+    </ul>
+  </details>
+
+  <details class="card">
+    <summary>7. Situación por tres estrellas</summary>
+    <ul>
+      <li>Observar en el crepúsculo náutico: ya se ven las estrellas y todavía se ve el horizonte.</li>
+      <li>Elegir estrellas con alturas entre 20° y 60°.</li>
+      <li>Que sus acimutes queden separados unos 120° entre sí.</li>
+      <li>Entre las 57 estrellas del Almanaque, priorizar las más luminosas.</li>
+      <li>Las tres rectas forman un triángulo; la situación es su centro. Un triángulo grande indica un error en alguna observación.</li>
+    </ul>
+  </details>
+</section>
+
+<!-- ================= ÁNGULOS HORARIOS ================= -->
+<section id="angulos">
+  <h2>Ángulos horarios</h2>
+  <div class="card">
+    <p class="note">Complete lo que tenga; se calcula el resto. Grados y minutos se escriben con espacio: <code>133 25.4</code>.</p>
+    <div class="grid2">
+      <label>AHG de Aries (AHGγ)<input id="ah-ag" inputmode="decimal" placeholder="95"></label>
+      <label>Ángulo sidéreo (AS)<input id="ah-as" inputmode="decimal" placeholder="38"></label>
+      <label>AHG del astro (AHG*)<input id="ah-gs" inputmode="decimal" placeholder="calculado"></label>
+      <label>Longitud<span class="inrow"><input id="ah-l" inputmode="decimal" placeholder="57"><select id="ah-lN"><option>W</option><option>E</option></select></span></label>
+    </div>
+    <div class="out" id="ah-out"></div>
+    <svg id="ah-svg" viewBox="0 0 320 320" role="img" aria-label="Gráfico polar visto desde el polo sur celeste"></svg>
+    <p class="note">Gráfico visto desde el polo sur celeste: Greenwich arriba y los ángulos crecen hacia el oeste (sentido antihorario en el dibujo).</p>
+  </div>
+</section>
+
+<!-- ================= PASAJE MERIDIANO ================= -->
+<section id="meridiana">
+  <h2>Pasaje meridiano</h2>
+  <div class="card">
+    <h3>Datos iniciales</h3>
+    <div class="grid2">
+      <label>Fecha del pasaje<input id="pm-f" type="date"></label>
+      <label>Hora TMG de la última posición<input id="pm-t0" inputmode="decimal" placeholder="06 11 07"></label>
+      <label>Latitud asumida<span class="inrow"><input id="pm-lat" inputmode="decimal" placeholder="42 14.2"><select id="pm-latN"><option>S</option><option>N</option></select></span></label>
+      <label>Longitud asumida<span class="inrow"><input id="pm-lon" inputmode="decimal" placeholder="034 42.4"><select id="pm-lonN"><option>W</option><option>E</option></select></span></label>
+      <label>Rumbo verdadero (°)<input id="pm-rv" inputmode="decimal" placeholder="48"></label>
+      <label>Velocidad (nudos)<input id="pm-v" inputmode="decimal" placeholder="6.8"></label>
+    </div>
+    <h3>Observación</h3>
+    <div class="grid2">
+      <label>Altura instrumento Hi<input id="pm-hi" inputmode="decimal" placeholder="78 17.6"></label>
+      <label>Corrección de índice Ei (′, con signo)<input id="pm-ei" inputmode="decimal" placeholder="+1.4"></label>
+      <label>Altura del ojo (m)<input id="pm-eye" inputmode="decimal" placeholder="2.5"></label>
+      <label>Limbo<select id="pm-limbo"><option value="inf">Inferior</option><option value="sup">Superior</option></select></label>
+    </div>
+    <details>
+      <summary class="note" style="cursor:pointer">Usar mis datos del Almanaque (opcional)</summary>
+      <div class="grid3" style="margin-top:8px">
+        <label>Mer. Pass (AN)<input id="pm-anpm" inputmode="decimal" placeholder="12 08"></label>
+        <label>Declinación<span class="inrow"><input id="pm-andec" inputmode="decimal" placeholder="0 54.3"><select id="pm-andecN"><option>S</option><option>N</option></select></span></label>
+        <label>SD/Ref tabla (′)<input id="pm-ancorr" inputmode="decimal" placeholder="+14.3"></label>
+      </div>
+    </details>
+    <div class="btns"><button id="pm-ej" class="ghost" type="button">Cargar un ejemplo</button><button id="pm-copy" class="ghost" type="button">Copiar planilla</button></div>
+  </div>
+  <div id="pm-out" class="out"></div>
+</section>
+
+<!-- ================= RECTA DE ALTURA ================= -->
+<section id="recta">
+  <h2>Recta de altura y situación</h2>
+  <div class="card">
+    <div class="grid2">
+      <label>Fecha<input id="rc-f" type="date"></label>
+      <label>Hora TMG de la observación<input id="rc-t" inputmode="decimal" placeholder="23 32 10"></label>
+      <label>Latitud asumida<span class="inrow"><input id="rc-lat" inputmode="decimal" placeholder="35 00"><select id="rc-latN"><option>S</option><option>N</option></select></span></label>
+      <label>Longitud asumida<span class="inrow"><input id="rc-lon" inputmode="decimal" placeholder="056 00"><select id="rc-lonN"><option>W</option><option>E</option></select></span></label>
+      <label>Astro<select id="rc-astro"></select></label>
+      <label>Limbo (solo Sol)<select id="rc-limbo"><option value="inf">Inferior</option><option value="sup">Superior</option></select></label>
+      <label>Altura instrumento Hi<input id="rc-hi" inputmode="decimal" placeholder="35 20.5"></label>
+      <label>Corrección de índice Ei (′)<input id="rc-ei" inputmode="decimal" placeholder="0"></label>
+      <label>Altura del ojo (m)<input id="rc-eye" inputmode="decimal" placeholder="2.5"></label>
+    </div>
+    <details>
+      <summary class="note" style="cursor:pointer">Usar mis datos del Almanaque (opcional)</summary>
+      <div class="grid3" style="margin-top:8px">
+        <label>AHG del astro<input id="rc-angha" inputmode="decimal" placeholder="auto"></label>
+        <label>Declinación<span class="inrow"><input id="rc-andec" inputmode="decimal" placeholder="auto"><select id="rc-andecN"><option>S</option><option>N</option></select></span></label>
+        <label>Corrección total (′)<input id="rc-ancorr" inputmode="decimal" placeholder="auto"></label>
+      </div>
+      <p class="note">Para una estrella, el AHG es AHGγ + AS del Almanaque. Para Luna o planetas, use estos campos con el astro «Otro».</p>
+    </details>
+    <div class="out" id="rc-out"></div>
+    <div class="btns"><button id="rc-add" type="button">Agregar recta a la situación</button><button id="rc-clear" class="ghost" type="button">Borrar rectas</button></div>
+  </div>
+  <div class="card" id="fx-card">
+    <h3>Plotting</h3>
+    <div id="fx-list"></div>
+    <svg id="fx-svg" viewBox="0 0 320 320" role="img" aria-label="Plotting de rectas de altura"></svg>
+    <div id="fx-out"></div>
+    <p class="note">Situación por mínimos cuadrados entre todas las rectas. No incluye el traslado de rectas: si las observaciones están separadas en el tiempo, traslade la posición asumida antes de cargarlas.</p>
+  </div>
+</section>
+
+<!-- ================= PLANIFICAR ================= -->
+<section id="planificar">
+  <h2>Planificar la observación</h2>
+  <div class="card">
+    <div class="grid3">
+      <label>Fecha<input id="pl-f" type="date"></label>
+      <label>Latitud estimada<span class="inrow"><input id="pl-lat" inputmode="decimal" value="34 55"><select id="pl-latN"><option>S</option><option>N</option></select></span></label>
+      <label>Longitud estimada<span class="inrow"><input id="pl-lon" inputmode="decimal" value="056 10"><select id="pl-lonN"><option>W</option><option>E</option></select></span></label>
+    </div>
+    <div class="tabs" role="group" aria-label="Momento"><button type="button" class="tab" data-pl="tarde" aria-pressed="true">Crepúsculo de la tarde</button><button type="button" class="tab" data-pl="manana" aria-pressed="false">Crepúsculo de la mañana</button></div>
+    <div id="pl-out" class="out"></div>
+  </div>
+</section>
+
+<!-- ================= PRÁCTICA ================= -->
+<section id="practica">
+  <h2>Práctica</h2>
+  <div class="card">
+    <div class="tabs" role="group" aria-label="Tipo de ejercicio" id="pr-tabs">
+      <button type="button" class="tab" data-t="mix" aria-pressed="true">Mezcla</button>
+      <button type="button" class="tab" data-t="gs" aria-pressed="false">AHG*</button>
+      <button type="button" class="tab" data-t="as" aria-pressed="false">AS</button>
+      <button type="button" class="tab" data-t="ahl" aria-pressed="false">AHL</button>
+      <button type="button" class="tab" data-t="lon" aria-pressed="false">Longitud</button>
+      <button type="button" class="tab" data-t="ew" aria-pressed="false">E o W</button>
+      <button type="button" class="tab" data-t="gms" aria-pressed="false">Calculadora</button>
+    </div>
+    <p class="q" id="pr-q"></p>
+    <div class="inrow" id="pr-in"></div>
+    <div class="btns"><button id="pr-ok" type="button">Corregir</button><button id="pr-next" class="ghost" type="button">Otro</button></div>
+    <p id="pr-fb" aria-live="polite"></p>
+    <p class="note" id="pr-score"></p>
+  </div>
+</section>
+
+<!-- ================= APUNTES DE CLASE ================= -->
+<section id="clase">
+  <h2>Mis apuntes de clase</h2>
+  <div class="card">
+    <h3>Recta de Sol y tres estrellas</h3>
+    <ul>
+      <li>Diferencia mayor a 20′ entre altura calculada y corregida: solo si es un error.</li>
+      <li>Fórmula y conversión del acimut astronómico (Z) al acimut verdadero (Zn).</li>
+      <li>Tres estrellas: círculos y rectas de altura.</li>
+      <li>Alturas entre 20° y 60°.</li>
+      <li>Ángulos horizontales (entre acimutes) de unos 120°.</li>
+      <li>De las estrellas del Almanaque, las más luminosas.</li>
+      <li>Idea: foto al cielo con lente ojo de pez como «sextante».</li>
+      <li>La posición asumida se plotea siempre.</li>
+      <li>Las estimadas son las calculadas; se marcan.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Para repasar</h3>
+    <ul>
+      <li>Teorema de las latitudes.</li>
+      <li>Cambiar el dibujo de las diapositivas de la diferencia entre Hc y Ho.</li>
+      <li>Uso de la calculadora científica: tecla de grados-minutos, editar fórmulas sin reescribirlas (Shift + Ins) y no olvidar los paréntesis.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Material de estudio</h3>
+    <ul>
+      <li>01 Los cálculos: trigonometría</li>
+      <li>02 La calculadora científica</li>
+      <li>03 La esfera celeste</li>
+      <li>Ejercicios 1 a 30 (ángulos horarios)</li>
+      <li>Pasaje meridiano: explicación paso a paso · planilla Meridiana</li>
+      <li>Ejercicios 36 y 37 · 38 a 40 · 41 a 44</li>
+      <li>Hoja de plotting</li>
+      <li>Apuntes de navegación astronómica de clase</li>
+    </ul>
+    <p class="note">Material del curso de Brevet A, Instituto 35 Sur (2016). Si está preparando el Brevet A y quiere estudiar con este material, <a href="https://wa.me/59899348110?text=Hola%2C%20quiero%20consultar%20por%20clases%20de%20navegaci%C3%B3n%20astron%C3%B3mica">escríbame por WhatsApp</a>.</p>
+  </div>
+</section>
+
+<footer>Ignacio Porrini · Centro de Estudios Náuticos · Efemérides calculadas con algoritmos de Meeus y NOAA; para navegar, use el Almanaque Náutico del año. <a href="apps/">Más apps náuticas</a></footer>
+</main>
+<script>{
+/* ===== Núcleo de cálculo (sin DOM) ===== */
+const D2R=Math.PI/180,R2D=180/Math.PI;
+const norm=a=>((a%360)+360)%360;
+const sinD=a=>Math.sin(a*D2R),cosD=a=>Math.cos(a*D2R);
+function jd(y,m,d,h){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+function solJ(J){const T=(J-2451545)/36525;
+ const L0=norm(280.46646+T*(36000.76983+T*0.0003032)),M=357.52911+T*(35999.05029-0.0001537*T);
+ const e=0.016708634-T*(0.000042037+0.0000001267*T),Mr=M*D2R;
+ const C=Math.sin(Mr)*(1.914602-T*(0.004817+0.000014*T))+Math.sin(2*Mr)*(0.019993-0.000101*T)+Math.sin(3*Mr)*0.000289;
+ const om=(125.04-1934.136*T)*D2R,lam=(L0+C-0.00569-0.00478*Math.sin(om))*D2R;
+ const eps0=23+(26+(21.448-T*(46.815+T*(0.00059-T*0.001813)))/60)/60,eps=(eps0+0.00256*Math.cos(om))*D2R;
+ const dec=Math.asin(Math.sin(eps)*Math.sin(lam))*R2D;
+ const y=Math.tan(eps/2)**2,L=L0*D2R;
+ const E=y*Math.sin(2*L)-2*e*Math.sin(Mr)+4*e*y*Math.sin(Mr)*Math.cos(2*L)-0.5*y*y*Math.sin(4*L)-1.25*e*e*Math.sin(2*Mr);
+ const v=(M+C)*D2R,Rd=1.000001018*(1-e*e)/(1+e*Math.cos(v));
+ return {dec,eot:E*R2D,sd:15.9938/Rd};}
+/* Sol a una hora UT (h decimal) de una fecha: AHG, Dec, SD (minutos) */
+function sol(y,m,d,h){const s=solJ(jd(y,m,d,h));return {gha:norm((h-12)*15+s.eot),dec:s.dec,sd:s.sd,eot:s.eot};}
+/* Hora UT del paso del Sol por Greenwich (Mer. Pass del AN) */
+function pasoGw(y,m,d){let h=12;for(let i=0;i<4;i++)h=12-solJ(jd(y,m,d,h)).eot/15;return h;}
+/* AHG de Aries (= tiempo sidéreo de Greenwich en grados) */
+function ariesGHA(y,m,d,h){const J=jd(y,m,d,h),T=(J-2451545)/36525;return norm(280.46061837+360.98564736629*(J-2451545)+0.000387933*T*T);}
+/* Correcciones de altura */
+const dip=hEye=>1.76*Math.sqrt(Math.max(0,hEye));             // minutos
+const refr=ha=>1/Math.tan((ha+7.31/(ha+4.4))*D2R);              // minutos (Bennett)
+function corrSol(ha,sd,limbo){const p=0.147*cosD(ha);return (limbo==='inf'?sd:-sd)-refr(ha)+p;} // minutos
+/* Estima (navegación plana) */
+function estima(lat,lon,rv,dist){const dl=dist*cosD(rv)/60,lat2=lat+dl,lm=(lat+lat2)/2;
+ const c=Math.abs(cosD(lm))<1e-6?1e-6:cosD(lm);return {lat:lat2,lon:lon+dist*sinD(rv)/(60*c)};}
+/* Pasaje meridiano completo (planilla 1–20). lat/lon con signo: N y E positivos */
+function pasajeMeridiano(o){
+ const pmGw=o.pmGw!=null?o.pmGw:pasoGw(o.y,o.m,o.d);
+ let pos={lat:o.lat0,lon:o.lon0},tPM=pmGw,hrs=0,dist=0;
+ for(let i=0;i<4;i++){tPM=pmGw-pos.lon/15;hrs=tPM-o.t0;while(hrs<0)hrs+=24;dist=o.v*hrs;pos=estima(o.lat0,o.lon0,o.rv,dist);}
+ const s=sol(o.y,o.m,o.d,tPM),dec=o.dec!=null?o.dec:s.dec;
+ const st10=o.hi+o.ei/60,dp=dip(o.hEye),st12=st10-dp/60;
+ const cl=o.corr!=null?o.corr:corrSol(st12,s.sd,o.limbo),ho=st12+cl/60;
+ const z=90-ho; const sunAlN=(o.sunBearing?o.sunBearing==='N':pos.lat<dec);
+ const lat=sunAlN?dec-z:dec+z;
+ let lon=null,distReal=null,vReal=null;
+ if(Math.abs(cosD(o.rv))>0.08){distReal=(lat-o.lat0)*60/cosD(o.rv);if(distReal>=0){lon=estima(o.lat0,o.lon0,o.rv,distReal).lon;vReal=distReal/hrs;}}
+ return {pmGw,tPM,hrs,dist,est:pos,dec,sd:s.sd,st10,dip:dp,st12,corr:cl,ho,z,sunAlN,lat,lon,distReal,vReal};}
+/* Recta de altura (Marcq Saint-Hilaire) */
+function recta(lat,lon,gha,dec,ho){const lha=norm(gha+lon);
+ const sh=sinD(lat)*sinD(dec)+cosD(lat)*cosD(dec)*cosD(lha),hc=Math.asin(Math.max(-1,Math.min(1,sh)))*R2D;
+ let cz=(sinD(dec)-sinD(lat)*sh)/(cosD(lat)*cosD(hc));cz=Math.max(-1,Math.min(1,cz));const Z=Math.acos(cz)*R2D;
+ const zn=lha>180?Z:360-Z;return {lha,hc,Z,zn,dh:(ho-hc)*60};}
+function altAz(lat,lon,gha,dec){const r=recta(lat,lon,gha,dec,0);return {alt:r.hc,zn:r.zn};}
+/* Situación por varias rectas (mínimos cuadrados) */
+function situacion(rs){if(rs.length<2)return null;const ref=rs[0];const k=60*cosD(ref.lat);
+ let a11=0,a12=0,a22=0,b1=0,b2=0;
+ for(const r of rs){const nx=sinD(r.zn),ny=cosD(r.zn),px=(r.lon-ref.lon)*k,py=(r.lat-ref.lat)*60,c=nx*px+ny*py+r.dh;
+  a11+=nx*nx;a12+=nx*ny;a22+=ny*ny;b1+=nx*c;b2+=ny*c;}
+ const det=a11*a22-a12*a12;if(Math.abs(det)<1e-6)return null;
+ const x=(b1*a22-b2*a12)/det,y=(a11*b2-a12*b1)/det;return {lat:ref.lat+y/60,lon:ref.lon+x/k,x,y};}
+/* Precesión J2000 -> fecha (Meeus 21.2) */
+function precesar(raDeg,decDeg,J){const T=(J-2451545)/36525,as=1/3600;
+ const ze=(2306.2181*T+0.30188*T*T+0.017998*T**3)*as,z=(2306.2181*T+1.09468*T*T+0.018203*T**3)*as,th=(2004.3109*T-0.42665*T*T-0.041833*T**3)*as;
+ const A=cosD(decDeg)*sinD(raDeg+ze),B=cosD(th)*cosD(decDeg)*cosD(raDeg+ze)-sinD(th)*sinD(decDeg),C=sinD(th)*cosD(decDeg)*cosD(raDeg+ze)+cosD(th)*sinD(decDeg);
+ return {ra:norm(Math.atan2(A,B)*R2D+z),dec:Math.asin(C)*R2D};}
+/* Crepúsculos: hora UT en que el Sol está a altura h0 (mañana/tarde) */
+function horaAltSol(y,m,d,lat,lon,h0,tarde){let t=12-lon/15;
+ for(let i=0;i<5;i++){const s=sol(y,m,d,t);const c=(sinD(h0)-sinD(lat)*sinD(s.dec))/(cosD(lat)*cosD(s.dec));if(c<-1||c>1)return null;
+  const H=Math.acos(c)*R2D;const ghaObj=norm((tarde?H:-H)-lon);let dt=(ghaObj-s.gha)/15;while(dt>12)dt-=24;while(dt<-12)dt+=24;t+=dt;}
+ return t;}
+/* Formatos y lectura */
+function aGM(a,dec=1){const s=a<0?'-':'';a=Math.abs(a);let g=Math.floor(a),m=+((a-g)*60).toFixed(dec);if(m>=60){g++;m=0}return {s,g,m};}
+function fmtA(a,dec=1,pad=0){const x=aGM(a,dec);return `${x.s}${String(x.g).padStart(pad,'0')}° ${x.m.toFixed(dec).padStart(dec?dec+3:2,'0')}'`;}
+function fmtH(h,seg=true){h=((h%24)+24)%24;let t=Math.round(h*3600);const H=Math.floor(t/3600),M=Math.floor(t%3600/60),S=t%60;
+ return `${String(H).padStart(2,'0')}h ${String(M).padStart(2,'0')}m`+(seg?` ${String(S).padStart(2,'0')}s`:'');}
+function leerNum(str){if(str==null)return NaN;str=String(str).trim().replace(/,/g,'.').replace(/[°º'′"″:hms]/gi,' ');if(!str)return NaN;
+ const neg=/^-/.test(str);const p=str.replace(/^[-+]/,'').trim().split(/\s+/).map(Number);if(p.some(isNaN))return NaN;
+ const v=(p[0]||0)+(p[1]||0)/60+(p[2]||0)/3600;return neg?-v:v;}
+/* ===== Interfaz ===== */
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem('navastro.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('navastro.'+k,JSON.stringify(v))}catch(e){}}};
+/* Estrellas de navegación más brillantes: AR (h) y Dec (°) J2000, magnitud */
+const ESTRELLAS=[
+ ['Sirius',6.7525,-16.7161,-1.5],['Canopus',6.3992,-52.6957,-0.7],['Rigil Kent',14.6601,-60.8340,-0.3],['Arcturus',14.2610,19.1825,-0.1],
+ ['Vega',18.6156,38.7837,0.0],['Capella',5.2782,45.9980,0.1],['Rigel',5.2423,-8.2017,0.1],['Procyon',7.6550,5.2250,0.4],
+ ['Achernar',1.6286,-57.2368,0.5],['Betelgeuse',5.9195,7.4071,0.5],['Hadar',14.0637,-60.3730,0.6],['Altair',19.8464,8.8683,0.8],
+ ['Acrux',12.4433,-63.0991,0.8],['Aldebaran',4.5987,16.5093,0.9],['Antares',16.4901,-26.4320,1.0],['Spica',13.4199,-11.1613,1.0],
+ ['Pollux',7.7553,28.0262,1.1],['Fomalhaut',22.9608,-29.6222,1.2],['Deneb',20.6905,45.2803,1.3],['Regulus',10.1395,11.9672,1.4],
+ ['Peacock',20.4275,-56.7350,1.9],['Shaula',17.5601,-37.1038,1.6],['Gacrux',12.5194,-57.1133,1.6],['Al Na\'ir',22.1372,-46.9611,1.7],['Mirfak',3.4054,49.8612,1.8],
+ ['Kaus Australis',18.4029,-34.3847,1.8],['Atria',16.8111,-69.0278,1.9],['Nunki',18.9211,-26.2967,2.0],['Alphard',9.4598,-8.6586,2.0],['Hamal',2.1196,23.4625,2.0],
+ ['Diphda',0.7265,-17.9867,2.0],['Alpheratz',0.1398,29.0906,2.1],['Menkent',14.1114,-36.3700,2.1],['Suhail',9.1333,-43.4325,2.2],['Ankaa',0.4381,-42.3061,2.4],['Enif',21.7364,9.8750,2.4],['Markab',23.0794,15.2053,2.5],['Miaplacidus',9.2200,-69.7172,1.7],['Alnilam',5.6036,-1.2019,1.7],['Avior',8.3752,-59.5095,1.9]];
+const hoy=()=>{const d=new Date();return d.toISOString().slice(0,10)};
+const leerFecha=id=>{const v=$(id).value||hoy();const [y,m,d]=v.split('-').map(Number);return {y,m,d}};
+const num=id=>leerNum($(id).value);
+const conNombre=(id,neg)=>{const v=num(id);if(isNaN(v))return NaN;return $(id+'N').value===neg?-Math.abs(v):Math.abs(v)};
+const nom=(a,p,n)=>`${fmtA(Math.abs(a),1,2)} ${a<0?n:p}`;
+const latS=a=>nom(a,'N','S'), lonS=a=>{a=((a+540)%360)-180;return `${fmtA(Math.abs(a),1,3)} ${a<0?'W':'E'}`};
+const minS=m=>`${m>=0?'+':'−'}${Math.abs(m).toFixed(1)}′`;
+const uy=h=>fmtH(h-3,false)+' (Uruguay)';
+function persist(ids){ids.forEach(id=>{const el=$(id);if(!el)return;const v=store.get('in.'+id,null);if(v!=null&&v!=='')el.value=v;el.addEventListener('input',()=>store.set('in.'+id,el.value));el.addEventListener('change',()=>store.set('in.'+id,el.value));});}
+
+/* ---------- Ángulos horarios ---------- */
+function polar(svg,pts){const cx=160,cy=160,r=120;let s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="3" fill="var(--muted)"/><text x="${cx+6}" y="${cy+14}" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">Ps</text>`;
+ const P=(a,rr=r)=>[cx-rr*Math.sin(a*Math.PI/180),cy-rr*Math.cos(a*Math.PI/180)];
+ for(let a=0;a<360;a+=30){const [x1,y1]=P(a,r-6),[x2,y2]=P(a,r);s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--line)"/>`}
+ pts.forEach((p,i)=>{const [x,y]=P(p.a);const [lx,ly]=P(p.a,r+22);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${p.c}" stroke-width="2.5" ${p.dash?'stroke-dasharray="5 4"':''}/><circle cx="${x}" cy="${y}" r="5" fill="${p.c}"/><text x="${lx}" y="${ly+4}" text-anchor="middle" font-size="13" font-weight="700" fill="${p.c}" font-family="Source Sans 3">${p.t}</text>`;});
+ const [wx,wy]=P(90,r-26),[ex,ey]=P(270,r-26);s+=`<text x="${wx}" y="${wy+4}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">W →</text><text x="${ex}" y="${ey+4}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">← E</text>`;
+ svg.innerHTML=s;}
+function calcAngulos(){const ag=num('ah-ag'),as=num('ah-as');let gs=num('ah-gs');const l=conNombre('ah-l','W');const out=[];const pts=[{a:0,t:'G',c:'var(--muted)'}];
+ let gsCalc=false;
+ if(!isNaN(ag)&&!isNaN(as)){gs=norm(ag+as);gsCalc=true;$('ah-gs').placeholder=fmtA(gs);out.push(`<p>AHG* = AHGγ + AS = ${fmtA(ag)} + ${fmtA(as)} = <b>${fmtA(gs)}</b></p>`)}
+ else if(!isNaN(ag)&&!isNaN(gs)){const a2=norm(gs-ag);out.push(`<p>AS = AHG* − AHGγ = <b>${fmtA(a2)}</b></p>`)}
+ if(!isNaN(ag))pts.push({a:ag,t:'γ',c:'var(--sea)',dash:true});
+ if(!isNaN(gs)){pts.push({a:gs,t:'✶',c:'var(--star)'});if(!isNaN(l)){const ahl=norm(gs+l);
+   out.push(`<p>AHL = AHG* ${l<0?'−':'+'} λ${l<0?'W':'E'} = <b>${fmtA(ahl)}</b> · el astro está al <b>${ahl<180?'W':'E'}</b> del observador</p>`);}}
+ if(!isNaN(l))pts.push({a:-l,t:'Obs',c:'var(--buoy)'});
+ $('ah-out').innerHTML=out.join('')||'<p class="note">Cargue al menos dos datos.</p>';polar($('ah-svg'),pts);}
+['ah-ag','ah-as','ah-gs','ah-l','ah-lN'].forEach(id=>$(id).addEventListener('input',calcAngulos));
+
+/* ---------- Pasaje meridiano ---------- */
+let pmTexto='';
+function calcPM(){const {y,m,d}=leerFecha('pm-f');const t0=num('pm-t0'),lat0=conNombre('pm-lat','S'),lon0=conNombre('pm-lon','W'),rv=num('pm-rv'),v=num('pm-v');
+ const hi=num('pm-hi'),ei=isNaN(num('pm-ei'))?0:parseFloat(String($('pm-ei').value).replace(',','.'))||0,eye=num('pm-eye');
+ const out=$('pm-out');
+ if([t0,lat0,lon0,rv,v].some(isNaN)){out.innerHTML='<p class="note">Complete fecha, hora, posición asumida, rumbo y velocidad para preparar la observación.</p>';return;}
+ const o={y,m,d,t0,lat0,lon0,rv,v,hi:isNaN(hi)?0:hi,ei,hEye:isNaN(eye)?0:eye,limbo:$('pm-limbo').value};
+ const anpm=num('pm-anpm'),andec=conNombre('pm-andec','S'),ancorr=parseFloat(String($('pm-ancorr').value).replace(',','.'));
+ if(!isNaN(anpm))o.pmGw=anpm; if(!isNaN(andec))o.dec=andec; if(!isNaN(ancorr))o.corr=ancorr;
+ const r=pasajeMeridiano(o);const hayObs=!isNaN(hi);
+ const rows=[
+  ['1','Fecha',`${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`],
+  ['2','Latitud estimada',latS(r.est.lat)],['3','Longitud estimada',lonS(r.est.lon)],['4','Velocidad',`${v} nudos`],
+  ['','Horas navegadas · millas',`${fmtH(r.hrs)} · ${r.dist.toFixed(1)} M`,'sub'],
+  ['5','El Sol pasa por Greenwich (Mer. Pass)',fmtH(r.pmGw)+(isNaN(anpm)?' *':'')],
+  ['6',`Arco a tiempo de λE (${r.est.lon<0?'al W se suma':'al E se resta'})`,`${r.est.lon<0?'+':'−'}${fmtH(Math.abs(r.est.lon)/15)}`],
+  ['7','Hora TMG de la observación','<b>'+fmtH(r.tPM)+'</b>','res'],
+  ['','Hora en Uruguay (UTC−3)',uy(r.tPM),'sub']];
+ if(hayObs){rows.push(
+  ['8','Altura instrumento Hi',fmtA(o.hi)],['9','Corrección de índice Ei',minS(ei)],['10','Subtotal',fmtA(r.st10)],
+  ['11',`Depresión (${o.hEye} m)`,minS(-r.dip)],['12','Subtotal (Ha)',fmtA(r.st12)],
+  ['13',`SD/Ref, limbo ${o.limbo==='inf'?'inferior':'superior'}`,minS(r.corr)+(isNaN(ancorr)?' *':'')],
+  ['14','Hq altura corregida',fmtA(r.ho)],['15','90°',"89° 60.0'"],['16','− Hq',fmtA(r.ho)],
+  ['17',`Distancia cenital (nombre ${r.sunAlN?'S':'N'}: Sol al ${r.sunAlN?'N':'S'})`,fmtA(r.z)],
+  ['18',`Declinación (${(r.sunAlN?r.dec<=0:r.dec>=0)?'nombres iguales, se suma':'nombres distintos, se resta'})`,latS(r.dec)+(isNaN(andec)?' *':'')],
+  ['19','Latitud','<b>'+latS(r.lat)+'</b>','res'],
+  ['20','Longitud (latitud cortando el rumbo)',r.lon!=null?'<b>'+lonS(r.lon)+'</b>':(Math.abs(Math.cos(rv*Math.PI/180))<=0.08?'rumbo casi E-W: use la estimada':'la latitud queda detrás de la asumida: revise'),'res']);}
+ let h=`<div class="tbl"><table><tr><th>N.º</th><th>Concepto</th><th style="text-align:right">Valor</th></tr>${rows.map(x=>`<tr class="${x[3]||''}"><td class="i">${x[0]}</td><td>${x[1]}</td><td class="n">${x[2]}</td></tr>`).join('')}</table></div>`;
+ if(hayObs&&r.vReal!=null)h+=`<p class="note">Distancia real desde la posición asumida: ${r.distReal.toFixed(1)} M · velocidad real: ${r.vReal.toFixed(1)} nudos.</p>`;
+ if(hayObs&&Math.abs((r.lat-r.est.lat)*60)>20)h+=`<p class="warnbox">La latitud obtenida difiere ${Math.abs((r.lat-r.est.lat)*60).toFixed(0)}′ de la estimada. Revise Hi, la declinación y los nombres.</p>`;
+ if(!hayObs)h+='<p class="note">Cargue la altura del sextante para obtener la latitud (casillas 8 a 20).</p>';
+ h+='<p class="note">* Dato calculado; reemplácelo con el del Almanaque si lo tiene.</p>';
+ out.innerHTML=h;pmTexto=rows.map(x=>`${x[0]?x[0]+'. ':''}${x[1]}: ${String(x[2]).replace(/<[^>]+>/g,'')}`).join('\n');}
+const pmIds=['pm-f','pm-t0','pm-lat','pm-latN','pm-lon','pm-lonN','pm-rv','pm-v','pm-hi','pm-ei','pm-eye','pm-limbo','pm-anpm','pm-andec','pm-andecN','pm-ancorr'];
+pmIds.forEach(id=>{$(id).addEventListener('input',calcPM);$(id).addEventListener('change',calcPM)});
+$('pm-ej').addEventListener('click',()=>{const v={'pm-f':'2015-01-16','pm-t0':'06 14','pm-lat':'40 44.7','pm-latN':'N','pm-lon':'031 55','pm-lonN':'W','pm-rv':'45','pm-v':'6','pm-hi':'27 32.4','pm-ei':'+2.2','pm-eye':'2.5','pm-limbo':'inf','pm-anpm':'','pm-andec':'','pm-ancorr':''};
+ for(const k in v){$(k).value=v[k];store.set('in.'+k,v[k])}calcPM();});
+$('pm-copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('PASAJE MERIDIANO\n'+pmTexto);$('pm-copy').textContent='Copiada'}catch(e){$('pm-copy').textContent='No se pudo copiar'}setTimeout(()=>$('pm-copy').textContent='Copiar planilla',1800)});
+
+/* ---------- Recta de altura ---------- */
+$('rc-astro').innerHTML='<option value="sol">Sol</option>'+ESTRELLAS.map((e,i)=>`<option value="${i}">${e[0]}</option>`).join('')+'<option value="otro">Otro (datos del AN)</option>';
+let rectas=store.get('rectas',[]);let ultima=null;
+function astroDatos(y,m,d,t){const a=$('rc-astro').value;
+ if(a==='sol'){const s=sol(y,m,d,t);return {nombre:'Sol',gha:s.gha,dec:s.dec,sd:s.sd,esSol:true}}
+ if(a==='otro')return {nombre:'Astro',gha:NaN,dec:NaN,esSol:false};
+ const e=ESTRELLAS[+a];const p=precesar(e[1]*15,e[2],jd(y,m,d,t));const sha=norm(360-p.ra);return {nombre:e[0],gha:norm(ariesGHA(y,m,d,t)+sha),dec:p.dec,sha,aries:ariesGHA(y,m,d,t),esSol:false};}
+function calcRecta(){const {y,m,d}=leerFecha('rc-f');const t=num('rc-t'),lat=conNombre('rc-lat','S'),lon=conNombre('rc-lon','W'),hi=num('rc-hi');
+ const ei=parseFloat(String($('rc-ei').value).replace(',','.'))||0,eye=num('rc-eye')||0;const out=$('rc-out');ultima=null;
+ if([t,lat,lon].some(isNaN)){out.innerHTML='<p class="note">Complete hora, posición asumida y astro.</p>';return}
+ const a=astroDatos(y,m,d,t);const g=num('rc-angha'),dd=conNombre('rc-andec','S'),cc=parseFloat(String($('rc-ancorr').value).replace(',','.'));
+ if(!isNaN(g))a.gha=g; if(!isNaN(dd))a.dec=dd;
+ if(isNaN(a.gha)||isNaN(a.dec)){out.innerHTML='<p class="note">Para «Otro», cargue AHG y declinación del Almanaque.</p>';return}
+ const r0=recta(lat,lon,a.gha,a.dec,0);
+ let h=`<div class="tbl"><table>
+ ${a.aries!=null?`<tr><td>AHG de Aries</td><td class="n">${fmtA(a.aries)}</td></tr><tr><td>AS (${a.nombre})</td><td class="n">${fmtA(a.sha)}</td></tr>`:''}
+ <tr><td>AHG ${a.nombre}${isNaN(g)?' *':''}</td><td class="n">${fmtA(a.gha)}</td></tr>
+ <tr><td>AHL = AHG ${lon<0?'− λW':'+ λE'}</td><td class="n">${fmtA(r0.lha)}</td></tr>
+ <tr><td>Declinación${isNaN(dd)?' *':''}</td><td class="n">${latS(a.dec)}</td></tr>
+ <tr><td>Hc altura calculada</td><td class="n">${fmtA(r0.hc)}</td></tr>
+ <tr><td>Z · Zn acimut</td><td class="n">${r0.Z.toFixed(1)}° · <b>${r0.zn.toFixed(1)}°</b></td></tr>`;
+ if(!isNaN(hi)){const st=hi+ei/60,dp=dip(eye),ha=st-dp/60;const corr=!isNaN(cc)?cc:(a.esSol?corrSol(ha,a.sd,$('rc-limbo').value):-refr(ha));const ho=ha+corr/60;const r=recta(lat,lon,a.gha,a.dec,ho);
+  h+=`<tr><td>Hi ${minS(ei)} Ei ${minS(-dp)} dip</td><td class="n">${fmtA(ha)}</td></tr>
+  <tr><td>${a.esSol?'SD/Ref':'Refracción'}${isNaN(cc)?' *':''}</td><td class="n">${minS(corr)}</td></tr>
+  <tr><td>Ho altura observada</td><td class="n">${fmtA(ho)}</td></tr>
+  <tr class="res"><td>Δh = Ho − Hc</td><td class="n">${Math.abs(r.dh).toFixed(1)}′ ${r.dh>=0?'hacia':'desde'} el astro</td></tr></table></div>`;
+  if(Math.abs(r.dh)>20)h+=`<p class="warnbox">Δh de ${Math.abs(r.dh).toFixed(0)}′: más de 20′ suele ser un error de cuenta, de hora o de astro. Revise antes de plotear.</p>`;
+  if(r0.hc<15)h+='<p class="warnbox">Altura baja: la refracción es incierta por debajo de 15°.</p>';
+  ultima={nombre:a.nombre,lat,lon,zn:r.zn,dh:r.dh,hc:r.hc,ho,t};}
+ else h+='</table></div><p class="note">Cargue Hi para obtener Ho y el intercepto.</p>';
+ out.innerHTML=h+'<p class="note">* Calculado; reemplácelo con el Almanaque si lo tiene.</p>';}
+const rcIds=['rc-f','rc-t','rc-lat','rc-latN','rc-lon','rc-lonN','rc-astro','rc-limbo','rc-hi','rc-ei','rc-eye','rc-angha','rc-andec','rc-andecN','rc-ancorr'];
+rcIds.forEach(id=>{$(id).addEventListener('input',calcRecta);$(id).addEventListener('change',calcRecta)});
+$('rc-add').addEventListener('click',()=>{if(!ultima){$('rc-out').insertAdjacentHTML('beforeend','<p class="bad">Falta completar la observación (Hi).</p>');return}rectas.push(ultima);store.set('rectas',rectas);dibujarFix();$('fx-card').scrollIntoView({behavior:'smooth'})});
+$('rc-clear').addEventListener('click',()=>{rectas=[];store.set('rectas',rectas);dibujarFix()});
+function dibujarFix(){const L=$('fx-list'),S=$('fx-svg'),O=$('fx-out');
+ if(!rectas.length){L.innerHTML='<p class="note">Todavía no hay rectas. Calcule una y toque «Agregar recta».</p>';S.innerHTML='';O.innerHTML='';return}
+ L.innerHTML=`<div class="tbl"><table><tr><th>Astro</th><th>Zn</th><th>Δh</th><th></th></tr>${rectas.map((r,i)=>`<tr><td>${r.nombre}</td><td class="n">${r.zn.toFixed(0)}°</td><td class="n">${Math.abs(r.dh).toFixed(1)}′ ${r.dh>=0?'H':'D'}</td><td><button class="ghost" style="min-height:32px;padding:2px 10px" data-del="${i}" aria-label="Quitar">×</button></td></tr>`).join('')}</table></div>`;
+ L.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{rectas.splice(+b.dataset.del,1);store.set('rectas',rectas);dibujarFix()});
+ const ref=rectas[0],k=60*Math.cos(ref.lat*Math.PI/180);const fx=situacion(rectas);
+ const pts=[];rectas.forEach(r=>{const px=(r.lon-ref.lon)*k,py=(r.lat-ref.lat)*60;pts.push([px,py]);const nx=Math.sin(r.zn*Math.PI/180),ny=Math.cos(r.zn*Math.PI/180);pts.push([px+nx*r.dh,py+ny*r.dh]);r._p=[px,py,nx,ny]});
+ if(fx)pts.push([fx.x,fx.y]);
+ let span=Math.max(10,...pts.map(p=>Math.max(Math.abs(p[0]),Math.abs(p[1]))))*1.35;const cx=160,cy=160,sc=140/span;
+ const X=x=>cx+x*sc,Y=y=>cy-y*sc;const cols=['var(--sea)','var(--flag)','var(--buoy)','var(--star)','var(--muted)'];
+ let s=`<rect x="0" y="0" width="320" height="320" fill="var(--bg)" rx="8"/><line x1="160" y1="8" x2="160" y2="312" stroke="var(--line)"/><line x1="8" y1="160" x2="312" y2="160" stroke="var(--line)"/><text x="164" y="20" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">N</text>`;
+ const step=span>40?20:span>20?10:5;s+=`<text x="10" y="310" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">cuadro ${step} M</text>`;
+ for(let v=step;v<span;v+=step){[[v,0],[-v,0]].forEach(([a])=>{s+=`<line x1="${X(a)}" y1="155" x2="${X(a)}" y2="165" stroke="var(--line)"/><line x1="155" y1="${Y(a)}" x2="165" y2="${Y(a)}" stroke="var(--line)"/>`})}
+ rectas.forEach((r,i)=>{const [px,py,nx,ny]=r._p,c=cols[i%cols.length];const qx=px+nx*r.dh,qy=py+ny*r.dh;const Lg=span*2;
+  s+=`<line x1="${X(px)}" y1="${Y(py)}" x2="${X(px+nx*span*0.9)}" y2="${Y(py+ny*span*0.9)}" stroke="${c}" stroke-dasharray="4 4"/>`;
+  s+=`<line x1="${X(qx-ny*Lg)}" y1="${Y(qy+nx*Lg)}" x2="${X(qx+ny*Lg)}" y2="${Y(qy-nx*Lg)}" stroke="${c}" stroke-width="2.5"/>`;
+  s+=`<text x="${X(px+nx*span*0.9)}" y="${Y(py+ny*span*0.9)-4}" font-size="12" font-weight="700" fill="${c}" font-family="Source Sans 3">${r.nombre}</text>`;
+  s+=`<circle cx="${X(px)}" cy="${Y(py)}" r="4" fill="none" stroke="var(--ink)" stroke-width="1.5"/>`;});
+ if(fx)s+=`<circle cx="${X(fx.x)}" cy="${Y(fx.y)}" r="7" fill="none" stroke="var(--ink)" stroke-width="2.5"/><circle cx="${X(fx.x)}" cy="${Y(fx.y)}" r="2" fill="var(--ink)"/>`;
+ S.innerHTML=s;
+ O.innerHTML=fx?`<p class="big">${latS(fx.lat)} · ${lonS(fx.lon)}</p><p class="note">A ${Math.hypot(fx.x,fx.y).toFixed(1)} M de la primera posición asumida, al ${(norm(Math.atan2(fx.x,fx.y)*180/Math.PI)).toFixed(0)}°.</p>`:'<p class="note">Con una sola recta hay línea de posición, no situación. Agregue otra con acimut bien distinto.</p>';}
+
+/* ---------- Planificar ---------- */
+let plMomento='tarde';
+document.querySelectorAll('[data-pl]').forEach(b=>b.addEventListener('click',()=>{plMomento=b.dataset.pl;document.querySelectorAll('[data-pl]').forEach(x=>x.setAttribute('aria-pressed',x===b));calcPlan()}));
+function calcPlan(){const {y,m,d}=leerFecha('pl-f');const lat=conNombre('pl-lat','S'),lon=conNombre('pl-lon','W');const out=$('pl-out');
+ if(isNaN(lat)||isNaN(lon)){out.innerHTML='<p class="note">Cargue una posición estimada.</p>';return}
+ const tarde=plMomento==='tarde';const pm=pasoGw(y,m,d)-lon/15;
+ const civ=horaAltSol(y,m,d,lat,lon,-6,tarde),nau=horaAltSol(y,m,d,lat,lon,-12,tarde),puesta=horaAltSol(y,m,d,lat,lon,-0.83,tarde);
+ let h=`<div class="tbl"><table><tr><th>Momento</th><th style="text-align:right">TMG</th><th style="text-align:right">Uruguay</th></tr>
+ <tr><td>Pasaje meridiano del Sol</td><td class="n">${fmtH(pm,false)}</td><td class="n">${fmtH(pm-3,false)}</td></tr>
+ <tr><td>${tarde?'Puesta':'Salida'} del Sol</td><td class="n">${puesta!=null?fmtH(puesta,false):'—'}</td><td class="n">${puesta!=null?fmtH(puesta-3,false):'—'}</td></tr>
+ <tr><td>Crepúsculo civil (Sol a −6°)</td><td class="n">${civ!=null?fmtH(civ,false):'—'}</td><td class="n">${civ!=null?fmtH(civ-3,false):'—'}</td></tr>
+ <tr><td>Crepúsculo náutico (Sol a −12°)</td><td class="n">${nau!=null?fmtH(nau,false):'—'}</td><td class="n">${nau!=null?fmtH(nau-3,false):'—'}</td></tr></table></div>`;
+ if(civ==null||nau==null){out.innerHTML=h+'<p class="note">En esta fecha y latitud no hay crepúsculo náutico definido.</p>';return}
+ const t=(civ+nau)/2;
+ const est=ESTRELLAS.map(e=>{const p=precesar(e[1]*15,e[2],jd(y,m,d,t));const sha=norm(360-p.ra);const gha=norm(ariesGHA(y,m,d,t)+sha);const aa=altAz(lat,lon,gha,p.dec);return {n:e[0],mag:e[3],sha,dec:p.dec,alt:aa.alt,zn:aa.zn}}).filter(s=>s.alt>=20&&s.alt<=60);
+ let best=null;for(let i=0;i<est.length;i++)for(let j=i+1;j<est.length;j++)for(let k=j+1;k<est.length;k++){const z=[est[i].zn,est[j].zn,est[k].zn].sort((a,b)=>a-b);const g=[z[1]-z[0],z[2]-z[1],360-z[2]+z[0]];const err=g.reduce((s,x)=>s+Math.abs(x-120),0)+8*(est[i].mag+est[j].mag+est[k].mag);if(!best||err<best.err)best={err,set:[est[i],est[j],est[k]]};}
+ h+=`<p>Hora sugerida para observar: <b>${fmtH(t,false)} TMG</b> (${fmtH(t-3,false)} en Uruguay), a mitad de camino entre los dos crepúsculos.</p>`;
+ if(!best)h+='<p class="warnbox">A esa hora no hay tres estrellas de la lista entre 20° y 60°. Pruebe el otro crepúsculo o use las de la tabla.</p>';
+ if(best)h+=`<div class="card" style="background:var(--buoy-bg)"><h3>Tres estrellas sugeridas</h3><p>${best.set.map(s=>`<b>${s.n}</b> (${s.alt.toFixed(0)}°, Zn ${s.zn.toFixed(0)}°)`).join(' · ')}</p></div>`;
+ h+=`<div class="tbl"><table><tr><th>Estrella</th><th>Mag</th><th style="text-align:right">Altura</th><th style="text-align:right">Zn</th><th style="text-align:right">AS</th><th style="text-align:right">Dec</th></tr>${est.sort((a,b)=>a.zn-b.zn).map(s=>`<tr><td>${s.n}</td><td class="n">${s.mag.toFixed(1)}</td><td class="n">${s.alt.toFixed(0)}°</td><td class="n">${s.zn.toFixed(0)}°</td><td class="n">${fmtA(s.sha)}</td><td class="n">${latS(s.dec)}</td></tr>`).join('')}</table></div>
+ <p class="note">Solo estrellas entre 20° y 60° de altura. La terna busca acimutes cerca de 120° entre sí y las más brillantes. AS y Dec son aproximados (±1′): para el cálculo use el Almanaque.</p>`;
+ out.innerHTML=h;}
+['pl-f','pl-lat','pl-latN','pl-lon','pl-lonN'].forEach(id=>{$(id).addEventListener('input',calcPlan);$(id).addEventListener('change',calcPlan)});
+
+/* ---------- Práctica ---------- */
+let prTipo='mix',prAct=null;const sc=store.get('score',{ok:0,tot:0,racha:0});
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function nuevo(){let t=prTipo==='mix'?['gs','as','ahl','lon','ew','gms'][ri(0,5)]:prTipo;const ag=ri(0,359),as=ri(0,359),gs=norm(ag+as),l=ri(1,179)*(Math.random()<.5?-1:1);const L=`${Math.abs(l)}°${l<0?'W':'E'}`;let q,ans,tipo='num';
+ if(t==='gs'){q=`AHGγ = ${ag}°, AS = ${as}°. Calcule el AHG*.`;ans=gs}
+ else if(t==='as'){q=`AHGγ = ${ag}°, AHG* = ${gs}°. Calcule el AS.`;ans=as}
+ else if(t==='ahl'){q=`λ = ${L}, AS = ${as}°, AHGγ = ${ag}°. Calcule el AHL.`;ans=norm(gs+l)}
+ else if(t==='lon'){const ahl=norm(gs+l);q=`AHGγ = ${ag}°, AS = ${as}°, AHL = ${ahl}°. Calcule la longitud (con su nombre).`;ans=l;tipo='lon'}
+ else if(t==='ew'){q=`λ = ${L}, AHG* = ${gs}°. ¿El astro está al E o al W del observador?`;ans=norm(gs+l)<180?'W':'E';tipo='ew'}
+ else{const g=ri(0,89),m=ri(0,59),s=ri(0,59);q=`Pase ${g}° ${m}′ ${s}″ a grados y minutos con decimal (como en el curso: sin segundos).`;ans=g+(m+s/60)/60;tipo='gm'}
+ prAct={ans,tipo};$('pr-q').textContent=q;$('pr-fb').textContent='';
+ $('pr-in').innerHTML=tipo==='ew'?'<select id="pr-a"><option value="">Elegir</option><option>E</option><option>W</option></select>':tipo==='lon'?'<input id="pr-a" inputmode="numeric" placeholder="grados"><select id="pr-aN"><option>W</option><option>E</option></select>':`<input id="pr-a" inputmode="decimal" placeholder="${tipo==='gm'?'g m.m':'grados'}">`;
+ const a=$('pr-a');a.addEventListener('keydown',e=>{if(e.key==='Enter')corregir()});}
+function corregir(){if(!prAct)return;const a=$('pr-a').value;let ok;const A=prAct.ans;let txt;
+ if(prAct.tipo==='ew'){ok=a===A;txt=A}
+ else if(prAct.tipo==='lon'){const v=leerNum(a)*($('pr-aN').value==='W'?-1:1);ok=Math.abs(v-A)<0.5;txt=`${Math.abs(A)}° ${A<0?'W':'E'}`}
+ else if(prAct.tipo==='gm'){ok=Math.abs(leerNum(a)-A)<0.06/60;txt=fmtA(A)}
+ else{ok=Math.abs(norm(leerNum(a)-A+180)-180)<0.5;txt=`${A}°`}
+ sc.tot++;if(ok){sc.ok++;sc.racha++}else sc.racha=0;store.set('score',sc);
+ $('pr-fb').innerHTML=ok?`<span class="ok">Correcto.</span> ${txt}`:`<span class="bad">No es así.</span> La respuesta es ${txt}. Dibuje el gráfico polar y vuelva a razonar la cuenta.`;
+ $('pr-score').textContent=`Aciertos: ${sc.ok} de ${sc.tot} · racha: ${sc.racha}`;}
+document.querySelectorAll('#pr-tabs [data-t]').forEach(b=>b.addEventListener('click',()=>{prTipo=b.dataset.t;document.querySelectorAll('#pr-tabs [data-t]').forEach(x=>x.setAttribute('aria-pressed',x===b));nuevo()}));
+$('pr-ok').addEventListener('click',corregir);$('pr-next').addEventListener('click',nuevo);
+
+/* ---------- Inicio ---------- */
+['pm-f','rc-f','pl-f'].forEach(id=>{if(!$(id).value)$(id).value=hoy()});
+persist([...pmIds,...rcIds,'pl-lat','pl-latN','pl-lon','pl-lonN','ah-ag','ah-as','ah-gs','ah-l','ah-lN']);
+['pl-f'].forEach(id=>$(id).value=hoy());
+calcAngulos();calcPM();calcRecta();dibujarFix();calcPlan();nuevo();
+if(sc.tot)$('pr-score').textContent=`Aciertos: ${sc.ok} de ${sc.tot} · racha: ${sc.racha}`;
+}</script></body></html>
