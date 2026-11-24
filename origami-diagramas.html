@@ -141,6 +141,7 @@
                         <li><a href="#cortar-cuadrados">Cuántos cuadrados salen de una hoja</a></li>
                         <li><a href="#mil-grullas">Mil grullas: contador</a></li>
                         <li><a href="#mitades">Una fracción con mitades</a></li>
+                        <li><a href="#hoja-base">Qué hoja necesito para una base</a></li>
                     </ul>
                 </details>
             </div>
@@ -450,6 +451,23 @@
                 <p class="sq-res mt-3 mb-1" id="mi-msg" aria-live="polite"></p>
                 <p class="sq-res mb-1" id="mi-err" aria-live="polite"></p>
                 <p class="small text-muted-light mb-0">En el dibujo, el punto amarillo es la fracción buscada, el verde es la marca más cercana que dan las mitades y los trazos grises son todas las marcas posibles con esa cantidad de dobleces. Es una cuenta de aritmética: en papel real cada doblez suma un error de unas décimas de milímetro. Para repetirlo: doble el lado por la mitad, desdoble y marque; luego lleve cada extremo hasta la marca, y así sucesivamente. Si necesita el tercio o el quinto exacto, use <a href="#haga">el pliegue de Haga</a>.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" id="hoja-base">
+            <div class="container">
+                <h2 class="section-title mb-2">Qué hoja necesito para que la base quede de cierto tamaño</h2>
+                <p class="text-muted-light mb-3">Cada base se achica respecto de la hoja. Si doblamos el cuadrado en cuatro (dos mitades), el lado queda en la mitad. Si llevamos las cuatro esquinas al centro, como en la base preliminar o la bomba de agua, el lado queda en 1 sobre raíz de 2, o sea, un 71 % del lado de la hoja. Escriba el tamaño final que busca y la herramienta calcula el lado de la hoja que tiene que cortar y le propone una medida común de papel.</p>
+                <div id="hb-tabs" role="group" aria-label="Tipo de plegado"></div>
+                <div class="row g-3 mt-1 mb-2">
+                    <div class="col-6" style="max-width:12rem"><label>Tamaño final (cm)<br><input class="sq-in" type="number" id="hb-t" min="0.5" max="100" step="0.5" inputmode="decimal" value="5"></label></div>
+                </div>
+                <label for="hb-n" class="mt-2 d-block"><b>Repeticiones del plegado:</b> <span id="hb-nv"></span></label>
+                <input id="hb-n" class="hg-range" type="range" min="1" max="3" value="1" step="1">
+                <svg id="hb-svg" class="gr-cv mt-3" viewBox="0 0 340 190" role="img" aria-label="Hoja cuadrada con los cuadrados que quedan dentro después de cada plegado"></svg>
+                <p class="sq-res mt-3 mb-1" id="hb-msg" aria-live="polite"></p>
+                <p class="sq-res mb-1" id="hb-sug" aria-live="polite"></p>
+                <p class="small text-muted-light mb-0">En el dibujo, el contorno claro es la hoja y los cuadrados interiores son el tamaño después de cada repetición; el último, en verde, es el final. Es geometría pura: con papel real el lado puede quedar un poco más chico por el grosor y la precisión de los dobleces. Para ver cómo se hace cada base, vaya a <a href="#bases">Bases tradicionales</a>; para obtener la hoja cuadrada, a <a href="#cuadrado">Cuadrado desde una hoja</a>.</p>
             </div>
         </section>
 
@@ -1099,6 +1117,48 @@
     tabs.appendChild(b);
   });
   nr.addEventListener('input',paint);L.addEventListener('input',paint);
+  paint();
+})();
+(function(){
+  var svg=document.getElementById('hb-svg'),tabs=document.getElementById('hb-tabs'),nr=document.getElementById('hb-n'),nv=document.getElementById('hb-nv'),T=document.getElementById('hb-t'),msg=document.getElementById('hb-msg'),sug=document.getElementById('hb-sug');
+  var NS='http://www.w3.org/2000/svg',KEY='ori-hoja-base-v1';
+  var MODOS=[{n:'En cuatro (dos mitades)',f:0.5,rot:false},{n:'Esquinas al centro (base preliminar)',f:Math.SQRT1_2,rot:true}];
+  var COMUN=[7.5,10,15,20,25,30];
+  var cur=0;
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function num(x,d){return x.toLocaleString('es-UY',{maximumFractionDigits:d==null?1:d})}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({m:cur,n:nr.value,t:T.value}))}catch(e){}}
+  function paint(){
+    var n=+nr.value,m=MODOS[cur],t=parseFloat(String(T.value).replace(',','.'));
+    if(!(t>=0.5))t=5;if(t>100)t=100;
+    nv.textContent=n;
+    var fac=Math.pow(m.f,n),hoja=t/fac;
+    svg.textContent='';
+    var C=95,S=150,x0=C-S/2,y0=95-S/2;
+    svg.appendChild(el('rect',{x:x0,y:y0,width:S,height:S,fill:'none',stroke:'#e8eeeb','stroke-width':2}));
+    for(var k=1;k<=n;k++){
+      var side=S*Math.pow(m.f,k),last=k===n,ang=m.rot&&k%2===1?45:0;
+      svg.appendChild(el('rect',{x:C-side/2,y:95-side/2,width:side,height:side,fill:last?'rgba(37,211,153,.18)':'none',stroke:last?'#25d399':'#8a9a94','stroke-width':last?3:1.5,transform:'rotate('+ang+' '+C+' 95)'}));
+    }
+    var tx=190,t1=svg.appendChild(el('text',{x:tx,y:70,fill:'#e8eeeb','font-size':13,'font-weight':700}));t1.textContent='Hoja: '+num(hoja,1)+' cm';
+    var t2=svg.appendChild(el('text',{x:tx,y:95,fill:'#25d399','font-size':13,'font-weight':700}));t2.textContent='Final: '+num(t,1)+' cm';
+    var t3=svg.appendChild(el('text',{x:tx,y:120,fill:'#8a9a94','font-size':12}));t3.textContent='Proporción: '+num(fac*100,0)+' %';
+    msg.textContent='Con el plegado «'+m.n.toLowerCase()+'» hecho '+n+(n===1?' vez':' veces')+', para llegar a '+num(t,1)+' cm de lado hace falta partir de un cuadrado de '+num(hoja,1)+' cm.';
+    var mejor=null;COMUN.forEach(function(c){if(mejor===null&&c>=hoja-0.001)mejor=c});
+    if(mejor===null){sug.textContent='Ninguna de las medidas comunes de papel (7,5 a 30 cm) alcanza: corte el cuadrado a medida.';}
+    else{sug.textContent='Medida común más cercana por arriba: '+num(mejor,1)+' cm, con la que la base queda de '+num(mejor*fac,1)+' cm.';}
+    save();
+  }
+  MODOS.forEach(function(m,j){
+    var b=document.createElement('button');b.type='button';b.className='ori-tab';b.textContent=m.n;
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){cur=j;mark();paint()});
+    tabs.appendChild(b);
+  });
+  function mark(){Array.prototype.forEach.call(tabs.children,function(x,i){x.setAttribute('aria-pressed',i===cur?'true':'false')})}
+  try{var g=JSON.parse(localStorage.getItem(KEY)||'null');if(g){if(g.m===0||g.m===1)cur=g.m;if(g.n>=1&&g.n<=3)nr.value=g.n;if(g.t)T.value=g.t}}catch(e){}
+  mark();
+  nr.addEventListener('input',paint);T.addEventListener('input',paint);
   paint();
 })();
 </script>
