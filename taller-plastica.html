@@ -589,6 +589,16 @@ footer a{color:var(--c)}
 .gd-sec .gd-res span{flex:0 1 auto;min-width:0}
 .gd-sec .gd-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media print{.gd-sec{display:none}}
+.tp-sec .tp-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.tp-sec .tp-two{display:flex;flex-wrap:wrap;gap:12px}
+.tp-sec .tp-ctl input,.tp-sec .tp-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.tp-sec .tp-ctl input:focus-visible,.tp-sec .tp-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.tp-sec #tp-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.tp-sec .tp-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.tp-sec .tp-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
+.tp-sec .tp-res span{flex:0 1 auto;min-width:0}
+.tp-sec .tp-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media print{.tp-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -945,6 +955,7 @@ footer a{color:var(--c)}
     <a href="#regla-60-30-10">Regla 60-30-10</a>
     <a href="#renglones">Renglones para letras</a>
     <a href="#guarda">Guarda decorativa</a>
+    <a href="#triptico">Tríptico y políptico</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3050,6 +3061,23 @@ footer a{color:var(--c)}
     <svg id="gd-svg" viewBox="0 0 320 120" role="img" aria-label="Tira con los motivos repartidos a escala"></svg>
     <ul class="gd-res" id="gd-res" aria-live="polite"></ul>
     <div class="tip">Cómo usarlo: cortá una tira de papel del largo de la guarda y marcá el borde izquierdo de cada motivo con la medida de «paso» (motivo más espacio). Doblá la tira al medio para chequear que quede simétrica. En el dibujo, el motivo es solo una forma de muestra: en tu guarda puede ser una hoja, una ola o lo que dibujes. Si el sobrante con tu espacio es grande, usá el espacio ajustado: reparte ese sobrante en partes iguales entre los motivos. Es una cuenta de reparto, sin modelos de nadie.</div>
+  </div>
+</section>
+
+<section id="triptico" class="tp-sec">
+  <h2>Tríptico y políptico: tamaño de cada panel</h2>
+  <p style="color:var(--muted)">Una obra en varios paneles (dos, tres, cinco) se arma mejor si se calcula antes. Escribí el ancho y el alto totales que querés cubrir y la separación entre paneles: te dice cuánto mide cada uno, cuántos centímetros ocupan las separaciones y qué proporción tiene cada panel. Con la opción de panel central más ancho, el del medio recibe una parte mayor y los laterales quedan iguales.</p>
+  <div class="card">
+    <div class="tp-two">
+      <label class="tp-ctl" for="tp-w"><span>Ancho total de la obra (cm)</span><input id="tp-w" type="number" inputmode="decimal" min="10" max="1000" step="1" value="120"></label>
+      <label class="tp-ctl" for="tp-h"><span>Alto de los paneles (cm)</span><input id="tp-h" type="number" inputmode="decimal" min="5" max="500" step="1" value="60"></label>
+      <label class="tp-ctl" for="tp-n"><span>Cantidad de paneles</span><select id="tp-n"><option value="2">2 (díptico)</option><option value="3" selected>3 (tríptico)</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></label>
+      <label class="tp-ctl" for="tp-s"><span>Separación entre paneles (cm)</span><input id="tp-s" type="number" inputmode="decimal" min="0" max="50" step="0.5" value="3"></label>
+      <label class="tp-ctl" for="tp-c"><span>Panel central (solo con 3 o 5)</span><select id="tp-c"><option value="1">Todos iguales</option><option value="1.5">Central 1,5 veces más ancho</option><option value="2">Central el doble de ancho</option></select></label>
+    </div>
+    <svg id="tp-svg" viewBox="0 0 320 140" role="img" aria-label="Paneles repartidos a escala"></svg>
+    <ul class="tp-res" id="tp-res" aria-live="polite"></ul>
+    <div class="tip">Cómo usarlo: el ancho total es la pared o el espacio que querés cubrir, contado de punta a punta de los paneles. Marcá los paneles sobre un cartón o una tela con las medidas de arriba y dejá la separación igual entre todos: el ojo lee mejor la obra como un conjunto cuando los huecos son parejos. Para que el dibujo continúe de un panel al siguiente, planeá la composición sobre la obra entera y recordá que lo que cae en la separación no se ve. Los números son una guía de reparto: ajustá a las medidas reales del bastidor o la madera que consigas.</div>
   </div>
 </section>
 
@@ -8045,6 +8073,45 @@ footer a{color:var(--c)}
       row("Largo útil",f(U,1)+" cm (largo menos "+f(2*g,1)+" cm de márgenes)");
     }
     svg.setAttribute("aria-label","Tira de "+f(L,1)+" por "+f(A,1)+" cm con "+n+" motivos repartidos a escala");
+    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-triptico-v1",$=function(i){return document.getElementById(i)},ids=["tp-w","tp-h","tp-n","tp-s","tp-c"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function calc(){
+    var W=num("tp-w",10,1000,120),H=num("tp-h",5,500,60),n=parseInt($("tp-n").value,10)||3,sp=num("tp-s",0,50,3),ck=parseFloat($("tp-c").value)||1;
+    var wts=[];for(var i=0;i<n;i++)wts.push(1);
+    var centro=(n===3||n===5)&&ck!==1;if(centro)wts[(n-1)/2]=ck;
+    var tw=0;wts.forEach(function(x){tw+=x});
+    var U=W-(n-1)*sp,svg=$("tp-svg"),ul=$("tp-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    if(U<=0){row("Aviso","Las separaciones ("+f((n-1)*sp,1)+" cm) ocupan todo el ancho: achicá la separación o ampliá la obra.");svg.setAttribute("aria-label","Sin lugar para los paneles");return}
+    var unit=U/tw,sc=Math.min(300/W,120/H),pw=W*sc,ph=H*sc,x0=(320-pw)/2,y0=(140-ph)/2,x=0;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:pw.toFixed(2),height:ph.toFixed(2),fill:"none",stroke:"#9aa0a6","stroke-width":0.5,"stroke-dasharray":"2 2"}));
+    var anchos=[],pos=[];
+    for(var k=0;k<n;k++){
+      var w=unit*wts[k];anchos.push(w);pos.push(x);
+      svg.appendChild(el("rect",{x:(x0+x*sc).toFixed(2),y:y0.toFixed(2),width:(w*sc).toFixed(2),height:ph.toFixed(2),rx:1,fill:wts[k]>1?"#2fbf71":(k%2?"#1a7f4b":"#2c9c60")}));
+      x+=w+sp;
+    }
+    if(centro){var wc=anchos[(n-1)/2],wl=anchos[0];row("Panel central",f(wc,1)+" x "+f(H,1)+" cm");row("Cada panel lateral",f(wl,1)+" x "+f(H,1)+" cm")}
+    else{row("Cada panel",f(unit,1)+" x "+f(H,1)+" cm")}
+    row("Separaciones",(n-1)+" de "+f(sp,1)+" cm ("+f((n-1)*sp,1)+" cm en total)");
+    row("Ancho cubierto por la pintura",f(U,1)+" cm de "+f(W,1)+" cm");
+    row("Proporción de un panel (ancho : alto)",f(anchos[0]/H,2)+" : 1");
+    var mk=[];for(var q=0;q<n;q++)mk.push(f(pos[q],1));
+    row("Borde izquierdo de cada panel (cm desde la punta izquierda)",mk.join(", "));
+    svg.setAttribute("aria-label","Obra de "+f(W,1)+" por "+f(H,1)+" cm con "+n+" paneles repartidos a escala");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
