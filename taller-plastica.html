@@ -604,6 +604,7 @@ footer a{color:var(--c)}
 .mz-sec .mz-ctl input,.mz-sec .mz-ctl select{min-height:44px;box-sizing:border-box;width:100%}
 .mz-sec .mz-ctl input:focus-visible,.mz-sec .mz-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
 .mz-sec #mz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #bn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
 .mz-sec .mz-res span{flex:0 1 auto;min-width:0}
@@ -983,6 +984,7 @@ footer a{color:var(--c)}
     <a href="#guirnalda">Guirnalda de anillos</a>
     <a href="#cuadros-pared">Cuadros en la pared</a>
     <a href="#movil">Móvil en equilibrio</a>
+    <a href="#banderines">Banderines en la cuerda</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3220,6 +3222,32 @@ footer a{color:var(--c)}
       <li>Para un móvil de varios niveles, armá primero el nivel de abajo, pesalo entero y tratalo como una pieza más del nivel de arriba.</li>
     </ol>
     <div class="tip">Cómo se calcula: es el promedio de los lugares ponderado por el peso. Cada pieza (y la varilla, que pesa en su centro) multiplica su peso por su distancia a la punta izquierda; la suma se divide por el peso total. Es el punto donde la suma de los giros a un lado iguala a la del otro. El hilo soporta el peso total, así que elegí uno que aguante más que eso. Con la varilla ya colgada, cualquier error de nudos o de balanza se corrige corriendo el hilo.</div>
+  </div>
+</section>
+
+<section id="banderines" class="mz-sec">
+  <h2>Banderines en la cuerda: cuántos entran y cuánto papel</h2>
+  <p style="color:var(--muted)">Para decorar una sala o una muestra con una hilera de banderines de papel: cargá el largo de la cuerda y la medida de cada banderín. Te dice cuántos entran, qué separación hace falta para que cierre justo y cuántas hojas necesitás.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="bn-l"><span>Largo de la cuerda (cm)</span><input id="bn-l" type="number" inputmode="numeric" min="50" max="2000" step="10" value="300"></label>
+      <label class="mz-ctl" for="bn-m"><span>Margen libre en cada punta (cm)</span><input id="bn-m" type="number" inputmode="decimal" min="0" max="100" step="1" value="20"></label>
+      <label class="mz-ctl" for="bn-w"><span>Ancho de cada banderín (cm)</span><input id="bn-w" type="number" inputmode="decimal" min="5" max="40" step="0.5" value="15"></label>
+      <label class="mz-ctl" for="bn-a"><span>Alto de cada banderín (cm)</span><input id="bn-a" type="number" inputmode="decimal" min="5" max="50" step="0.5" value="20"></label>
+      <label class="mz-ctl" for="bn-g"><span>Separación pedida (cm)</span><input id="bn-g" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="4"></label>
+      <label class="mz-ctl" for="bn-f"><span>Forma</span><select id="bn-f"><option value="tri" selected>Triángulo pegado a la cuerda</option><option value="sol">Con solapa que se dobla sobre la cuerda</option></select></label>
+      <label class="mz-ctl" for="bn-t"><span>Solapa (cm, si elige solapa)</span><input id="bn-t" type="number" inputmode="decimal" min="1" max="6" step="0.5" value="2"></label>
+      <label class="mz-ctl" for="bn-h"><span>Hoja</span><select id="bn-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="bn-c"><span>Colores alternados (1 a 4)</span><input id="bn-c" type="number" inputmode="numeric" min="1" max="4" step="1" value="3"></label>
+    </div>
+    <svg id="bn-svg" viewBox="0 0 320 110" role="img" aria-label="Cuerda con banderines"></svg>
+    <ul class="mz-res" id="bn-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá en la hoja los triángulos (o los rectángulos con solapa) con regla y lápiz, y cortalos todos con la misma plantilla de cartón para que salgan parejos.</li>
+      <li>Marcá en la cuerda, con cinta o lápiz, el primer banderín a la distancia del margen y los siguientes cada ancho más separación.</li>
+      <li>Pegá cada banderín a la cuerda (o doblá la solapa sobre ella y pegala) y alterná los colores en el orden que elijas.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: caben tantos banderines como veces entra el ancho más la separación en el largo libre de la cuerda (el largo menos los dos márgenes, más una separación). La separación ajustada reparte el sobrante entre los huecos para que el último banderín termine justo en el margen. Los triángulos se cortan alternando punta arriba y punta abajo, que es la forma de aprovechar la hoja sin desperdicio entre ellos; con solapa se cortan rectángulos de ancho por (alto más solapa). Es una cuenta geométrica, sin fuente externa; la cuerda se comba con el peso, así que conviene medir con la cuerda tensa.</div>
   </div>
 </section>
 
@@ -8472,6 +8500,59 @@ footer a{color:var(--c)}
     if(near)row("Aviso","Hay piezas a menos de 2 cm una de otra en la varilla: pueden chocar al girar, separalas o colgalas a distinto largo de hilo");
     svg.setAttribute("aria-label","Varilla de "+f(L,0)+" cm con "+n+" piezas colgadas; el hilo va a "+f(P,1)+" cm de la punta izquierda");
     try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-banderines-v1",$=function(i){return document.getElementById(i)},ids=["bn-l","bn-m","bn-w","bn-a","bn-g","bn-f","bn-t","bn-h","bn-c"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg",COL=["#2fbf71","#ffc23d","#4aa3ff","#ff6b81"];
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
+  function porHoja(X,Y,w,h,tri){
+    var r=Math.floor(Y/h+1e-9),a=Math.floor(X/w+1e-9);
+    if(r<1||a<1)return 0;
+    if(!tri)return r*a;
+    return r*(a+Math.max(0,Math.floor((X-w/2)/w+1e-9)));
+  }
+  function calc(){
+    var p=$("bn-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]),nom=p[2];
+    var L=num("bn-l",50,2000,300,true),m=num("bn-m",0,100,20,false),w=num("bn-w",5,40,15,false),h=num("bn-a",5,50,20,false),g=num("bn-g",0,30,4,false),t=num("bn-t",1,6,2,false),nc=num("bn-c",1,4,2,true);
+    var tri=$("bn-f").value!=="sol",hp=tri?h:h+t;
+    var svg=$("bn-svg"),ul=$("bn-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var libre=L-2*m;
+    if(libre<w){row("Aviso","El largo libre ("+f(Math.max(libre,0),0)+" cm) no alcanza para un banderín de "+f(w,1)+" cm: probá menos margen, una cuerda más larga o un banderín más angosto");return}
+    var n=Math.floor((libre+g)/(w+g)+1e-9),gj=n>1?(libre-n*w)/(n-1):0;
+    var ph=Math.max(porHoja(A,B,w,hp,tri),porHoja(B,A,w,hp,tri));
+    if(ph<1){row("Aviso","Un banderín de "+f(w,1)+" por "+f(hp,1)+" cm no entra en la hoja "+nom+": probá una hoja más grande o una medida menor");return}
+    var hojas=Math.ceil(n/ph);
+    var sc=Math.min(300/L,70/h),x0=(320-L*sc)/2,yc=22,i;
+    svg.appendChild(el("line",{x1:x0.toFixed(2),x2:(x0+L*sc).toFixed(2),y1:yc,y2:yc,stroke:"#8a8f98","stroke-width":1.2}));
+    for(i=0;i<n;i++){
+      var xi=x0+(m+i*(w+gj))*sc,wi=w*sc,hi=h*sc,c=COL[i%nc];
+      if(tri)svg.appendChild(el("polygon",{points:xi.toFixed(2)+","+yc+" "+(xi+wi).toFixed(2)+","+yc+" "+(xi+wi/2).toFixed(2)+","+(yc+hi).toFixed(2),fill:c,"fill-opacity":0.85,stroke:"#14161a","stroke-width":0.4}));
+      else{var ti=t*sc;svg.appendChild(el("polygon",{points:xi.toFixed(2)+","+(yc-ti).toFixed(2)+" "+(xi+wi).toFixed(2)+","+(yc-ti).toFixed(2)+" "+(xi+wi).toFixed(2)+","+yc+" "+(xi+wi/2).toFixed(2)+","+(yc+hi).toFixed(2)+" "+xi.toFixed(2)+","+yc,fill:c,"fill-opacity":0.85,stroke:"#14161a","stroke-width":0.4}))}
+    }
+    row("Banderines que entran",String(n)+" (con "+f(g,1)+" cm de separación sobran "+f(libre-n*w-(n-1)*g,1)+" cm)");
+    row("Separación para que cierre justo",n>1?f(gj,1)+" cm entre banderines":"un solo banderín, centralo en la cuerda");
+    row("Primer banderín","a "+f(m,1)+" cm de la punta; los siguientes cada "+f(w+gj,1)+" cm");
+    row("Cada pieza",tri?"triángulo de "+f(w,1)+" cm de base y "+f(h,1)+" cm de alto":"rectángulo de "+f(w,1)+" por "+f(hp,1)+" cm (solapa de "+f(t,1)+" cm)");
+    row("Piezas por hoja "+nom,String(ph)+(tri?" (triángulos alternados punta arriba y punta abajo)":""));
+    row("Hojas necesarias",hojas+(hojas===1?" hoja":" hojas")+" ("+(hojas*ph-n)+((hojas*ph-n)===1?" pieza de sobra)":" piezas de sobra)"));
+    if(nc>1){
+      var pc=[],q;for(q=0;q<nc;q++)pc.push(Math.floor(n/nc)+(q<n%nc?1:0));
+      row("Por color",pc.map(function(a,j){return "color "+(j+1)+": "+a}).join(", ")+" banderines");
+      row("Hojas por color",pc.map(function(a,j){return "color "+(j+1)+": "+Math.ceil(a/ph)}).join(", ")+" (si se compra por color)");
+    }
+    if(g<1&&n>1)row("Aviso","Con tan poca separación los banderines se tocan al moverse con el aire");
+    svg.setAttribute("aria-label","Cuerda de "+f(L,0)+" cm con "+n+" banderines de "+f(w,1)+" cm de ancho");
+    try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
