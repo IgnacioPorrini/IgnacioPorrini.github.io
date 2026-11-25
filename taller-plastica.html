@@ -610,6 +610,17 @@ footer a{color:var(--c)}
 .mz-sec .mz-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 .mz-sec ol{padding-left:1.3em}
 @media print{.mz-sec{display:none}}
+.mo-sec .mo-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
+.mo-sec .mo-two{display:flex;flex-wrap:wrap;gap:12px}
+.mo-sec .mo-ctl input,.mo-sec .mo-ctl select{min-height:44px;box-sizing:border-box;width:100%}
+.mo-sec .mo-ctl input:focus-visible,.mo-sec .mo-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
+.mo-sec #mo-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mo-sec .mo-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.mo-sec .mo-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
+.mo-sec .mo-res span{flex:0 1 auto;min-width:0}
+.mo-sec .mo-res b{text-align:right;flex:0 1 auto;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.mo-sec ol{padding-left:1.3em}
+@media print{.mo-sec{display:none}}
 .co-sec .co-ctl{display:grid;gap:4px;font-weight:700;flex:1 1 140px}
 .co-sec .co-two{display:flex;flex-wrap:wrap;gap:12px}
 .co-sec .co-ctl input:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
@@ -971,6 +982,7 @@ footer a{color:var(--c)}
     <a href="#acordeon">Libro acordeón</a>
     <a href="#guirnalda">Guirnalda de anillos</a>
     <a href="#cuadros-pared">Cuadros en la pared</a>
+    <a href="#movil">Móvil en equilibrio</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3180,6 +3192,34 @@ footer a{color:var(--c)}
       <li>Colgá las obras de los extremos primero, mirá el conjunto desde lejos y corregí a ojo antes de marcar de más.</li>
     </ol>
     <div class="tip">Cómo usarlo: la altura del centro es un valor de partida (muchas salas dejan el centro de la obra a la altura de los ojos, entre 145 y 150 cm), pero conviene ajustarlo a quienes van a mirar, por ejemplo más bajo para un grupo de chicos. La cuenta es una resta y una división en partes iguales y no usa fuente externa: el conjunto se centra en la pared y los clavos se calculan restando el colgador al borde superior.</div>
+  </div>
+</section>
+
+<section id="movil" class="mo-sec">
+  <h2>Móvil en equilibrio: dónde atar el hilo</h2>
+  <p style="color:var(--muted)">Para un móvil de una varilla con 2 a 4 piezas colgadas (papel, cartón, ramitas, figuras de origami): cargá el largo de la varilla, el peso de cada pieza y dónde la cuelgan. Te dice a qué distancia de la punta izquierda atar el hilo para que la varilla quede horizontal. Pesá las piezas con una balanza de cocina; las piezas de más que no uses se ignoran.</p>
+  <div class="card">
+    <div class="mo-two">
+      <label class="mo-ctl" for="mo-l"><span>Largo de la varilla (cm)</span><input id="mo-l" type="number" inputmode="decimal" min="10" max="200" step="1" value="40"></label>
+      <label class="mo-ctl" for="mo-b"><span>Peso de la varilla (g)</span><input id="mo-b" type="number" inputmode="decimal" min="0" max="500" step="0.5" value="5"></label>
+      <label class="mo-ctl" for="mo-n"><span>Piezas colgadas</span><select id="mo-n"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option></select></label>
+      <label class="mo-ctl" for="mo-w0"><span>Pieza 1: peso (g)</span><input id="mo-w0" type="number" inputmode="decimal" min="1" max="1000" step="1" value="20"></label>
+      <label class="mo-ctl" for="mo-x0"><span>Pieza 1: lugar desde la punta izquierda (cm)</span><input id="mo-x0" type="number" inputmode="decimal" min="0" max="200" step="0.5" value="4"></label>
+      <label class="mo-ctl" for="mo-w1"><span>Pieza 2: peso (g)</span><input id="mo-w1" type="number" inputmode="decimal" min="1" max="1000" step="1" value="10"></label>
+      <label class="mo-ctl" for="mo-x1"><span>Pieza 2: lugar desde la punta izquierda (cm)</span><input id="mo-x1" type="number" inputmode="decimal" min="0" max="200" step="0.5" value="22"></label>
+      <label class="mo-ctl" for="mo-w2"><span>Pieza 3: peso (g)</span><input id="mo-w2" type="number" inputmode="decimal" min="1" max="1000" step="1" value="30"></label>
+      <label class="mo-ctl" for="mo-x2"><span>Pieza 3: lugar desde la punta izquierda (cm)</span><input id="mo-x2" type="number" inputmode="decimal" min="0" max="200" step="0.5" value="36"></label>
+      <label class="mo-ctl" for="mo-w3"><span>Pieza 4: peso (g)</span><input id="mo-w3" type="number" inputmode="decimal" min="1" max="1000" step="1" value="15"></label>
+      <label class="mo-ctl" for="mo-x3"><span>Pieza 4: lugar desde la punta izquierda (cm)</span><input id="mo-x3" type="number" inputmode="decimal" min="0" max="200" step="0.5" value="38"></label>
+    </div>
+    <svg id="mo-svg" viewBox="0 0 320 170" role="img" aria-label="Varilla con piezas colgadas y el hilo en el punto de equilibrio"></svg>
+    <ul class="mo-res" id="mo-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá con lápiz el punto de atado sobre la varilla, midiendo desde la punta izquierda, y cuelgá cada pieza en su lugar con un nudo o una gota de pegamento para que no se corra.</li>
+      <li>Atá el hilo en la marca, levantá el móvil y mirá si la varilla queda horizontal. Si baja un lado, corré el hilo unos milímetros hacia ese lado y volvé a probar.</li>
+      <li>Para un móvil de varios niveles, armá primero el nivel de abajo, pesalo entero y tratalo como una pieza más del nivel de arriba.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: es el promedio de los lugares ponderado por el peso. Cada pieza (y la varilla, que pesa en su centro) multiplica su peso por su distancia a la punta izquierda; la suma se divide por el peso total. Es el punto donde la suma de los giros a un lado iguala a la del otro. El hilo soporta el peso total, así que elegí uno que aguante más que eso. Con la varilla ya colgada, cualquier error de nudos o de balanza se corrige corriendo el hilo.</div>
   </div>
 </section>
 
@@ -8388,6 +8428,50 @@ footer a{color:var(--c)}
     if(m<w/2&&n>1)row("Aviso","El margen lateral es menor que media obra: se verá apretado contra la esquina");
     svg.setAttribute("aria-label","Pared de "+f(P,0)+" cm con "+n+" obras de "+f(w,0)+" por "+f(a,0)+" cm centradas");
     try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-movil-v1",$=function(i){return document.getElementById(i)},ids=["mo-l","mo-b","mo-n"];
+  var k;for(k=0;k<4;k++){ids.push("mo-w"+k);ids.push("mo-x"+k)}
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!=="")$(i).value=t[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var q in at)e.setAttribute(q,at[q]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var L=num("mo-l",10,200,40),B=num("mo-b",0,500,5),n=parseInt($("mo-n").value,10)||3,i;
+    var svg=$("mo-svg"),ul=$("mo-res"),W=[],X=[];
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),b=document.createElement("b");x.textContent=l;b.textContent=v;li.appendChild(x);li.appendChild(b);ul.appendChild(li)}
+    var def=[[20,4],[10,22],[30,36],[15,38]],tw=B,m=B*L/2;
+    for(i=0;i<n;i++){W.push(num("mo-w"+i,1,1000,def[i][0]));X.push(num("mo-x"+i,0,L,Math.min(L,def[i][1])));tw+=W[i];m+=W[i]*X[i]}
+    var P=m/tw,izq=0,der=0;
+    function giro(w,x){var d=x-P;if(d<0)izq+=w*-d;else der+=w*d}
+    giro(B,L/2);for(i=0;i<n;i++)giro(W[i],X[i]);
+    var sc=280/L,x0=20,yb=50,wmax=Math.max.apply(null,W);
+    svg.appendChild(el("line",{x1:x0+P*sc,x2:x0+P*sc,y1:6,y2:yb,stroke:"#8a8f98","stroke-width":1}));
+    svg.appendChild(el("line",{x1:x0,x2:x0+L*sc,y1:yb,y2:yb,stroke:"#ffc23d","stroke-width":3,"stroke-linecap":"round"}));
+    svg.appendChild(el("polygon",{points:(x0+P*sc-5)+","+(yb+12)+" "+(x0+P*sc+5)+","+(yb+12)+" "+(x0+P*sc)+","+(yb+4),fill:"#2fbf71"}));
+    for(i=0;i<n;i++){
+      var r=6+10*Math.sqrt(W[i]/wmax),cx=x0+X[i]*sc,len=30+(i%2)*18;
+      svg.appendChild(el("line",{x1:cx.toFixed(2),x2:cx.toFixed(2),y1:yb,y2:yb+len+20,stroke:"#8a8f98","stroke-width":0.8}));
+      svg.appendChild(el("circle",{cx:cx.toFixed(2),cy:yb+len+20+r,r:r.toFixed(2),fill:"#2fbf71","fill-opacity":0.8,stroke:"#14161a","stroke-width":0.6}));
+      var tx=el("text",{x:cx.toFixed(2),y:(yb+len+20+r+3).toFixed(2),"text-anchor":"middle","font-size":9,fill:"#14161a","font-weight":700});tx.textContent=String(i+1);svg.appendChild(tx);
+    }
+    row("Atar el hilo a",f(P,1)+" cm de la punta izquierda ("+f(L-P,1)+" cm de la derecha)");
+    row("Peso que sostiene el hilo",f(tw,1)+" g");
+    row("Giro a cada lado del hilo",f(izq,0)+" g·cm a la izquierda / "+f(der,0)+" g·cm a la derecha");
+    if(L/2>P+0.05)row("Mitad de la varilla","El hilo queda "+f(L/2-P,1)+" cm hacia la izquierda de la mitad");
+    else if(P>L/2+0.05)row("Mitad de la varilla","El hilo queda "+f(P-L/2,1)+" cm hacia la derecha de la mitad");
+    else row("Mitad de la varilla","El hilo queda en el centro de la varilla");
+    var near=false,j;for(i=0;i<n;i++)for(j=i+1;j<n;j++)if(Math.abs(X[i]-X[j])<2)near=true;
+    if(near)row("Aviso","Hay piezas a menos de 2 cm una de otra en la varilla: pueden chocar al girar, separalas o colgalas a distinto largo de hilo");
+    svg.setAttribute("aria-label","Varilla de "+f(L,0)+" cm con "+n+" piezas colgadas; el hilo va a "+f(P,1)+" cm de la punta izquierda");
+    try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
