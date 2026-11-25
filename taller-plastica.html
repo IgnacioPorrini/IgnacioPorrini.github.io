@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -996,6 +996,7 @@ footer a{color:var(--c)}
     <a href="#historieta">Viñetas de historieta</a>
     <a href="#abanico">Abanico plegado</a>
     <a href="#molinete">Molinete de papel</a>
+    <a href="#doblar-mitad">Doblar a la mitad</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3390,6 +3391,26 @@ footer a{color:var(--c)}
       <li>Tomá una punta de cada esquina, siempre del mismo lado del corte, llevala al centro y fijala con un alfiler de cabeza o un broche mariposa a un palito o a un lápiz con goma.</li>
     </ol>
     <div class="tip">Cómo se calcula: la diagonal del cuadrado es el lado × raíz de 2, y se corta un porcentaje de su mitad. Lo que queda sin cortar hasta el centro es el resto. La punta alcanza el centro, de forma aproximada, cuando el corte es igual o mayor que ese resto, o sea desde la mitad de la mitad de la diagonal (50 %). Es una cuenta simple: el papel se curva y la cuenta no incluye el grosor ni el ancho de la punta.</div>
+  </div>
+</section>
+
+<section id="doblar-mitad" class="mz-sec">
+  <h2>Doblar a la mitad: cuánto mide y cuánto grosor</h2>
+  <p style="color:var(--muted)">Cada doblez a la mitad achica la hoja y duplica las capas. Elegí la hoja, el grosor del papel y cuántas veces doblás: te dice la medida del paquete, las capas, el grosor total y te dibuja los rectángulos que marcan los pliegues. Sirve para planear una base de origami, un cuaderno o un pliegue de carpeta.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="dm-h"><span>Hoja</span><select id="dm-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="dm-t"><span>Grosor de una hoja (mm)</span><input id="dm-t" type="number" inputmode="decimal" min="0.02" max="1" step="0.01" value="0.1"></label>
+      <label class="mz-ctl" for="dm-n"><span>Dobleces a la mitad</span><input id="dm-n" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
+    </div>
+    <svg id="dm-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja dividida por los pliegues"></svg>
+    <ul class="mz-res" id="dm-res" aria-live="polite"></ul>
+    <ol>
+      <li>Doblá la hoja por la mitad llevando el lado más largo sobre sí mismo y marcá bien el pliegue con la uña.</li>
+      <li>Repetí con el paquete que quedó, siempre por el lado más largo, hasta completar los dobleces elegidos.</li>
+      <li>Para saber el grosor real de tu papel, medí una pila de 20 hojas con una regla y dividí por 20.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: cada doblez parte por la mitad el lado más largo del paquete, así que el área queda en 1/2, 1/4, 1/8... y las capas pasan a 2, 4, 8... (2 elevado a la cantidad de dobleces). El grosor es el de una hoja por las capas. Es una cuenta ideal: en el papel real el doblez suma un poco de ancho y a partir de seis o siete dobleces cuesta cada vez más cerrar el paquete.</div>
   </div>
 </section>
 
@@ -8971,6 +8992,50 @@ footer a{color:var(--c)}
     else row("Cuadrados por hoja",n+" de "+f(L,1)+" cm ("+Math.floor(A/L+1e-9)+" x "+Math.floor(B/L+1e-9)+")");
     if(pc>=85)row("Aviso","Con un corte tan largo el centro queda muy débil y se rompe al fijarlo: dejá al menos 1 cm sin cortar");
     if(r<1&&pc<85)row("Aviso","Queda menos de 1 cm sin cortar: el centro puede romperse");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-doblarmitad-v1",$=function(i){return document.getElementById(i)},ids=["dm-h","dm-t","dm-n"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("dm-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
+    var t=num("dm-t",0.02,1,0.1),n=Math.round(num("dm-n",1,8,3));
+    var svg=$("dm-svg"),ul=$("dm-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var w=A,h=B,i,sc=Math.min(280/A,200/B),W=A*sc,H=B*sc,x0=160-W/2,y0=124-H/2;
+    var rects=[[0,0,A,B]];
+    for(i=0;i<n;i++){
+      var nr=[];
+      rects.forEach(function(r){
+        if(r[2]>=r[3]){nr.push([r[0],r[1],r[2]/2,r[3]]);nr.push([r[0]+r[2]/2,r[1],r[2]/2,r[3]])}
+        else{nr.push([r[0],r[1],r[2],r[3]/2]);nr.push([r[0],r[1]+r[3]/2,r[2],r[3]/2])}
+      });
+      rects=nr;
+      if(w>=h)w=w/2;else h=h/2;
+    }
+    svg.appendChild(el("rect",{x:x0,y:y0,width:W,height:H,fill:"#58d68d","fill-opacity":0.2,stroke:"#8a8f98","stroke-width":1}));
+    rects.forEach(function(r){svg.appendChild(el("rect",{x:x0+r[0]*sc,y:y0+r[1]*sc,width:r[2]*sc,height:r[3]*sc,fill:"none",stroke:"#ffffff","stroke-width":1.2,"stroke-dasharray":"5 3"}))});
+    var last=rects[rects.length-1];
+    svg.appendChild(el("rect",{x:x0+last[0]*sc,y:y0+last[1]*sc,width:last[2]*sc,height:last[3]*sc,fill:"#2fbf71","fill-opacity":0.5,stroke:"#2fbf71","stroke-width":1.6}));
+    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Hoja de "+f(A,1)+" x "+f(B,1)+" cm con "+n+(n===1?" doblez":" dobleces");svg.appendChild(tt);
+    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm dividida en "+rects.length+" rectángulos por "+n+" dobleces a la mitad; el paquete final mide "+f(Math.max(w,h),1)+" por "+f(Math.min(w,h),1)+" cm");
+    var cap=Math.pow(2,n),g=cap*t;
+    row("Paquete doblado",f(Math.max(w,h),1)+" x "+f(Math.min(w,h),1)+" cm");
+    row("Capas",String(cap));
+    row("Parte de la hoja",rects.length>1?"1/"+rects.length+" del área ("+f(100/rects.length,2)+" %)":"toda");
+    row("Grosor del paquete",f(g,2)+" mm ("+f(g/10,2)+" cm)");
+    if(Math.min(w,h)<=g*3)row("Aviso","El paquete es casi tan grueso como ancho: en la práctica no se va a cerrar bien. Probá con un doblez menos");
+    else if(n>=6)row("Aviso","Con "+n+" dobleces el paquete cuesta mucho de plegar y de marcar; usá papel fino");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
