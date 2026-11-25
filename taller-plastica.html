@@ -607,6 +607,7 @@ footer a{color:var(--c)}
 .mz-sec #bn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -991,6 +992,7 @@ footer a{color:var(--c)}
     <a href="#caja-hoja">Caja con una hoja</a>
     <a href="#tela-bastidor">Tela para un bastidor</a>
     <a href="#cubo-hoja">Cubo con una hoja</a>
+    <a href="#historieta">Viñetas de historieta</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3322,6 +3324,29 @@ footer a{color:var(--c)}
       <li>Doblá todos los lados hacia el mismo lado y pegá las solapas por dentro, una por una: son siete uniones.</li>
     </ol>
     <div class="tip">Cómo se calcula: la cruz mide 4 lados de largo por 3 de alto. Con una reserva t en todo el contorno, el cuadrado más grande que entra en una hoja de A por B es el menor entre (A − 2t) / 4 y (B − 2t) / 3, probando la hoja de las dos maneras (acostada o de pie). El volumen es lado al cubo. Las siete uniones salen de contar bordes: un cubo tiene 12 aristas y el desarrollo de seis cuadrados deja cinco ya unidas por un doblez, así que quedan siete para pegar. Es una cuenta geométrica, sin fuente externa; la reserva es conservadora (rodea toda la cruz) y la cantidad de cubos por hoja supone cruces separadas por esa misma reserva. Para armar un cubo sin pegamento, mirá la página de <a href="origami.html">origami</a>.</div>
+  </div>
+</section>
+
+<section id="historieta" class="mz-sec">
+  <h2>Viñetas de historieta en una hoja</h2>
+  <p style="color:var(--muted)">Para dibujar una página de historieta conviene decidir primero cuántas viñetas entran y de qué tamaño. Elegí la hoja, la cantidad de columnas y filas, el margen y la separación: te dice cuánto mide cada viñeta y te muestra la página a escala con el orden de lectura.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="hv-h"><span>Hoja</span><select id="hv-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="hv-o"><span>Orientación</span><select id="hv-o"><option value="p" selected>De pie</option><option value="a">Acostada</option></select></label>
+      <label class="mz-ctl" for="hv-c"><span>Columnas (1 a 4)</span><input id="hv-c" type="number" inputmode="numeric" min="1" max="4" step="1" value="2"></label>
+      <label class="mz-ctl" for="hv-f"><span>Filas (1 a 8)</span><input id="hv-f" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
+      <label class="mz-ctl" for="hv-m"><span>Margen de la hoja (cm)</span><input id="hv-m" type="number" inputmode="decimal" min="0" max="4" step="0.1" value="1.5"></label>
+      <label class="mz-ctl" for="hv-g"><span>Separación entre viñetas (cm)</span><input id="hv-g" type="number" inputmode="decimal" min="0.2" max="3" step="0.1" value="0.6"></label>
+    </div>
+    <svg id="hv-svg" viewBox="0 0 320 240" role="img" aria-label="Página de historieta con viñetas"></svg>
+    <ul class="mz-res" id="hv-res" aria-live="polite"></ul>
+    <ol>
+      <li>Con regla y escuadra, marcá primero el margen y después los límites de cada columna y de cada fila, dejando la separación entre una viñeta y la siguiente.</li>
+      <li>Trazá los marcos a lápiz y hacé en cada uno un boceto muy simple antes de entintar: así podés cambiar el orden o el tamaño sin arruinar la hoja.</li>
+      <li>Numerá las viñetas en el orden de lectura (de izquierda a derecha y de arriba hacia abajo) y recién entonces pasá a tinta.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: el ancho de cada viñeta es (ancho de la hoja − 2 × margen − (columnas − 1) × separación) / columnas, y el alto es lo mismo con el alto de la hoja y las filas. La proporción es ancho sobre alto. Son medidas de reparto para planificar la página; la forma y el tamaño de las viñetas de una historieta real pueden variar libremente.</div>
   </div>
 </section>
 
@@ -8770,6 +8795,52 @@ footer a{color:var(--c)}
     try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   $("cb-max").addEventListener("click",function(){var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]),t=num("cb-t",0,3,1);$("cb-s").value=(Math.floor(maxLado(A,B,t)*10)/10).toString();calc()});
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-historieta-v1",$=function(i){return document.getElementById(i)},ids=["hv-h","hv-o","hv-c","hv-f","hv-m","hv-g"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("hv-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
+    var HW=$("hv-o").value==="a"?A:B,HH=$("hv-o").value==="a"?B:A;
+    var c=Math.round(num("hv-c",1,4,2)),r=Math.round(num("hv-f",1,8,3)),m=num("hv-m",0,4,1.5),g=num("hv-g",0.2,3,0.6);
+    var svg=$("hv-svg"),ul=$("hv-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var pw=(HW-2*m-(c-1)*g)/c,ph=(HH-2*m-(r-1)*g)/r,ok=pw>=1&&ph>=1;
+    var sc=Math.min(300/HW,215/HH),x0=(320-HW*sc)/2,y0=(240-HH*sc)/2+6;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(HW*sc).toFixed(2),height:(HH*sc).toFixed(2),fill:"#2a2e35",stroke:"#8a8f98","stroke-width":1}));
+    if(ok){
+      var i,j,k=1;
+      for(j=0;j<r;j++)for(i=0;i<c;i++){
+        var x=x0+(m+i*(pw+g))*sc,y=y0+(m+j*(ph+g))*sc;
+        svg.appendChild(el("rect",{x:x.toFixed(2),y:y.toFixed(2),width:(pw*sc).toFixed(2),height:(ph*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.35,stroke:"#58d68d","stroke-width":1.2}));
+        if(pw*sc>14&&ph*sc>14){var t=el("text",{x:(x+4).toFixed(1),y:(y+12).toFixed(1),"font-size":10,fill:"#ffffff"});t.textContent=String(k);svg.appendChild(t)}
+        k++;
+      }
+    }
+    var tt=el("text",{x:160,y:12,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="hoja "+f(HW,1)+" x "+f(HH,1)+" cm";svg.appendChild(tt);
+    svg.setAttribute("aria-label",ok?"Página de "+f(HW,1)+" por "+f(HH,1)+" cm con "+(c*r)+" viñetas de "+f(pw,1)+" por "+f(ph,1)+" cm":"Con estos valores las viñetas no entran en la página");
+    if(!ok){row("Aviso","Con ese margen y esa separación las viñetas quedan de menos de 1 cm: bajá las columnas, las filas o la separación");}
+    else{
+      row("Viñetas por página",String(c*r));
+      row("Cada viñeta",f(pw,1)+" cm de ancho por "+f(ph,1)+" cm de alto");
+      var q=pw/ph;row("Proporción (ancho / alto)",f(q,2)+" ("+(q>1.15?"apaisada":q<0.87?"vertical":"casi cuadrada")+")");
+      row("Superficie dibujable",f(c*r*pw*ph,0)+" cm² de "+f(HW*HH,0)+" cm² ("+f(c*r*pw*ph/(HW*HH)*100,0)+" % de la hoja)");
+      row("Posición de los cortes de columna",Array.apply(null,Array(c)).map(function(_,i){return f(m+i*(pw+g),1)}).join(" · ")+" cm desde la izquierda");
+      row("Posición de los cortes de fila",Array.apply(null,Array(r)).map(function(_,i){return f(m+i*(ph+g),1)}).join(" · ")+" cm desde arriba");
+      if(m<1)row("Aviso","Con menos de 1 cm de margen, la impresora o el escáner pueden cortar el borde del dibujo");
+      if(c*r>=12)row("Aviso","Con tantas viñetas cada dibujo queda muy chico: probá con una hoja más grande");
+    }
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
 })();
