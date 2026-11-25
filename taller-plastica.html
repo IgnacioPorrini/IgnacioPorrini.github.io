@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -999,6 +999,7 @@ footer a{color:var(--c)}
     <a href="#doblar-mitad">Doblar a la mitad</a>
     <a href="#corona">Corona de papel</a>
     <a href="#escalon">Tarjeta con escalón</a>
+    <a href="#tubo">Tubo de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3457,6 +3458,28 @@ footer a{color:var(--c)}
       <li>Abrí la tarjeta, empujá las tiras hacia el lado contrario y cerrá despacio para que se acomoden. Pegá recién después lo que vaya sobre los escalones.</li>
     </ol>
     <div class="tip">Cómo se calcula: el largo de cada corte es igual al alto del escalón y el doblez va justo donde termina el corte, como en la <a href="https://www.AuntAnnie.com/GreetingCards/Step_Popup/" target="_blank" rel="noopener">guía de escalones de Aunt Annie</a>. Los escalones se reparten con el mismo espacio a los costados y entre sí. Esa guía pide unos 2 cm del borde, unos 1,3 cm entre escalones y, para su tarjeta de 14 x 21 cm, escalones de hasta unos 5 cm de alto y 10 cm de ancho; la herramienta avisa si se pasa de esas medidas. Si algo sobresale al cerrar la tarjeta, achicá el escalón. Hacé una prueba en papel borrador antes de cortar la hoja buena.</div>
+  </div>
+</section>
+
+<section id="tubo" class="mz-sec">
+  <h2>Tubo de papel: qué diámetro sale de una hoja</h2>
+  <p style="color:var(--muted)">Una hoja enrollada hace un portalápices, un cilindro para decorar o un rollo para un títere. Elegí la hoja, hacia dónde la enrollás y cuánto pegás: te dice el diámetro y el alto del tubo, cuánto entra, y el disco para tapar la base. También te dice qué tira hace falta para un diámetro que vos busques.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="tb-h"><span>Hoja</span><select id="tb-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="tb-o"><span>Se enrolla</span><select id="tb-o"><option value="l" selected>A lo largo (tubo más ancho y bajo)</option><option value="c">A lo ancho (tubo más fino y alto)</option></select></label>
+      <label class="mz-ctl" for="tb-s"><span>Solape para pegar (cm)</span><input id="tb-s" type="number" inputmode="decimal" min="0.5" max="4" step="0.5" value="1"></label>
+      <label class="mz-ctl" for="tb-p"><span>Pestaña de la tapa (cm)</span><input id="tb-p" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
+      <label class="mz-ctl" for="tb-d"><span>Diámetro que busco (cm)</span><input id="tb-d" type="number" inputmode="decimal" min="1" max="30" step="0.5" value="5"></label>
+    </div>
+    <svg id="tb-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja con el solape y disco de la base del tubo"></svg>
+    <ul class="mz-res" id="tb-res" aria-live="polite"></ul>
+    <ol>
+      <li>Poné un poco de adhesivo en la franja del solape, enrollá la hoja sin apretar de más y presioná un minuto hasta que agarre.</li>
+      <li>Apoyá el tubo sobre otra hoja, trazá el contorno por dentro y recortá un disco: el disco de la lista deja pestañas para pegar.</li>
+      <li>Cortá cada pestaña con tijera hasta la línea del círculo, doblala hacia arriba y pegala por dentro del tubo. Recién entonces decorá.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: la hoja enrollada forma una circunferencia, y la circunferencia de un círculo es pi por el diámetro (pi vale unos 3,14). Por eso el diámetro es (lado que se enrolla menos solape) dividido pi, y el alto es el otro lado de la hoja. El volumen es pi por el radio al cuadrado por el alto, y un cm³ equivale a un mililitro. Es una cuenta de geometría: el papel se aplasta un poco y el tubo real puede salir unos milímetros distinto. Hacé una prueba con papel borrador antes de usar la hoja buena.</div>
   </div>
 </section>
 
@@ -9169,6 +9192,52 @@ footer a{color:var(--c)}
     if(H>=D)row("Aviso","El corte llega al borde de la tarjeta ("+f(D,1)+" cm): bajá el alto del escalón");
     else if(H>D-1.5)row("Aviso","Queda menos de 1,5 cm entre el doblez y el borde: probá con un alto menor");
     if(H>5||W>10)row("Aviso","La guía de referencia llega a unos 5 cm de alto y 10 cm de ancho: hacé una prueba en borrador");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-tubo-v1",$=function(i){return document.getElementById(i)},ids=["tb-h","tb-o","tb-s","tb-p","tb-d"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var q=$("tb-h").value.split(","),A=parseFloat(q[0]),B=parseFloat(q[1]);
+    var C,H;if($("tb-o").value==="c"){C=B;H=A}else{C=A;H=B}
+    var S=num("tb-s",0.5,4,1),P=num("tb-p",0.5,3,1),D0=num("tb-d",1,30,5);
+    var svg=$("tb-svg"),ul=$("tb-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var d=(C-S)/Math.PI,r=d/2,vol=Math.PI*r*r*H,disco=d+2*P;
+    var sc=Math.min(180/C,170/H),w0=C*sc,h0=H*sc,x0=12,y0=125-h0/2;
+    svg.appendChild(el("rect",{x:x0,y:y0,width:w0,height:h0,fill:"#58d68d","fill-opacity":0.15,stroke:"#8a8f98","stroke-width":1}));
+    svg.appendChild(el("rect",{x:x0+w0-S*sc,y:y0,width:S*sc,height:h0,fill:"#ff6b6b","fill-opacity":0.35}));
+    svg.appendChild(el("line",{x1:x0+w0-S*sc,y1:y0,x2:x0+w0-S*sc,y2:y0+h0,stroke:"#ff6b6b","stroke-width":1.4,"stroke-dasharray":"4 3"}));
+    var cx=250,cy=125,rr=Math.min(r*sc,48),rd=Math.min(disco/2*sc,58);
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:rd,fill:"none",stroke:"#ffffff","stroke-width":1,"stroke-dasharray":"3 3"}));
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:rr,fill:"#58d68d","fill-opacity":0.3,stroke:"#58d68d","stroke-width":1.4}));
+    tx(svg,x0+w0/2,y0-6,f(C,1)+" cm (se enrolla)",9);
+    tx(svg,x0+w0/2,Math.min(y0+h0+14,226),"Alto del tubo: "+f(H,1)+" cm",9);
+    tx(svg,cx,cy+rd+14,"Base: d = "+f(d,1)+" cm",9);
+    tx(svg,160,14,"Hoja y base del tubo, a la misma escala",10);
+    tx(svg,160,234,"Rojo: solape. Blanco punteado: disco con pestañas",9);
+    svg.setAttribute("aria-label","Hoja de "+f(C,1)+" por "+f(H,1)+" cm enrollada en un tubo de "+f(d,1)+" cm de diámetro y "+f(H,1)+" cm de alto, con un solape de "+f(S,1)+" cm");
+    row("Diámetro del tubo",f(d,1)+" cm");
+    row("Alto del tubo",f(H,1)+" cm");
+    row("Cabe adentro (volumen)",f(vol,0)+" ml");
+    row("Disco para la base",f(disco,1)+" cm de diámetro (incluye pestañas de "+f(P,1)+" cm)");
+    var need=Math.PI*D0+S;
+    row("Para un diámetro de "+f(D0,1)+" cm","una tira de "+f(need,1)+" cm de largo");
+    if(need>C)row("Aviso","Esa tira no entra en el lado de "+f(C,1)+" cm de la hoja: pegá dos hojas o buscá un diámetro menor (como máximo "+f(d,1)+" cm)");
+    else if(need<C-0.05)row("Sobra","Sobran "+f(C-need,1)+" cm de la hoja: se recortan antes de enrollar");
+    if(d<2)row("Aviso","El tubo queda de menos de 2 cm de diámetro: va a costar enrollarlo parejo, probá enrollar a lo largo");
+    if(H/d>6)row("Aviso","El tubo es muy fino para su alto: puede doblarse. Probá enrollar a lo largo o reforzarlo por dentro");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
