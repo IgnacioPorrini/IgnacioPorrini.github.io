@@ -608,6 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -993,6 +994,7 @@ footer a{color:var(--c)}
     <a href="#tela-bastidor">Tela para un bastidor</a>
     <a href="#cubo-hoja">Cubo con una hoja</a>
     <a href="#historieta">Viñetas de historieta</a>
+    <a href="#abanico">Abanico plegado</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3347,6 +3349,26 @@ footer a{color:var(--c)}
       <li>Numerá las viñetas en el orden de lectura (de izquierda a derecha y de arriba hacia abajo) y recién entonces pasá a tinta.</li>
     </ol>
     <div class="tip">Cómo se calcula: el ancho de cada viñeta es (ancho de la hoja − 2 × margen − (columnas − 1) × separación) / columnas, y el alto es lo mismo con el alto de la hoja y las filas. La proporción es ancho sobre alto. Son medidas de reparto para planificar la página; la forma y el tamaño de las viñetas de una historieta real pueden variar libremente.</div>
+  </div>
+</section>
+
+<section id="abanico" class="mz-sec">
+  <h2>Abanico plegado: cuánto abre</h2>
+  <p style="color:var(--muted)">Un abanico de papel es una hoja plegada en acordeón y sujeta de un extremo. Elegí la hoja, para qué lado van los pliegues y el ancho de cada pliegue: te dice cuántos pliegues salen, cuánto abre el abanico y te lo dibuja a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="ab-h"><span>Hoja</span><select id="ab-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="ab-o"><span>Los pliegues corren a lo largo de</span><select id="ab-o"><option value="c" selected>Lado corto</option><option value="l">Lado largo (abre menos)</option></select></label>
+      <label class="mz-ctl" for="ab-w"><span>Ancho de cada pliegue (cm)</span><input id="ab-w" type="number" inputmode="decimal" min="0.8" max="6" step="0.1" value="1.5"></label>
+    </div>
+    <svg id="ab-svg" viewBox="0 0 320 240" role="img" aria-label="Abanico plegado abierto"></svg>
+    <ul class="mz-res" id="ab-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá con lápiz los pliegues a lo largo del lado elegido, todos del mismo ancho, y repasalos con la regla.</li>
+      <li>Plegá en acordeón, uno hacia un lado y el siguiente hacia el otro, y marcá cada doblez con la uña.</li>
+      <li>Sujetá un extremo con una banda elástica o un broche, o pegalo con cinta, y abrí el abanico: queda el ángulo que indica el cálculo.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: la cantidad de pliegues es el largo de la hoja dividido el ancho de cada pliegue (se toma la parte entera y el resto queda de sobrante). Si todas las líneas de pliegue se juntan en el punto de sujeción, cada pliegue abre un ángulo de 2 × arcoseno(ancho / (2 × alto)) y el abanico abre n veces ese ángulo. Es una aproximación con papel que se tuerce poco; con papel grueso o con el punto de sujeción un poco corrido, el resultado real puede diferir. Conviene un número par de pliegues para que la hoja cierre bien en monte y valle.</div>
   </div>
 </section>
 
@@ -8838,6 +8860,53 @@ footer a{color:var(--c)}
       row("Posición de los cortes de fila",Array.apply(null,Array(r)).map(function(_,i){return f(m+i*(ph+g),1)}).join(" · ")+" cm desde arriba");
       if(m<1)row("Aviso","Con menos de 1 cm de margen, la impresora o el escáner pueden cortar el borde del dibujo");
       if(c*r>=12)row("Aviso","Con tantas viñetas cada dibujo queda muy chico: probá con una hoja más grande");
+    }
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-abanico-v1",$=function(i){return document.getElementById(i)},ids=["ab-h","ab-o","ab-w"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("ab-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
+    var L=$("ab-o").value==="l"?B:A,H=$("ab-o").value==="l"?A:B;
+    var w=num("ab-w",0.8,6,1.5),n=Math.floor(L/w+1e-9),sob=L-n*w;
+    var svg=$("ab-svg"),ul=$("ab-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var ratio=Math.min(1,w/(2*H)),per=2*Math.asin(ratio),tot=n*per,cap=Math.min(tot,2*Math.PI),deg=cap*180/Math.PI;
+    if(n<2){row("Aviso","Con ese ancho entran menos de 2 pliegues: elegí un ancho menor");svg.setAttribute("aria-label","Con estos valores no se forma un abanico");}
+    else{
+      var pts=[],i,a0=-cap/2;
+      for(i=0;i<=n;i++){var a=a0+i*cap/n;pts.push([H*Math.sin(a),-H*Math.cos(a)])}
+      var xs=[0],ys=[0];pts.forEach(function(q){xs.push(q[0]);ys.push(q[1])});
+      var mnx=Math.min.apply(null,xs),mxx=Math.max.apply(null,xs),mny=Math.min.apply(null,ys),mxy=Math.max.apply(null,ys);
+      var sc=Math.min(290/Math.max(mxx-mnx,0.1),205/Math.max(mxy-mny,0.1)),ox=160-(mxx+mnx)/2*sc,oy=225-mxy*sc;
+      function X(x){return (ox+x*sc).toFixed(2)}function Y(y){return (oy+y*sc).toFixed(2)}
+      for(i=0;i<n;i++){
+        var q1=pts[i],q2=pts[i+1];
+        svg.appendChild(el("polygon",{points:X(0)+","+Y(0)+" "+X(q1[0])+","+Y(q1[1])+" "+X(q2[0])+","+Y(q2[1]),fill:i%2?"#2fbf71":"#58d68d","fill-opacity":i%2?0.35:0.55,stroke:"#8a8f98","stroke-width":0.8}));
+      }
+      svg.appendChild(el("circle",{cx:X(0),cy:Y(0),r:3,fill:"#ffffff"}));
+      var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent=n+" pliegues de "+f(w,1)+" cm, alto "+f(H,1)+" cm";svg.appendChild(tt);
+      svg.setAttribute("aria-label","Abanico de "+n+" pliegues que abre "+f(deg,0)+" grados");
+      row("Pliegues que salen",String(n)+(n%2?" (impar: probá un ancho que dé par)":" (par)"));
+      row("Sobrante de hoja",f(sob,1)+" cm (se puede recortar o usar de solapa)");
+      row("Ángulo por pliegue",f(per*180/Math.PI,1)+"°");
+      row("Cuánto abre",tot>2*Math.PI?"360° (el ángulo calculado, "+f(tot*180/Math.PI,0)+"°, ya cierra un círculo)":f(deg,0)+"°");
+      var wd=2*H*Math.sin(Math.min(cap,Math.PI)/2);
+      row("Ancho del abanico abierto",f(wd,1)+" cm, con "+f(H,1)+" cm de alto");
+      row("Plegado queda",f(w,1)+" cm de ancho por "+f(H,1)+" cm de alto, más el grosor de las capas");
+      if(deg>200&&tot<=2*Math.PI)row("Aviso","Abre más de 200°: el papel tiende a doblarse en los extremos; con pliegues más angostos queda más firme");
+      if(deg<60)row("Aviso","Abre menos de 60°: probá con pliegues más anchos o con pliegues más cortos (la hoja girada)");
     }
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
