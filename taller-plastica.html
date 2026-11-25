@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1001,6 +1001,7 @@ footer a{color:var(--c)}
     <a href="#escalon">Tarjeta con escalón</a>
     <a href="#tubo">Tubo de papel</a>
     <a href="#cono-papel">Cono de papel</a>
+    <a href="#poligono">Polígono y estrella</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3502,6 +3503,26 @@ footer a{color:var(--c)}
       <li>Recortá, pegá la franja de solape por dentro y presioná. Si la punta queda abierta, ajustá el pegado hasta que el borde de abajo quede redondo.</li>
     </ol>
     <div class="tip">Cómo se calcula: la pared del cono, de la punta al borde, mide la raíz de (radio al cuadrado más alto al cuadrado). Ese es el radio del recorte. El borde de abajo del cono es una circunferencia (pi por el diámetro) y tiene que coincidir con el arco del recorte, por eso el ángulo es 360 por radio de la base, dividido el radio del recorte. El volumen del cono es un tercio de pi por el radio al cuadrado por el alto. Es una cuenta de geometría: el papel real se flexiona y puede variar unos milímetros. Probá primero con papel borrador.</div>
+  </div>
+</section>
+
+<section id="poligono" class="mz-sec">
+  <h2>Polígono regular y estrella: cómo trazarlos</h2>
+  <p style="color:var(--muted)">Para dibujar un pentágono, un hexágono o una estrella con regla, compás y transportador. Elegí la cantidad de puntas y el radio de la circunferencia: te dice el ángulo entre vértices, la abertura del compás y el largo de cada lado, y dibuja el resultado a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="pg-n"><span>Cantidad de vértices (3 a 16)</span><input id="pg-n" type="number" inputmode="numeric" min="3" max="16" step="1" value="5"></label>
+      <label class="mz-ctl" for="pg-r"><span>Radio de la circunferencia (cm)</span><input id="pg-r" type="number" inputmode="decimal" min="1" max="30" step="0.5" value="6"></label>
+      <label class="mz-ctl" for="pg-k"><span>Unir cada vértice con el que está</span><select id="pg-k"><option value="1" selected>1 lugar más allá (polígono)</option><option value="2">2 lugares más allá (estrella)</option><option value="3">3 lugares más allá (estrella)</option><option value="4">4 lugares más allá (estrella)</option><option value="5">5 lugares más allá (estrella)</option></select></label>
+    </div>
+    <svg id="pg-svg" viewBox="0 0 320 240" role="img" aria-label="Polígono regular o estrella dibujado a escala dentro de su circunferencia"></svg>
+    <ul class="mz-res" id="pg-res" aria-live="polite"></ul>
+    <ol>
+      <li>Trazá una circunferencia con el compás, con el radio pedido, y marcá el centro. Con la regla y el transportador marcá la primera marca arriba, sobre la vertical del centro.</li>
+      <li>Desde esa marca, medí con el transportador el ángulo entre vértices de la lista y marcá cada vértice sobre la circunferencia. Otra forma: abrí el compás con el largo del lado de la lista y andá marcando desde un vértice al siguiente; si el último no cae justo, la abertura quedó apenas corta o larga.</li>
+      <li>Uní los vértices con la regla, saltando de a tantos lugares como elegiste. Borrá con suavidad los auxiliares y repasá.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: los vértices están repartidos parejo en la circunferencia, así que el ángulo entre dos vértices vecinos es 360 dividido la cantidad de vértices. El lado de un polígono mide 2 por el radio por el seno de la mitad de ese ángulo; con una estrella que salta de a k lugares, la mitad del ángulo es k por 180 dividido n. El ángulo interior de un polígono es 180 menos el ángulo central. Una estrella solo se cierra con una sola línea si n y k no tienen divisores en común (por ejemplo 5 y 2); si los tienen (por ejemplo 6 y 2) salen varias figuras separadas, como la estrella de seis puntas hecha con dos triángulos. Es una cuenta de geometría: al dibujar, el grosor del lápiz suma algún milímetro de error.</div>
   </div>
 </section>
 
@@ -9307,6 +9328,63 @@ footer a{color:var(--c)}
     if(th>=350)row("Aviso","El cono es muy ancho para su alto: casi un disco plano. Probá con más alto o menos diámetro");
     if(!fits)row("Aviso","El recorte no entra en la hoja elegida: probá una hoja más grande, un cono más chico, o armá el recorte con dos piezas pegadas");
     else row("En la hoja","Entra, usando la hoja "+((W<=A&&Hh<=B)?"acostada":"de pie"));
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-poligono-v1",$=function(i){return document.getElementById(i)},ids=["pg-n","pg-r","pg-k"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function gcd(a,b){return b?gcd(b,a%b):a}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var n=Math.round(num("pg-n",3,16,5)),R=num("pg-r",1,30,6),k=parseInt($("pg-k").value,10)||1;
+    var svg=$("pg-svg"),ul=$("pg-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var ang=360/n,ok=2*k<n,g=gcd(n,k);
+    var cx=160,cy=124,sc=Math.min(100/R,100/R*1),rr=R*sc;
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:rr,fill:"none",stroke:"#8892a0","stroke-width":1,"stroke-dasharray":"3 3"}));
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:2.5,fill:"#ffffff"}));
+    var pts=[],i,a;
+    for(i=0;i<n;i++){a=(-90+i*ang)*Math.PI/180;pts.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)])}
+    if(!ok){
+      row("Aviso","Con "+n+" vértices no se puede saltar de a "+k+": el salto tiene que ser menor que la mitad. Elegí un salto más chico o más vértices");
+      pts.forEach(function(p){svg.appendChild(el("circle",{cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:3,fill:"#58d68d"}))});
+      tx(svg,160,14,"Vértices a escala",10);
+    }else{
+      var seen={},j,m;
+      for(i=0;i<g;i++){
+        var path="",cur=i;
+        for(j=0;j<n/g;j++){path+=(j?"L":"M")+pts[cur][0].toFixed(1)+","+pts[cur][1].toFixed(1);cur=(cur+k)%n}
+        svg.appendChild(el("path",{d:path+"Z",fill:"#58d68d","fill-opacity":0.18,stroke:"#58d68d","stroke-width":1.6,"stroke-linejoin":"round"}));
+      }
+      pts.forEach(function(p,q){svg.appendChild(el("circle",{cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:2.6,fill:"#ffffff"}));var lx=cx+(rr+11)*(p[0]-cx)/rr,ly=cy+(rr+11)*(p[1]-cy)/rr+3;tx(svg,lx.toFixed(1),ly.toFixed(1),String(q+1),8)});
+      tx(svg,160,14,(k===1?"Polígono de "+n+" lados":"Estrella {"+n+"/"+k+"}")+" a escala",10);
+      var half=k*Math.PI/n,side=2*R*Math.sin(half);
+      row("Ángulo entre vértices vecinos",f(ang,2)+" grados");
+      row("Largo de cada línea (abertura del compás)",f(side,2)+" cm");
+      if(k===1){
+        var ap=R*Math.cos(Math.PI/n),per=n*side,ar=0.5*per*ap;
+        row("Ángulo interior de cada esquina",f(180-ang,2)+" grados");
+        row("Apotema (del centro a la mitad de un lado)",f(ap,2)+" cm");
+        row("Perímetro",f(per,2)+" cm");
+        row("Superficie",f(ar,1)+" cm²");
+      }else{
+        row("Ángulo de cada punta",f(180-2*k*180/n,2)+" grados");
+        if(g===1)row("Se dibuja","Con una sola línea sin levantar el lápiz");
+        else row("Se dibuja","En "+g+" figuras separadas (los vértices tienen divisores comunes con el salto)");
+      }
+      row("Ancho de la hoja necesario",f(2*R,1)+" cm, más margen");
+    }
+    svg.setAttribute("aria-label",(ok?(k===1?"Polígono regular de "+n+" lados":"Estrella de "+n+" vértices saltando de a "+k):"Vértices de "+n+" puntos")+" inscripto en una circunferencia de "+f(R,1)+" cm de radio, dibujado a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
