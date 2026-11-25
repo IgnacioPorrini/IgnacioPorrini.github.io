@@ -970,6 +970,7 @@ footer a{color:var(--c)}
     <a href="#minilibro">Minilibro de 8 páginas</a>
     <a href="#acordeon">Libro acordeón</a>
     <a href="#guirnalda">Guirnalda de anillos</a>
+    <a href="#cuadros-pared">Cuadros en la pared</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3155,6 +3156,30 @@ footer a{color:var(--c)}
       <li>Pasá cada tira nueva por dentro del último anillo, antes de pegarla, y alterná los colores en el orden que elijas.</li>
     </ol>
     <div class="tip">Cómo usarlo: el largo de la guirnalda es una estimación, porque depende de qué tan flojos queden los enlaces y de qué tan gruesa sea la hoja: armá tres anillos de prueba, medilos tensos y, si da distinto, ajustá el largo que pedís. La cuenta es geométrica y no usa fuente externa: cada tira mide lo que mide el borde de la hoja, el aro queda con ese largo menos el solape, y cada eslabón suma, aproximadamente, media vuelta menos un ancho de tira.</div>
+  </div>
+</section>
+
+<section id="cuadros-pared" class="mz-sec">
+  <h2>Cuadros en la pared: dónde va cada clavo</h2>
+  <p style="color:var(--muted)">Para colgar una hilera de obras en la muestra del taller o en casa: cargá el ancho de la pared, el tamaño de cada obra y la separación. Te dice cuánto margen queda a los lados, a qué distancia de la esquina empieza cada obra y a qué altura del piso va cada clavo.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="qp-p"><span>Ancho de la pared (cm)</span><input id="qp-p" type="number" inputmode="numeric" min="50" max="1000" step="5" value="300"></label>
+      <label class="mz-ctl" for="qp-n"><span>Obras en la hilera (1 a 8)</span><input id="qp-n" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
+      <label class="mz-ctl" for="qp-w"><span>Ancho de cada obra (cm)</span><input id="qp-w" type="number" inputmode="decimal" min="10" max="200" step="1" value="30"></label>
+      <label class="mz-ctl" for="qp-a"><span>Alto de cada obra (cm)</span><input id="qp-a" type="number" inputmode="decimal" min="10" max="200" step="1" value="40"></label>
+      <label class="mz-ctl" for="qp-g"><span>Separación entre obras (cm)</span><input id="qp-g" type="number" inputmode="decimal" min="0" max="50" step="0.5" value="8"></label>
+      <label class="mz-ctl" for="qp-c"><span>Altura del centro desde el piso (cm)</span><input id="qp-c" type="number" inputmode="numeric" min="80" max="220" step="1" value="145"></label>
+      <label class="mz-ctl" for="qp-d"><span>Colgador, bajo el borde superior (cm)</span><input id="qp-d" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="6"></label>
+    </div>
+    <svg id="qp-svg" viewBox="0 0 320 150" role="img" aria-label="Pared con la hilera de obras centrada"></svg>
+    <ul class="mz-res" id="qp-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá con lápiz suave, desde la esquina izquierda, el borde izquierdo de cada obra a la distancia indicada, y una línea horizontal a la altura del clavo con un nivel o una regla larga.</li>
+      <li>En cada obra medí cuánto baja el colgador desde el borde superior (con el alambre o la cinta tensos) y clavá a la altura que indica el resumen, que ya descuenta ese valor.</li>
+      <li>Colgá las obras de los extremos primero, mirá el conjunto desde lejos y corregí a ojo antes de marcar de más.</li>
+    </ol>
+    <div class="tip">Cómo usarlo: la altura del centro es un valor de partida (muchas salas dejan el centro de la obra a la altura de los ojos, entre 145 y 150 cm), pero conviene ajustarlo a quienes van a mirar, por ejemplo más bajo para un grupo de chicos. La cuenta es una resta y una división en partes iguales y no usa fuente externa: el conjunto se centra en la pared y los clavos se calculan restando el colgador al borde superior.</div>
   </div>
 </section>
 
@@ -8323,6 +8348,46 @@ footer a{color:var(--c)}
     if(w>c/6)row("Aviso","Tira ancha para ese aro: la cadena queda rígida y se enlaza con dificultad");
     svg.setAttribute("aria-label","Hoja "+nom+" dividida en "+per+" tiras de "+f(w,1)+" cm para anillos");
     try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-cuadros-pared-v1",$=function(i){return document.getElementById(i)},ids=["qp-p","qp-n","qp-w","qp-a","qp-g","qp-c","qp-d"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!=="")$(i).value=t[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var P=num("qp-p",50,1000,300,true),n=num("qp-n",1,8,3,true),w=num("qp-w",10,200,30,false),a=num("qp-a",10,200,40,false),g=num("qp-g",0,50,8,false),c=num("qp-c",80,220,145,true),d=num("qp-d",0,30,6,false);
+    var svg=$("qp-svg"),ul=$("qp-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),b=document.createElement("b");x.textContent=l;b.textContent=v;li.appendChild(x);li.appendChild(b);ul.appendChild(li)}
+    var tot=n*w+(n-1)*g;
+    if(tot>P){row("Aviso","El conjunto ("+f(tot,1)+" cm) no entra en la pared de "+f(P,0)+" cm: probá menos obras, una separación menor o obras más angostas");return}
+    var m=(P-tot)/2,H=250,sc=Math.min(300/P,130/Math.max(H,c+a/2+10)),x0=(320-P*sc)/2,yb=145,i;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:(yb-Math.max(H,c+a/2+10)*sc).toFixed(2),width:(P*sc).toFixed(2),height:(Math.max(H,c+a/2+10)*sc).toFixed(2),fill:"#2a2d33",stroke:"#8a8f98","stroke-width":0.6}));
+    svg.appendChild(el("line",{x1:x0.toFixed(2),x2:(x0+P*sc).toFixed(2),y1:(yb-c*sc).toFixed(2),y2:(yb-c*sc).toFixed(2),stroke:"#8a8f98","stroke-width":0.5,"stroke-dasharray":"3 3"}));
+    for(i=0;i<n;i++){
+      var xi=m+i*(w+g);
+      svg.appendChild(el("rect",{x:(x0+xi*sc).toFixed(2),y:(yb-(c+a/2)*sc).toFixed(2),width:(w*sc).toFixed(2),height:(a*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.8,stroke:"#14161a","stroke-width":0.5}));
+      svg.appendChild(el("circle",{cx:(x0+(xi+w/2)*sc).toFixed(2),cy:(yb-(c+a/2-d)*sc).toFixed(2),r:1.8,fill:"#ffc23d"}));
+    }
+    var lista=[];for(i=0;i<n;i++)lista.push(f(m+i*(w+g),1));
+    var clavo=c+a/2-d;
+    row("Conjunto",f(tot,1)+" cm de ancho");
+    row("Margen a cada lado",f(m,1)+" cm");
+    row("Borde izquierdo de cada obra",lista.join(" / ")+" cm desde la esquina");
+    row("Centro de cada clavo",lista.map(function(v,j){return f(m+j*(w+g)+w/2,1)}).join(" / ")+" cm desde la esquina");
+    row("Altura del clavo",f(clavo,1)+" cm desde el piso");
+    row("Borde inferior de las obras",f(c-a/2,1)+" cm desde el piso");
+    if(c-a/2<20)row("Aviso","El borde inferior queda muy bajo: se golpea con facilidad, subí el centro");
+    if(m<w/2&&n>1)row("Aviso","El margen lateral es menor que media obra: se verá apretado contra la esquina");
+    svg.setAttribute("aria-label","Pared de "+f(P,0)+" cm con "+n+" obras de "+f(w,0)+" por "+f(a,0)+" cm centradas");
+    try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
