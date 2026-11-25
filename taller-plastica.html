@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -995,6 +995,7 @@ footer a{color:var(--c)}
     <a href="#cubo-hoja">Cubo con una hoja</a>
     <a href="#historieta">Viñetas de historieta</a>
     <a href="#abanico">Abanico plegado</a>
+    <a href="#molinete">Molinete de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3369,6 +3370,26 @@ footer a{color:var(--c)}
       <li>Sujetá un extremo con una banda elástica o un broche, o pegalo con cinta, y abrí el abanico: queda el ángulo que indica el cálculo.</li>
     </ol>
     <div class="tip">Cómo se calcula: la cantidad de pliegues es el largo de la hoja dividido el ancho de cada pliegue (se toma la parte entera y el resto queda de sobrante). Si todas las líneas de pliegue se juntan en el punto de sujeción, cada pliegue abre un ángulo de 2 × arcoseno(ancho / (2 × alto)) y el abanico abre n veces ese ángulo. Es una aproximación con papel que se tuerce poco; con papel grueso o con el punto de sujeción un poco corrido, el resultado real puede diferir. Conviene un número par de pliegues para que la hoja cierre bien en monte y valle.</div>
+  </div>
+</section>
+
+<section id="molinete" class="mz-sec">
+  <h2>Molinete de papel: hasta dónde cortar</h2>
+  <p style="color:var(--muted)">El molinete se hace con un cuadrado cortado desde las cuatro esquinas hacia el centro. Elegí la hoja, el lado del cuadrado y cuánto de la diagonal cortás: te dice la medida de cada corte, cuánto queda sin cortar en el centro, cuántos cuadrados salen de la hoja y te lo dibuja a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="mn-h"><span>Hoja</span><select id="mn-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
+      <label class="mz-ctl" for="mn-l"><span>Lado del cuadrado (cm)</span><input id="mn-l" type="number" inputmode="decimal" min="4" max="30" step="0.5" value="15"></label>
+      <label class="mz-ctl" for="mn-c"><span>Corte: parte de la mitad de la diagonal (%)</span><input id="mn-c" type="number" inputmode="numeric" min="30" max="90" step="5" value="75"></label>
+    </div>
+    <svg id="mn-svg" viewBox="0 0 320 240" role="img" aria-label="Cuadrado con los cortes del molinete"></svg>
+    <ul class="mz-res" id="mn-res" aria-live="polite"></ul>
+    <ol>
+      <li>Sacá un cuadrado de la medida elegida y marcá las dos diagonales con lápiz (doblalo en diagonal y abrilo, o usá regla).</li>
+      <li>Cortá sobre cada diagonal desde la esquina, solo hasta la medida del corte. No pases de ahí: el centro tiene que quedar entero.</li>
+      <li>Tomá una punta de cada esquina, siempre del mismo lado del corte, llevala al centro y fijala con un alfiler de cabeza o un broche mariposa a un palito o a un lápiz con goma.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: la diagonal del cuadrado es el lado × raíz de 2, y se corta un porcentaje de su mitad. Lo que queda sin cortar hasta el centro es el resto. La punta alcanza el centro, de forma aproximada, cuando el corte es igual o mayor que ese resto, o sea desde la mitad de la mitad de la diagonal (50 %). Es una cuenta simple: el papel se curva y la cuenta no incluye el grosor ni el ancho de la punta.</div>
   </div>
 </section>
 
@@ -8908,6 +8929,48 @@ footer a{color:var(--c)}
       if(deg>200&&tot<=2*Math.PI)row("Aviso","Abre más de 200°: el papel tiende a doblarse en los extremos; con pliegues más angostos queda más firme");
       if(deg<60)row("Aviso","Abre menos de 60°: probá con pliegues más anchos o con pliegues más cortos (la hoja girada)");
     }
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-molinete-v1",$=function(i){return document.getElementById(i)},ids=["mn-h","mn-l","mn-c"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function calc(){
+    var p=$("mn-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
+    var L=num("mn-l",4,30,15),pc=num("mn-c",30,90,75);
+    var svg=$("mn-svg"),ul=$("mn-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var d=L*Math.SQRT2,hd=d/2,c=hd*pc/100,r=hd-c;
+    var sc=Math.min(200/L,200/L),S=L*sc,x0=160-S/2,y0=120-S/2,cx=160,cy=120;
+    svg.appendChild(el("rect",{x:x0,y:y0,width:S,height:S,fill:"#58d68d","fill-opacity":0.25,stroke:"#8a8f98","stroke-width":1}));
+    var k=c/hd,cors=[[x0,y0],[x0+S,y0],[x0+S,y0+S],[x0,y0+S]];
+    cors.forEach(function(q){
+      var ex=q[0]+(cx-q[0])*k,ey=q[1]+(cy-q[1])*k;
+      svg.appendChild(el("line",{x1:q[0],y1:q[1],x2:ex,y2:ey,stroke:"#ffffff","stroke-width":1.6,"stroke-dasharray":"5 3"}));
+      svg.appendChild(el("circle",{cx:q[0]+(cx-q[0])*0.06,cy:q[1]+(cy-q[1])*0.06,r:3,fill:"#2fbf71"}));
+    });
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:Math.max(r*sc,1.5),fill:"none",stroke:"#c9ced6","stroke-width":1}));
+    svg.appendChild(el("circle",{cx:cx,cy:cy,r:2,fill:"#ffffff"}));
+    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Cuadrado de "+f(L,1)+" cm, corte de "+f(c,1)+" cm desde cada esquina";svg.appendChild(tt);
+    svg.setAttribute("aria-label","Cuadrado de "+f(L,1)+" cm con cuatro cortes de "+f(c,1)+" cm desde las esquinas hacia el centro");
+    row("Diagonal del cuadrado",f(d,1)+" cm (la mitad: "+f(hd,1)+" cm)");
+    row("Largo de cada corte",f(c,1)+" cm desde la esquina");
+    row("Sin cortar hasta el centro",f(r,1)+" cm");
+    row("La punta llega al centro",c>=r?"Sí, con holgura de "+f(c-r,1)+" cm":"No: queda a unos "+f(r-c,1)+" cm. Cortá más largo");
+    var m=Math.min(A,B),n1=Math.floor(A/L+1e-9)*Math.floor(B/L+1e-9),n=n1;
+    if(L>m+1e-9)row("Aviso","Ese cuadrado no entra en la hoja: el lado máximo es "+f(m,1)+" cm");
+    else row("Cuadrados por hoja",n+" de "+f(L,1)+" cm ("+Math.floor(A/L+1e-9)+" x "+Math.floor(B/L+1e-9)+")");
+    if(pc>=85)row("Aviso","Con un corte tan largo el centro queda muy débil y se rompe al fijarlo: dejá al menos 1 cm sin cortar");
+    if(r<1&&pc<85)row("Aviso","Queda menos de 1 cm sin cortar: el centro puede romperse");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
