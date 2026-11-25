@@ -605,6 +605,7 @@ footer a{color:var(--c)}
 .mz-sec .mz-ctl input:focus-visible,.mz-sec .mz-ctl select:focus-visible{outline:3px solid #2fbf71;outline-offset:2px}
 .mz-sec #mz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #bn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
 .mz-sec .mz-res span{flex:0 1 auto;min-width:0}
@@ -985,6 +986,7 @@ footer a{color:var(--c)}
     <a href="#cuadros-pared">Cuadros en la pared</a>
     <a href="#movil">Móvil en equilibrio</a>
     <a href="#banderines">Banderines en la cuerda</a>
+    <a href="#caja-hoja">Caja con una hoja</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3248,6 +3250,28 @@ footer a{color:var(--c)}
       <li>Pegá cada banderín a la cuerda (o doblá la solapa sobre ella y pegala) y alterná los colores en el orden que elijas.</li>
     </ol>
     <div class="tip">Cómo se calcula: caben tantos banderines como veces entra el ancho más la separación en el largo libre de la cuerda (el largo menos los dos márgenes, más una separación). La separación ajustada reparte el sobrante entre los huecos para que el último banderín termine justo en el margen. Los triángulos se cortan alternando punta arriba y punta abajo, que es la forma de aprovechar la hoja sin desperdicio entre ellos; con solapa se cortan rectángulos de ancho por (alto más solapa). Es una cuenta geométrica, sin fuente externa; la cuerda se comba con el peso, así que conviene medir con la cuerda tensa.</div>
+  </div>
+</section>
+
+<section id="caja-hoja" class="mz-sec">
+  <h2>Caja sin tapa con una sola hoja: qué esquina cortar</h2>
+  <p style="color:var(--muted)">Una caja se arma recortando un cuadrado en cada esquina de la hoja y doblando los lados hacia arriba. Elegí la hoja y el lado del cuadrado: te dice cuánto mide la caja, cuánto le entra y qué corte da el mayor volumen.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="cj-h"><span>Hoja</span><select id="cj-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="20,20">Cuadrada de 20 cm</option><option value="otra">Otra medida (la de abajo)</option></select></label>
+      <label class="mz-ctl" for="cj-a"><span>Largo de la hoja (cm, si elige otra)</span><input id="cj-a" type="number" inputmode="decimal" min="8" max="100" step="0.5" value="30"></label>
+      <label class="mz-ctl" for="cj-b"><span>Ancho de la hoja (cm, si elige otra)</span><input id="cj-b" type="number" inputmode="decimal" min="8" max="100" step="0.5" value="20"></label>
+      <label class="mz-ctl" for="cj-c"><span>Lado del cuadrado que se recorta (cm)</span><input id="cj-c" type="number" inputmode="decimal" min="0.5" max="40" step="0.1" value="4"></label>
+    </div>
+    <p><button type="button" id="cj-opt" class="btn" style="min-height:44px">Usar el corte de mayor volumen</button></p>
+    <svg id="cj-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla de la caja"></svg>
+    <ul class="mz-res" id="cj-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá con regla un cuadrado del lado elegido en cada una de las cuatro esquinas y unilas con líneas: son los dobleces.</li>
+      <li>Recortá los cuatro cuadrados de las esquinas (la zona oscura del dibujo) y marcá los dobleces con la punta de un lápiz sin mina o de una tijera cerrada, apoyando la regla.</li>
+      <li>Doblá los cuatro lados hacia arriba y cerrá cada esquina con cinta o pegamento, porque en esta versión quedan abiertas.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: si la hoja mide A por B y se recorta un cuadrado de lado c en cada esquina, la caja queda de (A − 2c) por (B − 2c) de base y c de alto, así que el volumen es (A − 2c)(B − 2c)c. El corte que da el mayor volumen sale de derivar esa expresión: c = (A + B − √(A² − AB + B²)) / 6. Es una cuenta geométrica, sin fuente externa; con papel grueso conviene sumar un poco de holgura en los dobleces. Para una caja de papel plegado sin cortes, mirá la página de <a href="origami.html">origami</a>.</div>
   </div>
 </section>
 
@@ -8554,6 +8578,56 @@ footer a{color:var(--c)}
     svg.setAttribute("aria-label","Cuerda de "+f(L,0)+" cm con "+n+" banderines de "+f(w,1)+" cm de ancho");
     try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-caja-hoja-v1",$=function(i){return document.getElementById(i)},ids=["cj-h","cj-a","cj-b","cj-c"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function hoja(){
+    var v=$("cj-h").value;
+    if(v==="otra")return [num("cj-a",8,100,30),num("cj-b",8,100,20)];
+    var p=v.split(",");return [parseFloat(p[0]),parseFloat(p[1])];
+  }
+  function best(A,B){return (A+B-Math.sqrt(A*A-A*B+B*B))/6}
+  function vol(A,B,c){return (A-2*c)*(B-2*c)*c}
+  function calc(){
+    var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]);
+    var c=num("cj-c",0.5,40,4);
+    var svg=$("cj-svg"),ul=$("cj-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var cm=best(A,B);
+    if(2*c>=B-0.4){
+      row("Aviso","Con un cuadrado de "+f(c,1)+" cm no queda base: tiene que ser menor que "+f((B-0.4)/2,1)+" cm para esta hoja");
+      svg.setAttribute("aria-label","Sin plantilla: el corte es demasiado grande");
+      return;
+    }
+    var bl=A-2*c,ba=B-2*c,v=vol(A,B,c),vm=vol(A,B,cm);
+    var sc=Math.min(290/A,210/B),x0=(320-A*sc)/2,y0=(240-B*sc)/2;
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(A*sc).toFixed(2),height:(B*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.8,stroke:"#14161a","stroke-width":0.8}));
+    var cs=c*sc,cx=[x0,x0+A*sc-cs],cy=[y0,y0+B*sc-cs],ii,jj;
+    for(ii=0;ii<2;ii++)for(jj=0;jj<2;jj++)svg.appendChild(el("rect",{x:cx[ii].toFixed(2),y:cy[jj].toFixed(2),width:cs.toFixed(2),height:cs.toFixed(2),fill:"#14161a",stroke:"#8a8f98","stroke-width":0.6}));
+    svg.appendChild(el("rect",{x:(x0+cs).toFixed(2),y:(y0+cs).toFixed(2),width:(bl*sc).toFixed(2),height:(ba*sc).toFixed(2),fill:"none",stroke:"#14161a","stroke-width":1.2,"stroke-dasharray":"5 3"}));
+    var t1=el("text",{x:(160).toFixed(0),y:(y0+cs+ba*sc/2+4).toFixed(2),"text-anchor":"middle","font-size":11,fill:"#14161a","font-weight":700});t1.textContent="base "+f(bl,1)+" x "+f(ba,1)+" cm";svg.appendChild(t1);
+    var t2=el("text",{x:(160).toFixed(0),y:Math.min(236,y0+B*sc+11).toFixed(2),"text-anchor":"middle","font-size":9,fill:"#c9ced6"});t2.textContent="hoja "+f(A,1)+" x "+f(B,1)+" cm";svg.appendChild(t2);
+    row("Caja armada","base de "+f(bl,1)+" por "+f(ba,1)+" cm y "+f(c,1)+" cm de alto");
+    row("Cuánto le entra",f(v,0)+" cm³ ("+f(v/1000,2)+" litros)");
+    row("Papel que se usa",f(A*B-4*c*c,0)+" cm² de "+f(A*B,0)+" cm² ("+f(100*(1-4*c*c/(A*B)),0)+" % de la hoja)");
+    row("Dobleces","dos de "+f(bl,1)+" cm y dos de "+f(ba,1)+" cm");
+    row("Corte de mayor volumen",f(cm,1)+" cm, que da "+f(vm,0)+" cm³ ("+f(vm/1000,2)+" litros)");
+    if(c>cm*1.5)row("Aviso","Con un corte tan grande la caja queda baja y ancha de más: probá cerca de "+f(cm,1)+" cm");
+    else if(c<cm*0.5)row("Aviso","Con un corte tan chico la caja queda muy baja: probá cerca de "+f(cm,1)+" cm");
+    svg.setAttribute("aria-label","Plantilla de una hoja de "+f(A,1)+" por "+f(B,1)+" cm con esquinas de "+f(c,1)+" cm recortadas");
+    try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  $("cj-opt").addEventListener("click",function(){var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]);$("cj-c").value=(Math.round(best(A,B)*10)/10).toString();calc()});
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
 })();
