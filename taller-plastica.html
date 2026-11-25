@@ -606,6 +606,7 @@ footer a{color:var(--c)}
 .mz-sec #mz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #bn-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
 .mz-sec .mz-res span{flex:0 1 auto;min-width:0}
@@ -987,6 +988,7 @@ footer a{color:var(--c)}
     <a href="#movil">Móvil en equilibrio</a>
     <a href="#banderines">Banderines en la cuerda</a>
     <a href="#caja-hoja">Caja con una hoja</a>
+    <a href="#tela-bastidor">Tela para un bastidor</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3272,6 +3274,29 @@ footer a{color:var(--c)}
       <li>Doblá los cuatro lados hacia arriba y cerrá cada esquina con cinta o pegamento, porque en esta versión quedan abiertas.</li>
     </ol>
     <div class="tip">Cómo se calcula: si la hoja mide A por B y se recorta un cuadrado de lado c en cada esquina, la caja queda de (A − 2c) por (B − 2c) de base y c de alto, así que el volumen es (A − 2c)(B − 2c)c. El corte que da el mayor volumen sale de derivar esa expresión: c = (A + B − √(A² − AB + B²)) / 6. Es una cuenta geométrica, sin fuente externa; con papel grueso conviene sumar un poco de holgura en los dobleces. Para una caja de papel plegado sin cortes, mirá la página de <a href="origami.html">origami</a>.</div>
+  </div>
+</section>
+
+<section id="tela-bastidor" class="mz-sec">
+  <h2>Tela para un bastidor: cuánta comprar</h2>
+  <p style="color:var(--muted)">Para tensar una tela sobre un bastidor hay que cubrir el frente, los cantos y un borde para engrapar por detrás. Ingresá la medida del bastidor y el ancho del rollo: te dice cuánto cortar para cada uno y cuántos metros llevar.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="tl-w"><span>Ancho del bastidor (cm)</span><input id="tl-w" type="number" inputmode="decimal" min="10" max="300" step="1" value="50"></label>
+      <label class="mz-ctl" for="tl-a"><span>Alto del bastidor (cm)</span><input id="tl-a" type="number" inputmode="decimal" min="10" max="300" step="1" value="70"></label>
+      <label class="mz-ctl" for="tl-d"><span>Profundidad del canto (cm)</span><input id="tl-d" type="number" inputmode="decimal" min="0.5" max="10" step="0.1" value="2"></label>
+      <label class="mz-ctl" for="tl-m"><span>Borde para engrapar por detrás (cm)</span><input id="tl-m" type="number" inputmode="decimal" min="1" max="15" step="0.5" value="5"></label>
+      <label class="mz-ctl" for="tl-n"><span>Cantidad de bastidores (1 a 20)</span><input id="tl-n" type="number" inputmode="numeric" min="1" max="20" step="1" value="1"></label>
+      <label class="mz-ctl" for="tl-r"><span>Ancho del rollo de tela (cm)</span><input id="tl-r" type="number" inputmode="numeric" min="30" max="400" step="5" value="150"></label>
+    </div>
+    <svg id="tl-svg" viewBox="0 0 320 240" role="img" aria-label="Pieza de tela con el bastidor"></svg>
+    <ul class="mz-res" id="tl-res" aria-live="polite"></ul>
+    <ol>
+      <li>Cortá la pieza con las medidas indicadas, con una tijera de tela y siguiendo el hilo para que el corte quede derecho.</li>
+      <li>Apoyá el bastidor boca abajo sobre la tela, centrado, y engrapá el medio de cada lado, tirando apenas.</li>
+      <li>Seguí del centro hacia las esquinas, alternando los lados, y doblá las esquinas como un envoltorio antes de engrapar.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: la pieza mide el ancho del bastidor más dos veces (canto + borde) por el alto del bastidor más dos veces (canto + borde). Para varios bastidores se prueban las dos orientaciones sobre el rollo, se ponen tantas piezas por fila como entren en su ancho y se toma el largo mínimo. La diagonal sirve para escuadrar: si las dos diagonales del bastidor miden lo mismo, está en escuadra. Es una cuenta geométrica, sin fuente externa; las telas encogen al lavarse y la lona suele necesitar imprimación, así que conviene sumar un poco de reserva.</div>
   </div>
 </section>
 
@@ -8628,6 +8653,47 @@ footer a{color:var(--c)}
     try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   $("cj-opt").addEventListener("click",function(){var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]);$("cj-c").value=(Math.round(best(A,B)*10)/10).toString();calc()});
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-tela-bastidor-v1",$=function(i){return document.getElementById(i)},ids=["tl-w","tl-a","tl-d","tl-m","tl-n","tl-r"];
+  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!=="")$(i).value=t[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function largo(n,a,b,R){ /* piezas a (a lo ancho del rollo) por b (a lo largo) */
+    var k=Math.floor(R/a);if(k<1)return null;return {k:k,L:Math.ceil(n/k)*b}}
+  function calc(){
+    var W=num("tl-w",10,300,50),H=num("tl-a",10,300,70),d=num("tl-d",0.5,10,2),m=num("tl-m",1,15,5),n=Math.round(num("tl-n",1,20,1)),R=num("tl-r",30,400,150);
+    var svg=$("tl-svg"),ul=$("tl-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var e=d+m,PW=W+2*e,PH=H+2*e;
+    var o1=largo(n,PW,PH,R),o2=largo(n,PH,PW,R),o=null,giro=false;
+    if(o1&&(!o2||o1.L<=o2.L))o=o1;else if(o2){o=o2;giro=true}
+    var sc=Math.min(280/PW,200/PH),x0=(320-PW*sc)/2,y0=(18+(204-PH*sc)/2);
+    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(PW*sc).toFixed(2),height:(PH*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.8,stroke:"#14161a","stroke-width":0.8}));
+    svg.appendChild(el("rect",{x:(x0+m*sc).toFixed(2),y:(y0+m*sc).toFixed(2),width:((PW-2*m)*sc).toFixed(2),height:((PH-2*m)*sc).toFixed(2),fill:"none",stroke:"#14161a","stroke-width":1,"stroke-dasharray":"4 3"}));
+    svg.appendChild(el("rect",{x:(x0+e*sc).toFixed(2),y:(y0+e*sc).toFixed(2),width:(W*sc).toFixed(2),height:(H*sc).toFixed(2),fill:"#14161a","fill-opacity":0.55,stroke:"#14161a","stroke-width":1.2}));
+    var t1=el("text",{x:160,y:(y0+PH*sc/2+4).toFixed(2),"text-anchor":"middle","font-size":11,fill:"#c9ced6","font-weight":700});t1.textContent="frente "+f(W,1)+" x "+f(H,1)+" cm";svg.appendChild(t1);
+    var t2=el("text",{x:160,y:12,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});t2.textContent="pieza de tela "+f(PW,1)+" x "+f(PH,1)+" cm";svg.appendChild(t2);
+    svg.setAttribute("aria-label","Pieza de tela de "+f(PW,1)+" por "+f(PH,1)+" cm con el frente del bastidor de "+f(W,1)+" por "+f(H,1)+" cm en el centro");
+    row("Pieza de tela por bastidor",f(PW,1)+" por "+f(PH,1)+" cm");
+    row("Diagonal del bastidor (para escuadrar)",f(Math.sqrt(W*W+H*H),1)+" cm, las dos iguales");
+    if(!o){row("Aviso","El rollo de "+f(R,0)+" cm es más angosto que la pieza: necesita un rollo de al menos "+f(Math.min(PW,PH),1)+" cm");}
+    else{
+      row("Piezas por fila de rollo",o.k+(giro?" (con la pieza girada)":""));
+      row("Tela a comprar",f(o.L/100,2)+" m de largo ("+f(o.L,0)+" cm) para "+n+(n===1?" bastidor":" bastidores"));
+      row("Con 10 % de reserva",f(Math.ceil(o.L*1.1/5)*5/100,2)+" m");
+      row("Superficie cortada",f(PW*PH*n/10000,2)+" m² de "+f(o.L*R/10000,2)+" m² del rollo");
+    }
+    if(d<1)row("Aviso","Un canto de menos de 1 cm es muy fino: revisá la profundidad de su bastidor");
+    try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
 })();
