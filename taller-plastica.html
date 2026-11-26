@@ -12,6 +12,14 @@
 <meta property="og:url" content="https://ignacioporrini.github.io/taller-plastica.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<script>
+(function(){
+  var moved=["cuaderno-cosido", "sobre", "minilibro", "acordeon", "guirnalda", "caja-hoja", "cubo-hoja", "abanico", "molinete", "doblar-mitad", "corona", "escalon", "tubo", "cono-papel", "marcapaginas", "piramide", "farolito", "prisma", "gajos", "copo"];
+  var h=location.hash.slice(1);
+  try{h=decodeURIComponent(h)}catch(e){}
+  if(h&&moved.indexOf(h)>-1)location.replace('taller-plastica-papel.html#'+h);
+})();
+</script>
 <link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -62,6 +70,7 @@ details.toc-box>summary:focus-visible,.toc-find input:focus-visible{outline:3px 
 .toc-find input{flex:1;min-width:0}
 .toc-clear{font:inherit;cursor:pointer;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px;min-height:44px}
 .toc-clear:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.toc-moved{margin:10px 0 0;font-size:.9rem;color:var(--muted);text-align:center}
 .toc-cats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0;padding:0;border:0;min-width:0}
 .toc-cats legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .toc-cat{font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:0 14px;min-height:44px}
@@ -937,6 +946,7 @@ footer a{color:var(--c)}
     <h3>Mis herramientas</h3>
     <div id="toc-favs-list"></div>
   </div>
+  <p class="toc-moved">Las calculadoras de papel y plegado están en <a href="taller-plastica-papel.html">una página aparte</a> (los enlaces del índice te llevan directo).</p>
   <nav class="toc" aria-label="Índice de herramientas">
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
@@ -1018,42 +1028,42 @@ footer a{color:var(--c)}
     <a href="#peso-papel">Peso del papel</a>
     <a href="#secado">Reloj de secado</a>
     <a href="#distancia-obra">Desde dónde mirar la obra</a>
-    <a href="#cuaderno-cosido">Cuaderno cosido</a>
+    <a href="taller-plastica-papel.html#cuaderno-cosido" data-t="Cuaderno cosido: hojas y páginas">Cuaderno cosido</a>
     <a href="#daltonismo">Simulador de daltonismo</a>
     <a href="#estampado">Estampar con un sello</a>
     <a href="#collage">Collage: cuántos trozos</a>
-    <a href="#sobre">Sobre para una tarjeta</a>
+    <a href="taller-plastica-papel.html#sobre" data-t="Sobre para una tarjeta">Sobre para una tarjeta</a>
     <a href="#mural">Mural en hojas</a>
     <a href="#degrade">Degradé en pasos</a>
     <a href="#regla-60-30-10">Regla 60-30-10</a>
     <a href="#renglones">Renglones para letras</a>
     <a href="#guarda">Guarda decorativa</a>
     <a href="#triptico">Tríptico y políptico</a>
-    <a href="#minilibro">Minilibro de 8 páginas</a>
-    <a href="#acordeon">Libro acordeón</a>
-    <a href="#guirnalda">Guirnalda de anillos</a>
+    <a href="taller-plastica-papel.html#minilibro" data-t="Minilibro de 8 páginas con una sola hoja">Minilibro de 8 páginas</a>
+    <a href="taller-plastica-papel.html#acordeon" data-t="Libro acordeón: ancho de cada panel">Libro acordeón</a>
+    <a href="taller-plastica-papel.html#guirnalda" data-t="Guirnalda de anillos de papel: cuántas hojas">Guirnalda de anillos</a>
     <a href="#cuadros-pared">Cuadros en la pared</a>
     <a href="#movil">Móvil en equilibrio</a>
     <a href="#banderines">Banderines en la cuerda</a>
-    <a href="#caja-hoja">Caja con una hoja</a>
+    <a href="taller-plastica-papel.html#caja-hoja" data-t="Caja sin tapa con una sola hoja: qué esquina cortar">Caja con una hoja</a>
     <a href="#tela-bastidor">Tela para un bastidor</a>
-    <a href="#cubo-hoja">Cubo con una hoja</a>
+    <a href="taller-plastica-papel.html#cubo-hoja" data-t="Cubo con una hoja: qué lado puede tener">Cubo con una hoja</a>
     <a href="#historieta">Viñetas de historieta</a>
-    <a href="#abanico">Abanico plegado</a>
-    <a href="#molinete">Molinete de papel</a>
-    <a href="#doblar-mitad">Doblar a la mitad</a>
-    <a href="#corona">Corona de papel</a>
-    <a href="#escalon">Tarjeta con escalón</a>
-    <a href="#tubo">Tubo de papel</a>
-    <a href="#cono-papel">Cono de papel</a>
+    <a href="taller-plastica-papel.html#abanico" data-t="Abanico plegado: cuánto abre">Abanico plegado</a>
+    <a href="taller-plastica-papel.html#molinete" data-t="Molinete de papel: hasta dónde cortar">Molinete de papel</a>
+    <a href="taller-plastica-papel.html#doblar-mitad" data-t="Doblar a la mitad: cuánto mide y cuánto grosor">Doblar a la mitad</a>
+    <a href="taller-plastica-papel.html#corona" data-t="Corona de papel: cuántas tiras y cuántas hojas">Corona de papel</a>
+    <a href="taller-plastica-papel.html#escalon" data-t="Tarjeta con escalón: dónde van los cortes">Tarjeta con escalón</a>
+    <a href="taller-plastica-papel.html#tubo" data-t="Tubo de papel: qué diámetro sale de una hoja">Tubo de papel</a>
+    <a href="taller-plastica-papel.html#cono-papel" data-t="Cono de papel: qué recorte hace falta">Cono de papel</a>
     <a href="#poligono">Polígono y estrella</a>
-    <a href="#marcapaginas">Marcapáginas</a>
-    <a href="#piramide">Pirámide de papel</a>
-    <a href="#farolito">Farolito de papel</a>
-    <a href="#prisma">Prisma de papel</a>
-    <a href="#gajos">Esfera con gajos</a>
+    <a href="taller-plastica-papel.html#marcapaginas" data-t="Marcapáginas: cuántos salen de una hoja">Marcapáginas</a>
+    <a href="taller-plastica-papel.html#piramide" data-t="Pirámide de papel con base cuadrada">Pirámide de papel</a>
+    <a href="taller-plastica-papel.html#farolito" data-t="Farolito de papel: cuántos cortes y qué diámetro">Farolito de papel</a>
+    <a href="taller-plastica-papel.html#prisma" data-t="Prisma de papel: cuánto mide cada cara">Prisma de papel</a>
+    <a href="taller-plastica-papel.html#gajos" data-t="Esfera de papel con gajos: cómo es cada gajo">Esfera con gajos</a>
     <a href="#sesiones-obra">Sesiones para terminar una obra</a>
-    <a href="#copo">Copo de papel</a>
+    <a href="taller-plastica-papel.html#copo" data-t="Copo de papel: cuánto mide cada sector">Copo de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -2981,23 +2991,6 @@ footer a{color:var(--c)}
   </div>
 </section>
 
-<section id="cuaderno-cosido" class="cq-sec">
-  <h2>Cuaderno cosido: hojas y páginas</h2>
-  <p style="color:var(--muted)">Para hacer un cuaderno de bocetos o un libro de artista con hojas dobladas por la mitad y cosidas en el lomo. Elegí el tamaño de la hoja y cuántas páginas querés: te dice cuántas hojas cortar, qué tamaño queda y en qué orden van las páginas en cada hoja.</p>
-  <div class="card">
-    <div class="cq-two">
-      <label class="cq-ctl" for="cq-f"><span>Tamaño de la hoja sin doblar</span>
-        <select id="cq-f"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="42,59.4">A2 (42 x 59,4 cm)</option><option value="50,70">Pliego 50 x 70 cm</option></select></label>
-      <label class="cq-ctl" for="cq-p"><span>Páginas que quiero</span><input id="cq-p" type="number" inputmode="numeric" min="4" max="200" step="1" value="24"></label>
-      <label class="cq-ctl" for="cq-m"><span>Hojas por cuadernillo</span><input id="cq-m" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
-    </div>
-    <ul class="cq-res" id="cq-res" aria-live="polite"></ul>
-    <svg id="cq-svg" viewBox="0 0 320 120" role="img" aria-label="Dibujo a escala de la hoja abierta y de la página que queda al doblarla por la mitad"></svg>
-    <div class="cq-tw"><table id="cq-tab" aria-label="Orden de las páginas en cada hoja del primer cuadernillo"></table></div>
-    <div class="tip">Cómo se calcula: cada hoja doblada por la mitad da 4 páginas (dos de cada lado), así que las páginas se redondean hacia arriba al próximo múltiplo de 4 y las que sobran quedan en blanco. La página mide la mitad de la hoja: se dobla por la mitad del lado largo, por eso una A4 da páginas A5. Un cuadernillo es un grupo de hojas encajadas una dentro de otra; con muchas hojas se arman varios cuadernillos que se cosen juntos. La tabla muestra el primer cuadernillo: si las hojas están numeradas de afuera hacia adentro, la hoja k lleva de un lado las páginas (total - 2(k-1)) y (2k-1) y del otro la 2k y (total - 2k + 1), con el total del cuadernillo. Con muchas hojas encajadas el borde del lado abierto queda desparejo: se recorta al terminar o se usan cuadernillos de 2 a 4 hojas.</div>
-  </div>
-</section>
-
 <section id="daltonismo" class="dt-sec">
   <h2>Paleta para todos los ojos: simulador de daltonismo</h2>
   <p style="color:var(--muted)">Según las cifras habituales (alrededor del 8 % de los varones y el 0,5 % de las mujeres de origen europeo), mucha gente ve algunos colores distinto, sobre todo rojos y verdes. Elegí 3 o 4 colores de tu cartel o de tu obra y mirá cómo se ven con tres tipos de daltonismo: si dos colores se vuelven casi iguales, conviene cambiar uno o diferenciarlos también por claridad.</p>
@@ -3053,23 +3046,6 @@ footer a{color:var(--c)}
     <svg id="co-svg" viewBox="0 0 320 240" role="img" aria-label="Dibujo a escala de la superficie con los trozos de una capa"></svg>
     <ul class="co-res" id="co-res" aria-live="polite"></ul>
     <div class="tip">Cómo se calcula: cada trozo nuevo avanza (trozo menos solape). Se cuentan los trozos que hacen falta para llegar al borde, redondeando hacia arriba, en ancho y en alto; los que se pasan del borde se recortan o se doblan hacia atrás. Se multiplica por las capas y se suma la reserva, porque al recortar a mano siempre se pierde alguno. Una hoja A4 tiene 21 x 29,7 cm (623,7 cm²); el cálculo de hojas es por área y no cuenta lo que se pierde al cortar la hoja en trozos.</div>
-  </div>
-</section>
-
-<section id="sobre" class="sb-sec">
-  <h2>Sobre para una tarjeta</h2>
-  <p style="color:var(--muted)">Para hacer a mano el sobre de una tarjeta, un dibujo chico o un marcapáginas. Cargá el tamaño de la tarjeta y de la hoja: te da la plantilla en cruz con sus medidas, dónde doblar y cuántos sobres salen de cada hoja.</p>
-  <div class="card">
-    <div class="sb-two">
-      <label class="sb-ctl" for="sb-w"><span>Ancho de la tarjeta (cm)</span><input id="sb-w" type="number" inputmode="decimal" min="3" max="40" step="0.1" value="10.5"></label>
-      <label class="sb-ctl" for="sb-h"><span>Alto de la tarjeta (cm)</span><input id="sb-h" type="number" inputmode="decimal" min="3" max="40" step="0.1" value="14.8"></label>
-      <label class="sb-ctl" for="sb-g"><span>Holgura por lado (cm)</span><input id="sb-g" type="number" inputmode="decimal" min="0" max="3" step="0.1" value="0.3"></label>
-      <label class="sb-ctl" for="sb-f"><span>Solapa lateral (cm)</span><input id="sb-f" type="number" inputmode="decimal" min="1" max="8" step="0.1" value="2"></label>
-      <label class="sb-ctl" for="sb-s"><span>Hoja</span><select id="sb-s"><option value="21,29.7">A4 (21 x 29,7 cm)</option><option value="29.7,42">A3 (29,7 x 42 cm)</option><option value="14.8,21">A5 (14,8 x 21 cm)</option><option value="21.6,27.9">Carta (21,6 x 27,9 cm)</option><option value="50,70">Pliego 50 x 70 cm</option></select></label>
-    </div>
-    <svg id="sb-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla a escala del sobre, en forma de cruz, con las líneas de doblez"></svg>
-    <ul class="sb-res" id="sb-res" aria-live="polite"></ul>
-    <div class="tip">Cómo se calcula: el interior del sobre es la tarjeta más la holgura de cada lado. La hoja se corta en cruz: el panel de atrás (interior), una solapa a cada lado del ancho que elegís, una solapa inferior de 60 % del alto y una solapa superior triangular de 40 % del ancho. Se doblan primero las laterales hacia adentro, después la inferior hacia arriba (pegada sobre las laterales) y al final se cierra la superior. Es una plantilla propia y simple, no un modelo de origami. Los sobres por hoja se cuentan con el rectángulo que encierra la cruz, en las dos orientaciones, sin aprovechar los huecos de las esquinas; si querés encajarlas, probá con papel borrador. Una hoja gruesa necesita un poco más de holgura.</div>
   </div>
 </section>
 
@@ -3179,69 +3155,6 @@ footer a{color:var(--c)}
   </div>
 </section>
 
-<section id="minilibro" class="mz-sec">
-  <h2>Minilibro de 8 páginas con una sola hoja</h2>
-  <p style="color:var(--muted)">Con una hoja, cuatro dobleces y un corte se arma un librito de 8 páginas, ideal para dibujos, un cuaderno de viaje o un cuento. Elegí la hoja y el margen: te dice cuánto mide cada página y cuál va boca abajo en la hoja desplegada.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="mz-h"><span>Hoja (apaisada)</span><select id="mz-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="mz-m"><span>Margen interior de cada página (cm)</span><input id="mz-m" type="number" inputmode="decimal" min="0" max="2" step="0.1" value="0.5"></label>
-    </div>
-    <svg id="mz-svg" viewBox="0 0 320 180" role="img" aria-label="Hoja desplegada con las 8 páginas numeradas"></svg>
-    <ul class="mz-res" id="mz-res" aria-live="polite"></ul>
-    <ol>
-      <li>Doblá la hoja a lo largo por la mitad y abrila. Doblala a lo ancho por la mitad, y de nuevo cada mitad hacia el centro: quedan 8 rectángulos.</li>
-      <li>Con la hoja doblada a lo ancho por la mitad, cortá sobre el pliegue desde el centro hasta la mitad del borde (la línea punteada del dibujo).</li>
-      <li>Abrí la hoja, plegala a lo largo y empujá los extremos hacia el centro hasta formar una cruz; cerrá las páginas como un librito con la portada (página 1) al frente.</li>
-    </ol>
-    <div class="tip">Cómo usarlo: dibujá cada página con el número y la orientación del dibujo: las páginas de la fila de arriba (2, 3, 4 y 5) se dibujan boca abajo respecto de la fila de abajo. La disposición se comprobó con la regla de que las páginas que comparten hoja (1-2, 3-4, 5-6, 7-8) quedan unidas por un doblez y las enfrentadas (2-3, 4-5, 6-7, 8-1) quedan juntas en el librito. El método de pliegues y el corte coincide con la guía de <a href="https://tessneedham.com/folding-instructions/" target="_blank" rel="noopener">Tess Needham</a> y con la de la <a href="https://blogs.brighton.ac.uk/visuallearning/2019/09/25/create-a-mini-zine/" target="_blank" rel="noopener">Universidad de Brighton</a>, que trae un diagrama y un modelo para imprimir; probá primero con una hoja borrador.</div>
-  </div>
-</section>
-
-<section id="acordeon" class="mz-sec">
-  <h2>Libro acordeón: ancho de cada panel</h2>
-  <p style="color:var(--muted)">Una tira de papel plegada en zigzag hace un libro que se abre como acordeón: sirve para un paisaje largo, un cuento o un mural de bolsillo. Elegí la hoja, cuántas pegás y cuántos paneles querés: te dice cuánto mide cada panel y dónde van los pliegues.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="ac-h"><span>Hoja (apaisada)</span><select id="ac-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="ac-k"><span>Hojas pegadas (1 a 4)</span><input id="ac-k" type="number" inputmode="numeric" min="1" max="4" step="1" value="1"></label>
-      <label class="mz-ctl" for="ac-s"><span>Solape para pegar (cm)</span><input id="ac-s" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
-      <label class="mz-ctl" for="ac-n"><span>Paneles (2 a 16)</span><input id="ac-n" type="number" inputmode="numeric" min="2" max="16" step="1" value="6"></label>
-    </div>
-    <svg id="ac-svg" viewBox="0 0 320 110" role="img" aria-label="Tira de papel dividida en paneles iguales con los pliegues"></svg>
-    <ul class="mz-res" id="ac-res" aria-live="polite"></ul>
-    <ol>
-      <li>Si usás más de una hoja, pegalas por el borde corto solapando el ancho indicado y dejá secar. Apoyá la tira apaisada.</li>
-      <li>Marcá con lápiz, desde el borde izquierdo, cada pliegue a la distancia indicada, o doblá por mitades sucesivas si el número de paneles es una potencia de 2 (2, 4, 8 o 16).</li>
-      <li>Doblá en zigzag, un pliegue hacia adelante y el siguiente hacia atrás, y marcá bien cada doblez con la uña o una regla.</li>
-    </ol>
-    <div class="tip">Cómo usarlo: la tira plegada mide un panel de ancho; dibujá primero con la tira abierta para que la imagen siga de un panel al otro, y cuidá que una pegadura no caiga justo en medio de un detalle importante. Si la pegadura queda lejos de un pliegue, el resumen lo avisa para que cambies el solape o los paneles. El cálculo es una división en partes iguales, sin fuente externa: no encontré una guía de plegado que pudiera confirmar acá, así que probá primero con una tira de borrador y ajustá a tu papel.</div>
-  </div>
-</section>
-
-<section id="guirnalda" class="mz-sec">
-  <h2>Guirnalda de anillos de papel: cuántas hojas</h2>
-  <p style="color:var(--muted)">La cadena de anillos de papel es un clásico para decorar una sala o una muestra: se cortan tiras, se pegan en aro y se van enlazando. Elegí la hoja, el ancho de la tira y el largo que querés: te dice cuántas tiras salen de cada hoja y cuántas hojas comprar, con colores alternados si querés.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="gu-h"><span>Hoja</span><select id="gu-h"><option value="29.7,21,A4" selected>A4 (29,7 x 21 cm)</option><option value="42,29.7,A3">A3 (42 x 29,7 cm)</option><option value="21,14.85,A5">A5 (21 x 14,85 cm)</option><option value="27.94,21.59,Carta">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="gu-o"><span>Cortar las tiras</span><select id="gu-o"><option value="largo" selected>A lo largo de la hoja (tiras largas)</option><option value="corto">A lo ancho de la hoja (tiras cortas)</option></select></label>
-      <label class="mz-ctl" for="gu-w"><span>Ancho de la tira (cm)</span><input id="gu-w" type="number" inputmode="decimal" min="1" max="6" step="0.5" value="2"></label>
-      <label class="mz-ctl" for="gu-s"><span>Solape para pegar (cm)</span><input id="gu-s" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
-      <label class="mz-ctl" for="gu-l"><span>Largo de la guirnalda (cm)</span><input id="gu-l" type="number" inputmode="numeric" min="20" max="2000" step="10" value="200"></label>
-      <label class="mz-ctl" for="gu-c"><span>Colores alternados (1 a 4)</span><input id="gu-c" type="number" inputmode="numeric" min="1" max="4" step="1" value="2"></label>
-    </div>
-    <svg id="gu-svg" viewBox="0 0 320 150" role="img" aria-label="Hoja dividida en tiras para los anillos"></svg>
-    <ul class="mz-res" id="gu-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá en la hoja el ancho de la tira con lápiz y regla, y cortá todas las tiras del mismo largo (el sobrante de la hoja queda para otro trabajo).</li>
-      <li>Pegá cada tira en aro, solapando los extremos el ancho indicado, y dejá secar un minuto antes de enlazar.</li>
-      <li>Pasá cada tira nueva por dentro del último anillo, antes de pegarla, y alterná los colores en el orden que elijas.</li>
-    </ol>
-    <div class="tip">Cómo usarlo: el largo de la guirnalda es una estimación, porque depende de qué tan flojos queden los enlaces y de qué tan gruesa sea la hoja: armá tres anillos de prueba, medilos tensos y, si da distinto, ajustá el largo que pedís. La cuenta es geométrica y no usa fuente externa: cada tira mide lo que mide el borde de la hoja, el aro queda con ese largo menos el solape, y cada eslabón suma, aproximadamente, media vuelta menos un ancho de tira.</div>
-  </div>
-</section>
-
 <section id="cuadros-pared" class="mz-sec">
   <h2>Cuadros en la pared: dónde va cada clavo</h2>
   <p style="color:var(--muted)">Para colgar una hilera de obras en la muestra del taller o en casa: cargá el ancho de la pared, el tamaño de cada obra y la separación. Te dice cuánto margen queda a los lados, a qué distancia de la esquina empieza cada obra y a qué altura del piso va cada clavo.</p>
@@ -3320,28 +3233,6 @@ footer a{color:var(--c)}
   </div>
 </section>
 
-<section id="caja-hoja" class="mz-sec">
-  <h2>Caja sin tapa con una sola hoja: qué esquina cortar</h2>
-  <p style="color:var(--muted)">Una caja se arma recortando un cuadrado en cada esquina de la hoja y doblando los lados hacia arriba. Elegí la hoja y el lado del cuadrado: te dice cuánto mide la caja, cuánto le entra y qué corte da el mayor volumen.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="cj-h"><span>Hoja</span><select id="cj-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="20,20">Cuadrada de 20 cm</option><option value="otra">Otra medida (la de abajo)</option></select></label>
-      <label class="mz-ctl" for="cj-a"><span>Largo de la hoja (cm, si elige otra)</span><input id="cj-a" type="number" inputmode="decimal" min="8" max="100" step="0.5" value="30"></label>
-      <label class="mz-ctl" for="cj-b"><span>Ancho de la hoja (cm, si elige otra)</span><input id="cj-b" type="number" inputmode="decimal" min="8" max="100" step="0.5" value="20"></label>
-      <label class="mz-ctl" for="cj-c"><span>Lado del cuadrado que se recorta (cm)</span><input id="cj-c" type="number" inputmode="decimal" min="0.5" max="40" step="0.1" value="4"></label>
-    </div>
-    <p><button type="button" id="cj-opt" class="btn" style="min-height:44px">Usar el corte de mayor volumen</button></p>
-    <svg id="cj-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla de la caja"></svg>
-    <ul class="mz-res" id="cj-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá con regla un cuadrado del lado elegido en cada una de las cuatro esquinas y unilas con líneas: son los dobleces.</li>
-      <li>Recortá los cuatro cuadrados de las esquinas (la zona oscura del dibujo) y marcá los dobleces con la punta de un lápiz sin mina o de una tijera cerrada, apoyando la regla.</li>
-      <li>Doblá los cuatro lados hacia arriba y cerrá cada esquina con cinta o pegamento, porque en esta versión quedan abiertas.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: si la hoja mide A por B y se recorta un cuadrado de lado c en cada esquina, la caja queda de (A − 2c) por (B − 2c) de base y c de alto, así que el volumen es (A − 2c)(B − 2c)c. El corte que da el mayor volumen sale de derivar esa expresión: c = (A + B − √(A² − AB + B²)) / 6. Es una cuenta geométrica, sin fuente externa; con papel grueso conviene sumar un poco de holgura en los dobleces. Para una caja de papel plegado sin cortes, mirá la página de <a href="origami.html">origami</a>.</div>
-  </div>
-</section>
-
 <section id="tela-bastidor" class="mz-sec">
   <h2>Tela para un bastidor: cuánta comprar</h2>
   <p style="color:var(--muted)">Para tensar una tela sobre un bastidor hay que cubrir el frente, los cantos y un borde para engrapar por detrás. Ingresá la medida del bastidor y el ancho del rollo: te dice cuánto cortar para cada uno y cuántos metros llevar.</p>
@@ -3362,29 +3253,6 @@ footer a{color:var(--c)}
       <li>Seguí del centro hacia las esquinas, alternando los lados, y doblá las esquinas como un envoltorio antes de engrapar.</li>
     </ol>
     <div class="tip">Cómo se calcula: la pieza mide el ancho del bastidor más dos veces (canto + borde) por el alto del bastidor más dos veces (canto + borde). Para varios bastidores se prueban las dos orientaciones sobre el rollo, se ponen tantas piezas por fila como entren en su ancho y se toma el largo mínimo. La diagonal sirve para escuadrar: si las dos diagonales del bastidor miden lo mismo, está en escuadra. Es una cuenta geométrica, sin fuente externa; las telas encogen al lavarse y la lona suele necesitar imprimación, así que conviene sumar un poco de reserva.</div>
-  </div>
-</section>
-
-<section id="cubo-hoja" class="mz-sec">
-  <h2>Cubo con una hoja: qué lado puede tener</h2>
-  <p style="color:var(--muted)">El desarrollo de un cubo es una cruz de seis cuadrados: cuatro en fila y uno arriba y uno abajo. Elegí la hoja y el lado que querés: te dice si entra, cuál es el lado mayor posible y cuántos cubos salen de una hoja.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="cb-h"><span>Hoja</span><select id="cb-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option><option value="otra">Otra medida (la de abajo)</option></select></label>
-      <label class="mz-ctl" for="cb-a"><span>Largo de la hoja (cm, si elige otra)</span><input id="cb-a" type="number" inputmode="decimal" min="5" max="150" step="0.5" value="30"></label>
-      <label class="mz-ctl" for="cb-b"><span>Ancho de la hoja (cm, si elige otra)</span><input id="cb-b" type="number" inputmode="decimal" min="5" max="150" step="0.5" value="20"></label>
-      <label class="mz-ctl" for="cb-s"><span>Lado del cubo (cm)</span><input id="cb-s" type="number" inputmode="decimal" min="1" max="40" step="0.1" value="5"></label>
-      <label class="mz-ctl" for="cb-t"><span>Reserva para solapas de pegado (cm)</span><input id="cb-t" type="number" inputmode="decimal" min="0" max="3" step="0.1" value="1"></label>
-    </div>
-    <p><button type="button" id="cb-max" class="btn" style="min-height:44px">Usar el lado mayor que entra</button></p>
-    <svg id="cb-svg" viewBox="0 0 320 240" role="img" aria-label="Desarrollo del cubo sobre la hoja"></svg>
-    <ul class="mz-res" id="cb-res" aria-live="polite"></ul>
-    <ol>
-      <li>Dibujá con regla y escuadra la cruz de seis cuadrados dentro de la zona marcada, dejando en todo el borde la reserva para las solapas.</li>
-      <li>Marcá los dobleces (las líneas de puntos del dibujo) con la punta de un lápiz sin mina, recortá el contorno y agregá una solapa en cada borde que vaya a pegarse con otro.</li>
-      <li>Doblá todos los lados hacia el mismo lado y pegá las solapas por dentro, una por una: son siete uniones.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: la cruz mide 4 lados de largo por 3 de alto. Con una reserva t en todo el contorno, el cuadrado más grande que entra en una hoja de A por B es el menor entre (A − 2t) / 4 y (B − 2t) / 3, probando la hoja de las dos maneras (acostada o de pie). El volumen es lado al cubo. Las siete uniones salen de contar bordes: un cubo tiene 12 aristas y el desarrollo de seis cuadrados deja cinco ya unidas por un doblez, así que quedan siete para pegar. Es una cuenta geométrica, sin fuente externa; la reserva es conservadora (rodea toda la cruz) y la cantidad de cubos por hoja supone cruces separadas por esa misma reserva. Para armar un cubo sin pegamento, mirá la página de <a href="origami.html">origami</a>.</div>
   </div>
 </section>
 
@@ -3411,153 +3279,6 @@ footer a{color:var(--c)}
   </div>
 </section>
 
-<section id="abanico" class="mz-sec">
-  <h2>Abanico plegado: cuánto abre</h2>
-  <p style="color:var(--muted)">Un abanico de papel es una hoja plegada en acordeón y sujeta de un extremo. Elegí la hoja, para qué lado van los pliegues y el ancho de cada pliegue: te dice cuántos pliegues salen, cuánto abre el abanico y te lo dibuja a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="ab-h"><span>Hoja</span><select id="ab-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="ab-o"><span>Los pliegues corren a lo largo de</span><select id="ab-o"><option value="c" selected>Lado corto</option><option value="l">Lado largo (abre menos)</option></select></label>
-      <label class="mz-ctl" for="ab-w"><span>Ancho de cada pliegue (cm)</span><input id="ab-w" type="number" inputmode="decimal" min="0.8" max="6" step="0.1" value="1.5"></label>
-    </div>
-    <svg id="ab-svg" viewBox="0 0 320 240" role="img" aria-label="Abanico plegado abierto"></svg>
-    <ul class="mz-res" id="ab-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá con lápiz los pliegues a lo largo del lado elegido, todos del mismo ancho, y repasalos con la regla.</li>
-      <li>Plegá en acordeón, uno hacia un lado y el siguiente hacia el otro, y marcá cada doblez con la uña.</li>
-      <li>Sujetá un extremo con una banda elástica o un broche, o pegalo con cinta, y abrí el abanico: queda el ángulo que indica el cálculo.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: la cantidad de pliegues es el largo de la hoja dividido el ancho de cada pliegue (se toma la parte entera y el resto queda de sobrante). Si todas las líneas de pliegue se juntan en el punto de sujeción, cada pliegue abre un ángulo de 2 × arcoseno(ancho / (2 × alto)) y el abanico abre n veces ese ángulo. Es una aproximación con papel que se tuerce poco; con papel grueso o con el punto de sujeción un poco corrido, el resultado real puede diferir. Conviene un número par de pliegues para que la hoja cierre bien en monte y valle.</div>
-  </div>
-</section>
-
-<section id="molinete" class="mz-sec">
-  <h2>Molinete de papel: hasta dónde cortar</h2>
-  <p style="color:var(--muted)">El molinete se hace con un cuadrado cortado desde las cuatro esquinas hacia el centro. Elegí la hoja, el lado del cuadrado y cuánto de la diagonal cortás: te dice la medida de cada corte, cuánto queda sin cortar en el centro, cuántos cuadrados salen de la hoja y te lo dibuja a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="mn-h"><span>Hoja</span><select id="mn-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="mn-l"><span>Lado del cuadrado (cm)</span><input id="mn-l" type="number" inputmode="decimal" min="4" max="30" step="0.5" value="15"></label>
-      <label class="mz-ctl" for="mn-c"><span>Corte: parte de la mitad de la diagonal (%)</span><input id="mn-c" type="number" inputmode="numeric" min="30" max="90" step="5" value="75"></label>
-    </div>
-    <svg id="mn-svg" viewBox="0 0 320 240" role="img" aria-label="Cuadrado con los cortes del molinete"></svg>
-    <ul class="mz-res" id="mn-res" aria-live="polite"></ul>
-    <ol>
-      <li>Sacá un cuadrado de la medida elegida y marcá las dos diagonales con lápiz (doblalo en diagonal y abrilo, o usá regla).</li>
-      <li>Cortá sobre cada diagonal desde la esquina, solo hasta la medida del corte. No pases de ahí: el centro tiene que quedar entero.</li>
-      <li>Tomá una punta de cada esquina, siempre del mismo lado del corte, llevala al centro y fijala con un alfiler de cabeza o un broche mariposa a un palito o a un lápiz con goma.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: la diagonal del cuadrado es el lado × raíz de 2, y se corta un porcentaje de su mitad. Lo que queda sin cortar hasta el centro es el resto. La punta alcanza el centro, de forma aproximada, cuando el corte es igual o mayor que ese resto, o sea desde la mitad de la mitad de la diagonal (50 %). Es una cuenta simple: el papel se curva y la cuenta no incluye el grosor ni el ancho de la punta.</div>
-  </div>
-</section>
-
-<section id="doblar-mitad" class="mz-sec">
-  <h2>Doblar a la mitad: cuánto mide y cuánto grosor</h2>
-  <p style="color:var(--muted)">Cada doblez a la mitad achica la hoja y duplica las capas. Elegí la hoja, el grosor del papel y cuántas veces doblás: te dice la medida del paquete, las capas, el grosor total y te dibuja los rectángulos que marcan los pliegues. Sirve para planear una base de origami, un cuaderno o un pliegue de carpeta.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="dm-h"><span>Hoja</span><select id="dm-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="dm-t"><span>Grosor de una hoja (mm)</span><input id="dm-t" type="number" inputmode="decimal" min="0.02" max="1" step="0.01" value="0.1"></label>
-      <label class="mz-ctl" for="dm-n"><span>Dobleces a la mitad</span><input id="dm-n" type="number" inputmode="numeric" min="1" max="8" step="1" value="3"></label>
-    </div>
-    <svg id="dm-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja dividida por los pliegues"></svg>
-    <ul class="mz-res" id="dm-res" aria-live="polite"></ul>
-    <ol>
-      <li>Doblá la hoja por la mitad llevando el lado más largo sobre sí mismo y marcá bien el pliegue con la uña.</li>
-      <li>Repetí con el paquete que quedó, siempre por el lado más largo, hasta completar los dobleces elegidos.</li>
-      <li>Para saber el grosor real de tu papel, medí una pila de 20 hojas con una regla y dividí por 20.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: cada doblez parte por la mitad el lado más largo del paquete, así que el área queda en 1/2, 1/4, 1/8... y las capas pasan a 2, 4, 8... (2 elevado a la cantidad de dobleces). El grosor es el de una hoja por las capas. Es una cuenta ideal: en el papel real el doblez suma un poco de ancho y a partir de seis o siete dobleces cuesta cada vez más cerrar el paquete.</div>
-  </div>
-</section>
-
-<section id="corona" class="mz-sec">
-  <h2>Corona de papel: cuántas tiras y cuántas hojas</h2>
-  <p style="color:var(--muted)">Una corona es una tira de papel cerrada en anillo. Cargá la vuelta de cabeza, el alto de la tira y la hoja: te dice cuántas tiras hay que pegar, cuántas coronas salen de cada hoja y cuántas hojas necesitás para el grupo, con el dibujo de la hoja cortada en tiras a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="cwn-p"><span>Vuelta de cabeza (cm)</span><input id="cwn-p" type="number" inputmode="decimal" min="40" max="70" step="0.5" value="52"></label>
-      <label class="mz-ctl" for="cwn-a"><span>Alto de la tira (cm)</span><input id="cwn-a" type="number" inputmode="decimal" min="2" max="15" step="0.5" value="6"></label>
-      <label class="mz-ctl" for="cwn-s"><span>Solape para pegar (cm)</span><input id="cwn-s" type="number" inputmode="decimal" min="1" max="5" step="0.5" value="1.5"></label>
-      <label class="mz-ctl" for="cwn-h"><span>Hoja</span><select id="cwn-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="cwn-n"><span>Coronas que necesito</span><input id="cwn-n" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"></label>
-    </div>
-    <svg id="cwn-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja cortada en tiras para una corona"></svg>
-    <ul class="mz-res" id="cwn-res" aria-live="polite"></ul>
-    <ol>
-      <li>Medí la vuelta de la cabeza con una cinta o un hilo que después apoyás sobre la regla (una cabeza infantil ronda los 50 cm y una adulta los 55 a 58 cm).</li>
-      <li>Cortá la hoja en tiras del alto elegido, a lo largo del lado más largo, y pegá las tiras punta con punta con el solape indicado.</li>
-      <li>Probala en la cabeza, cerrá el anillo con el último solape y recién después decorá o recortá las puntas.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el largo necesario es la vuelta de cabeza más 1 cm de holgura más un solape para cerrar el anillo. Con tiras del largo de la hoja, k tiras pegadas con solape miden k por el largo menos (k - 1) solapes; se toma el menor k que alcance. Las tiras que salen de una hoja son la parte entera del ancho de la hoja dividido el alto de la tira. Las medidas de las hojas A salen de la norma ISO 216 y los pliegos varían según la librería: medí el tuyo. Es una cuenta ideal; el papel real pide algo de margen por los cortes a mano.</div>
-  </div>
-</section>
-
-<section id="escalon" class="mz-sec">
-  <h2>Tarjeta con escalón: dónde van los cortes</h2>
-  <p style="color:var(--muted)">Un escalón desplegable se hace con dos cortes que salen del lomo y un doblez entre ellos. Elegí la hoja, el alto y el ancho del escalón: te dice el largo de los cortes, dónde van y a qué distancia quedan del borde, con el dibujo de la hoja abierta a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="pu-h"><span>Hoja que se dobla</span><select id="pu-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="pu-l"><span>Lomo</span><select id="pu-l"><option value="c" selected>Sobre el lado corto (tarjeta apaisada)</option><option value="l">Sobre el lado largo (tarjeta alta)</option></select></label>
-      <label class="mz-ctl" for="pu-a"><span>Alto del escalón (cm)</span><input id="pu-a" type="number" inputmode="decimal" min="1" max="12" step="0.5" value="4"></label>
-      <label class="mz-ctl" for="pu-w"><span>Ancho del escalón (cm)</span><input id="pu-w" type="number" inputmode="decimal" min="1" max="20" step="0.5" value="4"></label>
-      <label class="mz-ctl" for="pu-n"><span>Cantidad de escalones</span><select id="pu-n"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label>
-    </div>
-    <svg id="pu-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja abierta con los cortes y dobleces del escalón"></svg>
-    <ul class="mz-res" id="pu-res" aria-live="polite"></ul>
-    <ol>
-      <li>Doblá la hoja por la mitad, marcá bien el lomo y, con la tarjeta cerrada, trazá en lápiz los cortes y el doblez de cada escalón.</li>
-      <li>Cortá solo las líneas que salen del lomo (las rojas del dibujo) y doblá cada tira por su línea de doblez, hacia un lado y hacia el otro, para que quede marcada.</li>
-      <li>Abrí la tarjeta, empujá las tiras hacia el lado contrario y cerrá despacio para que se acomoden. Pegá recién después lo que vaya sobre los escalones.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el largo de cada corte es igual al alto del escalón y el doblez va justo donde termina el corte, como en la <a href="https://www.AuntAnnie.com/GreetingCards/Step_Popup/" target="_blank" rel="noopener">guía de escalones de Aunt Annie</a>. Los escalones se reparten con el mismo espacio a los costados y entre sí. Esa guía pide unos 2 cm del borde, unos 1,3 cm entre escalones y, para su tarjeta de 14 x 21 cm, escalones de hasta unos 5 cm de alto y 10 cm de ancho; la herramienta avisa si se pasa de esas medidas. Si algo sobresale al cerrar la tarjeta, achicá el escalón. Hacé una prueba en papel borrador antes de cortar la hoja buena.</div>
-  </div>
-</section>
-
-<section id="tubo" class="mz-sec">
-  <h2>Tubo de papel: qué diámetro sale de una hoja</h2>
-  <p style="color:var(--muted)">Una hoja enrollada hace un portalápices, un cilindro para decorar o un rollo para un títere. Elegí la hoja, hacia dónde la enrollás y cuánto pegás: te dice el diámetro y el alto del tubo, cuánto entra, y el disco para tapar la base. También te dice qué tira hace falta para un diámetro que vos busques.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="tb-h"><span>Hoja</span><select id="tb-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option></select></label>
-      <label class="mz-ctl" for="tb-o"><span>Se enrolla</span><select id="tb-o"><option value="l" selected>A lo largo (tubo más ancho y bajo)</option><option value="c">A lo ancho (tubo más fino y alto)</option></select></label>
-      <label class="mz-ctl" for="tb-s"><span>Solape para pegar (cm)</span><input id="tb-s" type="number" inputmode="decimal" min="0.5" max="4" step="0.5" value="1"></label>
-      <label class="mz-ctl" for="tb-p"><span>Pestaña de la tapa (cm)</span><input id="tb-p" type="number" inputmode="decimal" min="0.5" max="3" step="0.5" value="1"></label>
-      <label class="mz-ctl" for="tb-d"><span>Diámetro que busco (cm)</span><input id="tb-d" type="number" inputmode="decimal" min="1" max="30" step="0.5" value="5"></label>
-    </div>
-    <svg id="tb-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja con el solape y disco de la base del tubo"></svg>
-    <ul class="mz-res" id="tb-res" aria-live="polite"></ul>
-    <ol>
-      <li>Poné un poco de adhesivo en la franja del solape, enrollá la hoja sin apretar de más y presioná un minuto hasta que agarre.</li>
-      <li>Apoyá el tubo sobre otra hoja, trazá el contorno por dentro y recortá un disco: el disco de la lista deja pestañas para pegar.</li>
-      <li>Cortá cada pestaña con tijera hasta la línea del círculo, doblala hacia arriba y pegala por dentro del tubo. Recién entonces decorá.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: la hoja enrollada forma una circunferencia, y la circunferencia de un círculo es pi por el diámetro (pi vale unos 3,14). Por eso el diámetro es (lado que se enrolla menos solape) dividido pi, y el alto es el otro lado de la hoja. El volumen es pi por el radio al cuadrado por el alto, y un cm³ equivale a un mililitro. Es una cuenta de geometría: el papel se aplasta un poco y el tubo real puede salir unos milímetros distinto. Hacé una prueba con papel borrador antes de usar la hoja buena.</div>
-  </div>
-</section>
-
-<section id="cono-papel" class="mz-sec">
-  <h2>Cono de papel: qué recorte hace falta</h2>
-  <p style="color:var(--muted)">Un gorro, un cucurucho, un sombrero de bruja o la punta de un cohete salen de un recorte con forma de porción de círculo. Elegí el diámetro de la base y el alto del cono: te dice el radio del recorte, el ángulo que se corta, el solape y si entra en la hoja que tenés.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="cn-d"><span>Diámetro de la base (cm)</span><input id="cn-d" type="number" inputmode="decimal" min="2" max="60" step="0.5" value="10"></label>
-      <label class="mz-ctl" for="cn-a"><span>Alto del cono (cm)</span><input id="cn-a" type="number" inputmode="decimal" min="1" max="80" step="0.5" value="15"></label>
-      <label class="mz-ctl" for="cn-s"><span>Solape para pegar (cm)</span><input id="cn-s" type="number" inputmode="decimal" min="0.5" max="4" step="0.5" value="1"></label>
-      <label class="mz-ctl" for="cn-h"><span>Hoja</span><select id="cn-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-    </div>
-    <svg id="cn-svg" viewBox="0 0 320 240" role="img" aria-label="Recorte en forma de porción de círculo para armar un cono"></svg>
-    <ul class="mz-res" id="cn-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá un punto para la punta del cono. Con un hilo o una regla, apoyá una pinza en ese punto y trazá un arco con el radio de la lista.</li>
-      <li>Desde la punta, trazá una recta hasta el arco y medí a lo largo del arco el ángulo (o la longitud de arco) de la lista; trazá la segunda recta. Sumá la franja del solape en una de ellas.</li>
-      <li>Recortá, pegá la franja de solape por dentro y presioná. Si la punta queda abierta, ajustá el pegado hasta que el borde de abajo quede redondo.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: la pared del cono, de la punta al borde, mide la raíz de (radio al cuadrado más alto al cuadrado). Ese es el radio del recorte. El borde de abajo del cono es una circunferencia (pi por el diámetro) y tiene que coincidir con el arco del recorte, por eso el ángulo es 360 por radio de la base, dividido el radio del recorte. El volumen del cono es un tercio de pi por el radio al cuadrado por el alto. Es una cuenta de geometría: el papel real se flexiona y puede variar unos milímetros. Probá primero con papel borrador.</div>
-  </div>
-</section>
-
 <section id="poligono" class="mz-sec">
   <h2>Polígono regular y estrella: cómo trazarlos</h2>
   <p style="color:var(--muted)">Para dibujar un pentágono, un hexágono o una estrella con regla, compás y transportador. Elegí la cantidad de puntas y el radio de la circunferencia: te dice el ángulo entre vértices, la abertura del compás y el largo de cada lado, y dibuja el resultado a escala.</p>
@@ -3575,112 +3296,6 @@ footer a{color:var(--c)}
       <li>Uní los vértices con la regla, saltando de a tantos lugares como elegiste. Borrá con suavidad los auxiliares y repasá.</li>
     </ol>
     <div class="tip">Cómo se calcula: los vértices están repartidos parejo en la circunferencia, así que el ángulo entre dos vértices vecinos es 360 dividido la cantidad de vértices. El lado de un polígono mide 2 por el radio por el seno de la mitad de ese ángulo; con una estrella que salta de a k lugares, la mitad del ángulo es k por 180 dividido n. El ángulo interior de un polígono es 180 menos el ángulo central. Una estrella solo se cierra con una sola línea si n y k no tienen divisores en común (por ejemplo 5 y 2); si los tienen (por ejemplo 6 y 2) salen varias figuras separadas, como la estrella de seis puntas hecha con dos triángulos. Es una cuenta de geometría: al dibujar, el grosor del lápiz suma algún milímetro de error.</div>
-  </div>
-</section>
-
-<section id="marcapaginas" class="mz-sec">
-  <h2>Marcapáginas: cuántos salen de una hoja</h2>
-  <p style="color:var(--muted)">Para recortar marcapáginas, tarjetas largas o etiquetas de un mismo tamaño. Elegí la hoja y la medida de cada pieza: te dice cuántas entran, si conviene girarlas, dónde van los cortes y cuánto papel sobra, y lo dibuja a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="mk-h"><span>Hoja</span><select id="mk-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="mk-w"><span>Ancho de la pieza (cm)</span><input id="mk-w" type="number" inputmode="decimal" min="1" max="40" step="0.5" value="5"></label>
-      <label class="mz-ctl" for="mk-a"><span>Alto de la pieza (cm)</span><input id="mk-a" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="18"></label>
-      <label class="mz-ctl" for="mk-m"><span>Margen de la hoja (cm)</span><input id="mk-m" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0.5"></label>
-      <label class="mz-ctl" for="mk-g"><span>Espacio entre piezas (cm)</span><input id="mk-g" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0"></label>
-    </div>
-    <svg id="mk-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja con las piezas acomodadas a escala"></svg>
-    <ul class="mz-res" id="mk-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá en la hoja el margen en los cuatro lados con regla y lápiz suave; algunas impresoras y cortadoras no llegan al borde.</li>
-      <li>Marcá los cortes de la lista a lo largo del lado donde caben las columnas, y después los cortes del otro lado. Si hay espacio entre piezas, cada pieza lleva dos marcas.</li>
-      <li>Cortá primero las tiras largas con regla y cúter (o guillotina) y después cada tira en piezas. Decorá antes de cortar si el dibujo sigue de una pieza a otra.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: en cada fila entran tantas piezas como veces cabe el ancho de pieza más el espacio en el ancho útil de la hoja (hoja menos dos márgenes, más un espacio porque el último no lleva espacio después). Se prueba con la pieza de pie y con la pieza girada, y se muestra la que da más piezas. Es una cuenta simple de reparto: el papel real puede variar un milímetro y el corte también, por eso conviene dejar un poco de margen y probar con una hoja borrador.</div>
-  </div>
-</section>
-
-<section id="piramide" class="mz-sec">
-  <h2>Pirámide de papel con base cuadrada</h2>
-  <p style="color:var(--muted)">Para hacer una pirámide hueca con una sola hoja: elegí la hoja, el lado de la base y el alto. Te dice si la plantilla entra, el tamaño de las caras, la inclinación y cuántos ml entran, y dibuja la plantilla a escala con los dobleces.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="pi-h"><span>Hoja</span><select id="pi-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="pi-b"><span>Lado de la base (cm)</span><input id="pi-b" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="6"></label>
-      <label class="mz-ctl" for="pi-a"><span>Alto de la pirámide (cm)</span><input id="pi-a" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="6"></label>
-      <label class="mz-ctl" for="pi-s"><span>Solapa para pegar (cm)</span><input id="pi-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
-    </div>
-    <svg id="pi-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla de la pirámide dibujada a escala"></svg>
-    <ul class="mz-res" id="pi-res" aria-live="polite"></ul>
-    <ol>
-      <li>Dibujá en la hoja el cuadrado de la base y, sobre cada lado, un triángulo con esa base y el alto de cara que indica la lista. Dejá la solapa sobre uno de los lados inclinados de un triángulo.</li>
-      <li>Marcá los dobleces del cuadrado con regla y punta seca (un bolígrafo sin tinta) para que doblen derecho, y cortá solo el contorno exterior.</li>
-      <li>Doblá los cuatro triángulos hacia arriba, unilos en la punta y pegá la solapa por dentro. Si la punta no cierra bien, revisá que los cuatro triángulos midan lo mismo.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el alto de cada cara es la raíz de (alto de la pirámide al cuadrado más la mitad de la base al cuadrado), y la arista inclinada es la raíz de (alto al cuadrado más la mitad de la diagonal de la base al cuadrado). La plantilla en cruz mide la base más dos veces el alto de cara. El volumen es base al cuadrado por alto dividido tres, y 1 cm³ equivale a 1 ml. Es una cuenta geométrica simple: el grosor del papel y el pegado restan un poco de precisión.</div>
-  </div>
-</section>
-
-<section id="farolito" class="mz-sec">
-  <h2>Farolito de papel: cuántos cortes y qué diámetro</h2>
-  <p style="color:var(--muted)">Para un farolito con una sola hoja: elegí la hoja, el margen sin cortar arriba y abajo y el ancho de cada tira. Te dice cuántas tiras y cortes salen, cuánto mide cada corte, el diámetro del farolito y dibuja la hoja a escala con los cortes.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="fa-h"><span>Hoja</span><select id="fa-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="fa-m"><span>Margen sin cortar arriba y abajo (cm)</span><input id="fa-m" type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value="2"></label>
-      <label class="mz-ctl" for="fa-w"><span>Ancho de cada tira (cm)</span><input id="fa-w" type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value="2"></label>
-      <label class="mz-ctl" for="fa-s"><span>Solapa para pegar (cm)</span><input id="fa-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
-    </div>
-    <svg id="fa-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja del farolito dibujada a escala con los cortes"></svg>
-    <ul class="mz-res" id="fa-res" aria-live="polite"></ul>
-    <ol>
-      <li>Poné la hoja acostada y doblala a la mitad a lo largo, de modo que el doblez quede en el lado largo. Desde el doblez, hacé los cortes hacia el borde abierto sin llegar al margen indicado.</li>
-      <li>Abrí la hoja, enrollala hasta que los lados cortos se junten y pegá la solapa por dentro.</li>
-      <li>Apretá suavemente desde arriba y desde abajo: las tiras se abomban y forman el farolito. Para el asa, pegá una tira de papel adentro, arriba. Usalo con una luz de pilas, nunca con una llama.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el largo útil es el largo de la hoja menos la solapa. Se divide por el ancho pedido y se redondea para que todas las tiras queden iguales. Los cortes son uno menos que las tiras, porque la última tira se cierra con la primera. Cada corte mide el lado corto menos los dos márgenes. El diámetro es el largo útil dividido por pi. Es una cuenta simple: el grosor del papel resta un poco de precisión.</div>
-  </div>
-</section>
-
-<section id="prisma" class="mz-sec">
-  <h2>Prisma de papel: cuánto mide cada cara</h2>
-  <p style="color:var(--muted)">Una hoja doblada en caras iguales hace una torre o un portalápices con base de 3 a 8 lados. Elegí la hoja, cuántas caras y la solapa: te dice cuánto mide cada cara, dónde van los dobleces, el ancho de la torre y el volumen, y dibuja la hoja y la base a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="pz-h"><span>Hoja</span><select id="pz-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="pz-o"><span>Dar la vuelta por el lado</span><select id="pz-o"><option value="L" selected>Largo (torre más baja)</option><option value="C">Corto (torre más alta)</option></select></label>
-      <label class="mz-ctl" for="pz-n"><span>Cantidad de caras (3 a 8)</span><input id="pz-n" type="number" inputmode="numeric" min="3" max="8" step="1" value="4"></label>
-      <label class="mz-ctl" for="pz-s"><span>Solapa para pegar (cm)</span><input id="pz-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
-    </div>
-    <svg id="pz-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja del prisma dibujada a escala con los dobleces"></svg>
-    <ul class="mz-res" id="pz-res" aria-live="polite"></ul>
-    <ol>
-      <li>Marcá con lápiz suave los dobleces a la distancia indicada, medida desde un borde de la hoja, y repasalos con el filo de una regla para marcarlos bien.</li>
-      <li>Doblá cada línea hacia el mismo lado, abrí la hoja y cerrala en forma de prisma.</li>
-      <li>Pegá la solapa por dentro. Para una tapa o una base, trazá el polígono regular del mismo lado que una cara (mirá la herramienta de polígonos) y pegalo con pestañas.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el largo que se enrolla, menos la solapa, se reparte en tantas caras iguales como lados tenga la base. Con el lado de la cara a, el ancho entre caras opuestas es a / tan(180 / n) y el círculo que rodea la base tiene diámetro a / sen(180 / n). Con la base en cm² por el alto sale el volumen. Con una cantidad impar de caras no hay caras opuestas: se mide desde una cara hasta el vértice de enfrente.</div>
-  </div>
-</section>
-
-<section id="gajos" class="mz-sec">
-  <h2>Esfera de papel con gajos: cómo es cada gajo</h2>
-  <p style="color:var(--muted)">Un globo, una farola o una base para papel maché se arma con tiras que van de un polo al otro, como los gajos de una naranja. Elegí el diámetro y cuántos gajos: te dice cuánto mide cada gajo, qué ancho tiene en cada punto, cuántos entran en la hoja y dibuja la plantilla a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="gj-h"><span>Hoja</span><select id="gj-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="gj-d"><span>Diámetro de la esfera (cm)</span><input id="gj-d" type="number" inputmode="decimal" min="3" max="60" step="0.5" value="10"></label>
-      <label class="mz-ctl" for="gj-n"><span>Cantidad de gajos (4 a 24)</span><input id="gj-n" type="number" inputmode="numeric" min="4" max="24" step="1" value="8"></label>
-      <label class="mz-ctl" for="gj-s"><span>Solapa en un borde (cm)</span><input id="gj-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0.5"></label>
-    </div>
-    <svg id="gj-svg" viewBox="0 0 320 170" role="img" aria-label="Plantilla de un gajo dibujada a escala"></svg>
-    <ul class="mz-res" id="gj-res" aria-live="polite"></ul>
-    <ol>
-      <li>Dibujá una línea recta del largo indicado y marcá en ella el punto medio y los cuartos. Por cada marca, trazá hacia los dos lados la mitad del ancho que indica la lista.</li>
-      <li>Unís los puntos con una curva suave que se cierre en una punta arriba y otra abajo, y recortá ese gajo. Usalo de molde para repetirlo tantas veces como gajos elegiste.</li>
-      <li>Pegá los gajos de borde a borde, de a uno, con la solapa por dentro. Si te sobra o te falta un poquito en el cierre, repartí la diferencia entre todos los bordes.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: de polo a polo hay media vuelta, es decir pi por el diámetro dividido 2. El ancho de un gajo en cada punto es la vuelta completa de ese paralelo (pi por el diámetro por el seno del ángulo desde el polo) dividida por la cantidad de gajos, así que es máximo en el medio y nulo en las puntas. Es un cálculo para papel que se estira poco: con pocos gajos la esfera sale más facetada. La cuenta de gajos por hoja usa el rectángulo que ocupa cada gajo, sin encajar uno con la punta del otro, así que en la práctica puede entrar alguno más.</div>
   </div>
 </section>
 
@@ -3703,27 +3318,6 @@ footer a{color:var(--c)}
       <li>Cuando lleves la mitad de las sesiones, volvé a calcular con las horas que realmente te llevó y corregí la fecha.</li>
     </ol>
     <div class="tip">Cómo se calcula: sesiones = horas por 60 dividido los minutos de cada sesión, redondeado hacia arriba. Con el margen, se suma ese porcentaje de sesiones extra. Las sesiones de cada semana se reparten parejas a lo largo de los siete días, empezando en la fecha elegida. Es una estimación para ordenarte, no una promesa.</div>
-  </div>
-</section>
-
-<section id="copo" class="mz-sec">
-  <h2>Copo de papel: cuánto mide cada sector</h2>
-  <p style="color:var(--muted)">Un copo de nieve, una carpetita o un papel picado se hace doblando un círculo en sectores iguales y recortando. Elegí la hoja y cuántas puntas querés: te dice de qué diámetro cortar el círculo, cuánto mide el sector, cuántas capas quedan y qué ancho puede tener cada corte sin que el copo se parta, con un dibujo a escala.</p>
-  <div class="card">
-    <div class="mz-two">
-      <label class="mz-ctl" for="cpo-h"><span>Hoja</span><select id="cpo-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
-      <label class="mz-ctl" for="cpo-k"><span>Puntas del copo</span><select id="cpo-k"><option value="4">4 puntas (45°)</option><option value="6" selected>6 puntas (30°)</option><option value="8">8 puntas (22,5°)</option></select></label>
-      <label class="mz-ctl" for="cpo-d"><span>Diámetro del círculo (cm, 0 = el mayor que entra)</span><input id="cpo-d" type="number" inputmode="decimal" min="0" max="70" step="0.5" value="0"></label>
-      <label class="mz-ctl" for="cpo-b"><span>Puente mínimo sin cortar (mm)</span><input id="cpo-b" type="number" inputmode="decimal" min="1" max="10" step="0.5" value="3"></label>
-    </div>
-    <svg id="cpo-svg" viewBox="0 0 320 200" role="img" aria-label="Sector del copo dibujado a escala"></svg>
-    <ul class="mz-res" id="cpo-res" aria-live="polite"></ul>
-    <ol>
-      <li>Trazá el círculo con compás (o con un plato) y recortalo. Marcá el centro con un puntito.</li>
-      <li>Doblá a la mitad, siempre llevando el centro a la punta del doblez. Con 4 puntas: mitad, mitad y mitad otra vez. Con 8: cuatro veces a la mitad. Con 6: una mitad, después en tres partes iguales (como una carta, a ojo) y por último una mitad más.</li>
-      <li>Recortá desde los bordes, sin pasarte del puente mínimo, y dejá algún corte que toque cada doblez para que el copo se abra en una pieza. Desplegá con cuidado y planchá con un libro encima.</li>
-    </ol>
-    <div class="tip">Cómo se calcula: el sector mide 180° dividido las puntas. A una distancia r del centro, el ancho del sector doblado es 2 por r por la tangente de la mitad del ángulo, y de ese ancho se resta el puente de cada lado para saber cuánto puede abrir un corte. Las capas son el doble de las puntas: con 16 capas conviene papel fino (de 60 a 70 g) y tijera bien afilada. Los círculos por hoja se cuentan acomodados en grilla, sin aprovechar los huecos.</div>
   </div>
 </section>
 
@@ -7161,12 +6755,13 @@ footer a{color:var(--c)}
   var box=document.getElementById('toc-box'),q=document.getElementById('toc-q'),none=document.getElementById('toc-none');
   if(!box||!q)return;
   var links=[].slice.call(box.querySelectorAll('nav.toc a'));
+  function hid(a){var h=a.getAttribute('href')||'';return h.slice(h.indexOf('#')+1)}
   var FKEY='tp-favoritas-v1',favs=[],favBox=document.getElementById('toc-favs'),favList=document.getElementById('toc-favs-list');
   try{var fv=JSON.parse(localStorage.getItem(FKEY)||'[]');if(Array.isArray(fv))favs=fv.filter(function(x){return typeof x==='string'})}catch(e){}
   function saveFavs(){try{localStorage.setItem(FKEY,JSON.stringify(favs))}catch(e){}}
   var wraps={},stars={};
   links.forEach(function(a){
-    var id=(a.getAttribute('href')||'').slice(1),w=document.createElement('span'),b=document.createElement('button');
+    var id=hid(a),w=document.createElement('span'),b=document.createElement('button');
     w.className='toc-item';a.parentNode.insertBefore(w,a);w.appendChild(a);
     b.type='button';b.className='toc-star';b.setAttribute('data-id',id);
     b.addEventListener('click',function(){var i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);saveFavs();renderFavs()});
@@ -7175,14 +6770,14 @@ footer a{color:var(--c)}
   function renderFavs(){
     var ok=favs.filter(function(id){return wraps[id]});
     links.forEach(function(a){
-      var id=(a.getAttribute('href')||'').slice(1),on=ok.indexOf(id)>-1,b=stars[id],t=a.textContent.trim();
+      var id=hid(a),on=ok.indexOf(id)>-1,b=stars[id],t=a.textContent.trim();
       b.textContent=on?'\u2605':'\u2606';b.setAttribute('aria-pressed',on?'true':'false');
       b.setAttribute('aria-label',(on?'Quitar de Mis herramientas: ':'Agregar a Mis herramientas: ')+t);
     });
     favList.textContent='';
     ok.forEach(function(id){
       var src=wraps[id].querySelector('a'),c=document.createElement('a');
-      c.href='#'+id;c.textContent=src.textContent;
+      c.href=src.getAttribute('href');c.textContent=src.textContent;
       c.addEventListener('click',function(){if(window.matchMedia&&window.matchMedia('(max-width:699px)').matches)box.open=false});
       favList.appendChild(c);
     });
@@ -7193,7 +6788,7 @@ footer a{color:var(--c)}
   if(window.matchMedia&&window.matchMedia('(min-width:700px)').matches)box.open=true;
   function norm(t){return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
   var clr=document.getElementById('toc-clear'),cnt=document.getElementById('toc-count');
-  var secs=links.map(function(a){var id=(a.getAttribute('href')||'').slice(1),s=document.getElementById(id),h=s&&s.querySelector('h2');return {a:a,s:s,t:norm(a.textContent+' '+(h?h.textContent:''))}});
+  var secs=links.map(function(a){var id=hid(a),s=document.getElementById(id),h=s&&s.querySelector('h2');return {a:a,s:s,t:norm(a.textContent+' '+(h?h.textContent:(a.getAttribute('data-t')||'')))}});
   var CATS={
     color:'tarjetas mezclador rueda paleta-foto valores escala-color contraste temperatura mezcla-optica residual ojo-color ojo-valor ojo-grises daltonismo degrade regla-60-30-10 contraste-cartel',
     dibujo:'cuadricula composicion contorno perspectiva simetria mosaico luz-sombra a-ciegas rostro tramas miniaturas figura volumenes puntos silueta entrecerrar garabato al-reves linea-continua calentamiento gestos memoria angulos proporciones punto-medio circulo-mano escala-lapices sombra-proyectada horizonte medir-lapiz ampliar-reducir dividir-circulo dividir-linea poligono renglones guarda',
@@ -7204,11 +6799,11 @@ footer a{color:var(--c)}
   Object.keys(CATS).forEach(function(k){CATS[k].split(' ').forEach(function(id){catOf[id]=k})});
   function catFor(id){return catOf[id]||(id.indexOf('ojo-')===0?'dibujo':'otros')}
   var cat='',cbtns=[].slice.call(document.querySelectorAll('#toc-cats .toc-cat'));
-  secs.forEach(function(o){o.c=catFor((o.a.getAttribute('href')||'').slice(1));o.a.setAttribute('data-cat',o.c)});
+  secs.forEach(function(o){o.c=catFor(hid(o.a));o.a.setAttribute('data-cat',o.c)});
   function filter(){
     var v=norm(q.value.trim()),n=0,on=!!v||!!cat;
     document.body.classList.toggle('toc-filtering',on);
-    secs.forEach(function(o){var ok=(!v||o.t.indexOf(v)>-1)&&(!cat||o.c===cat);o.a.hidden=!ok;wraps[(o.a.getAttribute('href')||'').slice(1)].hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
+    secs.forEach(function(o){var ok=(!v||o.t.indexOf(v)>-1)&&(!cat||o.c===cat);o.a.hidden=!ok;wraps[hid(o.a)].hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
     none.hidden=n>0;clr.hidden=!on;
     cnt.textContent=on?(n+(n===1?' resultado':' resultados')+' de '+links.length):'';
     if(on&&n)box.open=true;
@@ -8380,43 +7975,6 @@ footer a{color:var(--c)}
 </script>
 <script>
 (function(){
-  var KEY="tp-cuaderno-cosido-v1",$=function(i){return document.getElementById(i)},ids=["cq-f","cq-p","cq-m"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i]}})}catch(e){}
-  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function f(x,d){return x.toFixed(d).replace(".",",")}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function calc(){
-    var wh=$("cq-f").value.split(",").map(parseFloat),w=wh[0],h=wh[1];
-    var pg=Math.round(val("cq-p",4,200,24)),mh=Math.round(val("cq-m",1,8,3));
-    var tot=Math.ceil(pg/4)*4,hojas=tot/4,cuad=Math.ceil(hojas/mh),ph=h/2,pa=Math.min(w,ph),pb=Math.max(w,ph);
-    var rows=[["Páginas (múltiplo de 4)",tot+(tot>pg?" ("+(tot-pg)+" en blanco)":"")],["Hojas para cortar",String(hojas)],["Cuadernillos",cuad+(cuad>1?(hojas-(cuad-1)*mh===mh?" (de "+mh+" hojas cada uno)":" (de "+mh+" hojas, el último con "+(hojas-(cuad-1)*mh)+")"):" de "+hojas+" hoja"+(hojas>1?"s":""))],["Tamaño de la página",f(pa,1)+" x "+f(pb,1)+" cm"],["Hojas sin doblar",f(w,1)+" x "+f(h,1)+" cm"]];
-    var ul=$("cq-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
-    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),b=document.createElement("b");p.textContent=x[0];b.textContent=x[1];li.appendChild(p);li.appendChild(b);ul.appendChild(li)});
-    var svg=$("cq-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
-    var sc=Math.min(190/w,100/h),W=w*sc,H=h*sc,x0=10,y0=(120-H)/2;
-    svg.appendChild(el("rect",{x:x0,y:y0,width:W,height:H,fill:"none",stroke:"#e8eaed","stroke-width":2}));
-    svg.appendChild(el("line",{x1:x0,y1:y0+H/2,x2:x0+W,y2:y0+H/2,stroke:"#2fbf71","stroke-width":2,"stroke-dasharray":"5 3"}));
-    var x1=x0+W+30;
-    svg.appendChild(el("rect",{x:x1,y:y0,width:W,height:H/2,fill:"#2fbf7133",stroke:"#2fbf71","stroke-width":2}));
-    var a=el("text",{x:x0,y:Math.max(12,y0-4),fill:"#9aa3ad","font-size":11,"text-anchor":"start"});a.textContent="hoja (pliegue en verde)";svg.appendChild(a);
-    var b=el("text",{x:x1+W/2,y:y0+H/2+13,fill:"#9aa3ad","font-size":11,"text-anchor":"middle"});b.textContent="página";svg.appendChild(b);
-    var tb=$("cq-tab");while(tb.firstChild)tb.removeChild(tb.firstChild);
-    var n=Math.min(mh,hojas),T=n*4;
-    var hd=document.createElement("tr");["Hoja","Un lado","Otro lado"].forEach(function(x){var th=document.createElement("th");th.textContent=x;hd.appendChild(th)});tb.appendChild(hd);
-    for(var k=1;k<=n;k++){
-      var tr=document.createElement("tr");
-      [String(k),(T-2*(k-1))+" y "+(2*k-1),(2*k)+" y "+(T-2*k+1)].forEach(function(x){var td=document.createElement("td");td.textContent=x;tr.appendChild(td)});
-      tb.appendChild(tr);
-    }
-    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
   var KEY="tp-daltonismo-v1",$=function(i){return document.getElementById(i)};
   var HEX=/^#[0-9a-fA-F]{6}$/,IDS=["dt-c0","dt-c1","dt-c2","dt-c3"];
   var M=[["Visión normal",null],
@@ -8540,39 +8098,6 @@ footer a{color:var(--c)}
     }
     svg.appendChild(g);
     svg.appendChild(el("rect",{x:x0,y:y0,width:W*sc,height:H*sc,fill:"none",stroke:"#e8eaed","stroke-width":2}));
-    try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-sobre-v1",$=function(i){return document.getElementById(i)},ids=["sb-w","sb-h","sb-g","sb-f","sb-s"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).value!==t[i]&&$(i).tagName==="SELECT")$(i).selectedIndex=0}})}catch(e){}
-  function val(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function f(x,d){return x.toFixed(d).replace(".",",")}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function fit(A,B,w,h){return Math.floor(A/w+1e-9)*Math.floor(B/h+1e-9)}
-  function calc(){
-    var W=val("sb-w",3,40,10.5),H=val("sb-h",3,40,14.8),g=val("sb-g",0,3,0.3),sf=val("sb-f",1,8,2);
-    var sp=$("sb-s").value.split(","),A=parseFloat(sp[0]),B=parseFloat(sp[1]);
-    var w=W+2*g,h=H+2*g,bf=0.6*h,tf=0.4*w,BW=w+2*sf,BH=tf+h+bf;
-    var n1=fit(A,B,BW,BH),n2=fit(A,B,BH,BW),n=Math.max(n1,n2);
-    var rows=[["Interior del sobre",f(w,1)+" x "+f(h,1)+" cm"],["Plantilla (rectángulo que la encierra)",f(BW,1)+" x "+f(BH,1)+" cm"],["Solapas","laterales "+f(sf,1)+" cm, inferior "+f(bf,1)+" cm, superior "+f(tf,1)+" cm"],["Sobres por hoja",n>0?String(n)+(n2>n1?" (con la plantilla acostada)":""):"No entra"]];
-    if(n===0)rows.push(["Aviso","La plantilla es más grande que la hoja: probá una hoja mayor o una solapa lateral más angosta."]);
-    var ul=$("sb-res");while(ul.firstChild)ul.removeChild(ul.firstChild);
-    rows.forEach(function(x){var li=document.createElement("li"),p=document.createElement("span"),b=document.createElement("b");p.textContent=x[0];b.textContent=x[1];li.appendChild(p);li.appendChild(b);ul.appendChild(li)});
-    var svg=$("sb-svg");while(svg.firstChild)svg.removeChild(svg.firstChild);
-    var sc=Math.min(290/BW,215/BH),x0=(320-BW*sc)/2,y0=(240-BH*sc)/2;
-    function X(v){return (x0+v*sc).toFixed(1)}function Y(v){return (y0+v*sc).toFixed(1)}
-    var pts=[[sf,0],[sf+w/2,0],[sf+w,tf],[sf+w,tf],[BW,tf],[BW,tf+h],[sf+w,tf+h],[sf+w,BH],[sf,BH],[sf,tf+h],[0,tf+h],[0,tf],[sf,tf]];
-    pts[0]=[sf+w/2,0];pts.splice(1,2);
-    var d="M"+pts.map(function(p){return X(p[0])+" "+Y(p[1])}).join(" L")+" Z";
-    svg.appendChild(el("path",{d:d,fill:"#2fbf7133",stroke:"#2fbf71","stroke-width":2,"stroke-linejoin":"round"}));
-    [[[sf,tf],[sf,tf+h]],[[sf+w,tf],[sf+w,tf+h]],[[sf,tf+h],[sf+w,tf+h]],[[sf,tf],[sf+w,tf]]].forEach(function(l){svg.appendChild(el("line",{x1:X(l[0][0]),y1:Y(l[0][1]),x2:X(l[1][0]),y2:Y(l[1][1]),stroke:"#e8eaed","stroke-width":1.2,"stroke-dasharray":"4 3"}))});
-    var tx=el("text",{x:X(sf+w/2),y:Y(tf+h/2),fill:"#e8eaed","font-size":11,"text-anchor":"middle"});tx.textContent="tarjeta "+f(W,1)+" x "+f(H,1);svg.appendChild(tx);
     try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
@@ -8819,139 +8344,6 @@ footer a{color:var(--c)}
 </script>
 <script>
 (function(){
-  var KEY="tp-minilibro-v1",$=function(i){return document.getElementById(i)},ids=["mz-h","mz-m"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function calc(){
-    var p=$("mz-h").value.split(","),W=parseFloat(p[0]),H=parseFloat(p[1]),nom=p[2];
-    var m=parseFloat(String($("mz-m").value).replace(",","."));if(!isFinite(m))m=0.5;m=Math.min(2,Math.max(0,m));
-    var pw=W/4,ph=H/2,uw=pw-2*m,uh=ph-2*m;
-    var svg=$("mz-svg"),ul=$("mz-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var sc=Math.min(300/W,160/H),x0=(320-W*sc)/2,y0=(180-H*sc)/2,top=[5,4,3,2],bot=[6,7,8,1];
-    for(var r=0;r<2;r++)for(var c=0;c<4;c++){
-      var n=r===0?top[c]:bot[c],x=x0+c*pw*sc,y=y0+r*ph*sc;
-      svg.appendChild(el("rect",{x:x.toFixed(2),y:y.toFixed(2),width:(pw*sc).toFixed(2),height:(ph*sc).toFixed(2),fill:n===1?"#2fbf71":((r+c)%2?"#1a7f4b":"#2c9c60"),stroke:"#14161a","stroke-width":0.5}));
-      var cx=x+pw*sc/2,cy=y+ph*sc/2+5,tx=el("text",{x:cx.toFixed(2),y:cy.toFixed(2),"text-anchor":"middle","font-size":16,"font-weight":700,fill:"#ffffff"});
-      if(r===0)tx.setAttribute("transform","rotate(180 "+cx.toFixed(2)+" "+(y+ph*sc/2).toFixed(2)+")");
-      tx.textContent=String(n);svg.appendChild(tx);
-    }
-    svg.appendChild(el("line",{x1:(x0+pw*sc).toFixed(2),y1:(y0+ph*sc).toFixed(2),x2:(x0+3*pw*sc).toFixed(2),y2:(y0+ph*sc).toFixed(2),stroke:"#ffc23d","stroke-width":2,"stroke-dasharray":"4 3"}));
-    row("Hoja",nom+" apaisada, "+f(W,1)+" x "+f(H,1)+" cm");
-    row("Cada página",f(pw,2)+" x "+f(ph,2)+" cm");
-    row("Zona de dibujo con margen",uw>0&&uh>0?f(uw,2)+" x "+f(uh,2)+" cm":"Sin lugar: achicá el margen");
-    row("Proporción de la página (ancho : alto)",f(pw/ph,2)+" : 1");
-    row("Largo del corte",f(W/2,1)+" cm, centrado sobre el pliegue del medio");
-    row("Páginas boca abajo en la hoja","2, 3, 4 y 5");
-    svg.setAttribute("aria-label","Hoja "+nom+" desplegada: arriba, boca abajo, las páginas 5, 4, 3 y 2; abajo 6, 7, 8 y 1; el corte va en el centro");
-    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-acordeon-v1",$=function(i){return document.getElementById(i)},ids=["ac-h","ac-k","ac-s","ac-n"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var p=$("ac-h").value.split(","),W=parseFloat(p[0]),H=parseFloat(p[1]),nom=p[2];
-    var k=num("ac-k",1,4,1,true),s=num("ac-s",0.5,3,1,false),n=num("ac-n",2,16,6,true);
-    var L=k*W-(k-1)*s,pw=L/n;
-    var svg=$("ac-svg"),ul=$("ac-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var sc=Math.min(300/L,80/H),x0=(320-L*sc)/2,y0=(110-H*sc)/2;
-    for(var i=0;i<n;i++){
-      svg.appendChild(el("rect",{x:(x0+i*pw*sc).toFixed(2),y:y0.toFixed(2),width:(pw*sc).toFixed(2),height:(H*sc).toFixed(2),fill:i===0?"#2fbf71":(i%2?"#1a7f4b":"#2c9c60"),stroke:"#14161a","stroke-width":0.4}));
-      if(pw*sc>9){var tx=el("text",{x:(x0+(i+0.5)*pw*sc).toFixed(2),y:(y0+H*sc/2+4).toFixed(2),"text-anchor":"middle","font-size":Math.min(12,pw*sc*0.6).toFixed(1),"font-weight":700,fill:"#ffffff"});tx.textContent=String(i+1);svg.appendChild(tx)}
-    }
-    var lejos=0,cer=[];
-    for(var j=1;j<k;j++){
-      var xj=j*(W-s),xe=xj+s,xe0=xj;
-      svg.appendChild(el("rect",{x:(x0+xe0*sc).toFixed(2),y:y0.toFixed(2),width:(s*sc).toFixed(2),height:(H*sc).toFixed(2),fill:"#ffc23d","fill-opacity":0.55}));
-      var d=Math.min(Math.abs(xe0/pw-Math.round(xe0/pw)),Math.abs(xe/pw-Math.round(xe/pw)))*pw;
-      cer.push(d);if(d>pw/4)lejos++;
-    }
-    row("Hoja",nom+" apaisada, "+f(W,1)+" x "+f(H,1)+" cm");
-    row("Largo de la tira",f(L,1)+" cm"+(k>1?" ("+k+" hojas con "+f(s,1)+" cm de solape)":""));
-    row("Cada panel",f(pw,2)+" x "+f(H,1)+" cm");
-    row("Proporción del panel (ancho : alto)",f(pw/H,2)+" : 1");
-    row("Pliegues",(n-1)+", a "+f(pw,2)+" cm uno del otro");
-    row("Caras para dibujar",(2*n)+" (frente y dorso, "+n+" por lado)");
-    row("Libro cerrado",f(pw,2)+" x "+f(H,1)+" cm");
-    if(pw<2)row("Aviso","Paneles muy angostos: pocos paneles o más hojas");
-    if(lejos>0)row("Aviso","Una pegadura cae lejos de un pliegue: probá otro solape o otra cantidad de paneles");
-    var lis=[];for(var q=1;q<n;q++)lis.push(f(q*pw,1));
-    row("Pliegues desde el borde izquierdo (cm)",lis.join(", "));
-    svg.setAttribute("aria-label","Tira de "+f(L,1)+" por "+f(H,1)+" cm dividida en "+n+" paneles de "+f(pw,2)+" cm");
-    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-guirnalda-v1",$=function(i){return document.getElementById(i)},ids=["gu-h","gu-o","gu-w","gu-s","gu-l","gu-c"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg",COL=["#2fbf71","#ffc23d","#4aa3ff","#ff6b81"];
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def,int){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;if(int)v=Math.round(v);return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var p=$("gu-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]),nom=p[2];
-    var largo=$("gu-o").value!=="corto";
-    var w=num("gu-w",1,6,2,false),s=num("gu-s",0.5,3,1,false),G=num("gu-l",20,2000,200,true),nc=num("gu-c",1,4,2,true);
-    var L=largo?A:B,T=largo?B:A;
-    var svg=$("gu-svg"),ul=$("gu-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var per=Math.floor(T/w+1e-9),sob=T-per*w;
-    var c=L-s,paso=c/2-w;
-    if(per<1||paso<=0.5){
-      row("Aviso","Con esas medidas no se arma una cadena: probá una tira más angosta o cortar a lo largo de la hoja");
-      return;
-    }
-    var n=Math.max(1,Math.ceil((G-w)/paso));
-    var hojas=Math.ceil(n/per),real=n*paso+w;
-    var sc=Math.min(300/L,130/T),x0=(320-L*sc)/2,y0=(150-T*sc)/2;
-    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(L*sc).toFixed(2),height:(T*sc).toFixed(2),fill:"#2a2d33",stroke:"#8a8f98","stroke-width":0.6}));
-    for(var i=0;i<per;i++){
-      svg.appendChild(el("rect",{x:x0.toFixed(2),y:(y0+i*w*sc).toFixed(2),width:(L*sc).toFixed(2),height:(w*sc).toFixed(2),fill:COL[i%nc],"fill-opacity":0.85,stroke:"#14161a","stroke-width":0.4}));
-    }
-    var ov=el("rect",{x:(x0+L*sc-s*sc).toFixed(2),y:y0.toFixed(2),width:(s*sc).toFixed(2),height:(per*w*sc).toFixed(2),fill:"#ffffff","fill-opacity":0.35});
-    svg.appendChild(ov);
-    row("Hoja",nom+(largo?", tiras a lo largo":", tiras a lo ancho")+" ("+f(L,1)+" cm de largo de tira)");
-    row("Tiras por hoja",per+" de "+f(w,1)+" cm"+(sob>0.05?" (sobran "+f(sob,1)+" cm de ancho)":""));
-    row("Aro de cada anillo","perímetro "+f(c,1)+" cm, diámetro unos "+f(c/Math.PI,1)+" cm");
-    row("Cada eslabón suma","unos "+f(paso,1)+" cm");
-    row("Anillos necesarios",String(n));
-    row("Hojas necesarias",hojas+(hojas===1?" hoja":" hojas")+" ("+(hojas*per-n)+" tiras de sobra)");
-    if(nc>1){
-      var pc=[],q;for(q=0;q<nc;q++)pc.push(Math.floor(n/nc)+(q<n%nc?1:0));
-      var hc=pc.map(function(a){return Math.ceil(a/per)});
-      row("Por color",pc.map(function(a,j){return "color "+(j+1)+": "+a+" anillos"}).join(", "));
-      row("Hojas por color",hc.map(function(a,j){return "color "+(j+1)+": "+a}).join(", ")+" (si se compra por color)");
-    }
-    row("Largo estimado",f(real,0)+" cm (pedido: "+f(G,0)+" cm)");
-    if(w>c/6)row("Aviso","Tira ancha para ese aro: la cadena queda rígida y se enlaza con dificultad");
-    svg.setAttribute("aria-label","Hoja "+nom+" dividida en "+per+" tiras de "+f(w,1)+" cm para anillos");
-    try{var ob={};ids.forEach(function(i){ob[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
   var KEY="tp-cuadros-pared-v1",$=function(i){return document.getElementById(i)},ids=["qp-p","qp-n","qp-w","qp-a","qp-g","qp-c","qp-d"];
   try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!=="")$(i).value=t[i]})}catch(e){}
   var NS="http://www.w3.org/2000/svg";
@@ -9089,56 +8481,6 @@ footer a{color:var(--c)}
 </script>
 <script>
 (function(){
-  var KEY="tp-caja-hoja-v1",$=function(i){return document.getElementById(i)},ids=["cj-h","cj-a","cj-b","cj-c"];
-  try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!==""){$(i).value=t[i];if($(i).tagName==="SELECT"&&$(i).value!==t[i])$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function hoja(){
-    var v=$("cj-h").value;
-    if(v==="otra")return [num("cj-a",8,100,30),num("cj-b",8,100,20)];
-    var p=v.split(",");return [parseFloat(p[0]),parseFloat(p[1])];
-  }
-  function best(A,B){return (A+B-Math.sqrt(A*A-A*B+B*B))/6}
-  function vol(A,B,c){return (A-2*c)*(B-2*c)*c}
-  function calc(){
-    var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]);
-    var c=num("cj-c",0.5,40,4);
-    var svg=$("cj-svg"),ul=$("cj-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var cm=best(A,B);
-    if(2*c>=B-0.4){
-      row("Aviso","Con un cuadrado de "+f(c,1)+" cm no queda base: tiene que ser menor que "+f((B-0.4)/2,1)+" cm para esta hoja");
-      svg.setAttribute("aria-label","Sin plantilla: el corte es demasiado grande");
-      return;
-    }
-    var bl=A-2*c,ba=B-2*c,v=vol(A,B,c),vm=vol(A,B,cm);
-    var sc=Math.min(290/A,210/B),x0=(320-A*sc)/2,y0=(240-B*sc)/2;
-    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(A*sc).toFixed(2),height:(B*sc).toFixed(2),fill:"#2fbf71","fill-opacity":0.8,stroke:"#14161a","stroke-width":0.8}));
-    var cs=c*sc,cx=[x0,x0+A*sc-cs],cy=[y0,y0+B*sc-cs],ii,jj;
-    for(ii=0;ii<2;ii++)for(jj=0;jj<2;jj++)svg.appendChild(el("rect",{x:cx[ii].toFixed(2),y:cy[jj].toFixed(2),width:cs.toFixed(2),height:cs.toFixed(2),fill:"#14161a",stroke:"#8a8f98","stroke-width":0.6}));
-    svg.appendChild(el("rect",{x:(x0+cs).toFixed(2),y:(y0+cs).toFixed(2),width:(bl*sc).toFixed(2),height:(ba*sc).toFixed(2),fill:"none",stroke:"#14161a","stroke-width":1.2,"stroke-dasharray":"5 3"}));
-    var t1=el("text",{x:(160).toFixed(0),y:(y0+cs+ba*sc/2+4).toFixed(2),"text-anchor":"middle","font-size":11,fill:"#14161a","font-weight":700});t1.textContent="base "+f(bl,1)+" x "+f(ba,1)+" cm";svg.appendChild(t1);
-    var t2=el("text",{x:(160).toFixed(0),y:Math.min(236,y0+B*sc+11).toFixed(2),"text-anchor":"middle","font-size":9,fill:"#c9ced6"});t2.textContent="hoja "+f(A,1)+" x "+f(B,1)+" cm";svg.appendChild(t2);
-    row("Caja armada","base de "+f(bl,1)+" por "+f(ba,1)+" cm y "+f(c,1)+" cm de alto");
-    row("Cuánto le entra",f(v,0)+" cm³ ("+f(v/1000,2)+" litros)");
-    row("Papel que se usa",f(A*B-4*c*c,0)+" cm² de "+f(A*B,0)+" cm² ("+f(100*(1-4*c*c/(A*B)),0)+" % de la hoja)");
-    row("Dobleces","dos de "+f(bl,1)+" cm y dos de "+f(ba,1)+" cm");
-    row("Corte de mayor volumen",f(cm,1)+" cm, que da "+f(vm,0)+" cm³ ("+f(vm/1000,2)+" litros)");
-    if(c>cm*1.5)row("Aviso","Con un corte tan grande la caja queda baja y ancha de más: probá cerca de "+f(cm,1)+" cm");
-    else if(c<cm*0.5)row("Aviso","Con un corte tan chico la caja queda muy baja: probá cerca de "+f(cm,1)+" cm");
-    svg.setAttribute("aria-label","Plantilla de una hoja de "+f(A,1)+" por "+f(B,1)+" cm con esquinas de "+f(c,1)+" cm recortadas");
-    try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  $("cj-opt").addEventListener("click",function(){var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]);$("cj-c").value=(Math.round(best(A,B)*10)/10).toString();calc()});
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
   var KEY="tp-tela-bastidor-v1",$=function(i){return document.getElementById(i)},ids=["tl-w","tl-a","tl-d","tl-m","tl-n","tl-r"];
   try{var t=JSON.parse(localStorage.getItem(KEY)||"{}");if(t&&typeof t==="object")ids.forEach(function(i){if(typeof t[i]==="string"&&t[i]!=="")$(i).value=t[i]})}catch(e){}
   var NS="http://www.w3.org/2000/svg";
@@ -9174,57 +8516,6 @@ footer a{color:var(--c)}
     if(d<1)row("Aviso","Un canto de menos de 1 cm es muy fino: revisá la profundidad de su bastidor");
     try{var ob={};ids.forEach(function(q){ob[q]=$(q).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-cubo-hoja-v1",$=function(i){return document.getElementById(i)},ids=["cb-h","cb-a","cb-b","cb-s","cb-t"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function hoja(){var v=$("cb-h").value;if(v==="otra")return [num("cb-a",5,150,30),num("cb-b",5,150,20)];var p=v.split(",");return [parseFloat(p[0]),parseFloat(p[1])]}
-  function maxLado(A,B,t){return Math.max(0,Math.max(Math.min((A-2*t)/4,(B-2*t)/3),Math.min((B-2*t)/4,(A-2*t)/3)))}
-  function calc(){
-    var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]),s=num("cb-s",1,40,5),t=num("cb-t",0,3,1);
-    var svg=$("cb-svg"),ul=$("cb-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var mx=maxLado(A,B,t);
-    var fitH=(4*s+2*t<=A+1e-9&&3*s+2*t<=B+1e-9),fitV=(4*s+2*t<=B+1e-9&&3*s+2*t<=A+1e-9);
-    var acost=fitH||!fitV; /* hoja acostada: cruz de 4 de largo sobre el lado largo */
-    var HW=acost?A:B,HH=acost?B:A;
-    var sc=Math.min(300/HW,210/HH),x0=(320-HW*sc)/2,y0=(240-HH*sc)/2;
-    svg.appendChild(el("rect",{x:x0.toFixed(2),y:y0.toFixed(2),width:(HW*sc).toFixed(2),height:(HH*sc).toFixed(2),fill:"#2a2e35",stroke:"#8a8f98","stroke-width":1}));
-    var fits=fitH||fitV;
-    if(fits){
-      var cx=x0+(HW-4*s)/2*sc,cy=y0+(HH-3*s)/2*sc,q=s*sc,i;
-      var cuad=[[0,1],[1,1],[2,1],[3,1],[1,0],[1,2]];
-      for(i=0;i<cuad.length;i++){
-        svg.appendChild(el("rect",{x:(cx+cuad[i][0]*q).toFixed(2),y:(cy+cuad[i][1]*q).toFixed(2),width:q.toFixed(2),height:q.toFixed(2),fill:i<4?"#2fbf71":"#58d68d","fill-opacity":0.8,stroke:"#14161a","stroke-width":1,"stroke-dasharray":"3 2"}))}
-      svg.appendChild(el("rect",{x:(x0+t*sc).toFixed(2),y:(y0+t*sc).toFixed(2),width:((HW-2*t)*sc).toFixed(2),height:((HH-2*t)*sc).toFixed(2),fill:"none",stroke:"#c9ced6","stroke-width":0.8,"stroke-dasharray":"2 3"}));
-    }
-    var tt=el("text",{x:160,y:12,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="hoja "+f(HW,1)+" x "+f(HH,1)+" cm";svg.appendChild(tt);
-    svg.setAttribute("aria-label",fits?"Cruz de seis cuadrados de "+f(s,1)+" cm de lado sobre una hoja de "+f(HW,1)+" por "+f(HH,1)+" cm":"El desarrollo del cubo no entra en la hoja de "+f(HW,1)+" por "+f(HH,1)+" cm");
-    row("Cruz del desarrollo",f(4*s,1)+" por "+f(3*s,1)+" cm, más "+f(2*t,1)+" cm de reserva en cada medida");
-    if(fits){
-      row("Posición en la hoja",acost?"hoja acostada, la fila de cuatro a lo largo":"hoja de pie, la fila de cuatro a lo largo");
-      var sobraL=(acost?A:B)-(4*s+2*t),sobraA=(acost?B:A)-(3*s+2*t);
-      row("Sobra","a lo largo "+f(sobraL,1)+" cm y a lo ancho "+f(sobraA,1)+" cm");
-      var n1=Math.floor((A+1e-9)/(4*s+2*t))*Math.floor((B+1e-9)/(3*s+2*t)),n2=Math.floor((B+1e-9)/(4*s+2*t))*Math.floor((A+1e-9)/(3*s+2*t));
-      var n=Math.max(n1,n2);
-      row("Cubos por hoja",String(n)+(n===1?" cubo":" cubos"));
-    }else row("Aviso","No entra: con "+f(t,1)+" cm de reserva, el lado mayor posible es "+f(mx,1)+" cm");
-    row("Lado mayor que entra en esta hoja",f(mx,1)+" cm");
-    row("Cubo armado",f(s,1)+" cm de arista, "+f(6*s*s,1)+" cm² de superficie y "+f(s*s*s,1)+" cm³ ("+f(s*s*s/1000,3)+" litros)");
-    row("Pegaduras",mx<=0?"sin lado posible":"7 uniones (12 aristas menos 5 dobleces del desarrollo)");
-    if(t<0.5)row("Aviso","Con menos de 0,5 cm las solapas quedan muy angostas para pegar");
-    try{var ob={};ids.forEach(function(k){ob[k]=$(k).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  $("cb-max").addEventListener("click",function(){var h=hoja(),A=Math.max(h[0],h[1]),B=Math.min(h[0],h[1]),t=num("cb-t",0,3,1);$("cb-s").value=(Math.floor(maxLado(A,B,t)*10)/10).toString();calc()});
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
   calc();
 })();
@@ -9269,319 +8560,6 @@ footer a{color:var(--c)}
       if(m<1)row("Aviso","Con menos de 1 cm de margen, la impresora o el escáner pueden cortar el borde del dibujo");
       if(c*r>=12)row("Aviso","Con tantas viñetas cada dibujo queda muy chico: probá con una hoja más grande");
     }
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-abanico-v1",$=function(i){return document.getElementById(i)},ids=["ab-h","ab-o","ab-w"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var p=$("ab-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
-    var L=$("ab-o").value==="l"?B:A,H=$("ab-o").value==="l"?A:B;
-    var w=num("ab-w",0.8,6,1.5),n=Math.floor(L/w+1e-9),sob=L-n*w;
-    var svg=$("ab-svg"),ul=$("ab-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var ratio=Math.min(1,w/(2*H)),per=2*Math.asin(ratio),tot=n*per,cap=Math.min(tot,2*Math.PI),deg=cap*180/Math.PI;
-    if(n<2){row("Aviso","Con ese ancho entran menos de 2 pliegues: elegí un ancho menor");svg.setAttribute("aria-label","Con estos valores no se forma un abanico");}
-    else{
-      var pts=[],i,a0=-cap/2;
-      for(i=0;i<=n;i++){var a=a0+i*cap/n;pts.push([H*Math.sin(a),-H*Math.cos(a)])}
-      var xs=[0],ys=[0];pts.forEach(function(q){xs.push(q[0]);ys.push(q[1])});
-      var mnx=Math.min.apply(null,xs),mxx=Math.max.apply(null,xs),mny=Math.min.apply(null,ys),mxy=Math.max.apply(null,ys);
-      var sc=Math.min(290/Math.max(mxx-mnx,0.1),205/Math.max(mxy-mny,0.1)),ox=160-(mxx+mnx)/2*sc,oy=225-mxy*sc;
-      function X(x){return (ox+x*sc).toFixed(2)}function Y(y){return (oy+y*sc).toFixed(2)}
-      for(i=0;i<n;i++){
-        var q1=pts[i],q2=pts[i+1];
-        svg.appendChild(el("polygon",{points:X(0)+","+Y(0)+" "+X(q1[0])+","+Y(q1[1])+" "+X(q2[0])+","+Y(q2[1]),fill:i%2?"#2fbf71":"#58d68d","fill-opacity":i%2?0.35:0.55,stroke:"#8a8f98","stroke-width":0.8}));
-      }
-      svg.appendChild(el("circle",{cx:X(0),cy:Y(0),r:3,fill:"#ffffff"}));
-      var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent=n+" pliegues de "+f(w,1)+" cm, alto "+f(H,1)+" cm";svg.appendChild(tt);
-      svg.setAttribute("aria-label","Abanico de "+n+" pliegues que abre "+f(deg,0)+" grados");
-      row("Pliegues que salen",String(n)+(n%2?" (impar: probá un ancho que dé par)":" (par)"));
-      row("Sobrante de hoja",f(sob,1)+" cm (se puede recortar o usar de solapa)");
-      row("Ángulo por pliegue",f(per*180/Math.PI,1)+"°");
-      row("Cuánto abre",tot>2*Math.PI?"360° (el ángulo calculado, "+f(tot*180/Math.PI,0)+"°, ya cierra un círculo)":f(deg,0)+"°");
-      var wd=2*H*Math.sin(Math.min(cap,Math.PI)/2);
-      row("Ancho del abanico abierto",f(wd,1)+" cm, con "+f(H,1)+" cm de alto");
-      row("Plegado queda",f(w,1)+" cm de ancho por "+f(H,1)+" cm de alto, más el grosor de las capas");
-      if(deg>200&&tot<=2*Math.PI)row("Aviso","Abre más de 200°: el papel tiende a doblarse en los extremos; con pliegues más angostos queda más firme");
-      if(deg<60)row("Aviso","Abre menos de 60°: probá con pliegues más anchos o con pliegues más cortos (la hoja girada)");
-    }
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-molinete-v1",$=function(i){return document.getElementById(i)},ids=["mn-h","mn-l","mn-c"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var p=$("mn-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
-    var L=num("mn-l",4,30,15),pc=num("mn-c",30,90,75);
-    var svg=$("mn-svg"),ul=$("mn-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var d=L*Math.SQRT2,hd=d/2,c=hd*pc/100,r=hd-c;
-    var sc=Math.min(200/L,200/L),S=L*sc,x0=160-S/2,y0=120-S/2,cx=160,cy=120;
-    svg.appendChild(el("rect",{x:x0,y:y0,width:S,height:S,fill:"#58d68d","fill-opacity":0.25,stroke:"#8a8f98","stroke-width":1}));
-    var k=c/hd,cors=[[x0,y0],[x0+S,y0],[x0+S,y0+S],[x0,y0+S]];
-    cors.forEach(function(q){
-      var ex=q[0]+(cx-q[0])*k,ey=q[1]+(cy-q[1])*k;
-      svg.appendChild(el("line",{x1:q[0],y1:q[1],x2:ex,y2:ey,stroke:"#ffffff","stroke-width":1.6,"stroke-dasharray":"5 3"}));
-      svg.appendChild(el("circle",{cx:q[0]+(cx-q[0])*0.06,cy:q[1]+(cy-q[1])*0.06,r:3,fill:"#2fbf71"}));
-    });
-    svg.appendChild(el("circle",{cx:cx,cy:cy,r:Math.max(r*sc,1.5),fill:"none",stroke:"#c9ced6","stroke-width":1}));
-    svg.appendChild(el("circle",{cx:cx,cy:cy,r:2,fill:"#ffffff"}));
-    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Cuadrado de "+f(L,1)+" cm, corte de "+f(c,1)+" cm desde cada esquina";svg.appendChild(tt);
-    svg.setAttribute("aria-label","Cuadrado de "+f(L,1)+" cm con cuatro cortes de "+f(c,1)+" cm desde las esquinas hacia el centro");
-    row("Diagonal del cuadrado",f(d,1)+" cm (la mitad: "+f(hd,1)+" cm)");
-    row("Largo de cada corte",f(c,1)+" cm desde la esquina");
-    row("Sin cortar hasta el centro",f(r,1)+" cm");
-    row("La punta llega al centro",c>=r?"Sí, con holgura de "+f(c-r,1)+" cm":"No: queda a unos "+f(r-c,1)+" cm. Cortá más largo");
-    var m=Math.min(A,B),n1=Math.floor(A/L+1e-9)*Math.floor(B/L+1e-9),n=n1;
-    if(L>m+1e-9)row("Aviso","Ese cuadrado no entra en la hoja: el lado máximo es "+f(m,1)+" cm");
-    else row("Cuadrados por hoja",n+" de "+f(L,1)+" cm ("+Math.floor(A/L+1e-9)+" x "+Math.floor(B/L+1e-9)+")");
-    if(pc>=85)row("Aviso","Con un corte tan largo el centro queda muy débil y se rompe al fijarlo: dejá al menos 1 cm sin cortar");
-    if(r<1&&pc<85)row("Aviso","Queda menos de 1 cm sin cortar: el centro puede romperse");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-doblarmitad-v1",$=function(i){return document.getElementById(i)},ids=["dm-h","dm-t","dm-n"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var p=$("dm-h").value.split(","),A=parseFloat(p[0]),B=parseFloat(p[1]);
-    var t=num("dm-t",0.02,1,0.1),n=Math.round(num("dm-n",1,8,3));
-    var svg=$("dm-svg"),ul=$("dm-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var w=A,h=B,i,sc=Math.min(280/A,200/B),W=A*sc,H=B*sc,x0=160-W/2,y0=124-H/2;
-    var rects=[[0,0,A,B]];
-    for(i=0;i<n;i++){
-      var nr=[];
-      rects.forEach(function(r){
-        if(r[2]>=r[3]){nr.push([r[0],r[1],r[2]/2,r[3]]);nr.push([r[0]+r[2]/2,r[1],r[2]/2,r[3]])}
-        else{nr.push([r[0],r[1],r[2],r[3]/2]);nr.push([r[0],r[1]+r[3]/2,r[2],r[3]/2])}
-      });
-      rects=nr;
-      if(w>=h)w=w/2;else h=h/2;
-    }
-    svg.appendChild(el("rect",{x:x0,y:y0,width:W,height:H,fill:"#58d68d","fill-opacity":0.2,stroke:"#8a8f98","stroke-width":1}));
-    rects.forEach(function(r){svg.appendChild(el("rect",{x:x0+r[0]*sc,y:y0+r[1]*sc,width:r[2]*sc,height:r[3]*sc,fill:"none",stroke:"#ffffff","stroke-width":1.2,"stroke-dasharray":"5 3"}))});
-    var last=rects[rects.length-1];
-    svg.appendChild(el("rect",{x:x0+last[0]*sc,y:y0+last[1]*sc,width:last[2]*sc,height:last[3]*sc,fill:"#2fbf71","fill-opacity":0.5,stroke:"#2fbf71","stroke-width":1.6}));
-    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Hoja de "+f(A,1)+" x "+f(B,1)+" cm con "+n+(n===1?" doblez":" dobleces");svg.appendChild(tt);
-    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm dividida en "+rects.length+" rectángulos por "+n+" dobleces a la mitad; el paquete final mide "+f(Math.max(w,h),1)+" por "+f(Math.min(w,h),1)+" cm");
-    var cap=Math.pow(2,n),g=cap*t;
-    row("Paquete doblado",f(Math.max(w,h),1)+" x "+f(Math.min(w,h),1)+" cm");
-    row("Capas",String(cap));
-    row("Parte de la hoja",rects.length>1?"1/"+rects.length+" del área ("+f(100/rects.length,2)+" %)":"toda");
-    row("Grosor del paquete",f(g,2)+" mm ("+f(g/10,2)+" cm)");
-    if(Math.min(w,h)<=g*3)row("Aviso","El paquete es casi tan grueso como ancho: en la práctica no se va a cerrar bien. Probá con un doblez menos");
-    else if(n>=6)row("Aviso","Con "+n+" dobleces el paquete cuesta mucho de plegar y de marcar; usá papel fino");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-corona-v1",$=function(i){return document.getElementById(i)},ids=["cwn-p","cwn-a","cwn-s","cwn-h","cwn-n"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var q=$("cwn-h").value.split(","),A=parseFloat(q[0]),B=parseFloat(q[1]);
-    var P=num("cwn-p",40,70,52),H=num("cwn-a",2,15,6),S=num("cwn-s",1,5,1.5),N=Math.round(num("cwn-n",1,60,10));
-    var svg=$("cwn-svg"),ul=$("cwn-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var need=P+1+S;
-    var k=A<=S?999:Math.max(1,Math.ceil((need-S)/(A-S)));
-    var tiras=Math.floor(B/H+1e-9);
-    if(tiras<1||k>=999){row("Aviso","La tira no entra en la hoja: bajá el alto o elegí una hoja más grande");return}
-    var tot=k*A-(k-1)*S,sobra=tot-need;
-    var porHoja=Math.floor(tiras/k);
-    var usadas=Math.ceil(N*k/tiras);
-    var sc=Math.min(280/A,190/B),W=A*sc,Hh=B*sc,x0=160-W/2,y0=126-Hh/2,i;
-    svg.appendChild(el("rect",{x:x0,y:y0,width:W,height:Hh,fill:"#58d68d","fill-opacity":0.12,stroke:"#8a8f98","stroke-width":1}));
-    for(i=0;i<tiras;i++)svg.appendChild(el("rect",{x:x0,y:y0+i*H*sc,width:W,height:H*sc,fill:(Math.floor(i/k)%2?"#2fbf71":"#58d68d"),"fill-opacity":0.45,stroke:"#ffffff","stroke-width":1,"stroke-dasharray":"5 3"}));
-    var rest=B-tiras*H;
-    if(rest>0.05)svg.appendChild(el("rect",{x:x0,y:y0+tiras*H*sc,width:W,height:rest*sc,fill:"#8a8f98","fill-opacity":0.3}));
-    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Hoja de "+f(A,1)+" x "+f(B,1)+" cm: "+tiras+" tiras de "+f(H,1)+" cm";svg.appendChild(tt);
-    var t2=el("text",{x:160,y:236,"text-anchor":"middle","font-size":9,fill:"#c9ced6"});t2.textContent="Mismo color = tiras de una misma corona; gris = sobrante";svg.appendChild(t2);
-    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm cortada en "+tiras+" tiras de "+f(H,1)+" cm; cada corona usa "+k+(k===1?" tira":" tiras"));
-    row("Largo necesario",f(need,1)+" cm (cabeza + 1 de holgura + solape)");
-    row("Tiras por corona",k+(k>1?" pegadas con solape de "+f(S,1)+" cm":" sola, sin pegar tiras"));
-    row("Largo de la tira armada",f(tot,1)+" cm (sobran "+f(sobra,1)+" cm para recortar)");
-    row("Tiras por hoja",String(tiras)+(rest>0.05?" (sobran "+f(rest,1)+" cm de ancho)":""));
-    row("Coronas por hoja",porHoja>0?String(porHoja)+(tiras%k?" ("+(tiras%k)+(tiras%k===1?" tira sobra":" tiras sobran")+")":""):"ninguna entera: se arma con tiras de más de una hoja");
-    row("Hojas para "+N+(N===1?" corona":" coronas"),String(usadas)+" (se reparten las tiras sueltas entre hojas)");
-    if(k>3)row("Aviso","Hacen falta "+k+" tiras por corona: con una hoja más grande hay menos pegaduras y queda más firme");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-escalon-v1",$=function(i){return document.getElementById(i)},ids=["pu-h","pu-l","pu-a","pu-w","pu-n"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function calc(){
-    var q=$("pu-h").value.split(","),A=parseFloat(q[0]),B=parseFloat(q[1]);
-    var L,D;if($("pu-l").value==="l"){L=A;D=B/2}else{L=B;D=A/2}
-    var H=num("pu-a",1,12,4),W=num("pu-w",1,20,4),N=parseInt($("pu-n").value,10)||1;
-    var svg=$("pu-svg"),ul=$("pu-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var gap=(L-N*W)/(N+1);
-    if(gap<0){row("Aviso","Los escalones no entran en el lomo de "+f(L,1)+" cm: bajá el ancho o la cantidad");return}
-    var sc=Math.min(290/L,200/(2*D)),w0=L*sc,h0=2*D*sc,x0=160-w0/2,y0=125-h0/2,ys=y0+D*sc,i;
-    svg.appendChild(el("rect",{x:x0,y:y0,width:w0,height:h0,fill:"#58d68d","fill-opacity":0.1,stroke:"#8a8f98","stroke-width":1}));
-    svg.appendChild(el("line",{x1:x0,y1:ys,x2:x0+w0,y2:ys,stroke:"#c9ced6","stroke-width":1.2,"stroke-dasharray":"2 3"}));
-    for(i=0;i<N;i++){
-      var xa=x0+(gap+i*(W+gap))*sc,xb=xa+W*sc,hh=Math.min(H,D)*sc;
-      svg.appendChild(el("rect",{x:xa,y:ys-hh,width:W*sc,height:2*hh,fill:"#58d68d","fill-opacity":0.3}));
-      [xa,xb].forEach(function(x){svg.appendChild(el("line",{x1:x,y1:ys-hh,x2:x,y2:ys+hh,stroke:"#ff6b6b","stroke-width":1.6}))});
-      [ys-hh,ys+hh].forEach(function(y){svg.appendChild(el("line",{x1:xa,y1:y,x2:xb,y2:y,stroke:"#ffffff","stroke-width":1.2,"stroke-dasharray":"4 3"}))});
-    }
-    var tt=el("text",{x:160,y:14,"text-anchor":"middle","font-size":10,fill:"#c9ced6"});tt.textContent="Hoja abierta de "+f(L,1)+" x "+f(2*D,1)+" cm";svg.appendChild(tt);
-    var t2=el("text",{x:160,y:234,"text-anchor":"middle","font-size":9,fill:"#c9ced6"});t2.textContent="Rojo: corte. Blanco punteado: doblez. Gris punteado: lomo";svg.appendChild(t2);
-    svg.setAttribute("aria-label","Hoja abierta de "+f(L,1)+" por "+f(2*D,1)+" cm con "+N+(N===1?" escalón":" escalones")+" de "+f(W,1)+" cm de ancho y "+f(H,1)+" cm de alto, con dos cortes y un doblez cada uno");
-    row("Tarjeta cerrada",f(L,1)+" x "+f(D,1)+" cm");
-    row("Largo de cada corte",f(H,1)+" cm desde el lomo ("+(2*N)+" cortes, con la tarjeta cerrada)");
-    row("Doblez de cada tira","a "+f(H,1)+" cm del lomo, entre los dos cortes");
-    row("Espacio entre escalones",f(gap,1)+" cm"+(N>1?" (igual a los costados)":" a cada costado"));
-    row("Primer corte desde el borde",f(gap,1)+" cm");
-    if(gap<2)row("Aviso","Queda a menos de 2 cm del borde"+(N>1&&gap<1.3?" y a menos de 1,3 cm entre escalones":"")+": achicá el ancho o poné menos escalones");
-    else if(N>1&&gap<1.3)row("Aviso","Entre escalones quedan menos de 1,3 cm: achicá el ancho");
-    if(H>=D)row("Aviso","El corte llega al borde de la tarjeta ("+f(D,1)+" cm): bajá el alto del escalón");
-    else if(H>D-1.5)row("Aviso","Queda menos de 1,5 cm entre el doblez y el borde: probá con un alto menor");
-    if(H>5||W>10)row("Aviso","La guía de referencia llega a unos 5 cm de alto y 10 cm de ancho: hacé una prueba en borrador");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-tubo-v1",$=function(i){return document.getElementById(i)},ids=["tb-h","tb-o","tb-s","tb-p","tb-d"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var q=$("tb-h").value.split(","),A=parseFloat(q[0]),B=parseFloat(q[1]);
-    var C,H;if($("tb-o").value==="c"){C=B;H=A}else{C=A;H=B}
-    var S=num("tb-s",0.5,4,1),P=num("tb-p",0.5,3,1),D0=num("tb-d",1,30,5);
-    var svg=$("tb-svg"),ul=$("tb-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var d=(C-S)/Math.PI,r=d/2,vol=Math.PI*r*r*H,disco=d+2*P;
-    var sc=Math.min(180/C,170/H),w0=C*sc,h0=H*sc,x0=12,y0=125-h0/2;
-    svg.appendChild(el("rect",{x:x0,y:y0,width:w0,height:h0,fill:"#58d68d","fill-opacity":0.15,stroke:"#8a8f98","stroke-width":1}));
-    svg.appendChild(el("rect",{x:x0+w0-S*sc,y:y0,width:S*sc,height:h0,fill:"#ff6b6b","fill-opacity":0.35}));
-    svg.appendChild(el("line",{x1:x0+w0-S*sc,y1:y0,x2:x0+w0-S*sc,y2:y0+h0,stroke:"#ff6b6b","stroke-width":1.4,"stroke-dasharray":"4 3"}));
-    var cx=250,cy=125,rr=Math.min(r*sc,48),rd=Math.min(disco/2*sc,58);
-    svg.appendChild(el("circle",{cx:cx,cy:cy,r:rd,fill:"none",stroke:"#ffffff","stroke-width":1,"stroke-dasharray":"3 3"}));
-    svg.appendChild(el("circle",{cx:cx,cy:cy,r:rr,fill:"#58d68d","fill-opacity":0.3,stroke:"#58d68d","stroke-width":1.4}));
-    tx(svg,x0+w0/2,y0-6,f(C,1)+" cm (se enrolla)",9);
-    tx(svg,x0+w0/2,Math.min(y0+h0+14,226),"Alto del tubo: "+f(H,1)+" cm",9);
-    tx(svg,cx,cy+rd+14,"Base: d = "+f(d,1)+" cm",9);
-    tx(svg,160,14,"Hoja y base del tubo, a la misma escala",10);
-    tx(svg,160,234,"Rojo: solape. Blanco punteado: disco con pestañas",9);
-    svg.setAttribute("aria-label","Hoja de "+f(C,1)+" por "+f(H,1)+" cm enrollada en un tubo de "+f(d,1)+" cm de diámetro y "+f(H,1)+" cm de alto, con un solape de "+f(S,1)+" cm");
-    row("Diámetro del tubo",f(d,1)+" cm");
-    row("Alto del tubo",f(H,1)+" cm");
-    row("Cabe adentro (volumen)",f(vol,0)+" ml");
-    row("Disco para la base",f(disco,1)+" cm de diámetro (incluye pestañas de "+f(P,1)+" cm)");
-    var need=Math.PI*D0+S;
-    row("Para un diámetro de "+f(D0,1)+" cm","una tira de "+f(need,1)+" cm de largo");
-    if(need>C)row("Aviso","Esa tira no entra en el lado de "+f(C,1)+" cm de la hoja: pegá dos hojas o buscá un diámetro menor (como máximo "+f(d,1)+" cm)");
-    else if(need<C-0.05)row("Sobra","Sobran "+f(C-need,1)+" cm de la hoja: se recortan antes de enrollar");
-    if(d<2)row("Aviso","El tubo queda de menos de 2 cm de diámetro: va a costar enrollarlo parejo, probá enrollar a lo largo");
-    if(H/d>6)row("Aviso","El tubo es muy fino para su alto: puede doblarse. Probá enrollar a lo largo o reforzarlo por dentro");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-cono-v1",$=function(i){return document.getElementById(i)},ids=["cn-d","cn-a","cn-s","cn-h"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var D=num("cn-d",2,60,10),H=num("cn-a",1,80,15),S=num("cn-s",0.5,4,1);
-    var q=$("cn-h").value.split(","),A=parseFloat(q[0]),B=parseFloat(q[1]);
-    var svg=$("cn-svg"),ul=$("cn-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var r=D/2,L=Math.sqrt(r*r+H*H),th=360*r/L,thr=th*Math.PI/180,arc=Math.PI*D,vol=Math.PI*r*r*H/3;
-    /* Recorte con la punta en (0,0), simétrico respecto de la vertical hacia abajo; y crece hacia abajo */
-    var pts=[[0,0]],n=90,i,a;
-    for(i=0;i<=n;i++){a=-thr/2+thr*i/n;pts.push([L*Math.sin(a),L*Math.cos(a)])}
-    /* Franja de solape sobre el borde recto del lado derecho (ángulo +th/2) */
-    var ex=L*Math.sin(thr/2),ey=L*Math.cos(thr/2),nx=Math.cos(thr/2),ny=-Math.sin(thr/2);
-    var tab=[[0,0],[ex,ey],[ex+S*nx,ey+S*ny],[S*nx,S*ny]];
-    var all=pts.concat(tab),x1=1e9,x2=-1e9,y1=1e9,y2=-1e9;
-    all.forEach(function(p){x1=Math.min(x1,p[0]);x2=Math.max(x2,p[0]);y1=Math.min(y1,p[1]);y2=Math.max(y2,p[1])});
-    var W=x2-x1,Hh=y2-y1,sc=Math.min(280/W,180/Hh),ox=160-(x1+x2)/2*sc,oy=120-(y1+y2)/2*sc;
-    function P(p){return (ox+p[0]*sc).toFixed(1)+","+(oy+p[1]*sc).toFixed(1)}
-    svg.appendChild(el("polygon",{points:pts.map(P).join(" "),fill:"#58d68d","fill-opacity":0.2,stroke:"#58d68d","stroke-width":1.4}));
-    svg.appendChild(el("polygon",{points:tab.map(P).join(" "),fill:"#ff6b6b","fill-opacity":0.35,stroke:"#ff6b6b","stroke-width":1,"stroke-dasharray":"4 3"}));
-    svg.appendChild(el("circle",{cx:ox,cy:oy,r:2.5,fill:"#ffffff"}));
-    tx(svg,160,14,"Recorte a escala (punta arriba)",10);
-    tx(svg,160,232,"Radio "+f(L,1)+" cm, ángulo "+f(th,0)+" grados. Rojo: solape",9);
-    svg.setAttribute("aria-label","Recorte en forma de porción de círculo de "+f(L,1)+" cm de radio y "+f(th,0)+" grados, con solape de "+f(S,1)+" cm, para armar un cono de "+f(D,1)+" cm de diámetro y "+f(H,1)+" cm de alto");
-    row("Radio del recorte",f(L,1)+" cm");
-    row("Ángulo del recorte",f(th,0)+" grados");
-    row("Largo del arco",f(arc,1)+" cm");
-    row("Cabe adentro (volumen)",f(vol,0)+" ml");
-    row("Recorte con solape ocupa",f(W,1)+" x "+f(Hh,1)+" cm");
-    var fits=(W<=A&&Hh<=B)||(W<=B&&Hh<=A);
-    if(th>=350)row("Aviso","El cono es muy ancho para su alto: casi un disco plano. Probá con más alto o menos diámetro");
-    if(!fits)row("Aviso","El recorte no entra en la hoja elegida: probá una hoja más grande, un cono más chico, o armá el recorte con dos piezas pegadas");
-    else row("En la hoja","Entra, usando la hoja "+((W<=A&&Hh<=B)?"acostada":"de pie"));
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
@@ -9647,257 +8625,6 @@ footer a{color:var(--c)}
 </script>
 <script>
 (function(){
-  var KEY="tp-marcapaginas-v1",$=function(i){return document.getElementById(i)},ids=["mk-h","mk-w","mk-a","mk-m","mk-g"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function fit(len,p,g){return len<p-1e-9?0:Math.floor((len+g+1e-9)/(p+g))}
-  function calc(){
-    var hs=($("mk-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
-    var w=num("mk-w",1,40,5),h=num("mk-a",1,60,18),m=num("mk-m",0,3,0.5),g=num("mk-g",0,3,0);
-    var svg=$("mk-svg"),ul=$("mk-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
-    var uw=A-2*m,uh=B-2*m;
-    var c1=fit(uw,w,g),r1=fit(uh,h,g),c2=fit(uw,h,g),r2=fit(uh,w,g);
-    var rot=(c2*r2>c1*r1),pw=rot?h:w,ph=rot?w:h,cols=rot?c2:c1,rows=rot?r2:r1,n=cols*rows;
-    var sc=Math.min(290/A,210/B),ox=(320-A*sc)/2,oy=(240-B*sc)/2+4;
-    svg.appendChild(el("rect",{x:ox,y:oy,width:A*sc,height:B*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
-    svg.appendChild(el("rect",{x:ox+m*sc,y:oy+m*sc,width:uw*sc,height:uh*sc,fill:"none",stroke:"#8892a0","stroke-width":0.8,"stroke-dasharray":"3 3"}));
-    var i,j;
-    for(i=0;i<cols;i++)for(j=0;j<rows;j++){
-      svg.appendChild(el("rect",{x:(ox+(m+i*(pw+g))*sc).toFixed(1),y:(oy+(m+j*(ph+g))*sc).toFixed(1),width:(pw*sc).toFixed(1),height:(ph*sc).toFixed(1),fill:"#58d68d","fill-opacity":0.25,stroke:"#58d68d","stroke-width":1}));
-    }
-    tx(svg,160,12,n>0?(n+" piezas, hoja "+f(A,1)+" x "+f(B,1)+" cm a escala"):"No entra ninguna pieza",10);
-    if(n===0){
-      row("Aviso","La pieza no entra en la hoja con ese margen: probá una pieza más chica, menos margen o una hoja más grande");
-    }else{
-      row("Piezas que entran",String(n));
-      row("Acomodo",cols+" por fila x "+rows+" filas"+(rot?" (con la pieza girada)":" (con la pieza de pie)"));
-      var usedW=cols*pw+(cols-1)*g,usedH=rows*ph+(rows-1)*g,sw=uw-usedW,sh=uh-usedH;
-      row("Papel que sobra a lo ancho / alto",f(sw,1)+" / "+f(sh,1)+" cm");
-      row("Papel que se aprovecha",f(100*n*pw*ph/(A*B),0)+" % de la hoja");
-      var cuts=[],x;
-      for(i=0;i<cols;i++){x=m+i*(pw+g);cuts.push(f(x,1));if(g>0||i===cols-1)cuts.push(f(x+pw,1))}
-      row("Cortes a lo ancho (desde el borde)",cuts.join(", ")+" cm");
-      var cuts2=[];
-      for(j=0;j<rows;j++){x=m+j*(ph+g);cuts2.push(f(x,1));if(g>0||j===rows-1)cuts2.push(f(x+ph,1))}
-      row("Cortes a lo alto (desde el borde)",cuts2.join(", ")+" cm");
-      var alt=rot?c1*r1:c2*r2;
-      if(alt===n)row("Aviso","Girando la pieza sale la misma cantidad: elegí el acomodo que te resulte más cómodo de cortar");
-    }
-    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+n+" piezas de "+f(w,1)+" por "+f(h,1)+" cm, dibujada a escala");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-piramide-v1",$=function(i){return document.getElementById(i)},ids=["pi-h","pi-b","pi-a","pi-s"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function geo(b,h,s){var a=Math.sqrt(h*h+b*b/4),L=Math.sqrt(a*a+b*b/4),e=s*(b/2)/L;return{a:a,L:L,w:b+2*a,h:b+2*a+e,e:e}}
-  function fits(g,A,B){return (g.w<=A+1e-9&&g.h<=B+1e-9)||(g.w<=B+1e-9&&g.h<=A+1e-9)}
-  function calc(){
-    var hs=($("pi-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
-    var b=num("pi-b",1,60,6),h=num("pi-a",1,60,6),s=num("pi-s",0,3,1);
-    var svg=$("pi-svg"),ul=$("pi-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
-    var g=geo(b,h,s),ok=fits(g,A,B);
-    var SW=A,SH=B;
-    if(!(g.w<=A+1e-9&&g.h<=B+1e-9)&&(g.w<=B+1e-9&&g.h<=A+1e-9)){SW=B;SH=A}
-    var W=Math.max(SW,g.w),H=Math.max(SH,g.h);
-    var sc=Math.min(296/W,206/H),ox=(320-SW*sc)/2,oy=(240-SH*sc)/2+6;
-    svg.appendChild(el("rect",{x:ox,y:oy,width:SW*sc,height:SH*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
-    var col=ok?"#58d68d":"#e74c3c";
-    var cx=ox+SW*sc/2,cy=oy+(SH*sc)/2+(g.e*sc)/2,hb=b/2*sc,aa=g.a*sc;
-    function pt(x,y){return x.toFixed(1)+","+y.toFixed(1)}
-    var P=[[cx-hb,cy-hb],[cx+hb,cy-hb],[cx+hb,cy+hb],[cx-hb,cy+hb]];
-    var tri=[
-      [P[0],P[1],[cx,cy-hb-aa]],
-      [P[1],P[2],[cx+hb+aa,cy]],
-      [P[2],P[3],[cx,cy+hb+aa]],
-      [P[3],P[0],[cx-hb-aa,cy]]
-    ];
-    tri.forEach(function(t){svg.appendChild(el("polygon",{points:t.map(function(q){return pt(q[0],q[1])}).join(" "),fill:col,"fill-opacity":0.22,stroke:col,"stroke-width":1.4}))});
-    if(s>0){
-      var ap=tri[0][2],p1=P[1],nx=g.a/g.L*s*sc,ny=-(b/2)/g.L*s*sc;
-      svg.appendChild(el("polygon",{points:[pt(p1[0],p1[1]),pt(ap[0],ap[1]),pt(ap[0]+nx,ap[1]+ny),pt(p1[0]+nx,p1[1]+ny)].join(" "),fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1.2}));
-    }
-    svg.appendChild(el("rect",{x:cx-hb,y:cy-hb,width:2*hb,height:2*hb,fill:"#222831","fill-opacity":0.6,stroke:"#c9ced6","stroke-width":1,"stroke-dasharray":"4 3"}));
-    tx(svg,160,14,ok?("Plantilla de "+f(g.w,1)+" x "+f(g.h,1)+" cm, hoja a escala"):"La plantilla no entra en la hoja",10);
-    row("Plantilla en cruz",f(g.w,1)+" x "+f(g.h,1)+" cm (con solapa)");
-    row("Alto de cada cara (triángulo)",f(g.a,1)+" cm");
-    row("Arista inclinada",f(g.L,1)+" cm");
-    row("Inclinación de la cara sobre la base",f(Math.atan2(h,b/2)*180/Math.PI,0)+" grados");
-    row("Volumen",f(b*b*h/3,0)+" ml");
-    if(!ok){
-      var lo=1,hi=b,m,i;
-      for(i=0;i<40;i++){m=(lo+hi)/2;if(fits(geo(m,h,s),A,B))lo=m;else hi=m}
-      var okb=fits(geo(1,h,s),A,B);
-      row("Aviso",okb?("No entra en esa hoja. Con ese alto, la base más grande que entra es de "+f(Math.floor(lo*2)/2,1)+" cm"):"No entra en esa hoja ni con la base más chica: probá un alto menor o una hoja más grande");
-    }else{
-      var mx=Math.floor(A/g.w)*Math.floor(B/g.h),mx2=Math.floor(B/g.w)*Math.floor(A/g.h);
-      row("Plantillas por hoja (en cuadrícula)",String(Math.max(mx,mx2,1)));
-      if(h<b/4)row("Aviso","Queda muy chata: las caras casi se acuestan sobre la base y cuesta que la punta cierre");
-    }
-    svg.setAttribute("aria-label","Plantilla de pirámide de base "+f(b,1)+" cm y alto "+f(h,1)+" cm sobre una hoja de "+f(A,1)+" por "+f(B,1)+" cm, a escala");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-farolito-v1",$=function(i){return document.getElementById(i)},ids=["fa-h","fa-m","fa-w","fa-s"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var hs=($("fa-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
-    var m=num("fa-m",0.5,10,2),w=num("fa-w",0.5,10,2),s=num("fa-s",0,3,1);
-    var svg=$("fa-svg"),ul=$("fa-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
-    var U=A-s,n=Math.max(1,Math.round(U/w)),tw=U/n,cl=B-2*m,ok=cl>0.5&&n>=3;
-    var sc=Math.min(296/A,196/B),ox=(320-A*sc)/2,oy=(240-B*sc)/2+8;
-    svg.appendChild(el("rect",{x:ox,y:oy,width:A*sc,height:B*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
-    if(s>0)svg.appendChild(el("rect",{x:ox+U*sc,y:oy,width:s*sc,height:B*sc,fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
-    svg.appendChild(el("line",{x1:ox,y1:oy+B*sc/2,x2:ox+A*sc,y2:oy+B*sc/2,stroke:"#8892a0","stroke-width":1,"stroke-dasharray":"5 3"}));
-    var col=ok?"#58d68d":"#e74c3c";
-    if(cl>0){for(var k=1;k<n;k++){var x=ox+k*tw*sc;svg.appendChild(el("line",{x1:x.toFixed(1),y1:(oy+m*sc).toFixed(1),x2:x.toFixed(1),y2:(oy+(B-m)*sc).toFixed(1),stroke:col,"stroke-width":1.6}))}}
-    tx(svg,160,16,ok?("Hoja de "+f(A,1)+" x "+f(B,1)+" cm, "+(n-1)+" cortes"):"Revisá las medidas",10);
-    tx(svg,ox+4,oy+B*sc/2-3,"doblez",8,"start");
-    row("Tiras",String(n)+" de "+f(tw,1)+" cm");
-    row("Cortes",String(Math.max(n-1,0))+" de "+f(Math.max(cl,0),1)+" cm cada uno");
-    row("Diámetro del farolito",f(U/Math.PI,1)+" cm");
-    row("Alto sin apretar",f(B,1)+" cm");
-    if(cl<=0)row("Aviso","Los márgenes ocupan todo el lado corto: bajalos para poder cortar");
-    else if(cl<=0.5)row("Aviso","El corte queda cortísimo: bajá el margen");
-    else if(n<3)row("Aviso","Con tan pocas tiras no se arma el farol: bajá el ancho de la tira");
-    if(tw<1&&cl>0)row("Aviso","Las tiras de menos de 1 cm se doblan o rompen fácil: probá más anchas");
-    if(cl>0&&m<1)row("Aviso","Con un margen menor a 1 cm el farolito se desarma: dejá al menos 1 cm arriba y abajo");
-    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+Math.max(n-1,0)+" cortes de "+f(Math.max(cl,0),1)+" cm, a escala");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-prisma-v1",$=function(i){return document.getElementById(i)},ids=["pz-h","pz-o","pz-n","pz-s"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var hs=($("pz-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
-    var rol=$("pz-o").value==="C"?B:A,alt=$("pz-o").value==="C"?A:B;
-    var n=Math.round(num("pz-n",3,8,4)),s=num("pz-s",0,3,1);
-    var svg=$("pz-svg"),ul=$("pz-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
-    var U=rol-s,a=U/n,pi=Math.PI/n,R=a/(2*Math.sin(pi)),r=a/(2*Math.tan(pi));
-    var area=n*a*r/2,across=(n%2===0)?2*r:r+R,diag=2*R;
-    var W=rol,H=alt,sc=Math.min(296/W,120/H),ox=(320-W*sc)/2,oy=22;
-    svg.appendChild(el("rect",{x:ox,y:oy,width:W*sc,height:H*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
-    if(s>0)svg.appendChild(el("rect",{x:ox+U*sc,y:oy,width:s*sc,height:H*sc,fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
-    for(var k=1;k<n;k++){var x=ox+k*a*sc;svg.appendChild(el("line",{x1:x.toFixed(1),y1:oy,x2:x.toFixed(1),y2:(oy+H*sc).toFixed(1),stroke:"#58d68d","stroke-width":1.6,"stroke-dasharray":"6 3"}))}
-    tx(svg,160,14,"Hoja de "+f(W,1)+" x "+f(H,1)+" cm, "+n+" caras de "+f(a,1)+" cm",10);
-    var cy=oy+H*sc+58,cx=160,pts=[];
-    var Rs=34;
-    for(var j=0;j<n;j++){var an=-Math.PI/2+j*2*pi;pts.push((cx+Rs*Math.cos(an)).toFixed(1)+","+(cy+Rs*Math.sin(an)).toFixed(1))}
-    svg.appendChild(el("polygon",{points:pts.join(" "),fill:"#58d68d","fill-opacity":0.15,stroke:"#58d68d","stroke-width":1.6}));
-    tx(svg,cx,cy+Rs+12,"base vista desde arriba (forma, no a escala)",8);
-    row("Cada cara",f(a,1)+" cm de ancho por "+f(alt,1)+" cm de alto");
-    var d=[];for(var q=1;q<n;q++)d.push(f(q*a,1));
-    row("Dobleces desde el borde",d.join(" · ")+" cm");
-    row("Ángulo interior de la base",f((n-2)*180/n,0)+" grados");
-    row(n%2===0?"Ancho entre caras opuestas":"Ancho de una cara al vértice de enfrente",f(across,1)+" cm");
-    row("Círculo que lo rodea (diámetro)",f(diag,1)+" cm");
-    row("Volumen",f(area*alt,0)+" ml");
-    if(s===0)row("Aviso","Sin solapa hay que pegar con cinta por afuera: sumá al menos 1 cm");
-    if(a<1.5)row("Aviso","Las caras salen muy angostas: usá menos caras o una hoja más grande");
-    if(alt/across>8)row("Aviso","La torre sale muy alta y finita: se dobla fácil, probá dar la vuelta por el lado largo");
-    svg.setAttribute("aria-label","Hoja de "+f(W,1)+" por "+f(H,1)+" cm con "+n+" caras de "+f(a,1)+" cm, a escala");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-gajos-v1",$=function(i){return document.getElementById(i)},ids=["gj-h","gj-d","gj-n","gj-s"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!==""){$(i).value=t0[i];if($(i).tagName==="SELECT"&&$(i).value!==t0[i])$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var hs=($("gj-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
-    var D=num("gj-d",3,60,10),n=Math.round(num("gj-n",4,24,8)),s=num("gj-s",0,3,0.5);
-    var svg=$("gj-svg"),ul=$("gj-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
-    var L=Math.PI*D/2,W=Math.PI*D/n,wt=W+s;
-    function wid(t){return W*Math.sin(Math.PI*t)}
-    var sc=Math.min(290/L,100/wt),ox=(320-L*sc)/2,cy=78,i,pts=[];
-    for(i=0;i<=48;i++){var t=i/48;pts.push([ox+t*L*sc,cy-wid(t)*sc/2])}
-    for(i=48;i>=0;i--){var u=i/48;pts.push([ox+u*L*sc,cy+wid(u)*sc/2])}
-    var fp=[];for(i=0;i<=48;i++){var v=i/48;fp.push([ox+v*L*sc,cy+wid(v)*sc/2])}
-    for(i=48;i>=0;i--){var w=i/48;fp.push([ox+w*L*sc,cy+wid(w)*sc/2+s*sc*Math.min(1,Math.sin(Math.PI*w)*3)])}
-    function P(a){return a.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ")}
-    if(s>0)svg.appendChild(el("polygon",{points:P(fp),fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
-    svg.appendChild(el("polygon",{points:P(pts),fill:"#58d68d","fill-opacity":0.15,stroke:"#58d68d","stroke-width":1.6}));
-    svg.appendChild(el("line",{x1:ox.toFixed(1),y1:cy,x2:(ox+L*sc).toFixed(1),y2:cy,stroke:"#8892a0","stroke-width":1}));
-    [0.25,0.5,0.75].forEach(function(q){var x=ox+q*L*sc,h=wid(q)*sc/2;
-      svg.appendChild(el("line",{x1:x.toFixed(1),y1:(cy-h).toFixed(1),x2:x.toFixed(1),y2:(cy+h).toFixed(1),stroke:"#8892a0","stroke-width":1,"stroke-dasharray":"4 3"}));
-      tx(svg,x,cy-h-5,f(wid(q),1)+" cm",9)});
-    tx(svg,160,14,"Un gajo de "+f(L,1)+" cm de largo y "+f(W,1)+" cm de ancho máximo",10);
-    tx(svg,160,158,"de punta a punta, a escala"+(s>0?" (solapa en naranja)":""),9);
-    var opts=[];
-    if(L<=A)opts.push(Math.floor(B/wt));
-    if(L<=B)opts.push(Math.floor(A/wt));
-    var per=opts.length?Math.max.apply(null,opts):0;
-    row("Largo de cada gajo",f(L,1)+" cm");
-    row("Ancho máximo (en el medio)",f(W,1)+" cm"+(s>0?", con solapa "+f(wt,1)+" cm":""));
-    row("Ancho a 1/4 y a 3/4 del largo",f(wid(0.25),1)+" cm");
-    row("Ancho a 1/8 y a 7/8 del largo",f(wid(0.125),1)+" cm");
-    row("Gajos que entran en una hoja",per>0?String(per):"ninguno");
-    row("Hojas para "+n+" gajos",per>0?String(Math.ceil(n/per)):"hace falta una hoja más grande");
-    row("Superficie de la esfera",f(Math.PI*D*D,0)+" cm²");
-    row("Volumen",f(Math.PI*D*D*D/6,0)+" ml");
-    if(per===0)row("Aviso","El gajo mide "+f(L,1)+" cm y no entra en la hoja: achicá el diámetro o usá una hoja más grande");
-    if(n<6)row("Aviso","Con menos de 6 gajos la esfera sale muy facetada");
-    if(wt<1.5)row("Aviso","Los gajos salen muy angostos: usá menos gajos o una esfera más grande");
-    svg.setAttribute("aria-label","Plantilla de un gajo de "+f(L,1)+" cm de largo y "+f(W,1)+" cm de ancho máximo, a escala");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
   var KEY="tp-sesiones-obra-v1",$=function(i){return document.getElementById(i)},ids=["so-h","so-m","so-w","so-r","so-d"];
   try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
   var NS="http://www.w3.org/2000/svg";
@@ -9935,56 +8662,6 @@ footer a{color:var(--c)}
     if(M<20)row("Aviso","Con sesiones tan cortas se pierde mucho tiempo en armar y guardar los materiales");
     if(tot>80)row("Aviso","Son muchas sesiones: dividí la obra en etapas y planificá cada una por separado");
     svg.setAttribute("aria-label","Cuadrícula con "+n+" sesiones necesarias y "+ex+" de margen");
-    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
-  }
-  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
-  calc();
-})();
-</script>
-<script>
-(function(){
-  var KEY="tp-copo-papel-v1",$=function(i){return document.getElementById(i)},ids=["cpo-h","cpo-k","cpo-d","cpo-b"];
-  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!==""){$(i).value=t0[i];if($(i).value!==t0[i]&&$(i).tagName==="SELECT")$(i).selectedIndex=0}})}catch(e){}
-  var NS="http://www.w3.org/2000/svg";
-  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
-  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
-  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
-  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
-  function calc(){
-    var hs=$("cpo-h").value.split(",").map(Number),W=hs[0],H=hs[1],K=parseInt($("cpo-k").value,10)||6;
-    var Dmax=Math.min(W,H),Dr=num("cpo-d",0,70,0),D=Dr===0?Dmax:Dr,B=num("cpo-b",1,10,3)/10;
-    var svg=$("cpo-svg"),ul=$("cpo-res");
-    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
-    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
-    var th=180/K,R=D/2,half=th*Math.PI/360,tn=Math.tan(half),layers=2*K;
-    var chord=2*R*Math.sin(half);
-    var per=Math.floor(W/D)*Math.floor(H/D);
-    // dibujo del sector: centro abajo, eje vertical, abierto hacia arriba
-    var sc=Math.min(150/R,260/(2*R*Math.sin(half)+0.001)),cx=160,cy=182,i;
-    var ax=cx-R*Math.sin(half)*sc,ay=cy-R*Math.cos(half)*sc,bx=cx+R*Math.sin(half)*sc,by=ay;
-    svg.appendChild(el("path",{d:"M"+cx+","+cy+" L"+ax.toFixed(1)+","+ay.toFixed(1)+" A"+(R*sc).toFixed(1)+","+(R*sc).toFixed(1)+" 0 0 1 "+bx.toFixed(1)+","+by.toFixed(1)+" Z",fill:"#58d68d","fill-opacity":0.18,stroke:"#58d68d","stroke-width":1.5}));
-    // puente: franja punteada paralela a cada borde
-    [-1,1].forEach(function(sd){
-      var dx=Math.sin(half)*sd,dy=-Math.cos(half),nx=-sd*Math.cos(half),ny=-Math.sin(half);
-      var px=cx+nx*B*sc,py=cy+ny*B*sc,L=R*sc*0.97;
-      svg.appendChild(el("line",{x1:px.toFixed(1),y1:py.toFixed(1),x2:(px+dx*L).toFixed(1),y2:(py+dy*L).toFixed(1),stroke:"#f5b041","stroke-width":1,"stroke-dasharray":"3 3"}))});
-    [0.25,0.5,0.75].forEach(function(q){var r=R*q*sc,w=r*tn;
-      svg.appendChild(el("line",{x1:(cx-w).toFixed(1),y1:(cy-r).toFixed(1),x2:(cx+w).toFixed(1),y2:(cy-r).toFixed(1),stroke:"#c9ced6","stroke-width":0.7,"stroke-opacity":0.7}));
-      tx(svg,cx,(cy-r-2).toFixed(1),f(2*R*q*tn,1)+" cm",8)});
-    tx(svg,cx,12,"Sector de "+f(th,1)+"° · radio "+f(R,1)+" cm",11);
-    tx(svg,cx,196,"naranja: puente que no se corta · rayas: ancho cada ¼ del radio",8);
-    row("Diámetro del círculo",f(D,1)+" cm"+(Dr===0?" (el mayor que entra)":""));
-    row("Sector doblado",f(th,1)+"° con radio de "+f(R,1)+" cm");
-    row("Ancho del sector a ¼, ½ y ¾ del radio",f(2*R*0.25*tn,1)+" / "+f(2*R*0.5*tn,1)+" / "+f(2*R*0.75*tn,1)+" cm");
-    row("Ancho en el borde exterior",f(2*R*tn,1)+" cm");
-    row("Corte más ancho a ¼, ½ y ¾",f(Math.max(0,2*R*0.25*tn-2*B),1)+" / "+f(Math.max(0,2*R*0.5*tn-2*B),1)+" / "+f(Math.max(0,2*R*0.75*tn-2*B),1)+" cm");
-    row("Capas al cortar",String(layers));
-    row("Círculos por hoja",per+(per===1?" círculo":" círculos")+" en grilla");
-    if(D>Dmax+1e-9)row("Aviso","El círculo no entra en la hoja: el mayor posible mide "+f(Dmax,1)+" cm");
-    if(R*0.25*2*tn<2*B+0.3)row("Aviso","Cerca del centro el sector es muy angosto: casi no se puede cortar ahí");
-    if(layers>=16)row("Aviso","Con 16 capas usá papel fino y cortá de a poco, o hacé primero un copo de 6 puntas");
-    if(D<6)row("Aviso","Con un círculo tan chico los cortes salen muy finos: probá con 10 cm o más");
-    svg.setAttribute("aria-label","Sector de "+f(th,1)+" grados con radio de "+f(R,1)+" centímetros, dibujado a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
