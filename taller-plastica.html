@@ -56,6 +56,11 @@ details.toc-box>summary:focus-visible,.toc-find input:focus-visible{outline:3px 
 .toc-find input{flex:1;min-width:0}
 .toc-clear{font:inherit;cursor:pointer;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px;min-height:44px}
 .toc-clear:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.toc-cats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0;padding:0;border:0;min-width:0}
+.toc-cats legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.toc-cat{font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:0 14px;min-height:44px}
+.toc-cat[aria-pressed="true"]{border-color:var(--b);box-shadow:inset 0 0 0 1px var(--b);font-weight:700}
+.toc-cat:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 .toc-count{text-align:center;color:var(--muted);margin:8px 0 0;font-size:.9rem;min-height:1.2em}
 body.toc-filtering section[hidden]{display:none!important}
 .toc-find input{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px}
@@ -901,8 +906,17 @@ footer a{color:var(--c)}
     <input type="search" id="toc-q" placeholder="Buscar: color, ojo, perspectiva..." autocomplete="off" enterkeyhint="search">
     <button type="button" id="toc-clear" class="toc-clear" hidden>Borrar</button>
   </div>
+  <fieldset class="toc-cats" id="toc-cats">
+    <legend>Filtrar por categoría</legend>
+    <button type="button" class="toc-cat" data-cat="" aria-pressed="true">Todas</button>
+    <button type="button" class="toc-cat" data-cat="color" aria-pressed="false">Color</button>
+    <button type="button" class="toc-cat" data-cat="dibujo" aria-pressed="false">Dibujo y ojo</button>
+    <button type="button" class="toc-cat" data-cat="papel" aria-pressed="false">Papel y plegado</button>
+    <button type="button" class="toc-cat" data-cat="plan" aria-pressed="false">Planificación y materiales</button>
+    <button type="button" class="toc-cat" data-cat="otros" aria-pressed="false">Otros</button>
+  </fieldset>
   <p class="toc-count" id="toc-count" role="status" aria-live="polite"></p>
-  <p class="toc-none" id="toc-none" hidden>No hay coincidencias. Probá con otra palabra o borrá la búsqueda.</p>
+  <p class="toc-none" id="toc-none" hidden>No hay coincidencias. Probá con otra palabra o borrá los filtros.</p>
   <nav class="toc" aria-label="Índice de herramientas">
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
@@ -7132,17 +7146,34 @@ footer a{color:var(--c)}
   function norm(t){return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
   var clr=document.getElementById('toc-clear'),cnt=document.getElementById('toc-count');
   var secs=links.map(function(a){var id=(a.getAttribute('href')||'').slice(1),s=document.getElementById(id),h=s&&s.querySelector('h2');return {a:a,s:s,t:norm(a.textContent+' '+(h?h.textContent:''))}});
+  var CATS={
+    color:'tarjetas mezclador rueda paleta-foto valores escala-color contraste temperatura mezcla-optica residual ojo-color ojo-valor ojo-grises daltonismo degrade regla-60-30-10 contraste-cartel',
+    dibujo:'cuadricula composicion contorno perspectiva simetria mosaico luz-sombra a-ciegas rostro tramas miniaturas figura volumenes puntos silueta entrecerrar garabato al-reves linea-continua calentamiento gestos memoria angulos proporciones punto-medio circulo-mano escala-lapices sombra-proyectada horizonte medir-lapiz ampliar-reducir dividir-circulo dividir-linea poligono renglones guarda',
+    papel:'cuaderno-cosido sobre minilibro acordeon guirnalda caja-hoja cubo-hoja abanico molinete doblar-mitad corona escalon tubo cono-papel marcapaginas piramide farolito prisma gajos copo',
+    plan:'taller plan temporizador cartel imprimir-foto cortar-pliego grilla-columnas pintura-mural diluir-pintura materiales-grupo peso-papel secado distancia-obra mural collage marco-paspartu reparto-clase sesiones-obra cuadros-pared tela-bastidor triptico historieta materiales bitacora edades'
+  };
+  var catOf={};
+  Object.keys(CATS).forEach(function(k){CATS[k].split(' ').forEach(function(id){catOf[id]=k})});
+  function catFor(id){return catOf[id]||(id.indexOf('ojo-')===0?'dibujo':'otros')}
+  var cat='',cbtns=[].slice.call(document.querySelectorAll('#toc-cats .toc-cat'));
+  secs.forEach(function(o){o.c=catFor((o.a.getAttribute('href')||'').slice(1));o.a.setAttribute('data-cat',o.c)});
   function filter(){
-    var v=norm(q.value.trim()),n=0;
-    document.body.classList.toggle('toc-filtering',!!v);
-    secs.forEach(function(o){var ok=!v||o.t.indexOf(v)>-1;o.a.hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
-    none.hidden=n>0;clr.hidden=!v;
-    cnt.textContent=v?(n+(n===1?' resultado':' resultados')+' de '+links.length):'';
-    if(v&&n)box.open=true;
+    var v=norm(q.value.trim()),n=0,on=!!v||!!cat;
+    document.body.classList.toggle('toc-filtering',on);
+    secs.forEach(function(o){var ok=(!v||o.t.indexOf(v)>-1)&&(!cat||o.c===cat);o.a.hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
+    none.hidden=n>0;clr.hidden=!on;
+    cnt.textContent=on?(n+(n===1?' resultado':' resultados')+' de '+links.length):'';
+    if(on&&n)box.open=true;
   }
+  cbtns.forEach(function(b){b.addEventListener('click',function(){
+    cat=b.getAttribute('data-cat')||'';
+    cbtns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    filter();
+  })});
+  function reset(){q.value='';cat='';cbtns.forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-cat')===''?'true':'false')});filter()}
   q.addEventListener('input',filter);
-  clr.addEventListener('click',function(){q.value='';filter();q.focus()});
-  q.addEventListener('keydown',function(e){if(e.key==='Escape'&&q.value){q.value='';filter()}});
+  clr.addEventListener('click',function(){reset();q.focus()});
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'&&(q.value||cat)){reset()}});
   links.forEach(function(a){a.addEventListener('click',function(){if(window.matchMedia&&window.matchMedia('(max-width:699px)').matches)box.open=false})});
 })();
 </script>
