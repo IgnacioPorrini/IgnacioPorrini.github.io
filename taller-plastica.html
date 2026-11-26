@@ -1009,6 +1009,7 @@ footer a{color:var(--c)}
     <a href="#prisma">Prisma de papel</a>
     <a href="#gajos">Esfera con gajos</a>
     <a href="#sesiones-obra">Sesiones para terminar una obra</a>
+    <a href="#copo">Copo de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3658,6 +3659,27 @@ footer a{color:var(--c)}
       <li>Cuando lleves la mitad de las sesiones, volvé a calcular con las horas que realmente te llevó y corregí la fecha.</li>
     </ol>
     <div class="tip">Cómo se calcula: sesiones = horas por 60 dividido los minutos de cada sesión, redondeado hacia arriba. Con el margen, se suma ese porcentaje de sesiones extra. Las sesiones de cada semana se reparten parejas a lo largo de los siete días, empezando en la fecha elegida. Es una estimación para ordenarte, no una promesa.</div>
+  </div>
+</section>
+
+<section id="copo" class="mz-sec">
+  <h2>Copo de papel: cuánto mide cada sector</h2>
+  <p style="color:var(--muted)">Un copo de nieve, una carpetita o un papel picado se hace doblando un círculo en sectores iguales y recortando. Elegí la hoja y cuántas puntas querés: te dice de qué diámetro cortar el círculo, cuánto mide el sector, cuántas capas quedan y qué ancho puede tener cada corte sin que el copo se parta, con un dibujo a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="cpo-h"><span>Hoja</span><select id="cpo-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="cpo-k"><span>Puntas del copo</span><select id="cpo-k"><option value="4">4 puntas (45°)</option><option value="6" selected>6 puntas (30°)</option><option value="8">8 puntas (22,5°)</option></select></label>
+      <label class="mz-ctl" for="cpo-d"><span>Diámetro del círculo (cm, 0 = el mayor que entra)</span><input id="cpo-d" type="number" inputmode="decimal" min="0" max="70" step="0.5" value="0"></label>
+      <label class="mz-ctl" for="cpo-b"><span>Puente mínimo sin cortar (mm)</span><input id="cpo-b" type="number" inputmode="decimal" min="1" max="10" step="0.5" value="3"></label>
+    </div>
+    <svg id="cpo-svg" viewBox="0 0 320 200" role="img" aria-label="Sector del copo dibujado a escala"></svg>
+    <ul class="mz-res" id="cpo-res" aria-live="polite"></ul>
+    <ol>
+      <li>Trazá el círculo con compás (o con un plato) y recortalo. Marcá el centro con un puntito.</li>
+      <li>Doblá a la mitad, siempre llevando el centro a la punta del doblez. Con 4 puntas: mitad, mitad y mitad otra vez. Con 8: cuatro veces a la mitad. Con 6: una mitad, después en tres partes iguales (como una carta, a ojo) y por último una mitad más.</li>
+      <li>Recortá desde los bordes, sin pasarte del puente mínimo, y dejá algún corte que toque cada doblez para que el copo se abra en una pieza. Desplegá con cuidado y planchá con un libro encima.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: el sector mide 180° dividido las puntas. A una distancia r del centro, el ancho del sector doblado es 2 por r por la tangente de la mitad del ángulo, y de ese ancho se resta el puente de cada lado para saber cuánto puede abrir un corte. Las capas son el doble de las puntas: con 16 capas conviene papel fino (de 60 a 70 g) y tijera bien afilada. Los círculos por hoja se cuentan acomodados en grilla, sin aprovechar los huecos.</div>
   </div>
 </section>
 
@@ -9816,6 +9838,56 @@ footer a{color:var(--c)}
     if(M<20)row("Aviso","Con sesiones tan cortas se pierde mucho tiempo en armar y guardar los materiales");
     if(tot>80)row("Aviso","Son muchas sesiones: dividí la obra en etapas y planificá cada una por separado");
     svg.setAttribute("aria-label","Cuadrícula con "+n+" sesiones necesarias y "+ex+" de margen");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-copo-papel-v1",$=function(i){return document.getElementById(i)},ids=["cpo-h","cpo-k","cpo-d","cpo-b"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!==""){$(i).value=t0[i];if($(i).value!==t0[i]&&$(i).tagName==="SELECT")$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var hs=$("cpo-h").value.split(",").map(Number),W=hs[0],H=hs[1],K=parseInt($("cpo-k").value,10)||6;
+    var Dmax=Math.min(W,H),Dr=num("cpo-d",0,70,0),D=Dr===0?Dmax:Dr,B=num("cpo-b",1,10,3)/10;
+    var svg=$("cpo-svg"),ul=$("cpo-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var th=180/K,R=D/2,half=th*Math.PI/360,tn=Math.tan(half),layers=2*K;
+    var chord=2*R*Math.sin(half);
+    var per=Math.floor(W/D)*Math.floor(H/D);
+    // dibujo del sector: centro abajo, eje vertical, abierto hacia arriba
+    var sc=Math.min(150/R,260/(2*R*Math.sin(half)+0.001)),cx=160,cy=182,i;
+    var ax=cx-R*Math.sin(half)*sc,ay=cy-R*Math.cos(half)*sc,bx=cx+R*Math.sin(half)*sc,by=ay;
+    svg.appendChild(el("path",{d:"M"+cx+","+cy+" L"+ax.toFixed(1)+","+ay.toFixed(1)+" A"+(R*sc).toFixed(1)+","+(R*sc).toFixed(1)+" 0 0 1 "+bx.toFixed(1)+","+by.toFixed(1)+" Z",fill:"#58d68d","fill-opacity":0.18,stroke:"#58d68d","stroke-width":1.5}));
+    // puente: franja punteada paralela a cada borde
+    [-1,1].forEach(function(sd){
+      var dx=Math.sin(half)*sd,dy=-Math.cos(half),nx=-sd*Math.cos(half),ny=-Math.sin(half);
+      var px=cx+nx*B*sc,py=cy+ny*B*sc,L=R*sc*0.97;
+      svg.appendChild(el("line",{x1:px.toFixed(1),y1:py.toFixed(1),x2:(px+dx*L).toFixed(1),y2:(py+dy*L).toFixed(1),stroke:"#f5b041","stroke-width":1,"stroke-dasharray":"3 3"}))});
+    [0.25,0.5,0.75].forEach(function(q){var r=R*q*sc,w=r*tn;
+      svg.appendChild(el("line",{x1:(cx-w).toFixed(1),y1:(cy-r).toFixed(1),x2:(cx+w).toFixed(1),y2:(cy-r).toFixed(1),stroke:"#c9ced6","stroke-width":0.7,"stroke-opacity":0.7}));
+      tx(svg,cx,(cy-r-2).toFixed(1),f(2*R*q*tn,1)+" cm",8)});
+    tx(svg,cx,12,"Sector de "+f(th,1)+"° · radio "+f(R,1)+" cm",11);
+    tx(svg,cx,196,"naranja: puente que no se corta · rayas: ancho cada ¼ del radio",8);
+    row("Diámetro del círculo",f(D,1)+" cm"+(Dr===0?" (el mayor que entra)":""));
+    row("Sector doblado",f(th,1)+"° con radio de "+f(R,1)+" cm");
+    row("Ancho del sector a ¼, ½ y ¾ del radio",f(2*R*0.25*tn,1)+" / "+f(2*R*0.5*tn,1)+" / "+f(2*R*0.75*tn,1)+" cm");
+    row("Ancho en el borde exterior",f(2*R*tn,1)+" cm");
+    row("Corte más ancho a ¼, ½ y ¾",f(Math.max(0,2*R*0.25*tn-2*B),1)+" / "+f(Math.max(0,2*R*0.5*tn-2*B),1)+" / "+f(Math.max(0,2*R*0.75*tn-2*B),1)+" cm");
+    row("Capas al cortar",String(layers));
+    row("Círculos por hoja",per+(per===1?" círculo":" círculos")+" en grilla");
+    if(D>Dmax+1e-9)row("Aviso","El círculo no entra en la hoja: el mayor posible mide "+f(Dmax,1)+" cm");
+    if(R*0.25*2*tn<2*B+0.3)row("Aviso","Cerca del centro el sector es muy angosto: casi no se puede cortar ahí");
+    if(layers>=16)row("Aviso","Con 16 capas usá papel fino y cortá de a poco, o hacé primero un copo de 6 puntas");
+    if(D<6)row("Aviso","Con un círculo tan chico los cortes salen muy finos: probá con 10 cm o más");
+    svg.setAttribute("aria-label","Sector de "+f(th,1)+" grados con radio de "+f(R,1)+" centímetros, dibujado a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
