@@ -74,6 +74,16 @@ body.toc-filtering section[hidden]{display:none!important}
 .toc-none{text-align:center;color:var(--muted);margin:10px 0 0}
 nav.toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 8px}
 nav.toc a{text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:99px;font-size:.9rem}
+.toc-item{display:inline-flex;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:99px}
+.toc-item[hidden]{display:none}
+nav.toc .toc-item a{border:0;background:transparent;padding:6px 4px 6px 12px;min-height:32px;display:inline-flex;align-items:center}
+.toc-star{font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;color:var(--muted);background:transparent;border:0;border-radius:99px;min-width:44px;min-height:44px;margin:-6px 0}
+.toc-star[aria-pressed="true"]{color:var(--b)}
+.toc-star:focus-visible{outline:3px solid var(--b);outline-offset:-3px}
+.toc-favs{margin:16px 0 0;text-align:center}
+.toc-favs h3{margin:0 0 8px;font-size:.95rem;color:var(--muted);font-family:"Nunito";font-weight:700}
+.toc-favs div{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.toc-favs a{text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--b);padding:8px 14px;border-radius:99px;font-size:.9rem;min-height:20px}
 section{margin-top:40px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
@@ -113,7 +123,7 @@ footer a{color:var(--c)}
 @media (max-width:480px){.step{grid-template-columns:52px 1fr}.time{font-size:.95rem}}
 @media print{
   body{background:#fff;color:#000;font-size:13px}
-  nav.toc,details.toc-box,.noprint,.to-toc,.sec-up{display:none}
+  nav.toc,details.toc-box,.toc-favs,.noprint,.to-toc,.sec-up{display:none}
   .card,.rc{break-inside:avoid}
   section{margin-top:20px}
 }
@@ -923,6 +933,10 @@ footer a{color:var(--c)}
   </fieldset>
   <p class="toc-count" id="toc-count" role="status" aria-live="polite"></p>
   <p class="toc-none" id="toc-none" hidden>No hay coincidencias. Probá con otra palabra o borrá los filtros.</p>
+  <div class="toc-favs" id="toc-favs" role="region" aria-label="Mis herramientas" hidden>
+    <h3>Mis herramientas</h3>
+    <div id="toc-favs-list"></div>
+  </div>
   <nav class="toc" aria-label="Índice de herramientas">
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
@@ -7147,6 +7161,34 @@ footer a{color:var(--c)}
   var box=document.getElementById('toc-box'),q=document.getElementById('toc-q'),none=document.getElementById('toc-none');
   if(!box||!q)return;
   var links=[].slice.call(box.querySelectorAll('nav.toc a'));
+  var FKEY='tp-favoritas-v1',favs=[],favBox=document.getElementById('toc-favs'),favList=document.getElementById('toc-favs-list');
+  try{var fv=JSON.parse(localStorage.getItem(FKEY)||'[]');if(Array.isArray(fv))favs=fv.filter(function(x){return typeof x==='string'})}catch(e){}
+  function saveFavs(){try{localStorage.setItem(FKEY,JSON.stringify(favs))}catch(e){}}
+  var wraps={},stars={};
+  links.forEach(function(a){
+    var id=(a.getAttribute('href')||'').slice(1),w=document.createElement('span'),b=document.createElement('button');
+    w.className='toc-item';a.parentNode.insertBefore(w,a);w.appendChild(a);
+    b.type='button';b.className='toc-star';b.setAttribute('data-id',id);
+    b.addEventListener('click',function(){var i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);saveFavs();renderFavs()});
+    w.appendChild(b);wraps[id]=w;stars[id]=b;
+  });
+  function renderFavs(){
+    var ok=favs.filter(function(id){return wraps[id]});
+    links.forEach(function(a){
+      var id=(a.getAttribute('href')||'').slice(1),on=ok.indexOf(id)>-1,b=stars[id],t=a.textContent.trim();
+      b.textContent=on?'\u2605':'\u2606';b.setAttribute('aria-pressed',on?'true':'false');
+      b.setAttribute('aria-label',(on?'Quitar de Mis herramientas: ':'Agregar a Mis herramientas: ')+t);
+    });
+    favList.textContent='';
+    ok.forEach(function(id){
+      var src=wraps[id].querySelector('a'),c=document.createElement('a');
+      c.href='#'+id;c.textContent=src.textContent;
+      c.addEventListener('click',function(){if(window.matchMedia&&window.matchMedia('(max-width:699px)').matches)box.open=false});
+      favList.appendChild(c);
+    });
+    favBox.hidden=!ok.length;
+  }
+  renderFavs();
   document.getElementById('toc-n').textContent=links.length;
   if(window.matchMedia&&window.matchMedia('(min-width:700px)').matches)box.open=true;
   function norm(t){return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
@@ -7166,7 +7208,7 @@ footer a{color:var(--c)}
   function filter(){
     var v=norm(q.value.trim()),n=0,on=!!v||!!cat;
     document.body.classList.toggle('toc-filtering',on);
-    secs.forEach(function(o){var ok=(!v||o.t.indexOf(v)>-1)&&(!cat||o.c===cat);o.a.hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
+    secs.forEach(function(o){var ok=(!v||o.t.indexOf(v)>-1)&&(!cat||o.c===cat);o.a.hidden=!ok;wraps[(o.a.getAttribute('href')||'').slice(1)].hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
     none.hidden=n>0;clr.hidden=!on;
     cnt.textContent=on?(n+(n===1?' resultado':' resultados')+' de '+links.length):'';
     if(on&&n)box.open=true;
