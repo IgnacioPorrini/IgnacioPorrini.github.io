@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg,.mz-sec #pz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg,.mz-sec #pz-svg,.mz-sec #gj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1006,6 +1006,7 @@ footer a{color:var(--c)}
     <a href="#piramide">Pirámide de papel</a>
     <a href="#farolito">Farolito de papel</a>
     <a href="#prisma">Prisma de papel</a>
+    <a href="#gajos">Esfera con gajos</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3612,6 +3613,27 @@ footer a{color:var(--c)}
       <li>Pegá la solapa por dentro. Para una tapa o una base, trazá el polígono regular del mismo lado que una cara (mirá la herramienta de polígonos) y pegalo con pestañas.</li>
     </ol>
     <div class="tip">Cómo se calcula: el largo que se enrolla, menos la solapa, se reparte en tantas caras iguales como lados tenga la base. Con el lado de la cara a, el ancho entre caras opuestas es a / tan(180 / n) y el círculo que rodea la base tiene diámetro a / sen(180 / n). Con la base en cm² por el alto sale el volumen. Con una cantidad impar de caras no hay caras opuestas: se mide desde una cara hasta el vértice de enfrente.</div>
+  </div>
+</section>
+
+<section id="gajos" class="mz-sec">
+  <h2>Esfera de papel con gajos: cómo es cada gajo</h2>
+  <p style="color:var(--muted)">Un globo, una farola o una base para papel maché se arma con tiras que van de un polo al otro, como los gajos de una naranja. Elegí el diámetro y cuántos gajos: te dice cuánto mide cada gajo, qué ancho tiene en cada punto, cuántos entran en la hoja y dibuja la plantilla a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="gj-h"><span>Hoja</span><select id="gj-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="gj-d"><span>Diámetro de la esfera (cm)</span><input id="gj-d" type="number" inputmode="decimal" min="3" max="60" step="0.5" value="10"></label>
+      <label class="mz-ctl" for="gj-n"><span>Cantidad de gajos (4 a 24)</span><input id="gj-n" type="number" inputmode="numeric" min="4" max="24" step="1" value="8"></label>
+      <label class="mz-ctl" for="gj-s"><span>Solapa en un borde (cm)</span><input id="gj-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0.5"></label>
+    </div>
+    <svg id="gj-svg" viewBox="0 0 320 170" role="img" aria-label="Plantilla de un gajo dibujada a escala"></svg>
+    <ul class="mz-res" id="gj-res" aria-live="polite"></ul>
+    <ol>
+      <li>Dibujá una línea recta del largo indicado y marcá en ella el punto medio y los cuartos. Por cada marca, trazá hacia los dos lados la mitad del ancho que indica la lista.</li>
+      <li>Unís los puntos con una curva suave que se cierre en una punta arriba y otra abajo, y recortá ese gajo. Usalo de molde para repetirlo tantas veces como gajos elegiste.</li>
+      <li>Pegá los gajos de borde a borde, de a uno, con la solapa por dentro. Si te sobra o te falta un poquito en el cierre, repartí la diferencia entre todos los bordes.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: de polo a polo hay media vuelta, es decir pi por el diámetro dividido 2. El ancho de un gajo en cada punto es la vuelta completa de ese paralelo (pi por el diámetro por el seno del ángulo desde el polo) dividida por la cantidad de gajos, así que es máximo en el medio y nulo en las puntas. Es un cálculo para papel que se estira poco: con pocos gajos la esfera sale más facetada. La cuenta de gajos por hoja usa el rectángulo que ocupa cada gajo, sin encajar uno con la punta del otro, así que en la práctica puede entrar alguno más.</div>
   </div>
 </section>
 
@@ -9672,6 +9694,59 @@ footer a{color:var(--c)}
     if(a<1.5)row("Aviso","Las caras salen muy angostas: usá menos caras o una hoja más grande");
     if(alt/across>8)row("Aviso","La torre sale muy alta y finita: se dobla fácil, probá dar la vuelta por el lado largo");
     svg.setAttribute("aria-label","Hoja de "+f(W,1)+" por "+f(H,1)+" cm con "+n+" caras de "+f(a,1)+" cm, a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-gajos-v1",$=function(i){return document.getElementById(i)},ids=["gj-h","gj-d","gj-n","gj-s"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!==""){$(i).value=t0[i];if($(i).tagName==="SELECT"&&$(i).value!==t0[i])$(i).selectedIndex=0}})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var hs=($("gj-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
+    var D=num("gj-d",3,60,10),n=Math.round(num("gj-n",4,24,8)),s=num("gj-s",0,3,0.5);
+    var svg=$("gj-svg"),ul=$("gj-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var L=Math.PI*D/2,W=Math.PI*D/n,wt=W+s;
+    function wid(t){return W*Math.sin(Math.PI*t)}
+    var sc=Math.min(290/L,100/wt),ox=(320-L*sc)/2,cy=78,i,pts=[];
+    for(i=0;i<=48;i++){var t=i/48;pts.push([ox+t*L*sc,cy-wid(t)*sc/2])}
+    for(i=48;i>=0;i--){var u=i/48;pts.push([ox+u*L*sc,cy+wid(u)*sc/2])}
+    var fp=[];for(i=0;i<=48;i++){var v=i/48;fp.push([ox+v*L*sc,cy+wid(v)*sc/2])}
+    for(i=48;i>=0;i--){var w=i/48;fp.push([ox+w*L*sc,cy+wid(w)*sc/2+s*sc*Math.min(1,Math.sin(Math.PI*w)*3)])}
+    function P(a){return a.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ")}
+    if(s>0)svg.appendChild(el("polygon",{points:P(fp),fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
+    svg.appendChild(el("polygon",{points:P(pts),fill:"#58d68d","fill-opacity":0.15,stroke:"#58d68d","stroke-width":1.6}));
+    svg.appendChild(el("line",{x1:ox.toFixed(1),y1:cy,x2:(ox+L*sc).toFixed(1),y2:cy,stroke:"#8892a0","stroke-width":1}));
+    [0.25,0.5,0.75].forEach(function(q){var x=ox+q*L*sc,h=wid(q)*sc/2;
+      svg.appendChild(el("line",{x1:x.toFixed(1),y1:(cy-h).toFixed(1),x2:x.toFixed(1),y2:(cy+h).toFixed(1),stroke:"#8892a0","stroke-width":1,"stroke-dasharray":"4 3"}));
+      tx(svg,x,cy-h-5,f(wid(q),1)+" cm",9)});
+    tx(svg,160,14,"Un gajo de "+f(L,1)+" cm de largo y "+f(W,1)+" cm de ancho máximo",10);
+    tx(svg,160,158,"de punta a punta, a escala"+(s>0?" (solapa en naranja)":""),9);
+    var opts=[];
+    if(L<=A)opts.push(Math.floor(B/wt));
+    if(L<=B)opts.push(Math.floor(A/wt));
+    var per=opts.length?Math.max.apply(null,opts):0;
+    row("Largo de cada gajo",f(L,1)+" cm");
+    row("Ancho máximo (en el medio)",f(W,1)+" cm"+(s>0?", con solapa "+f(wt,1)+" cm":""));
+    row("Ancho a 1/4 y a 3/4 del largo",f(wid(0.25),1)+" cm");
+    row("Ancho a 1/8 y a 7/8 del largo",f(wid(0.125),1)+" cm");
+    row("Gajos que entran en una hoja",per>0?String(per):"ninguno");
+    row("Hojas para "+n+" gajos",per>0?String(Math.ceil(n/per)):"hace falta una hoja más grande");
+    row("Superficie de la esfera",f(Math.PI*D*D,0)+" cm²");
+    row("Volumen",f(Math.PI*D*D*D/6,0)+" ml");
+    if(per===0)row("Aviso","El gajo mide "+f(L,1)+" cm y no entra en la hoja: achicá el diámetro o usá una hoja más grande");
+    if(n<6)row("Aviso","Con menos de 6 gajos la esfera sale muy facetada");
+    if(wt<1.5)row("Aviso","Los gajos salen muy angostos: usá menos gajos o una esfera más grande");
+    svg.setAttribute("aria-label","Plantilla de un gajo de "+f(L,1)+" cm de largo y "+f(W,1)+" cm de ancho máximo, a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
