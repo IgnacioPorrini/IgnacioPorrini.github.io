@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1003,6 +1003,7 @@ footer a{color:var(--c)}
     <a href="#cono-papel">Cono de papel</a>
     <a href="#poligono">Polígono y estrella</a>
     <a href="#marcapaginas">Marcapáginas</a>
+    <a href="#piramide">Pirámide de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3546,6 +3547,27 @@ footer a{color:var(--c)}
       <li>Cortá primero las tiras largas con regla y cúter (o guillotina) y después cada tira en piezas. Decorá antes de cortar si el dibujo sigue de una pieza a otra.</li>
     </ol>
     <div class="tip">Cómo se calcula: en cada fila entran tantas piezas como veces cabe el ancho de pieza más el espacio en el ancho útil de la hoja (hoja menos dos márgenes, más un espacio porque el último no lleva espacio después). Se prueba con la pieza de pie y con la pieza girada, y se muestra la que da más piezas. Es una cuenta simple de reparto: el papel real puede variar un milímetro y el corte también, por eso conviene dejar un poco de margen y probar con una hoja borrador.</div>
+  </div>
+</section>
+
+<section id="piramide" class="mz-sec">
+  <h2>Pirámide de papel con base cuadrada</h2>
+  <p style="color:var(--muted)">Para hacer una pirámide hueca con una sola hoja: elegí la hoja, el lado de la base y el alto. Te dice si la plantilla entra, el tamaño de las caras, la inclinación y cuántos ml entran, y dibuja la plantilla a escala con los dobleces.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="pi-h"><span>Hoja</span><select id="pi-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="pi-b"><span>Lado de la base (cm)</span><input id="pi-b" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="6"></label>
+      <label class="mz-ctl" for="pi-a"><span>Alto de la pirámide (cm)</span><input id="pi-a" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="6"></label>
+      <label class="mz-ctl" for="pi-s"><span>Solapa para pegar (cm)</span><input id="pi-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
+    </div>
+    <svg id="pi-svg" viewBox="0 0 320 240" role="img" aria-label="Plantilla de la pirámide dibujada a escala"></svg>
+    <ul class="mz-res" id="pi-res" aria-live="polite"></ul>
+    <ol>
+      <li>Dibujá en la hoja el cuadrado de la base y, sobre cada lado, un triángulo con esa base y el alto de cara que indica la lista. Dejá la solapa sobre uno de los lados inclinados de un triángulo.</li>
+      <li>Marcá los dobleces del cuadrado con regla y punta seca (un bolígrafo sin tinta) para que doblen derecho, y cortá solo el contorno exterior.</li>
+      <li>Doblá los cuatro triángulos hacia arriba, unilos en la punta y pegá la solapa por dentro. Si la punta no cierra bien, revisá que los cuatro triángulos midan lo mismo.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: el alto de cada cara es la raíz de (alto de la pirámide al cuadrado más la mitad de la base al cuadrado), y la arista inclinada es la raíz de (alto al cuadrado más la mitad de la diagonal de la base al cuadrado). La plantilla en cruz mide la base más dos veces el alto de cara. El volumen es base al cuadrado por alto dividido tres, y 1 cm³ equivale a 1 ml. Es una cuenta geométrica simple: el grosor del papel y el pegado restan un poco de precisión.</div>
   </div>
 </section>
 
@@ -9459,6 +9481,68 @@ footer a{color:var(--c)}
       if(alt===n)row("Aviso","Girando la pieza sale la misma cantidad: elegí el acomodo que te resulte más cómodo de cortar");
     }
     svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+n+" piezas de "+f(w,1)+" por "+f(h,1)+" cm, dibujada a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-piramide-v1",$=function(i){return document.getElementById(i)},ids=["pi-h","pi-b","pi-a","pi-s"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function geo(b,h,s){var a=Math.sqrt(h*h+b*b/4),L=Math.sqrt(a*a+b*b/4),e=s*(b/2)/L;return{a:a,L:L,w:b+2*a,h:b+2*a+e,e:e}}
+  function fits(g,A,B){return (g.w<=A+1e-9&&g.h<=B+1e-9)||(g.w<=B+1e-9&&g.h<=A+1e-9)}
+  function calc(){
+    var hs=($("pi-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
+    var b=num("pi-b",1,60,6),h=num("pi-a",1,60,6),s=num("pi-s",0,3,1);
+    var svg=$("pi-svg"),ul=$("pi-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var g=geo(b,h,s),ok=fits(g,A,B);
+    var SW=A,SH=B;
+    if(!(g.w<=A+1e-9&&g.h<=B+1e-9)&&(g.w<=B+1e-9&&g.h<=A+1e-9)){SW=B;SH=A}
+    var W=Math.max(SW,g.w),H=Math.max(SH,g.h);
+    var sc=Math.min(296/W,206/H),ox=(320-SW*sc)/2,oy=(240-SH*sc)/2+6;
+    svg.appendChild(el("rect",{x:ox,y:oy,width:SW*sc,height:SH*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
+    var col=ok?"#58d68d":"#e74c3c";
+    var cx=ox+SW*sc/2,cy=oy+(SH*sc)/2+(g.e*sc)/2,hb=b/2*sc,aa=g.a*sc;
+    function pt(x,y){return x.toFixed(1)+","+y.toFixed(1)}
+    var P=[[cx-hb,cy-hb],[cx+hb,cy-hb],[cx+hb,cy+hb],[cx-hb,cy+hb]];
+    var tri=[
+      [P[0],P[1],[cx,cy-hb-aa]],
+      [P[1],P[2],[cx+hb+aa,cy]],
+      [P[2],P[3],[cx,cy+hb+aa]],
+      [P[3],P[0],[cx-hb-aa,cy]]
+    ];
+    tri.forEach(function(t){svg.appendChild(el("polygon",{points:t.map(function(q){return pt(q[0],q[1])}).join(" "),fill:col,"fill-opacity":0.22,stroke:col,"stroke-width":1.4}))});
+    if(s>0){
+      var ap=tri[0][2],p1=P[1],nx=g.a/g.L*s*sc,ny=-(b/2)/g.L*s*sc;
+      svg.appendChild(el("polygon",{points:[pt(p1[0],p1[1]),pt(ap[0],ap[1]),pt(ap[0]+nx,ap[1]+ny),pt(p1[0]+nx,p1[1]+ny)].join(" "),fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1.2}));
+    }
+    svg.appendChild(el("rect",{x:cx-hb,y:cy-hb,width:2*hb,height:2*hb,fill:"#222831","fill-opacity":0.6,stroke:"#c9ced6","stroke-width":1,"stroke-dasharray":"4 3"}));
+    tx(svg,160,14,ok?("Plantilla de "+f(g.w,1)+" x "+f(g.h,1)+" cm, hoja a escala"):"La plantilla no entra en la hoja",10);
+    row("Plantilla en cruz",f(g.w,1)+" x "+f(g.h,1)+" cm (con solapa)");
+    row("Alto de cada cara (triángulo)",f(g.a,1)+" cm");
+    row("Arista inclinada",f(g.L,1)+" cm");
+    row("Inclinación de la cara sobre la base",f(Math.atan2(h,b/2)*180/Math.PI,0)+" grados");
+    row("Volumen",f(b*b*h/3,0)+" ml");
+    if(!ok){
+      var lo=1,hi=b,m,i;
+      for(i=0;i<40;i++){m=(lo+hi)/2;if(fits(geo(m,h,s),A,B))lo=m;else hi=m}
+      var okb=fits(geo(1,h,s),A,B);
+      row("Aviso",okb?("No entra en esa hoja. Con ese alto, la base más grande que entra es de "+f(Math.floor(lo*2)/2,1)+" cm"):"No entra en esa hoja ni con la base más chica: probá un alto menor o una hoja más grande");
+    }else{
+      var mx=Math.floor(A/g.w)*Math.floor(B/g.h),mx2=Math.floor(B/g.w)*Math.floor(A/g.h);
+      row("Plantillas por hoja (en cuadrícula)",String(Math.max(mx,mx2,1)));
+      if(h<b/4)row("Aviso","Queda muy chata: las caras casi se acuestan sobre la base y cuesta que la punta cierre");
+    }
+    svg.setAttribute("aria-label","Plantilla de pirámide de base "+f(b,1)+" cm y alto "+f(h,1)+" cm sobre una hoja de "+f(A,1)+" por "+f(B,1)+" cm, a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
