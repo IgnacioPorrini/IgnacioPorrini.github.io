@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1004,6 +1004,7 @@ footer a{color:var(--c)}
     <a href="#poligono">Polígono y estrella</a>
     <a href="#marcapaginas">Marcapáginas</a>
     <a href="#piramide">Pirámide de papel</a>
+    <a href="#farolito">Farolito de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3568,6 +3569,27 @@ footer a{color:var(--c)}
       <li>Doblá los cuatro triángulos hacia arriba, unilos en la punta y pegá la solapa por dentro. Si la punta no cierra bien, revisá que los cuatro triángulos midan lo mismo.</li>
     </ol>
     <div class="tip">Cómo se calcula: el alto de cada cara es la raíz de (alto de la pirámide al cuadrado más la mitad de la base al cuadrado), y la arista inclinada es la raíz de (alto al cuadrado más la mitad de la diagonal de la base al cuadrado). La plantilla en cruz mide la base más dos veces el alto de cara. El volumen es base al cuadrado por alto dividido tres, y 1 cm³ equivale a 1 ml. Es una cuenta geométrica simple: el grosor del papel y el pegado restan un poco de precisión.</div>
+  </div>
+</section>
+
+<section id="farolito" class="mz-sec">
+  <h2>Farolito de papel: cuántos cortes y qué diámetro</h2>
+  <p style="color:var(--muted)">Para un farolito con una sola hoja: elegí la hoja, el margen sin cortar arriba y abajo y el ancho de cada tira. Te dice cuántas tiras y cortes salen, cuánto mide cada corte, el diámetro del farolito y dibuja la hoja a escala con los cortes.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="fa-h"><span>Hoja</span><select id="fa-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="fa-m"><span>Margen sin cortar arriba y abajo (cm)</span><input id="fa-m" type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value="2"></label>
+      <label class="mz-ctl" for="fa-w"><span>Ancho de cada tira (cm)</span><input id="fa-w" type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value="2"></label>
+      <label class="mz-ctl" for="fa-s"><span>Solapa para pegar (cm)</span><input id="fa-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
+    </div>
+    <svg id="fa-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja del farolito dibujada a escala con los cortes"></svg>
+    <ul class="mz-res" id="fa-res" aria-live="polite"></ul>
+    <ol>
+      <li>Poné la hoja acostada y doblala a la mitad a lo largo, de modo que el doblez quede en el lado largo. Desde el doblez, hacé los cortes hacia el borde abierto sin llegar al margen indicado.</li>
+      <li>Abrí la hoja, enrollala hasta que los lados cortos se junten y pegá la solapa por dentro.</li>
+      <li>Apretá suavemente desde arriba y desde abajo: las tiras se abomban y forman el farolito. Para el asa, pegá una tira de papel adentro, arriba. Usalo con una luz de pilas, nunca con una llama.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: el largo útil es el largo de la hoja menos la solapa. Se divide por el ancho pedido y se redondea para que todas las tiras queden iguales. Los cortes son uno menos que las tiras, porque la última tira se cierra con la primera. Cada corte mide el lado corto menos los dos márgenes. El diámetro es el largo útil dividido por pi. Es una cuenta simple: el grosor del papel resta un poco de precisión.</div>
   </div>
 </section>
 
@@ -9543,6 +9565,46 @@ footer a{color:var(--c)}
       if(h<b/4)row("Aviso","Queda muy chata: las caras casi se acuestan sobre la base y cuesta que la punta cierre");
     }
     svg.setAttribute("aria-label","Plantilla de pirámide de base "+f(b,1)+" cm y alto "+f(h,1)+" cm sobre una hoja de "+f(A,1)+" por "+f(B,1)+" cm, a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-farolito-v1",$=function(i){return document.getElementById(i)},ids=["fa-h","fa-m","fa-w","fa-s"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var hs=($("fa-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
+    var m=num("fa-m",0.5,10,2),w=num("fa-w",0.5,10,2),s=num("fa-s",0,3,1);
+    var svg=$("fa-svg"),ul=$("fa-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var U=A-s,n=Math.max(1,Math.round(U/w)),tw=U/n,cl=B-2*m,ok=cl>0.5&&n>=3;
+    var sc=Math.min(296/A,196/B),ox=(320-A*sc)/2,oy=(240-B*sc)/2+8;
+    svg.appendChild(el("rect",{x:ox,y:oy,width:A*sc,height:B*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
+    if(s>0)svg.appendChild(el("rect",{x:ox+U*sc,y:oy,width:s*sc,height:B*sc,fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
+    svg.appendChild(el("line",{x1:ox,y1:oy+B*sc/2,x2:ox+A*sc,y2:oy+B*sc/2,stroke:"#8892a0","stroke-width":1,"stroke-dasharray":"5 3"}));
+    var col=ok?"#58d68d":"#e74c3c";
+    if(cl>0){for(var k=1;k<n;k++){var x=ox+k*tw*sc;svg.appendChild(el("line",{x1:x.toFixed(1),y1:(oy+m*sc).toFixed(1),x2:x.toFixed(1),y2:(oy+(B-m)*sc).toFixed(1),stroke:col,"stroke-width":1.6}))}}
+    tx(svg,160,16,ok?("Hoja de "+f(A,1)+" x "+f(B,1)+" cm, "+(n-1)+" cortes"):"Revisá las medidas",10);
+    tx(svg,ox+4,oy+B*sc/2-3,"doblez",8,"start");
+    row("Tiras",String(n)+" de "+f(tw,1)+" cm");
+    row("Cortes",String(Math.max(n-1,0))+" de "+f(Math.max(cl,0),1)+" cm cada uno");
+    row("Diámetro del farolito",f(U/Math.PI,1)+" cm");
+    row("Alto sin apretar",f(B,1)+" cm");
+    if(cl<=0)row("Aviso","Los márgenes ocupan todo el lado corto: bajalos para poder cortar");
+    else if(cl<=0.5)row("Aviso","El corte queda cortísimo: bajá el margen");
+    else if(n<3)row("Aviso","Con tan pocas tiras no se arma el farol: bajá el ancho de la tira");
+    if(tw<1&&cl>0)row("Aviso","Las tiras de menos de 1 cm se doblan o rompen fácil: probá más anchas");
+    if(cl>0&&m<1)row("Aviso","Con un margen menor a 1 cm el farolito se desarma: dejá al menos 1 cm arriba y abajo");
+    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+Math.max(n-1,0)+" cortes de "+f(Math.max(cl,0),1)+" cm, a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
