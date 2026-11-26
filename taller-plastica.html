@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1002,6 +1002,7 @@ footer a{color:var(--c)}
     <a href="#tubo">Tubo de papel</a>
     <a href="#cono-papel">Cono de papel</a>
     <a href="#poligono">Polígono y estrella</a>
+    <a href="#marcapaginas">Marcapáginas</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3523,6 +3524,28 @@ footer a{color:var(--c)}
       <li>Uní los vértices con la regla, saltando de a tantos lugares como elegiste. Borrá con suavidad los auxiliares y repasá.</li>
     </ol>
     <div class="tip">Cómo se calcula: los vértices están repartidos parejo en la circunferencia, así que el ángulo entre dos vértices vecinos es 360 dividido la cantidad de vértices. El lado de un polígono mide 2 por el radio por el seno de la mitad de ese ángulo; con una estrella que salta de a k lugares, la mitad del ángulo es k por 180 dividido n. El ángulo interior de un polígono es 180 menos el ángulo central. Una estrella solo se cierra con una sola línea si n y k no tienen divisores en común (por ejemplo 5 y 2); si los tienen (por ejemplo 6 y 2) salen varias figuras separadas, como la estrella de seis puntas hecha con dos triángulos. Es una cuenta de geometría: al dibujar, el grosor del lápiz suma algún milímetro de error.</div>
+  </div>
+</section>
+
+<section id="marcapaginas" class="mz-sec">
+  <h2>Marcapáginas: cuántos salen de una hoja</h2>
+  <p style="color:var(--muted)">Para recortar marcapáginas, tarjetas largas o etiquetas de un mismo tamaño. Elegí la hoja y la medida de cada pieza: te dice cuántas entran, si conviene girarlas, dónde van los cortes y cuánto papel sobra, y lo dibuja a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="mk-h"><span>Hoja</span><select id="mk-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="mk-w"><span>Ancho de la pieza (cm)</span><input id="mk-w" type="number" inputmode="decimal" min="1" max="40" step="0.5" value="5"></label>
+      <label class="mz-ctl" for="mk-a"><span>Alto de la pieza (cm)</span><input id="mk-a" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="18"></label>
+      <label class="mz-ctl" for="mk-m"><span>Margen de la hoja (cm)</span><input id="mk-m" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0.5"></label>
+      <label class="mz-ctl" for="mk-g"><span>Espacio entre piezas (cm)</span><input id="mk-g" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="0"></label>
+    </div>
+    <svg id="mk-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja con las piezas acomodadas a escala"></svg>
+    <ul class="mz-res" id="mk-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá en la hoja el margen en los cuatro lados con regla y lápiz suave; algunas impresoras y cortadoras no llegan al borde.</li>
+      <li>Marcá los cortes de la lista a lo largo del lado donde caben las columnas, y después los cortes del otro lado. Si hay espacio entre piezas, cada pieza lleva dos marcas.</li>
+      <li>Cortá primero las tiras largas con regla y cúter (o guillotina) y después cada tira en piezas. Decorá antes de cortar si el dibujo sigue de una pieza a otra.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: en cada fila entran tantas piezas como veces cabe el ancho de pieza más el espacio en el ancho útil de la hoja (hoja menos dos márgenes, más un espacio porque el último no lleva espacio después). Se prueba con la pieza de pie y con la pieza girada, y se muestra la que da más piezas. Es una cuenta simple de reparto: el papel real puede variar un milímetro y el corte también, por eso conviene dejar un poco de margen y probar con una hoja borrador.</div>
   </div>
 </section>
 
@@ -9385,6 +9408,57 @@ footer a{color:var(--c)}
       row("Ancho de la hoja necesario",f(2*R,1)+" cm, más margen");
     }
     svg.setAttribute("aria-label",(ok?(k===1?"Polígono regular de "+n+" lados":"Estrella de "+n+" vértices saltando de a "+k):"Vértices de "+n+" puntos")+" inscripto en una circunferencia de "+f(R,1)+" cm de radio, dibujado a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-marcapaginas-v1",$=function(i){return document.getElementById(i)},ids=["mk-h","mk-w","mk-a","mk-m","mk-g"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function fit(len,p,g){return len<p-1e-9?0:Math.floor((len+g+1e-9)/(p+g))}
+  function calc(){
+    var hs=($("mk-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
+    var w=num("mk-w",1,40,5),h=num("mk-a",1,60,18),m=num("mk-m",0,3,0.5),g=num("mk-g",0,3,0);
+    var svg=$("mk-svg"),ul=$("mk-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("b");a.textContent=l;b.textContent=v;li.appendChild(a);li.appendChild(b);ul.appendChild(li)}
+    var uw=A-2*m,uh=B-2*m;
+    var c1=fit(uw,w,g),r1=fit(uh,h,g),c2=fit(uw,h,g),r2=fit(uh,w,g);
+    var rot=(c2*r2>c1*r1),pw=rot?h:w,ph=rot?w:h,cols=rot?c2:c1,rows=rot?r2:r1,n=cols*rows;
+    var sc=Math.min(290/A,210/B),ox=(320-A*sc)/2,oy=(240-B*sc)/2+4;
+    svg.appendChild(el("rect",{x:ox,y:oy,width:A*sc,height:B*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
+    svg.appendChild(el("rect",{x:ox+m*sc,y:oy+m*sc,width:uw*sc,height:uh*sc,fill:"none",stroke:"#8892a0","stroke-width":0.8,"stroke-dasharray":"3 3"}));
+    var i,j;
+    for(i=0;i<cols;i++)for(j=0;j<rows;j++){
+      svg.appendChild(el("rect",{x:(ox+(m+i*(pw+g))*sc).toFixed(1),y:(oy+(m+j*(ph+g))*sc).toFixed(1),width:(pw*sc).toFixed(1),height:(ph*sc).toFixed(1),fill:"#58d68d","fill-opacity":0.25,stroke:"#58d68d","stroke-width":1}));
+    }
+    tx(svg,160,12,n>0?(n+" piezas, hoja "+f(A,1)+" x "+f(B,1)+" cm a escala"):"No entra ninguna pieza",10);
+    if(n===0){
+      row("Aviso","La pieza no entra en la hoja con ese margen: probá una pieza más chica, menos margen o una hoja más grande");
+    }else{
+      row("Piezas que entran",String(n));
+      row("Acomodo",cols+" por fila x "+rows+" filas"+(rot?" (con la pieza girada)":" (con la pieza de pie)"));
+      var usedW=cols*pw+(cols-1)*g,usedH=rows*ph+(rows-1)*g,sw=uw-usedW,sh=uh-usedH;
+      row("Papel que sobra a lo ancho / alto",f(sw,1)+" / "+f(sh,1)+" cm");
+      row("Papel que se aprovecha",f(100*n*pw*ph/(A*B),0)+" % de la hoja");
+      var cuts=[],x;
+      for(i=0;i<cols;i++){x=m+i*(pw+g);cuts.push(f(x,1));if(g>0||i===cols-1)cuts.push(f(x+pw,1))}
+      row("Cortes a lo ancho (desde el borde)",cuts.join(", ")+" cm");
+      var cuts2=[];
+      for(j=0;j<rows;j++){x=m+j*(ph+g);cuts2.push(f(x,1));if(g>0||j===rows-1)cuts2.push(f(x+ph,1))}
+      row("Cortes a lo alto (desde el borde)",cuts2.join(", ")+" cm");
+      var alt=rot?c1*r1:c2*r2;
+      if(alt===n)row("Aviso","Girando la pieza sale la misma cantidad: elegí el acomodo que te resulte más cómodo de cortar");
+    }
+    svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+n+" piezas de "+f(w,1)+" por "+f(h,1)+" cm, dibujada a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
