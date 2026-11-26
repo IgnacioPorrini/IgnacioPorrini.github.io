@@ -52,7 +52,12 @@ details.toc-box{margin:18px auto 6px;max-width:760px;text-align:left}
 details.toc-box>summary{cursor:pointer;list-style:none;text-align:center;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:10px 16px;min-height:44px}
 details.toc-box>summary::-webkit-details-marker{display:none}
 details.toc-box>summary:focus-visible,.toc-find input:focus-visible{outline:3px solid var(--b);outline-offset:2px}
-.toc-find{display:block;margin:12px 0 0}
+.toc-find{display:flex;gap:8px;margin:12px 0 0}
+.toc-find input{flex:1;min-width:0}
+.toc-clear{font:inherit;cursor:pointer;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px;min-height:44px}
+.toc-clear:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.toc-count{text-align:center;color:var(--muted);margin:8px 0 0;font-size:.9rem;min-height:1.2em}
+body.toc-filtering section[hidden]{display:none!important}
 .toc-find input{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px}
 .sr-toc{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .toc-none{text-align:center;color:var(--muted);margin:10px 0 0}
@@ -891,8 +896,13 @@ footer a{color:var(--c)}
   <p>Un taller nómade: los materiales entran en una mochila y el espacio se arma donde haga falta. Dibujo, color, texturas y collage para explorar sin miedo a equivocarse. No hace falta saber dibujar.</p>
   <details class="toc-box" id="toc-box">
   <summary>Ir a una herramienta (<span id="toc-n"></span>)</summary>
-  <label class="toc-find"><span class="sr-toc">Buscar en el índice</span><input type="search" id="toc-q" placeholder="Buscar: color, ojo, perspectiva..." autocomplete="off"></label>
-  <p class="toc-none" id="toc-none" hidden>No hay coincidencias.</p>
+  <div class="toc-find">
+    <label for="toc-q" class="sr-toc">Buscar herramientas y secciones por título</label>
+    <input type="search" id="toc-q" placeholder="Buscar: color, ojo, perspectiva..." autocomplete="off" enterkeyhint="search">
+    <button type="button" id="toc-clear" class="toc-clear" hidden>Borrar</button>
+  </div>
+  <p class="toc-count" id="toc-count" role="status" aria-live="polite"></p>
+  <p class="toc-none" id="toc-none" hidden>No hay coincidencias. Probá con otra palabra o borrá la búsqueda.</p>
   <nav class="toc" aria-label="Índice de herramientas">
     <a href="#taller">El taller</a>
     <a href="#plan">Plan de la clase 0</a>
@@ -7120,11 +7130,19 @@ footer a{color:var(--c)}
   document.getElementById('toc-n').textContent=links.length;
   if(window.matchMedia&&window.matchMedia('(min-width:700px)').matches)box.open=true;
   function norm(t){return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
-  q.addEventListener('input',function(){
+  var clr=document.getElementById('toc-clear'),cnt=document.getElementById('toc-count');
+  var secs=links.map(function(a){var id=(a.getAttribute('href')||'').slice(1),s=document.getElementById(id),h=s&&s.querySelector('h2');return {a:a,s:s,t:norm(a.textContent+' '+(h?h.textContent:''))}});
+  function filter(){
     var v=norm(q.value.trim()),n=0;
-    links.forEach(function(a){var ok=!v||norm(a.textContent).indexOf(v)>-1;a.hidden=!ok;if(ok)n++});
-    none.hidden=n>0;
-  });
+    document.body.classList.toggle('toc-filtering',!!v);
+    secs.forEach(function(o){var ok=!v||o.t.indexOf(v)>-1;o.a.hidden=!ok;if(o.s)o.s.hidden=!ok;if(ok)n++});
+    none.hidden=n>0;clr.hidden=!v;
+    cnt.textContent=v?(n+(n===1?' resultado':' resultados')+' de '+links.length):'';
+    if(v&&n)box.open=true;
+  }
+  q.addEventListener('input',filter);
+  clr.addEventListener('click',function(){q.value='';filter();q.focus()});
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'&&q.value){q.value='';filter()}});
   links.forEach(function(a){a.addEventListener('click',function(){if(window.matchMedia&&window.matchMedia('(max-width:699px)').matches)box.open=false})});
 })();
 </script>
