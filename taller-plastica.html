@@ -609,6 +609,7 @@ footer a{color:var(--c)}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg,.mz-sec #pz-svg,.mz-sec #gj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #so-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1007,6 +1008,7 @@ footer a{color:var(--c)}
     <a href="#farolito">Farolito de papel</a>
     <a href="#prisma">Prisma de papel</a>
     <a href="#gajos">Esfera con gajos</a>
+    <a href="#sesiones-obra">Sesiones para terminar una obra</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3634,6 +3636,28 @@ footer a{color:var(--c)}
       <li>Pegá los gajos de borde a borde, de a uno, con la solapa por dentro. Si te sobra o te falta un poquito en el cierre, repartí la diferencia entre todos los bordes.</li>
     </ol>
     <div class="tip">Cómo se calcula: de polo a polo hay media vuelta, es decir pi por el diámetro dividido 2. El ancho de un gajo en cada punto es la vuelta completa de ese paralelo (pi por el diámetro por el seno del ángulo desde el polo) dividida por la cantidad de gajos, así que es máximo en el medio y nulo en las puntas. Es un cálculo para papel que se estira poco: con pocos gajos la esfera sale más facetada. La cuenta de gajos por hoja usa el rectángulo que ocupa cada gajo, sin encajar uno con la punta del otro, así que en la práctica puede entrar alguno más.</div>
+  </div>
+</section>
+
+<section id="sesiones-obra" class="mz-sec">
+  <h2>Sesiones para terminar una obra</h2>
+  <p style="color:var(--muted)">Una pintura o un mural grande casi nunca se termina en una tarde. Cargá cuántas horas calculás que lleva, cuánto rendís por sesión y cuántas veces por semana podés sentarte: te dice cuántas sesiones hacen falta y para qué fecha estaría lista, con un margen para imprevistos.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="so-h"><span>Horas de trabajo estimadas</span><input id="so-h" type="number" inputmode="decimal" min="0.5" max="500" step="0.5" value="12"></label>
+      <label class="mz-ctl" for="so-m"><span>Minutos por sesión</span><input id="so-m" type="number" inputmode="numeric" min="10" max="480" step="5" value="90"></label>
+      <label class="mz-ctl" for="so-w"><span>Sesiones por semana (1 a 7)</span><input id="so-w" type="number" inputmode="numeric" min="1" max="7" step="1" value="2"></label>
+      <label class="mz-ctl" for="so-r"><span>Margen para imprevistos (%)</span><input id="so-r" type="number" inputmode="numeric" min="0" max="100" step="5" value="25"></label>
+      <label class="mz-ctl" for="so-d"><span>Primera sesión</span><input id="so-d" type="date"></label>
+    </div>
+    <svg id="so-svg" viewBox="0 0 320 170" role="img" aria-label="Cuadrícula con una casilla por sesión"></svg>
+    <ul class="mz-res" id="so-res" aria-live="polite"></ul>
+    <ol>
+      <li>Estimá las horas sumando etapas: boceto, base, capas de color, detalles y retoques. Si es tu primera obra de ese tamaño, sumale un tercio más.</li>
+      <li>Reservá los días en la agenda como una clase más. Una sesión corta y regular rinde más que una larga y rara.</li>
+      <li>Cuando lleves la mitad de las sesiones, volvé a calcular con las horas que realmente te llevó y corregí la fecha.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: sesiones = horas por 60 dividido los minutos de cada sesión, redondeado hacia arriba. Con el margen, se suma ese porcentaje de sesiones extra. Las sesiones de cada semana se reparten parejas a lo largo de los siete días, empezando en la fecha elegida. Es una estimación para ordenarte, no una promesa.</div>
   </div>
 </section>
 
@@ -9747,6 +9771,51 @@ footer a{color:var(--c)}
     if(n<6)row("Aviso","Con menos de 6 gajos la esfera sale muy facetada");
     if(wt<1.5)row("Aviso","Los gajos salen muy angostos: usá menos gajos o una esfera más grande");
     svg.setAttribute("aria-label","Plantilla de un gajo de "+f(L,1)+" cm de largo y "+f(W,1)+" cm de ancho máximo, a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-sesiones-obra-v1",$=function(i){return document.getElementById(i)},ids=["so-h","so-m","so-w","so-r","so-d"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function iso(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+  function parseD(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");if(!m)return null;var d=new Date(+m[1],+m[2]-1,+m[3],12);return isNaN(d.getTime())?null:d}
+  function fecha(d){return d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
+  function sessionDate(st,k,w){var wk=Math.floor(k/w),j=k%w,d=new Date(st.getTime());d.setDate(d.getDate()+wk*7+Math.round(j*7/w));return d}
+  if(!$("so-d").value)$("so-d").value=iso(new Date());
+  function calc(){
+    var H=num("so-h",0.5,500,12),M=Math.round(num("so-m",10,480,90)),W=Math.round(num("so-w",1,7,2)),R=num("so-r",0,100,25);
+    var st=parseD($("so-d").value)||new Date();st.setHours(12,0,0,0);
+    var svg=$("so-svg"),ul=$("so-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var n=Math.max(1,Math.ceil(H*60/M)),ex=Math.ceil(n*R/100),tot=n+ex;
+    var dEnd=sessionDate(st,n-1,W),dTop=sessionDate(st,tot-1,W);
+    var days=Math.round((dTop-st)/86400000)+1,wks=Math.ceil(days/7);
+    var cols=Math.min(tot,Math.max(5,Math.ceil(Math.sqrt(tot*2)))),rows=Math.ceil(tot/cols);
+    var cs=Math.min(26,280/cols,110/rows),gx=(320-cols*cs)/2,gy=34+(110-rows*cs)/2,i;
+    for(i=0;i<tot;i++){var c=i%cols,r=Math.floor(i/cols),ext=i>=n;
+      svg.appendChild(el("rect",{x:(gx+c*cs+1).toFixed(1),y:(gy+r*cs+1).toFixed(1),width:(cs-2).toFixed(1),height:(cs-2).toFixed(1),rx:2,fill:ext?"#f5b041":"#58d68d","fill-opacity":ext?0.3:0.55,stroke:ext?"#f5b041":"#58d68d","stroke-width":1}))}
+    tx(svg,160,16,n+(n===1?" sesión":" sesiones")+(ex>0?" + "+ex+" de margen":""),11);
+    tx(svg,160,160,"verde: las necesarias · naranja: el margen",9);
+    row("Sesiones necesarias",String(n));
+    row("Con el margen de "+f(R,0)+" %",tot+(tot===1?" sesión":" sesiones"));
+    row("Horas agendadas",f(n*M/60,1)+" h en "+n+(n===1?" sesión":" sesiones")+" (con el margen, hasta "+f(tot*M/60,1)+" h)");
+    row("Terminarías hacia el",fecha(dEnd));
+    row("Fecha tope con margen",fecha(dTop));
+    row("Duración hasta el tope",days+" días (unas "+wks+(wks===1?" semana":" semanas")+")");
+    if(M>240)row("Aviso","Más de 4 horas seguidas cansan la vista y la mano: probá sesiones más cortas");
+    if(M<20)row("Aviso","Con sesiones tan cortas se pierde mucho tiempo en armar y guardar los materiales");
+    if(tot>80)row("Aviso","Son muchas sesiones: dividí la obra en etapas y planificá cada una por separado");
+    svg.setAttribute("aria-label","Cuadrícula con "+n+" sesiones necesarias y "+ex+" de margen");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
