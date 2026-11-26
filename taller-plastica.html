@@ -608,7 +608,7 @@ footer a{color:var(--c)}
 .mz-sec #cj-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #cb-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #hv-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
-.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
+.mz-sec #ab-svg,.mz-sec #mn-svg,.mz-sec #dm-svg,.mz-sec #cwn-svg,.mz-sec #pu-svg,.mz-sec #tb-svg,.mz-sec #cn-svg,.mz-sec #pg-svg,.mz-sec #mk-svg,.mz-sec #pi-svg,.mz-sec #fa-svg,.mz-sec #pz-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec #tl-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto;border-radius:12px;border:2px solid var(--line);background:#14161a}
 .mz-sec .mz-res{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
 .mz-sec .mz-res li{box-sizing:border-box;min-width:0;max-width:100%;padding:8px 12px;border-radius:12px;border:2px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
@@ -1005,6 +1005,7 @@ footer a{color:var(--c)}
     <a href="#marcapaginas">Marcapáginas</a>
     <a href="#piramide">Pirámide de papel</a>
     <a href="#farolito">Farolito de papel</a>
+    <a href="#prisma">Prisma de papel</a>
     <a href="#materiales">Materiales</a>
     <a href="#bitacora">Bitácora</a>
     <a href="#edades">Según la edad</a>
@@ -3590,6 +3591,27 @@ footer a{color:var(--c)}
       <li>Apretá suavemente desde arriba y desde abajo: las tiras se abomban y forman el farolito. Para el asa, pegá una tira de papel adentro, arriba. Usalo con una luz de pilas, nunca con una llama.</li>
     </ol>
     <div class="tip">Cómo se calcula: el largo útil es el largo de la hoja menos la solapa. Se divide por el ancho pedido y se redondea para que todas las tiras queden iguales. Los cortes son uno menos que las tiras, porque la última tira se cierra con la primera. Cada corte mide el lado corto menos los dos márgenes. El diámetro es el largo útil dividido por pi. Es una cuenta simple: el grosor del papel resta un poco de precisión.</div>
+  </div>
+</section>
+
+<section id="prisma" class="mz-sec">
+  <h2>Prisma de papel: cuánto mide cada cara</h2>
+  <p style="color:var(--muted)">Una hoja doblada en caras iguales hace una torre o un portalápices con base de 3 a 8 lados. Elegí la hoja, cuántas caras y la solapa: te dice cuánto mide cada cara, dónde van los dobleces, el ancho de la torre y el volumen, y dibuja la hoja y la base a escala.</p>
+  <div class="card">
+    <div class="mz-two">
+      <label class="mz-ctl" for="pz-h"><span>Hoja</span><select id="pz-h"><option value="29.7,21" selected>A4 (29,7 x 21 cm)</option><option value="21,14.85">A5 (21 x 14,85 cm)</option><option value="42,29.7">A3 (42 x 29,7 cm)</option><option value="27.94,21.59">Carta (27,94 x 21,59 cm)</option><option value="70,50">Pliego (70 x 50 cm)</option></select></label>
+      <label class="mz-ctl" for="pz-o"><span>Dar la vuelta por el lado</span><select id="pz-o"><option value="L" selected>Largo (torre más baja)</option><option value="C">Corto (torre más alta)</option></select></label>
+      <label class="mz-ctl" for="pz-n"><span>Cantidad de caras (3 a 8)</span><input id="pz-n" type="number" inputmode="numeric" min="3" max="8" step="1" value="4"></label>
+      <label class="mz-ctl" for="pz-s"><span>Solapa para pegar (cm)</span><input id="pz-s" type="number" inputmode="decimal" min="0" max="3" step="0.5" value="1"></label>
+    </div>
+    <svg id="pz-svg" viewBox="0 0 320 240" role="img" aria-label="Hoja del prisma dibujada a escala con los dobleces"></svg>
+    <ul class="mz-res" id="pz-res" aria-live="polite"></ul>
+    <ol>
+      <li>Marcá con lápiz suave los dobleces a la distancia indicada, medida desde un borde de la hoja, y repasalos con el filo de una regla para marcarlos bien.</li>
+      <li>Doblá cada línea hacia el mismo lado, abrí la hoja y cerrala en forma de prisma.</li>
+      <li>Pegá la solapa por dentro. Para una tapa o una base, trazá el polígono regular del mismo lado que una cara (mirá la herramienta de polígonos) y pegalo con pestañas.</li>
+    </ol>
+    <div class="tip">Cómo se calcula: el largo que se enrolla, menos la solapa, se reparte en tantas caras iguales como lados tenga la base. Con el lado de la cara a, el ancho entre caras opuestas es a / tan(180 / n) y el círculo que rodea la base tiene diámetro a / sen(180 / n). Con la base en cm² por el alto sale el volumen. Con una cantidad impar de caras no hay caras opuestas: se mide desde una cara hasta el vértice de enfrente.</div>
   </div>
 </section>
 
@@ -9605,6 +9627,51 @@ footer a{color:var(--c)}
     if(tw<1&&cl>0)row("Aviso","Las tiras de menos de 1 cm se doblan o rompen fácil: probá más anchas");
     if(cl>0&&m<1)row("Aviso","Con un margen menor a 1 cm el farolito se desarma: dejá al menos 1 cm arriba y abajo");
     svg.setAttribute("aria-label","Hoja de "+f(A,1)+" por "+f(B,1)+" cm con "+Math.max(n-1,0)+" cortes de "+f(Math.max(cl,0),1)+" cm, a escala");
+    try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
+  }
+  ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var KEY="tp-prisma-v1",$=function(i){return document.getElementById(i)},ids=["pz-h","pz-o","pz-n","pz-s"];
+  try{var t0=JSON.parse(localStorage.getItem(KEY)||"{}");if(t0&&typeof t0==="object")ids.forEach(function(i){if(typeof t0[i]==="string"&&t0[i]!=="")$(i).value=t0[i]})}catch(e){}
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e}
+  function f(v,d){return v.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function num(id,lo,hi,def){var v=parseFloat(String($(id).value).replace(",","."));if(!isFinite(v))v=def;return Math.min(hi,Math.max(lo,v))}
+  function tx(svg,x,y,t,sz,anc){var e=el("text",{x:x,y:y,"text-anchor":anc||"middle","font-size":sz,fill:"#c9ced6"});e.textContent=t;svg.appendChild(e)}
+  function calc(){
+    var hs=($("pz-h").value||"29.7,21").split(","),A=parseFloat(hs[0]),B=parseFloat(hs[1]);
+    var rol=$("pz-o").value==="C"?B:A,alt=$("pz-o").value==="C"?A:B;
+    var n=Math.round(num("pz-n",3,8,4)),s=num("pz-s",0,3,1);
+    var svg=$("pz-svg"),ul=$("pz-res");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);while(ul.firstChild)ul.removeChild(ul.firstChild);
+    function row(l,v){var li=document.createElement("li"),x=document.createElement("span"),y=document.createElement("b");x.textContent=l;y.textContent=v;li.appendChild(x);li.appendChild(y);ul.appendChild(li)}
+    var U=rol-s,a=U/n,pi=Math.PI/n,R=a/(2*Math.sin(pi)),r=a/(2*Math.tan(pi));
+    var area=n*a*r/2,across=(n%2===0)?2*r:r+R,diag=2*R;
+    var W=rol,H=alt,sc=Math.min(296/W,120/H),ox=(320-W*sc)/2,oy=22;
+    svg.appendChild(el("rect",{x:ox,y:oy,width:W*sc,height:H*sc,fill:"#222831",stroke:"#8892a0","stroke-width":1}));
+    if(s>0)svg.appendChild(el("rect",{x:ox+U*sc,y:oy,width:s*sc,height:H*sc,fill:"#f5b041","fill-opacity":0.25,stroke:"#f5b041","stroke-width":1}));
+    for(var k=1;k<n;k++){var x=ox+k*a*sc;svg.appendChild(el("line",{x1:x.toFixed(1),y1:oy,x2:x.toFixed(1),y2:(oy+H*sc).toFixed(1),stroke:"#58d68d","stroke-width":1.6,"stroke-dasharray":"6 3"}))}
+    tx(svg,160,14,"Hoja de "+f(W,1)+" x "+f(H,1)+" cm, "+n+" caras de "+f(a,1)+" cm",10);
+    var cy=oy+H*sc+58,cx=160,pts=[];
+    var Rs=34;
+    for(var j=0;j<n;j++){var an=-Math.PI/2+j*2*pi;pts.push((cx+Rs*Math.cos(an)).toFixed(1)+","+(cy+Rs*Math.sin(an)).toFixed(1))}
+    svg.appendChild(el("polygon",{points:pts.join(" "),fill:"#58d68d","fill-opacity":0.15,stroke:"#58d68d","stroke-width":1.6}));
+    tx(svg,cx,cy+Rs+12,"base vista desde arriba (forma, no a escala)",8);
+    row("Cada cara",f(a,1)+" cm de ancho por "+f(alt,1)+" cm de alto");
+    var d=[];for(var q=1;q<n;q++)d.push(f(q*a,1));
+    row("Dobleces desde el borde",d.join(" · ")+" cm");
+    row("Ángulo interior de la base",f((n-2)*180/n,0)+" grados");
+    row(n%2===0?"Ancho entre caras opuestas":"Ancho de una cara al vértice de enfrente",f(across,1)+" cm");
+    row("Círculo que lo rodea (diámetro)",f(diag,1)+" cm");
+    row("Volumen",f(area*alt,0)+" ml");
+    if(s===0)row("Aviso","Sin solapa hay que pegar con cinta por afuera: sumá al menos 1 cm");
+    if(a<1.5)row("Aviso","Las caras salen muy angostas: usá menos caras o una hoja más grande");
+    if(alt/across>8)row("Aviso","La torre sale muy alta y finita: se dobla fácil, probá dar la vuelta por el lado largo");
+    svg.setAttribute("aria-label","Hoja de "+f(W,1)+" por "+f(H,1)+" cm con "+n+" caras de "+f(a,1)+" cm, a escala");
     try{var ob={};ids.forEach(function(k2){ob[k2]=$(k2).value});localStorage.setItem(KEY,JSON.stringify(ob))}catch(e2){}
   }
   ids.forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
